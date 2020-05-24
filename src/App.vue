@@ -2,10 +2,10 @@
 	<div id="q-app" class="text-grey-9">
 		<!-- v-if="!$q.platform.is.mobile" -->
 		<router-view> </router-view>
-
+		<!-- 
 		<div class="q-pa-xl text-h6 text-bold text-center ">
 			<p>Versao Mobile em desenvolvimento</p>
-		</div>
+		</div> -->
 	</div>
 </template>
 
