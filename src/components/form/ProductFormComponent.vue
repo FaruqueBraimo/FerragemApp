@@ -6,26 +6,38 @@
 					Preencha os campos abaixo para registar um produto
 				</p>
 			</div>
-			<q-form class="q-gutter-md q-py-md">
+			<q-form @submit="onSubmit" class="q-gutter-md q-py-md">
 				<div class="row">
 					<div class="col-md-8 col-xs-12 q-pa-sm">
-						<q-input outlined label="Nome do producto" lazy-rules />
+						<q-input
+							outlined
+							label="Nome do producto"
+							v-model="saveObject.name"
+							lazy-rules
+						/>
 					</div>
 					<div class="col-md-4 col-xs-12 q-pa-sm">
 						<q-select
 							label="Categoria do Produto"
 							outlined
 							:options="category"
+							v-model="saveObject.category"
 						/>
 					</div>
-                    <div class="col-md-6 col-xs-12 q-pa-sm">
-						<q-input outlined label="Preco do producto" lazy-rules />
+					<div class="col-md-6 col-xs-12 q-pa-sm">
+						<q-input
+							outlined
+							label="Preco do producto"
+							v-model="saveObject.price"
+							lazy-rules
+						/>
 					</div>
-                    <div class="col-md-6 col-xs-12 q-pa-sm">
+					<div class="col-md-6 col-xs-12 q-pa-sm">
 						<q-select
 							label="Finalidade do Produto"
 							outlined
 							:options="utility"
+							v-model="saveObject.utility"
 						/>
 					</div>
 					<div class="submit col-xs-12 col-md-12">
@@ -48,9 +60,23 @@
 					'Categoria 3',
 					'Categoria 4',
 					'Categoria 5'
-                ],
-                utility:['Venda','Uso Interno']
+				],
+				utility: ['Venda', 'Uso Interno'],
+				saveObject: {
+					name: '',
+					category: '',
+					price: '',
+					utility: ''
+				}
 			};
+		},
+		methods: {
+			onSubmit() {
+				this.$emit('emitData', this.saveObject);
+			},
+			onReset() {
+				this.saveObject = {};
+			}
 		}
 	};
 </script>
