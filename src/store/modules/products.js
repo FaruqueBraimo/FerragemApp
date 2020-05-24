@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { dbProducts } from '../../boot/firebase';
-import { Loading } from 'quasar';
+import { Loading, date } from 'quasar';
 import { showErrorMessage } from '../../functions/handle-error-messages';
 import { showSuccessMessage } from '../../functions/show-success-messages';
 
@@ -149,7 +149,7 @@ const actions = {
 				// 1. Limpar todas solicitações
 				commit('resetProduct');
 
-				showSuccessMessage('Solicitação submetida com sucesso!');
+				showSuccessMessage('Producto Adicionado com sucesso!');
 
 				return true;
 			})
@@ -165,8 +165,7 @@ const actions = {
 	updateProduct({ commit, rootGetters }, payload) {
 		commit('loading', true);
 
-		payload.updates.updatedAt =
-			rootGetters['expDate/getTodayDateAndTimeFormated'];
+		payload.updates.updatedAt = new Date()
 
 		let sucessMessage = payload.successMessage
 			? payload.successMessage
@@ -199,7 +198,7 @@ const actions = {
 			.doc(id)
 			.delete()
 			.then(function(docRef) {
-				showSuccessMessage('Solicitação deletada...');
+				showSuccessMessage('Producto eliminado com sucesso...');
 				return true;
 			})
 			.catch(function(error) {
