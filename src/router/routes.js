@@ -12,7 +12,9 @@ const routes = [
   path: '/admin',
   component: () => import('layouts/Dash.vue'),
   children: [
-    { path: '', component: () => import('pages/admin/Index.vue') },
+    { path: '/admin', component: () => import('pages/admin/Index.vue') },
+
+    { path: '/products/add', component: () => import('pages/admin/AddProductPage.vue') },
     
     // { path: 'users', component: () => import('pages/admin/Users.vue') },
     // { path: 'nopermission', component: () => import('pages/admin/NoPermission.vue') },
