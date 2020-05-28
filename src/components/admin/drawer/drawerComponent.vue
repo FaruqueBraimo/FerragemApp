@@ -44,6 +44,7 @@
 								<q-icon color="primary" name="add" />
 							</q-item-section>
 							<q-item-section>
+								<p @click="$router.push('/products')">Lista de Produtos</p>
 								<p @click="$router.push('/products/add')">Registar Produtos</p>
 							</q-item-section>
 						</q-item>

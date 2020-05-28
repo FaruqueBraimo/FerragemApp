@@ -40,6 +40,38 @@
 							v-model="saveObject.utility"
 						/>
 					</div>
+					<div class="col-md-5 col-xs-12 q-pa-sm">
+						<q-input
+							outlined
+							label="Quantidade do producto"
+							v-model="saveObject.quantity"
+							lazy-rules
+						/>
+					</div>
+					<div class="col-md-7 col-xs-12 q-pa-sm">
+						<q-input
+							outlined
+							v-model="saveObject.expires"
+							label="Data de validade"
+						>
+							<template v-slot:append>
+								<q-icon name="event" class="cursor-pointer">
+									<q-popup-proxy
+										ref="qDateProxy"
+										transition-show="scale"
+										transition-hide="scale"
+									>
+										<q-date
+											v-model="date"
+											@input="
+												() => $refs.qDateProxy.hide()
+											"
+										/>
+									</q-popup-proxy>
+								</q-icon>
+							</template>
+						</q-input>
+					</div>
 					<div class="submit col-xs-12 col-md-12">
 						<q-btn label="Registar" type="submit" color="primary" />
 					</div>
@@ -54,6 +86,7 @@
 		name: 'ProductFormComponent',
 		data() {
 			return {
+				date: 'AAAA/MM/DD',
 				category: [
 					'Categoria 1',
 					'Categoria 2',
@@ -66,7 +99,9 @@
 					name: '',
 					category: '',
 					price: '',
-					utility: ''
+					utility: '',
+					quantity: '',
+					expires: ''
 				}
 			};
 		},
@@ -76,7 +111,7 @@
 			},
 			onReset() {
 				this.saveObject = {};
-			}
+			},
 		}
 	};
 </script>
