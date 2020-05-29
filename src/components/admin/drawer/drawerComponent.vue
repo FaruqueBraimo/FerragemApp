@@ -1,10 +1,10 @@
 <template>
 	<q-drawer show-if-above bordered :width="280">
 		<div>
-			<q-card flat class="shadow-0">
-				<q-card-section class="text-center q-pa-lg	">
-					<q-avatar size="70px" color="blue-grey">
-						<img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+			<q-card flat class="shadow-0 ">
+				<q-card-section class="text-center q-pa-lg	text-bold">
+					<q-avatar size="70px" color="">
+						<img src="https://img.icons8.com/color/96/000000/user-male-circle.png"/> 
 					</q-avatar>
 					<div class="text-capitalize text-center q-py-sm">
 						<p>Gerson Muvavele</p>
@@ -17,10 +17,20 @@
 			<q-list
 				dark
 				padding
-				class="rounded-borders text-white"
+				class="rounded-borders text-white text-bold"
 				style="max-width: 328px"
 			>
-				<q-item clickable v-ripple>
+				<q-item clickable v-ripple to="/admin" exact >
+					<q-item-section avatar>
+						<q-icon name="home" />
+					</q-item-section>
+
+					<q-item-section>
+						<p>Inicio</p>
+					</q-item-section>
+				</q-item>
+
+		<q-item clickable v-ripple exact>
 					<q-item-section avatar>
 						<q-icon name="apps" />
 					</q-item-section>
@@ -29,7 +39,6 @@
 						<p>Categorias</p>
 					</q-item-section>
 				</q-item>
-
 				<q-expansion-item
 					dense-toggle
 					icon="local_grocery_store"
@@ -40,18 +49,38 @@
 				>
 					<q-list class="text-body1">
 						<q-item clickable v-ripple>
+						
+
+								<q-list class="text-body1">
+						<q-item clickable v-ripple to="/products">
 							<q-item-section avatar>
-								<q-icon color="primary" name="add" />
+								<q-icon
+									color="primary"
+									name="book"
+								/>
 							</q-item-section>
 							<q-item-section>
-								<p @click="$router.push('/products')">Lista de Produtos</p>
-								<p @click="$router.push('/products/add')">Registar Produtos</p>
+								<p>Lista de Produtos</p>
 							</q-item-section>
+						</q-item>
+
+						<q-item clickable v-ripple to="/products/add">
+							<q-item-section avatar>
+								<q-icon
+									color="primary"
+									name="add"
+								/>
+							</q-item-section>
+							<q-item-section>
+								<p>Registar Produtos</p>
+							</q-item-section>
+						</q-item>
+					</q-list>
 						</q-item>
 					</q-list>
 				</q-expansion-item>
 
-				<q-item clickable v-ripple>
+				<q-item clickable v-ripple exact>
 					<q-item-section avatar>
 						<q-icon name="group" />
 					</q-item-section>
@@ -105,7 +134,7 @@
 								/>
 							</q-item-section>
 							<q-item-section>
-								<p>Clientes</p>
+								<p>Entrada de Produtos</p>
 							</q-item-section>
 						</q-item>
 
@@ -123,22 +152,16 @@
 					</q-list>
 				</q-expansion-item>
 
-				<q-expansion-item
-					icon="person"
-					label="Utlizadores"
-          expand-icon-class="text-grey-8"
-					dense-toggle
-					my-active-class
-					my-exact-active-class
-					class="ex-item"
-				>
-					<q-card class="bg-grey-9">
-						<q-card-section>
-							Lorem ipsum dolor sit amet, consectetur adipisicing
-							elit.
-						</q-card-section>
-					</q-card>
-				</q-expansion-item>
+				<q-item clickable v-ripple to="/users"  exact>
+					<q-item-section avatar>
+						<q-icon name="person" />
+					</q-item-section>
+
+					<q-item-section>
+						<p>Utlizadores</p>
+					</q-item-section>
+				</q-item>
+
 			</q-list>
 		</div>
 	</q-drawer>
