@@ -13,7 +13,7 @@ const { addToDate } = date
 
 const state = {
     userAuth: null,
-    redirectTo: '/admin',
+    redirectTo: '/users',
     defaultUser: '/statics/users/default-user.png',
     users: {},
     loading: false,
@@ -81,24 +81,7 @@ const getters = {
     getUserAuth : (state) => {
         return state.userAuth && state.users ? state.users[state.userAuth.id] : null
     },
-    isUserPro : (state) => (user) => {
-        if (user && user.payments && user.payments.length) {
-
-            let lastPayment = user.payments[user.payments.length -1]
-
-            let todayFormated = date.formatDate(new Date(), 'YYYY-MM-DD')
-
-            return todayFormated <= lastPayment.endAt
-
-        }
-        return false
-    },
-    dynamicColor : (state, getters) => {
-        return getters.isUserPro(state.userAuth) ? 'green-8' : 'primary'
-    },
-    dynamicExadecimalColor : (state, getters) => {
-        return getters.isUserPro(state.userAuth) ? '#388e3c' : '#027BE3'
-    },
+    
 }
 
 const actions = {
@@ -116,7 +99,7 @@ const actions = {
 
                  commit('setUserAuth', user)
                  dispatch('addUser', user)
-                showSuccessMessage('A sua conta foi criada com sucesso!')
+                showSuccessMessage('A  conta foi criada com sucesso!')
                 this.$router.push(state.redirectTo)
 
                 Loading.hide()
@@ -143,7 +126,7 @@ const actions = {
                 Loading.hide()
             })
             .catch(error => {
-                showErrorMessage(error.message)
+                showErrorMessage('Usuario ou Senha Incorrectos  !')
             })
     },
 
@@ -165,6 +148,13 @@ const actions = {
         })
     },
 
+    deleteUserFromDb(){
+        var user = firebaseAuth.currentUser;
+        console.log(user)
+
+    },
+
+    
     logoutUser ({ commit }) {
         firebaseAuth.signOut();
         showSuccessMessage('Sessão terminada com sucesso!')
@@ -258,58 +248,8 @@ const actions = {
         }
     },
 
-    findUserByUserNameAndTelefone ({state, commit, dispatch}, payload) {
 
-        commit('loading', true)
-
-        dispatch('findUserByTelefone', payload)
-            .then((user) => {
-
-                if (user) {
-                    dispatch('loginUser', {
-                        telefone: user.email,
-                        password: payload.password
-                    })
-                } else {
-                    Notify.create({
-                        message: 'Não existe nenhum utilizador registado com este número de telefone!',
-                        color: 'negative'
-                    })
-                }
-                commit('loading', false)
-            })
-            .catch((error) => {
-                commit('loading', false)
-                console.log(error.message)
-                showErrorMessage(error.message)
-            })
-
-    },
-
-    findUserByTelefone ({state, commit, dispatch}, payload) {
-
-        const queryTelefone = dbUsers.where("telefone", "==", payload.telefone).get()
-
-        return queryTelefone.then(function(snapshot) {
-
-            let foundElements = snapshot.docChanges()
-
-            if (foundElements.length === 1) {
-
-                let foundUser = foundElements[0].doc.data()
-
-                foundUser.id = foundElements[0].doc.id
-                foundUser.password = payload.password
-
-                return foundUser
-
-            } else {
-
-                return null
-            }
-
-        });
-    },
+   
 
     storeUserPhoto ({state, commit, dispatch}, saveObject) {
 

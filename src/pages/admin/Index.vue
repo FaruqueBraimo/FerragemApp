@@ -18,7 +18,7 @@
 
 							<div class=" col text-right text-green-5 q-pa-md ">
 								<q-icon
-									name="group"
+									name="apps"
 									style="font-size: 3.0em;"
 								/>
 							</div>
@@ -53,7 +53,7 @@
 
 							<div class=" col text-right text-primary q-pa-md ">
 								<q-icon
-									name="group"
+									name="shopping_cart"
 									style="font-size: 3.0em;"
 								/>
 							</div>
@@ -90,7 +90,7 @@
 								class=" col text-right text-deep-orange q-pa-md "
 							>
 								<q-icon
-									name="group"
+									name="person"
 									style="font-size: 3.0em;"
 								/>
 							</div>
