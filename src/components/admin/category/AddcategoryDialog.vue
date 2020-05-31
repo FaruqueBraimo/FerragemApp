@@ -84,10 +84,10 @@
 				set(val) {
 					this.$emit('closeDialog');
 				}
-			},
-			selectedId() {
-				return this.editObjectPost ? this.editObjectPost.id : null;
-			}
+            },
+            
+			
+            
 		},
 		mounted() {
 		},

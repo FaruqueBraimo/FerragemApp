@@ -10,7 +10,7 @@
 	export default {
 		components: { ProductFormComponent },
 		methods: {
-			...mapActions('products', ['addProduct'])
+			...mapActions('product', ['addProduct'])
 		}
 	};
 	
