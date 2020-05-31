@@ -31,9 +31,10 @@
 						]"
 					/>
 
-					<q-input
+					<q-select
 						outlined
 						type="email"
+						:options="type"
 						v-model="saveObject.type"
 						label="Tipo de fornecdor *"
 						lazy-rules
@@ -91,6 +92,10 @@
 					'Acesso aos Clientes e Fornecedores',
 					'Acesso a gestão de Stock',
 					'Nenhum Acesso'
+				],
+				type: [
+					'Singular',
+					'Empresa',
 				]
 			};
 		},
