@@ -15,10 +15,10 @@
 
           <tbody>
 
-            <users-body-component
-         v-for="(user,index) in users"
+            <products-body-component
+         v-for="(product,index) in products"
          :key="index"
-         :user="user"
+         :product="product"
          @deleteUser='deleteUserFromDb' 
          />
 
@@ -57,8 +57,8 @@ export default {
     }
   },
     computed: {
-        ...mapState('auth', [
-            'users'
+        ...mapState('product', [
+            'products'
         ]),
     },
     

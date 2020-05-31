@@ -10,15 +10,7 @@
 		</td>
 		<td class="text-left">{{ user.email }}</td>
 		<td class="text-left ">
-			<q-select
-        label=" 'Não definido'"
-        transition-show="jump-up"
-        transition-hide="jump-up"
-        filled
-        v-model="user.role"
-        
-        :options="options"
-      />
+		{{user.role}}
     </div>
 		</td>
 
@@ -29,9 +21,9 @@
 		
 
     	<td class="text-center ">
-      <q-btn outline unelevated  text-color="secondary" label="Activar" icon="toggle_on" />
-      <q-btn  flat  rounded text-color="primary" icon="visibility" />
-      <q-btn  flat  rounded text-color="red" icon="delete" @click="$emit('deleteUser')" />
+      <q-btn outline size="sm" unelevated  text-color="secondary" label="Activar" icon="toggle_on" />
+      <q-btn  flat  size="sm" rounded text-color="primary" icon="visibility" />
+      <q-btn  flat  rounded  size="sm" text-color="red" icon="delete" @click="$emit('deleteUser')" />
 
 
 		</td>

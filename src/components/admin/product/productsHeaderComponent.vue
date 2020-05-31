@@ -9,8 +9,7 @@
                 style="width: 70px"
                 :ratio="1"
                 class="rounded-borders"
-         src="https://img.icons8.com/bubbles/100/000000/user.png"
-              />
+src="https://img.icons8.com/nolan/64/product.png"/>            
 
               <div class="text-h6 q-ml-md text-secondary">Produtos</div>
             </div>
@@ -21,6 +20,8 @@
           <th class="text-left">Nome</th>
          <th class="text-left">Categoria</th>
           <th class="text-left">Quantidade</th>
+            <th class="text-left">Preco de Venda</th>
+
          <th class="text-left">Forncedor</th>
   
           <th class="text-center">Data de Registo</th>
