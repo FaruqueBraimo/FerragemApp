@@ -8,7 +8,7 @@
 				icon="add"
 				label="Adicionar"
 				unelevated
-				@click="dialog = true"
+				@click="$router.push('/products/add')"
 			/>
 		</div>
 		<q-markup-table

@@ -16,19 +16,25 @@
 		created() {
 			this.listenUsersRealTimeChanges();
 			this.listenProductRealTimeChanges();
-			this.listencategoryRealTimeChanges()
+			this.listencategoryRealTimeChanges();
+			this.listenProviderRealTimeChanges();
+			this.listenCustomerRealTimeChanges()
 		},
 		methods: {
 			...mapActions('auth', [
 				'handleAuthStateChange',
 				'listenUsersRealTimeChanges',
-				'listenProductRealTimeChanges'
+				'listenProductRealTimeChanges',
+				
 
 				
 			]),
 
 			...mapActions('product' , ['listenProductRealTimeChanges']),
-			...mapActions('category' , ['listencategoryRealTimeChanges'])
+			...mapActions('category' , ['listencategoryRealTimeChanges']),
+			...mapActions('provider' , ['listenProviderRealTimeChanges']),
+			...mapActions('customer' , ['listenCustomerRealTimeChanges'])
+
 
 		},
 		beforeDestroy() {
