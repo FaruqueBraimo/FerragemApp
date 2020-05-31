@@ -16,16 +16,20 @@
 		created() {
 			this.listenUsersRealTimeChanges();
 			this.listenProductRealTimeChanges();
+			this.listencategoryRealTimeChanges()
 		},
 		methods: {
 			...mapActions('auth', [
 				'handleAuthStateChange',
 				'listenUsersRealTimeChanges',
 				'listenProductRealTimeChanges'
+
 				
 			]),
 
-			...mapActions('product' , ['listenProductRealTimeChanges'])
+			...mapActions('product' , ['listenProductRealTimeChanges']),
+			...mapActions('category' , ['listencategoryRealTimeChanges'])
+
 		},
 		beforeDestroy() {
 			this.$q.loading.hide();
