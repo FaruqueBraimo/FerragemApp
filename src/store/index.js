@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import auth from './modules/auth';
 import product from './modules/products';
 import category from './modules/categories';
+import provider from './modules/providers';
 
 Vue.use(Vuex);
 
@@ -20,7 +21,8 @@ export default function(/* { ssrContext } */) {
 		modules: {
 			auth,
 			product,
-			category
+			category,
+			provider
 		},
 
 		// enable strict mode (adds overhead!)
