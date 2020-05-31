@@ -17,6 +17,8 @@ const routes = [
 
     { path: '/products/add', component: () => import('pages/admin/AddProductPage.vue') },
     { path: '/products', component: () => import('pages/admin/ProductPage.vue') },
+
+    { path: '/providers', component: () => import('pages/admin/ProviderPage.vue') },
     
     { path: '/users', component: () => import('pages/admin/UsersPage.vue') },
     // { path: 'nopermission', component: () => import('pages/admin/NoPermission.vue') },

@@ -18,22 +18,22 @@
 			class="q-pa-md"
 			:style="$q.platform.is.mobile ? 'width: 100%' : ''"
 		>
-			<products-header-component class="q-pa-sm" />
+			<providers-header-component class="q-pa-sm" />
 
 			<tbody>
-				<products-body-component
-					v-for="(product, index) in products"
+				<providers-body-component
+					v-for="(provider, index) in providers"
 					:key="index"
-					:product="product"
-					@deleteUser="deleteUserFromDb"
+					:provider="provider"
+					@deleteUser="deleteProvider"
 				/>
 			</tbody>
 		</q-markup-table>
 
-		<AddUserDialog
+		<add-provider-dialog
 			:dialog="dialog"
 			@closeDialog="dialog = false"
-			@emitData="registerUser"
+			@emitData="addProvider"
 		/>
 	</q-page>
 </template>
@@ -41,9 +41,9 @@
 <script>
 	import { mapActions, mapState } from 'vuex';
 
-	import ProductsBodyComponent from '../../components/admin/product/ProductsBodyComponent';
-	import ProductsHeaderComponent from '../../components/admin/product/ProductsHeaderComponent';
-	import AddUserDialog from '../../components/admin/users/AddUserDialog';
+	import ProvidersBodyComponent from '../../components/admin/provider/ProvidersBodyComponent';
+	import ProvidersHeaderComponent from '../../components/admin/provider/ProvidersHeaderComponent';
+	import AddProviderDialog from '../../components/admin/provider/AddProviderDialog';
 
 	export default {
 		// name: 'PageName',
@@ -53,16 +53,16 @@
 			};
 		},
 		computed: {
-			...mapState('product', ['products'])
+			...mapState('provider', ['providers'])
 		},
 
 		methods: {
-			...mapActions('auth', ['registerUser', 'deleteUserFromDb'])
+			...mapActions('provider', ['addProvider', 'deleteProvider'])
 		},
 		components: {
-			ProductsHeaderComponent,
-			ProductsBodyComponent,
-			AddUserDialog
+			ProvidersHeaderComponent,
+			ProvidersBodyComponent,
+			AddProviderDialog
 		}
 	};
 </script>

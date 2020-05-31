@@ -4,7 +4,9 @@
 			<q-card flat class="shadow-0 ">
 				<q-card-section class="text-center q-pa-md">
 					<q-avatar size="70px" color="">
-						<img src="https://img.icons8.com/color/96/000000/user-male-circle.png"/> 
+						<img
+							src="https://img.icons8.com/color/96/000000/user-male-circle.png"
+						/>
 					</q-avatar>
 					<div class="text-capitalize text-center q-py-sm">
 						<p>Gerson Muvavele</p>
@@ -20,7 +22,7 @@
 				class="rounded-borders text-white "
 				style="max-width: 328px"
 			>
-				<q-item clickable v-ripple to="/admin" exact >
+				<q-item clickable v-ripple to="/admin" exact>
 					<q-item-section avatar>
 						<q-icon name="home" />
 					</q-item-section>
@@ -30,7 +32,7 @@
 					</q-item-section>
 				</q-item>
 
-		<q-item clickable v-ripple exact to="/category">
+				<q-item clickable v-ripple exact to="/category">
 					<q-item-section avatar>
 						<q-icon name="apps" />
 					</q-item-section>
@@ -49,38 +51,30 @@
 				>
 					<q-list class="text-body1">
 						<q-item clickable v-ripple>
-						
+							<q-list class="text-body1">
+								<q-item clickable v-ripple to="/products">
+									<q-item-section avatar>
+										<q-icon color="primary" name="book" />
+									</q-item-section>
+									<q-item-section>
+										<p>Lista de Produtos</p>
+									</q-item-section>
+								</q-item>
 
-								<q-list class="text-body1">
-						<q-item clickable v-ripple to="/products">
-							<q-item-section avatar>
-								<q-icon
-									color="primary"
-									name="book"
-								/>
-							</q-item-section>
-							<q-item-section>
-								<p>Lista de Produtos</p>
-							</q-item-section>
-						</q-item>
-
-						<q-item clickable v-ripple to="/products/add">
-							<q-item-section avatar>
-								<q-icon
-									color="primary"
-									name="add"
-								/>
-							</q-item-section>
-							<q-item-section>
-								<p> Adicionar</p>
-							</q-item-section>
-						</q-item>
-					</q-list>
+								<q-item clickable v-ripple to="/products/add">
+									<q-item-section avatar>
+										<q-icon color="primary" name="add" />
+									</q-item-section>
+									<q-item-section>
+										<p>Adicionar</p>
+									</q-item-section>
+								</q-item>
+							</q-list>
 						</q-item>
 					</q-list>
 				</q-expansion-item>
 
-				<q-item clickable v-ripple exact>
+				<q-item clickable v-ripple exact to="/providers">
 					<q-item-section avatar>
 						<q-icon name="group" />
 					</q-item-section>
@@ -106,7 +100,7 @@
 					dense-toggle
 					class="ex-item"
 				>
-					<q-card >
+					<q-card>
 						<q-card-section>
 							<p>
 								Lorem ipsum dolor sit amet, consectetur
@@ -152,7 +146,7 @@
 					</q-list>
 				</q-expansion-item>
 
-				<q-item clickable v-ripple to="/users"  exact>
+				<q-item clickable v-ripple to="/users" exact>
 					<q-item-section avatar>
 						<q-icon name="person" />
 					</q-item-section>
@@ -161,7 +155,6 @@
 						<p>Utlizadores</p>
 					</q-item-section>
 				</q-item>
-
 			</q-list>
 		</div>
 	</q-drawer>
