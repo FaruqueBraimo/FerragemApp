@@ -32,7 +32,7 @@
 					</q-item-section>
 				</q-item>
 
-				<q-item clickable v-ripple exact>
+				<q-item clickable v-ripple exact to="/category">
 					<q-item-section avatar>
 						<q-icon name="apps" />
 					</q-item-section>

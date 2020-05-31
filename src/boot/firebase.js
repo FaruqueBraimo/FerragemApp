@@ -29,7 +29,7 @@ export const dbUsers = db.collection("users");
 export const dbProducts = db.collection("products");
 export const dbProviders= db.collection("providers");
 
-export const dbCandidates = db.collection("arqueologs");
+export const dbcategories = db.collection("categories");
 
 
 
