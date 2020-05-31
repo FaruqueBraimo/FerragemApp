@@ -13,7 +13,7 @@
 				<q-card-section class="q-pt-none">
 					<q-list padding class="rounded-borders">
 						<q-item-label header class="text-h6"
-							>Detalhes do Producto</q-item-label
+							>Detalhes do Fornecedor</q-item-label
 						>
 						<q-separator class="q-mb-md"/>
 
@@ -27,10 +27,10 @@
 
 							<q-item-section>
 								<q-item-label class="text-subtitle1"
-									>Nome do Producto</q-item-label
+									>Nome do Fornecedor</q-item-label
 								>
 								<q-item-label lines="1" class="text-weight-bold">{{
-									product.name
+									provider.name
 								}}</q-item-label>
 							</q-item-section>
 						</q-item>
@@ -38,51 +38,35 @@
 						<q-item clickable v-ripple>
 							<q-item-section avatar top>
 								<q-avatar
-									icon="group"
+									icon="emoji_flags"
 									text-color="primary"
 								/>
 							</q-item-section>
 
 							<q-item-section>
 								<q-item-label class="text-subtitle1"
-									>Categoria do Producto</q-item-label
+									>Tipo de Fornecedor</q-item-label
 								>
 								<q-item-label lines="1" class="text-weight-bold">{{
-									product.category.label
+									provider.type
 								}}</q-item-label>
 							</q-item-section>
 						</q-item>
+
 						<q-item clickable v-ripple>
 							<q-item-section avatar top>
 								<q-avatar
-									icon="looks_4"
+									icon="location_on"
 									text-color="primary"
 								/>
 							</q-item-section>
 
 							<q-item-section>
 								<q-item-label class="text-subtitle1"
-									>Quantidade do Producto</q-item-label
+									>Endereco do Fornecedor</q-item-label
 								>
 								<q-item-label lines="1" class="text-weight-bold">{{
-									product.quantity
-								}}</q-item-label>
-							</q-item-section>
-						</q-item>
-						<q-item clickable v-ripple>
-							<q-item-section avatar top>
-								<q-avatar
-									icon="group"
-									text-color="primary"
-								/>
-							</q-item-section>
-
-							<q-item-section>
-								<q-item-label class="text-subtitle1"
-									>Fornecedor do Producto</q-item-label
-								>
-								<q-item-label lines="1" class="text-weight-bold">{{
-									product.provider.label
+									provider.address
 								}}</q-item-label>
 							</q-item-section>
 						</q-item>
@@ -100,38 +84,12 @@
 <script>
 	export default {
 		name: 'CustomerDetailsDialog',
-		props: ['product'],
+		props: ['provider'],
 		data() {
 			return {
 				dialog: false
 			};
 		},
-		filters: {
-			dateFormat(val) {
-				var months = [
-					'Janeiro',
-					'Fevereiro',
-					'Março',
-					'Abril',
-					'Maio',
-					'Junho',
-					'Julho',
-					'Agosto',
-					'Setembro',
-					'Outubro',
-					'Novembro',
-					'Dezembro'
-				];
-				let dateCreated = new Date(val.seconds * 1000);
-				return (
-					dateCreated.getDate() +
-					' de ' +
-					months[dateCreated.getMonth()] +
-					' de ' +
-					dateCreated.getFullYear()
-				);
-			}
-		}
 	};
 </script>
 

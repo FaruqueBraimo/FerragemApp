@@ -11,7 +11,7 @@
 		<q-dialog v-model="dialog">
 			<q-card style="width: 700px; max-width: 80vw;">
 				<q-card-section class="q-pt-none">
-					<q-listd padding class="rounded-borders">
+					<q-list padding class="rounded-borders">
 						<q-item-label header class="text-h6"
 							>Detalhes do Cliente</q-item-label
 						>
@@ -52,7 +52,7 @@
 								}}</q-item-label>
 							</q-item-section>
 						</q-item>
-					</q-listd>
+					</q-list>
 				</q-card-section>
 
 				<q-card-actions align="right">
@@ -72,32 +72,6 @@
 				dialog: false
 			};
 		},
-		filters: {
-			dateFormat(val) {
-				var months = [
-					'Janeiro',
-					'Fevereiro',
-					'Março',
-					'Abril',
-					'Maio',
-					'Junho',
-					'Julho',
-					'Agosto',
-					'Setembro',
-					'Outubro',
-					'Novembro',
-					'Dezembro'
-				];
-				let dateCreated = new Date(val.seconds * 1000);
-				return (
-					dateCreated.getDate() +
-					' de ' +
-					months[dateCreated.getMonth()] +
-					' de ' +
-					dateCreated.getFullYear()
-				);
-			}
-		}
 	};
 </script>
 
