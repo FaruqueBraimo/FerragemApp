@@ -13,7 +13,7 @@
 				<q-card-section class="q-pt-none">
 					<q-list padding class="rounded-borders">
 						<q-item-label header class="text-h6"
-							>Detalhes do Cliente</q-item-label
+							>Detalhes do Fornecedor</q-item-label
 						>
 						<q-separator class="q-mb-md"/>
 
@@ -27,10 +27,10 @@
 
 							<q-item-section>
 								<q-item-label class="text-subtitle1"
-									>Nome do Cliente</q-item-label
+									>Nome do Fornecedor</q-item-label
 								>
-								<q-item-label lines="1">{{
-									customer.name
+								<q-item-label lines="1" class="text-weight-bold">{{
+									provider.name
 								}}</q-item-label>
 							</q-item-section>
 						</q-item>
@@ -38,17 +38,35 @@
 						<q-item clickable v-ripple>
 							<q-item-section avatar top>
 								<q-avatar
-									icon="group"
+									icon="emoji_flags"
 									text-color="primary"
 								/>
 							</q-item-section>
 
 							<q-item-section>
 								<q-item-label class="text-subtitle1"
-									>Tipo de Cliente</q-item-label
+									>Tipo de Fornecedor</q-item-label
 								>
-								<q-item-label lines="1">{{
-									customer.type
+								<q-item-label lines="1" class="text-weight-bold">{{
+									provider.type
+								}}</q-item-label>
+							</q-item-section>
+						</q-item>
+
+						<q-item clickable v-ripple>
+							<q-item-section avatar top>
+								<q-avatar
+									icon="location_on"
+									text-color="primary"
+								/>
+							</q-item-section>
+
+							<q-item-section>
+								<q-item-label class="text-subtitle1"
+									>Endereco do Fornecedor</q-item-label
+								>
+								<q-item-label lines="1" class="text-weight-bold">{{
+									provider.address
 								}}</q-item-label>
 							</q-item-section>
 						</q-item>
@@ -66,7 +84,7 @@
 <script>
 	export default {
 		name: 'CustomerDetailsDialog',
-		props: ['customer'],
+		props: ['provider'],
 		data() {
 			return {
 				dialog: false

@@ -12,31 +12,40 @@
 		</td>
 
 		<td class="text-center ">
-			<q-btn
-				flat
-				size="sm"
-				rounded
-				text-color="secondary"
-				icon="visibility"
-			/>
-			<q-btn flat size="sm" rounded text-color="primary" icon="edit" />
-
-			<q-btn
-				flat
-				rounded
-				size="sm"
-				text-color="red"
-				icon="delete"
-				@click="$emit('deleteprovider')"
-			/>
+			<div class="row " style="width:100px;">
+				<div class="col text-center">
+					<provider-details-dialog :provider="provider"/>
+				</div>
+				<div class="col">
+					<q-btn
+						flat
+						size="sm"
+						rounded
+						text-color="primary"
+						icon="edit"
+					/>
+				</div>
+				<div class="col">
+					<q-btn
+						flat
+						rounded
+						size="sm"
+						text-color="red"
+						icon="delete"
+						@click="$emit('deleteProvider')"
+					/>
+				</div>
+			</div>
 		</td>
 	</tr>
 </template>
 
 <script>
 	import { mapActions, mapState } from 'vuex';
+	import ProviderDetailsDialog from './ProviderDetailsDialog';
 	export default {
 		name: 'providerBodyComponent',
+		components:{ProviderDetailsDialog},
 		props: ['provider'],
 		data() {
 			return {
