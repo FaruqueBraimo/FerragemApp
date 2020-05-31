@@ -7,11 +7,11 @@
 						<div class="row">
 							<div
 								class=" col "
-								v-if="Object.keys(users).length > 0"
+								v-if="Object.keys(categories).length > 0"
 							>
 								<div>Categorias</div>
 								<span class="text-green-5 text-h4">
-									{{ Object.keys(users).length }}</span
+									{{ Object.keys(categories).length }}</span
 								>
 							</div>
 							<q-skeleton type="QRadio" v-else />
@@ -25,7 +25,6 @@
 						</div>
 
 						<div>
-							Total Categorias
 							<q-linear-progress
 								indeterminate
 								color="green-5"
@@ -42,11 +41,11 @@
 						<div class="row">
 							<div
 								class=" col "
-								v-if="Object.keys(users).length > 0"
+								v-if="Object.keys(products).length > 0"
 							>
 								<div>Produtos</div>
 								<span class="text-primary text-h4">
-									{{ Object.keys(users).length }}</span
+									{{ Object.keys(products).length }}</span
 								>
 							</div>
 							<q-skeleton type="QRadio" v-else />
@@ -60,7 +59,6 @@
 						</div>
 
 						<div>
-							Total Produtos
 							<q-linear-progress
 								indeterminate
 								color="primary"
@@ -77,11 +75,11 @@
 						<div class="row">
 							<div
 								class=" col "
-								v-if="Object.keys(users).length > 0"
+								v-if="Object.keys(providers).length > 0"
 							>
 								<div>Fornecedores</div>
 								<span class="text-deep-orange text-h4">
-									{{ Object.keys(users).length }}</span
+									{{ Object.keys(providers).length }}</span
 								>
 							</div>
 							<q-skeleton type="QRadio" v-else />
@@ -97,7 +95,6 @@
 						</div>
 
 						<div>
-							Total Utilizadores
 							<q-linear-progress
 								indeterminate
 								color="deep-orange"
@@ -134,7 +131,6 @@
 						</div>
 
 						<div>
-							Total Fornecedores
 							<q-linear-progress
 								indeterminate
 								color="secondary"
@@ -185,10 +181,16 @@
 			}
 			let user = this.users[this.userAuth.uid];
 
-			//Redireciona o user para outra página, caso o user não seja Administrador nem Editor
 		},
 		computed: {
-			...mapState('auth', ['users', 'userAuth'])
+			...mapState('auth', ['users', 'userAuth']),
+			...mapState('category', ['categories', ]),
+			...mapState('product', ['products',]),
+			...mapState('provider', ['providers', ]),
+
+
+
+
 		},
 		methods: {
 			...mapActions('settings', ['setActualPageTitle'])

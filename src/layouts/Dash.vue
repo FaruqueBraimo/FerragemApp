@@ -4,7 +4,7 @@
 			<q-toolbar class="toolbar">
 				<div class="q-pr-lg" v-if="$q.screen.gt.xs">
 					<q-icon name="rv_hookup" size="xl" />
-					<span class="text-h6">SG Ferragem A</span>
+					<span class="text-h6" id='logo'>SG Ferragem A</span>
 				</div>
 
 				<q-space />
@@ -79,8 +79,12 @@
 </script>
 
 <style >
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Lobster&display=swap');
 .toolbar{
   height: 54px;
+}
+#logo{
+font-family: 'Fredoka One', cursive;
 }
 
 </style>

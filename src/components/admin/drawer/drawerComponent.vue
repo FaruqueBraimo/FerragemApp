@@ -101,12 +101,9 @@
 					class="ex-item"
 				>
 					<q-card>
-						<q-card-section>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur
-								adipisicing elit.
-							</p>
-						</q-card-section>
+						<div class="text-center text-caption text-red-4 q-pa-md">
+							Tudo sobre Relatórios brevemente
+						</div>
 					</q-card>
 				</q-expansion-item>
 

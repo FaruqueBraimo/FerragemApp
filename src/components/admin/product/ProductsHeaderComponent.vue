@@ -15,8 +15,8 @@
 			</th>
 		</tr>
 
-		<tr>
-			<th class="text-left">Nome</th>
+		<tr class="text-bold">
+			<th class="text-left text-bold" >Nome</th>
 			<th class="text-left">Categoria</th>
 			<th class="text-left">Quantidade</th>
 			<th class="text-left">Preco de Venda</th>
