@@ -3,14 +3,7 @@
 		<td class="text-left">
 			{{ customer.name }}
 		</td>
-		<td class="text-left">{{ customer.price }}</td>
-		<td class="text-left">11</td>
-
-		<td class="text-left">{{ customer.quantity }}</td>
-
-		<td class="text-left ">
-			<span class="text-primary cursor-pointer	">Jose Guera</span>
-		</td>
+		<td class="text-left">{{ customer.type }}</td>
 
 		<td class="text-center ">
 			{{ customer.createdAt | dateFormat }}
