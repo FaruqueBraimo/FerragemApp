@@ -28,6 +28,7 @@ export const db = firebaseApp.firestore();
 export const dbUsers = db.collection("users");
 export const dbProducts = db.collection("products");
 export const dbProviders= db.collection("providers");
+export const dbCustomers= db.collection("customers");
 
 export const dbcategories = db.collection("categories");
 

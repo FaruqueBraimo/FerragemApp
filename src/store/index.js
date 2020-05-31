@@ -4,6 +4,7 @@ import auth from './modules/auth';
 import product from './modules/products';
 import category from './modules/categories';
 import provider from './modules/providers';
+import customer from './modules/customers';
 
 Vue.use(Vuex);
 
@@ -22,7 +23,8 @@ export default function(/* { ssrContext } */) {
 			auth,
 			product,
 			category,
-			provider
+      provider,
+      customer
 		},
 
 		// enable strict mode (adds overhead!)
