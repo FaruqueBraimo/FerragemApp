@@ -7,7 +7,7 @@
 	>
 		<q-card style="width: 100vw;">
 			<q-card-section class="row items-center">
-				<div class="text-h6 text-center">Registo de Fornecedores</div>
+				<div class="text-h6 text-center">Registo de Clientes</div>
 				<q-space />
 				<q-btn
 					icon="close"
@@ -36,27 +36,14 @@
 						type="email"
 						:options="type"
 						v-model="saveObject.type"
-						label="Tipo de fornecdor *"
+						label="Tipo de Cliente *"
 						lazy-rules
 						:rules="[
 							val =>
 								(val !== null && val !== '') ||
-								'Por favor insira o tipo de fornecedor'
+								'Por favor insira o tipo de cliente'
 						]"
 					/>
-					<q-input
-						outlined
-						v-model="saveObject.address"
-						label="Endereco do fornecedor *"
-						type="text"
-						lazy-rules
-						:rules="[
-							val =>
-								(val !== null && val !== '') ||
-								'Por favor, insira endereco do fornecedor'
-						]"
-					/>
-
 					<div class="text-center">
 						<!--<router-link to="/">LOgin</router-link>-->
 
@@ -86,13 +73,6 @@
 			return {
 				saveObject: {},
 				model: [],
-				options: [
-					'Administrador',
-					'Acesso somente aos Produtos e Categorias',
-					'Acesso aos Clientes e Fornecedores',
-					'Acesso a gestão de Stock',
-					'Nenhum Acesso'
-				],
 				type: [
 					'Singular',
 					'Empresa',

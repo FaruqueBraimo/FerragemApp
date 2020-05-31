@@ -84,7 +84,7 @@
 					</q-item-section>
 				</q-item>
 
-				<q-item clickable v-ripple>
+				<q-item clickable v-ripple exact to="/customers">
 					<q-item-section avatar>
 						<q-icon name="people_alt" />
 					</q-item-section>

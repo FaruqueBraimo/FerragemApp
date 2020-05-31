@@ -1,11 +1,12 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import auth from "./modules/auth";
-import product from "./modules/products";
-import category from "./modules/categories";
+import Vue from 'vue';
+import Vuex from 'vuex';
+import auth from './modules/auth';
+import product from './modules/products';
+import category from './modules/categories';
+import provider from './modules/providers';
+import customer from './modules/customers';
 
-
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 /*
  * If not building with SSR mode, you can
@@ -16,18 +17,20 @@ Vue.use(Vuex)
  * with the Store instance.
  */
 
-export default function (/* { ssrContext } */) {
-  const Store = new Vuex.Store({
-    modules: {
-      auth,
-      product,
-      category
-    },
+export default function(/* { ssrContext } */) {
+	const Store = new Vuex.Store({
+		modules: {
+			auth,
+			product,
+			category,
+      provider,
+      customer
+		},
 
-    // enable strict mode (adds overhead!)
-    // for dev mode only
-    strict: process.env.DEV
-  })
+		// enable strict mode (adds overhead!)
+		// for dev mode only
+		strict: process.env.DEV
+	});
 
-  return Store
+	return Store;
 }
