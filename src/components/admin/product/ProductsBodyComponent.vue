@@ -1,19 +1,19 @@
 <template>
 	<tr>
 		<td class="text-left">
-			{{ provider.name }}
+			{{ product.name }}
 		</td>
-		<td class="text-left">{{ provider.price }}</td>
+		<td class="text-left">{{ product.price }}</td>
 		<td class="text-left">11</td>
 
-		<td class="text-left">{{ provider.quantity }}</td>
+		<td class="text-left">{{ product.quantity }}</td>
 
 		<td class="text-left ">
 			<span class="text-primary cursor-pointer	">Jose Guera</span>
 		</td>
 
 		<td class="text-center ">
-			{{ provider.createdAt | dateFormat }}
+			{{ product.createdAt | dateFormat }}
 		</td>
 
 		<td class="text-center ">
@@ -32,7 +32,7 @@
 				size="sm"
 				text-color="red"
 				icon="delete"
-				@click="$emit('deleteprovider')"
+				@click="$emit('deleteproduct')"
 			/>
 		</td>
 	</tr>
@@ -41,8 +41,8 @@
 <script>
 	import { mapActions, mapState } from 'vuex';
 	export default {
-		name: 'providerBodyComponent',
-		props: ['provider'],
+		name: 'productBodyComponent',
+		props: ['product'],
 		data() {
 			return {
 				role: null,
@@ -56,16 +56,16 @@
 			};
 		},
 		computed: {
-			providerRoleName() {
-				return this.provider.role ? this.provider.role : 'Outro';
+			productRoleName() {
+				return this.product.role ? this.product.role : 'Outro';
 			}
 		},
 		mounted() {
-			// console.log(this.provider)
+			// console.log(this.product)
 		},
 		methods: {
 			...mapActions('settings', ['setGlobalConfirm']),
-			...mapActions('provider', ['updateprovider'])
+			...mapActions('product', ['updateproduct'])
 		},
 		filters: {
 			dateFormat(val) {

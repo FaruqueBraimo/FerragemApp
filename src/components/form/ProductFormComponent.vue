@@ -10,7 +10,7 @@
 				<div class="row">
 					<div class="col-6 q-px-sm">
 						<q-input
-							outlined
+							square filled 
 							label="Nome do producto"
 							v-model="saveObject.name"
 							lazy-rules
@@ -19,14 +19,14 @@
 					<div class="col-6 q-px-sm">
 						<q-select
 							label="Categoria do Produto"
-							outlined
+							square filled 
 							:options="category"
 							v-model="saveObject.category"
 						/>
 					</div>
 					<div class="col-md-6 col-xs-12 q-pa-sm">
 						<q-input
-							outlined
+							square filled 
 							label="Preco do producto"
 							v-model="saveObject.price_sale"
 							lazy-rules
@@ -35,14 +35,14 @@
 					<div class="col-md-6  q-pa-sm">
 						<q-select
 							label="Fornecedor do Produto"
-							outlined
+							square filled 
 							:options="utility"
 							v-model="saveObject.utility"
 						/>
 					</div>
 					<div class="col-6  q-pa-sm">
 						<q-input
-							outlined
+							square filled 
 							label="Quantidade do producto"
 							v-model="saveObject.quantity"
 							lazy-rules
@@ -52,7 +52,7 @@
 
 					<div class="col-6  q-pa-sm">
 						<q-input
-							outlined
+							square filled 
 							label="Preço de compra "
 							v-model="saveObject.price_buy"
 							lazy-rules
@@ -60,15 +60,16 @@
 					</div>
 						<div class="col-6  q-pa-sm">
 						<q-input
-							outlined
+							square filled 
 							label="Outro "
+							class=""
 							v-model="saveObject.other"
 							lazy-rules
 						/>
 					</div>
 					<div class="col-6  q-pa-sm">
 						<q-input
-							outlined
+							square filled 
 							v-model="saveObject.expires"
 							label="Data de validade( *So se o produto tiver)"
 						>
@@ -82,7 +83,7 @@
 										<q-date
 											v-model="date"
 											@input="
-												() => $refs.qDateProxy.hide()
+												() => $refs.qDateProxy.show()
 											"
 										/>
 									</q-popup-proxy>
@@ -123,6 +124,9 @@
 </template>
 
 <script>
+	import { mapActions, mapState } from 'vuex';
+
+
 	export default {
 		name: 'ProductFormComponent',
 		data() {
@@ -137,7 +141,7 @@
 				],
 				utility: ['Venda', 'Uso Interno'],
 				saveObject: {
-					name: 'ss',
+					name: '',
 					category: '',
 					price: '',
 					utility: '',
