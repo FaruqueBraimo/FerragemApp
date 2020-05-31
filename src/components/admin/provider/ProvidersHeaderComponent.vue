@@ -10,7 +10,7 @@
 						src="https://img.icons8.com/officel/80/000000/supplier.png"/>
 					
 
-					<div class="text-h6 q-ml-md text-secondary">Forncedores</div>
+					<div class="text-h6 q-ml-md text-secondary">Fornecedores</div>
 				</div>
 			</th>
 		</tr>

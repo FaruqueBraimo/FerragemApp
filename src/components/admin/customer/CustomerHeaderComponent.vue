@@ -7,7 +7,7 @@
 						style="width: 70px"
 						:ratio="1"
 						class="rounded-borders"
-						src="https://img.icons8.com/officel/80/000000/supplier.png"/>
+						src="https://img.icons8.com/dusk/64/000000/user.png"/>
 					
 
 					<div class="text-h6 q-ml-md text-secondary">Clientes</div>

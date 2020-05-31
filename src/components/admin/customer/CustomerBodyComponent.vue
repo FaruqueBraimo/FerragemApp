@@ -9,9 +9,9 @@
 			{{ customer.createdAt | dateFormat }}
 		</td>
 
-		<td class="text-center ">
+		<td class="text-left ">
 			<div class="row " style="width:100px;">
-				<div class="col text-center">
+				<div class="col text-left">
 					<customer-details-dialog :customer="customer"/>
 				</div>
 				<div class="col">

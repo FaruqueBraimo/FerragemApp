@@ -4,12 +4,17 @@
 			{{ product.name }}
 		</td>
 		<td class="text-left text-primary cursor-pointer"  >{{ product.category.label }}</td>
-		<td class="text-left">11</td>
-
 		<td class="text-left">{{ product.quantity }}</td>
+ 
+		<td class="text-left">  <q-chip square size="sm" color="red-5" class="text-white" >
+      {{ product.price ?  product.price  : 0   }} MZN
+      </q-chip>
+	  </td>
 
 		<td class="text-left ">
-			<span class="text-primary cursor-pointer	">{{product.provider.label}}</span>
+			<span class="text-primary cursor-pointer 	" v-if="product.provider.label!='Nenhum'">{{product.provider.label  }}</span>
+			<span class=" 	" v-else> Nenhum</span>
+
 		</td>
 
 		<td class="text-center ">
