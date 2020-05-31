@@ -1,58 +1,89 @@
 <template>
-	<div>
-		<q-card class="q-pa-sm">
+	<div class="row items-center justify-center">
+		<q-card class="q-pa-sm" square bordered style="width: 60%">
 			<div class="form-header">
-				<p class="text-h6">
+				<p class="text-h6 text-center ">
 					Preencha os campos abaixo para registar um produto
+					{{ fetchCategories  }} {{fetchProviders}}
 				</p>
 			</div>
-			<q-form @submit="onSubmit" class="q-gutter-md q-py-md">
+			<q-form
+				@submit="onSubmit"
+				@reset="onReset"
+				class="q-gutter-md q-py-md"
+			>
 				<div class="row">
-					<div class="col-md-8 col-xs-12 q-pa-sm">
+					<div class="col-6 q-px-sm">
 						<q-input
-							outlined
+							square
+							filled
 							label="Nome do producto"
 							v-model="saveObject.name"
 							lazy-rules
 						/>
 					</div>
-					<div class="col-md-4 col-xs-12 q-pa-sm">
+					<div class="col-6 q-px-sm">
 						<q-select
 							label="Categoria do Produto"
-							outlined
-							:options="category"
+							square
+							filled
+							:options="optionalcategory"
 							v-model="saveObject.category"
 						/>
 					</div>
 					<div class="col-md-6 col-xs-12 q-pa-sm">
 						<q-input
-							outlined
+							square
+							filled
 							label="Preco do producto"
-							v-model="saveObject.price"
+							v-model="saveObject.price_sale"
 							lazy-rules
 						/>
 					</div>
-					<div class="col-md-6 col-xs-12 q-pa-sm">
+					<div class="col-md-6  q-pa-sm">
 						<q-select
-							label="Finalidade do Produto"
-							outlined
-							:options="utility"
-							v-model="saveObject.utility"
+							label="Fornecedor do Produto"
+							square
+							filled
+							:options="Optionalprovider"
+							v-model="saveObject.provider"
 						/>
 					</div>
-					<div class="col-md-5 col-xs-12 q-pa-sm">
+					<div class="col-6  q-pa-sm">
 						<q-input
-							outlined
+							square
+							filled
 							label="Quantidade do producto"
 							v-model="saveObject.quantity"
 							lazy-rules
 						/>
 					</div>
-					<div class="col-md-7 col-xs-12 q-pa-sm">
+
+					<div class="col-6  q-pa-sm">
 						<q-input
-							outlined
+							square
+							filled
+							label="Preço de compra "
+							v-model="saveObject.price_buy"
+							lazy-rules
+						/>
+					</div>
+					<div class="col-6  q-pa-sm">
+						<q-input
+							square
+							filled
+							label="Outro "
+							class=""
+							v-model="saveObject.other"
+							lazy-rules
+						/>
+					</div>
+					<div class="col-6  q-pa-sm">
+						<q-input
+							square
+							filled
 							v-model="saveObject.expires"
-							label="Data de validade"
+							label="Data de validade( *So se o produto tiver)"
 						>
 							<template v-slot:append>
 								<q-icon name="event" class="cursor-pointer">
@@ -64,7 +95,7 @@
 										<q-date
 											v-model="date"
 											@input="
-												() => $refs.qDateProxy.hide()
+												() => $refs.qDateProxy.show()
 											"
 										/>
 									</q-popup-proxy>
@@ -72,8 +103,29 @@
 							</template>
 						</q-input>
 					</div>
-					<div class="submit col-xs-12 col-md-12">
-						<q-btn label="Registar" type="submit" color="primary" />
+				</div>
+				<div class="row text-center">
+					<div class="col-6 q-pa-md">
+						<q-btn
+							label="Registar"
+							size="md"
+							type="submit"
+							color="primary"
+							:loading="loading"
+							unelevated
+							class="full-width "
+						/>
+					</div>
+
+					<div class="col-6 q-pa-md">
+						<q-btn
+							label="Limpar"
+							size="md"
+							type="reset"
+							color="deep-orange"
+							unelevated
+							class="full-width "
+						/>
 					</div>
 				</div>
 			</q-form>
@@ -82,18 +134,15 @@
 </template>
 
 <script>
+	import { mapActions, mapState } from 'vuex';
+
 	export default {
 		name: 'ProductFormComponent',
 		data() {
 			return {
 				date: 'AAAA/MM/DD',
-				category: [
-					'Categoria 1',
-					'Categoria 2',
-					'Categoria 3',
-					'Categoria 4',
-					'Categoria 5'
-				],
+				optionalcategory : [],
+				Optionalprovider : [],
 				utility: ['Venda', 'Uso Interno'],
 				saveObject: {
 					name: '',
@@ -105,13 +154,50 @@
 				}
 			};
 		},
+		computed: {
+			...mapState('product', ['products', 'loading']),
+			...mapState('category', ['categories', 'loading']),
+			...mapState('provider', ['providers', 'loading']),
+
+
+			fetchCategories() {
+				Object.keys(this.categories).forEach((element, key) => {
+					this.optionalcategory.push({
+						value: element,
+						label: this.categories[element].name
+					});
+				});
+
+				return '';
+			},
+
+				fetchProviders() {
+				Object.keys(this.providers).forEach((element, key) => {
+					this.Optionalprovider.push({
+						value: element,
+						label: this.providers[element].name
+					});
+				});
+
+				return '';
+			}
+		},
+
 		methods: {
 			onSubmit() {
-				this.$emit('emitData', this.saveObject);
+				let product = {};
+				product.category = this.saveObject.category;
+				product.name = this.saveObject.name;
+				product.price = this.saveObject.price;
+				product.quantity = this.saveObject.quantity;
+				product.provider = this.saveObject.provider;
+				product.price_buy = this.saveObject.price_buy;
+
+				this.$emit('emitData', product);
 			},
 			onReset() {
 				this.saveObject = {};
-			},
+			}
 		}
 	};
 </script>

@@ -1,31 +1,34 @@
 <template>
 	<tr>
 		<td class="text-left">
-			<q-avatar  text-color="white">
-				<q-img
-         src="https://img.icons8.com/dotty/80/000000/businessman.png"				/>
-			</q-avatar>
-
-			{{ user.name }}
+			{{ provider.name }}
 		</td>
-		<td class="text-left">{{ user.email }}</td>
-		<td class="text-left ">
-		{{user.role}}
-    </div>
+		<td class="text-left">{{ provider.type }}</td>
+
+		<td class="text-left">{{ provider.address }}</td>
+
+		<td class="text-center ">
+			{{ provider.createdAt | dateFormat }}
 		</td>
 
 		<td class="text-center ">
-			{{ user.createdAt | dateFormat }}
-		</td>
+			<q-btn
+				flat
+				size="sm"
+				rounded
+				text-color="secondary"
+				icon="visibility"
+			/>
+			<q-btn flat size="sm" rounded text-color="primary" icon="edit" />
 
-		
-
-    	<td class="text-center ">
-      <q-btn outline size="sm" unelevated  text-color="secondary" label="Activar" icon="toggle_on" />
-      <q-btn  flat  size="sm" rounded text-color="primary" icon="visibility" />
-      <q-btn  flat  rounded  size="sm" text-color="red" icon="delete" @click="$emit('deleteUser')" />
-
-
+			<q-btn
+				flat
+				rounded
+				size="sm"
+				text-color="red"
+				icon="delete"
+				@click="$emit('deleteprovider')"
+			/>
 		</td>
 	</tr>
 </template>
@@ -33,8 +36,8 @@
 <script>
 	import { mapActions, mapState } from 'vuex';
 	export default {
-		name: 'UserBodyComponent',
-		props: ['user'],
+		name: 'providerBodyComponent',
+		props: ['provider'],
 		data() {
 			return {
 				role: null,
@@ -48,16 +51,16 @@
 			};
 		},
 		computed: {
-			userRoleName() {
-				return this.user.role ? this.user.role : 'Outro';
+			providerRoleName() {
+				return this.provider.role ? this.provider.role : 'Outro';
 			}
 		},
 		mounted() {
-			// console.log(this.user)
+			// console.log(this.provider)
 		},
 		methods: {
 			...mapActions('settings', ['setGlobalConfirm']),
-			...mapActions('auth', ['updateUser'])
+			...mapActions('auth', ['updateprovider'])
 		},
 		filters: {
 			dateFormat(val) {

@@ -15,12 +15,27 @@
 		name: 'App',
 		created() {
 			this.listenUsersRealTimeChanges();
+			this.listenProductRealTimeChanges();
+			this.listencategoryRealTimeChanges();
+			this.listenProviderRealTimeChanges();
+			this.listenCustomerRealTimeChanges()
 		},
 		methods: {
 			...mapActions('auth', [
 				'handleAuthStateChange',
-				'listenUsersRealTimeChanges'
-			])
+				'listenUsersRealTimeChanges',
+				'listenProductRealTimeChanges',
+				
+
+				
+			]),
+
+			...mapActions('product' , ['listenProductRealTimeChanges']),
+			...mapActions('category' , ['listencategoryRealTimeChanges']),
+			...mapActions('provider' , ['listenProviderRealTimeChanges']),
+			...mapActions('customer' , ['listenCustomerRealTimeChanges'])
+
+
 		},
 		beforeDestroy() {
 			this.$q.loading.hide();

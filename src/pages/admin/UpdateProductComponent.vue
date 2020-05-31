@@ -1,6 +1,6 @@
 <template>
 	<q-page class="q-pa-xl">
-		<product-form-component @emitData="addProduct" />
+		<product-form-component @emitData="updateProduct" />
 	</q-page>
 </template>
 
@@ -10,7 +10,7 @@
 	export default {
 		components: { ProductFormComponent },
 		methods: {
-			...mapActions('product', ['addProduct'])
+			...mapActions('products', ['updateProduct'])
 		}
 	};
 	

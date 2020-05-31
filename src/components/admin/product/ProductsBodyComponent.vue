@@ -1,31 +1,39 @@
 <template>
 	<tr>
 		<td class="text-left">
-			<q-avatar  text-color="white">
-				<q-img
-         src="https://img.icons8.com/dotty/80/000000/businessman.png"				/>
-			</q-avatar>
-
-			{{ user.name }}
+			{{ product.name }}
 		</td>
-		<td class="text-left">{{ user.email }}</td>
+		<td class="text-left text-primary cursor-pointer"  >{{ product.category.label }}</td>
+		<td class="text-left">11</td>
+
+		<td class="text-left">{{ product.quantity }}</td>
+
 		<td class="text-left ">
-		{{user.role}}
-    </div>
+			<span class="text-primary cursor-pointer	">{{product.provider.label}}</span>
 		</td>
 
 		<td class="text-center ">
-			{{ user.createdAt | dateFormat }}
+			{{ product.createdAt | dateFormat }}
 		</td>
 
-		
+		<td class="text-center ">
+			<q-btn
+				flat
+				size="sm"
+				rounded
+				text-color="secondary"
+				icon="visibility"
+			/>
+			<q-btn flat size="sm" rounded text-color="primary" icon="edit" />
 
-    	<td class="text-center ">
-      <q-btn outline size="sm" unelevated  text-color="secondary" label="Activar" icon="toggle_on" />
-      <q-btn  flat  size="sm" rounded text-color="primary" icon="visibility" />
-      <q-btn  flat  rounded  size="sm" text-color="red" icon="delete" @click="$emit('deleteUser')" />
-
-
+			<q-btn
+				flat
+				rounded
+				size="sm"
+				text-color="red"
+				icon="delete"
+				@click="$emit('deleteproduct')"
+			/>
 		</td>
 	</tr>
 </template>
@@ -33,8 +41,8 @@
 <script>
 	import { mapActions, mapState } from 'vuex';
 	export default {
-		name: 'UserBodyComponent',
-		props: ['user'],
+		name: 'productBodyComponent',
+		props: ['product'],
 		data() {
 			return {
 				role: null,
@@ -48,16 +56,16 @@
 			};
 		},
 		computed: {
-			userRoleName() {
-				return this.user.role ? this.user.role : 'Outro';
+			productRoleName() {
+				return this.product.role ? this.product.role : 'Outro';
 			}
 		},
 		mounted() {
-			// console.log(this.user)
+			// console.log(this.product)
 		},
 		methods: {
 			...mapActions('settings', ['setGlobalConfirm']),
-			...mapActions('auth', ['updateUser'])
+			...mapActions('product', ['updateproduct'])
 		},
 		filters: {
 			dateFormat(val) {
