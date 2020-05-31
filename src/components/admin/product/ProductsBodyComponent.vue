@@ -3,13 +3,13 @@
 		<td class="text-left">
 			{{ product.name }}
 		</td>
-		<td class="text-left">{{ product.price }}</td>
+		<td class="text-left text-primary cursor-pointer"  >{{ product.category.label }}</td>
 		<td class="text-left">11</td>
 
 		<td class="text-left">{{ product.quantity }}</td>
 
 		<td class="text-left ">
-			<span class="text-primary cursor-pointer	">Jose Guera</span>
+			<span class="text-primary cursor-pointer	">{{product.provider.label}}</span>
 		</td>
 
 		<td class="text-center ">
