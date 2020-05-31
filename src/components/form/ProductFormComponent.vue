@@ -1,14 +1,14 @@
 <template>
-	<div>
-		<q-card class="q-pa-sm">
+	<div  class="row items-center justify-center">
+		<q-card class="q-pa-sm" square bordered style="width: 60%">
 			<div class="form-header">
-				<p class="text-h6">
+				<p class="text-h6 text-center ">
 					Preencha os campos abaixo para registar um produto
 				</p>
 			</div>
-			<q-form @submit="onSubmit" class="q-gutter-md q-py-md">
+			<q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md q-py-md">
 				<div class="row">
-					<div class="col-md-8 col-xs-12 q-pa-sm">
+					<div class="col-6 q-px-sm">
 						<q-input
 							outlined
 							label="Nome do producto"
@@ -16,7 +16,7 @@
 							lazy-rules
 						/>
 					</div>
-					<div class="col-md-4 col-xs-12 q-pa-sm">
+					<div class="col-6 q-px-sm">
 						<q-select
 							label="Categoria do Produto"
 							outlined
@@ -28,19 +28,19 @@
 						<q-input
 							outlined
 							label="Preco do producto"
-							v-model="saveObject.price"
+							v-model="saveObject.price_sale"
 							lazy-rules
 						/>
 					</div>
-					<div class="col-md-6 col-xs-12 q-pa-sm">
+					<div class="col-md-6  q-pa-sm">
 						<q-select
-							label="Finalidade do Produto"
+							label="Fornecedor do Produto"
 							outlined
 							:options="utility"
 							v-model="saveObject.utility"
 						/>
 					</div>
-					<div class="col-md-5 col-xs-12 q-pa-sm">
+					<div class="col-6  q-pa-sm">
 						<q-input
 							outlined
 							label="Quantidade do producto"
@@ -48,11 +48,29 @@
 							lazy-rules
 						/>
 					</div>
-					<div class="col-md-7 col-xs-12 q-pa-sm">
+
+
+					<div class="col-6  q-pa-sm">
+						<q-input
+							outlined
+							label="Preço de compra "
+							v-model="saveObject.price_buy"
+							lazy-rules
+						/>
+					</div>
+						<div class="col-6  q-pa-sm">
+						<q-input
+							outlined
+							label="Outro "
+							v-model="saveObject.other"
+							lazy-rules
+						/>
+					</div>
+					<div class="col-6  q-pa-sm">
 						<q-input
 							outlined
 							v-model="saveObject.expires"
-							label="Data de validade"
+							label="Data de validade( *So se o produto tiver)"
 						>
 							<template v-slot:append>
 								<q-icon name="event" class="cursor-pointer">
@@ -71,11 +89,34 @@
 								</q-icon>
 							</template>
 						</q-input>
+					
 					</div>
-					<div class="submit col-xs-12 col-md-12">
-						<q-btn label="Registar" type="submit" color="primary" />
-					</div>
+					
 				</div>
+				<div class="row text-center">
+						<div class="col-6 q-pa-md">
+							<q-btn
+								label="Registar"
+								size="md"
+								type="submit"
+								color="primary"
+								:loading="loading"
+								unelevated
+								class="full-width "
+							/>
+						</div>
+
+						<div class="col-6 q-pa-md">
+							<q-btn
+								label="Limpar"
+								size="md"
+								type="reset"
+								color="deep-orange"
+								unelevated
+								class="full-width "
+							/>
+						</div>
+					</div>
 			</q-form>
 		</q-card>
 	</div>
@@ -96,7 +137,7 @@
 				],
 				utility: ['Venda', 'Uso Interno'],
 				saveObject: {
-					name: '',
+					name: 'ss',
 					category: '',
 					price: '',
 					utility: '',
@@ -105,12 +146,17 @@
 				}
 			};
 		},
+			computed: {
+			...mapState('product', ['products', 'loading'])
+		},
+			
 		methods: {
 			onSubmit() {
 				this.$emit('emitData', this.saveObject);
 			},
 			onReset() {
 				this.saveObject = {};
+				
 			},
 		}
 	};
