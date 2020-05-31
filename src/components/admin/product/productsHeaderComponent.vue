@@ -1,3 +1,5 @@
+
+
 <template>
       <thead>
         <tr>
@@ -10,15 +12,17 @@
          src="https://img.icons8.com/bubbles/100/000000/user.png"
               />
 
-              <div class="text-h6 q-ml-md text-secondary">Utilizadores</div>
+              <div class="text-h6 q-ml-md text-secondary">Produtos</div>
             </div>
           </th>
         </tr>
           
         <tr>
-          <th class="text-left">Usuario</th>
-          <th class="text-left">Email</th>
-          <th class="text-left">Privilegios</th>
+          <th class="text-left">Nome</th>
+         <th class="text-left">Categoria</th>
+          <th class="text-left">Quantidade</th>
+         <th class="text-left">Forncedor</th>
+  
           <th class="text-center">Data de Registo</th>
           <th class="text-center">Acção</th>
         </tr>

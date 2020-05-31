@@ -2,7 +2,7 @@
 	<q-drawer show-if-above bordered :width="280">
 		<div>
 			<q-card flat class="shadow-0 ">
-				<q-card-section class="text-center q-pa-lg	text-bold">
+				<q-card-section class="text-center q-pa-md">
 					<q-avatar size="70px" color="">
 						<img src="https://img.icons8.com/color/96/000000/user-male-circle.png"/> 
 					</q-avatar>
@@ -17,7 +17,7 @@
 			<q-list
 				dark
 				padding
-				class="rounded-borders text-white text-bold"
+				class="rounded-borders text-white "
 				style="max-width: 328px"
 			>
 				<q-item clickable v-ripple to="/admin" exact >
@@ -72,7 +72,7 @@
 								/>
 							</q-item-section>
 							<q-item-section>
-								<p>Registar Produtos</p>
+								<p> Adicionar</p>
 							</q-item-section>
 						</q-item>
 					</q-list>
