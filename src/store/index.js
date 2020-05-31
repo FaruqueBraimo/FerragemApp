@@ -23,8 +23,8 @@ export default function(/* { ssrContext } */) {
 			auth,
 			product,
 			category,
-      provider,
-      customer
+			provider,
+			customer
 		},
 
 		// enable strict mode (adds overhead!)
