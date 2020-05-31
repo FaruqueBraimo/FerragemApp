@@ -3,14 +3,9 @@
 		<td class="text-left">
 			{{ provider.name }}
 		</td>
-		<td class="text-left">{{ provider.price }}</td>
-		<td class="text-left">11</td>
+		<td class="text-left">{{ provider.type }}</td>
 
-		<td class="text-left">{{ provider.quantity }}</td>
-
-		<td class="text-left ">
-			<span class="text-primary cursor-pointer	">Jose Guera</span>
-		</td>
+		<td class="text-left">{{ provider.address }}</td>
 
 		<td class="text-center ">
 			{{ provider.createdAt | dateFormat }}
