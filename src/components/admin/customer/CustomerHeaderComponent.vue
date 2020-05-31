@@ -19,7 +19,7 @@
 			<th class="text-left">Nome</th>
 			<th class="text-left">Tipo de Cliente</th>
 			<th class="text-center">Data de Registo</th>
-			<th class="text-center">Acção</th>
+			<th class="text-left">Acção</th>
 		</tr>
 	</thead>
 </template>

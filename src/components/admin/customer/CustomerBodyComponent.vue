@@ -10,34 +10,44 @@
 		</td>
 
 		<td class="text-center ">
-			<q-btn
-				flat
-				size="sm"
-				rounded
-				text-color="secondary"
-				icon="visibility"
-			/>
-			<q-btn flat size="sm" rounded text-color="primary" icon="edit" />
-
-			<q-btn
-				flat
-				rounded
-				size="sm"
-				text-color="red"
-				icon="delete"
-				@click="$emit('deleteCustomer')"
-			/>
+			<div class="row " style="width:100px;">
+				<div class="col text-center">
+					<customer-details-dialog :customer="customer"/>
+				</div>
+				<div class="col">
+					<q-btn
+						flat
+						size="sm"
+						rounded
+						text-color="primary"
+						icon="edit"
+					/>
+				</div>
+				<div class="col">
+					<q-btn
+						flat
+						rounded
+						size="sm"
+						text-color="red"
+						icon="delete"
+						@click="$emit('deleteCustomer')"
+					/>
+				</div>
+			</div>
 		</td>
 	</tr>
 </template>
 
 <script>
 	import { mapActions, mapState } from 'vuex';
+	import CustomerDetailsDialog from './CustomerDetailsDialog';
 	export default {
 		name: 'CustomerBodyComponent',
 		props: ['customer'],
+		components: { CustomerDetailsDialog },
 		data() {
 			return {
+				dialog: false,
 				role: null,
 				options: [
 					'Administrador',
