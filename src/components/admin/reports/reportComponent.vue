@@ -1,107 +1,50 @@
 <template>
-    <div class="col-12  col-md-4  ">
-        <q-card class="my-card text-center  ">
-
-            <q-btn
-                color=""
-                flat
-                icon="more_horiz"
-                class="absolute-top-right"
-             
-            >
-                <q-menu>
-
-                    <q-list style="">
-                        <!--TODO: implementar a actualização de vagas-->
-                        <q-item clickable v-close-popup>
-                            <q-item-section   >Editar</q-item-section>
-                        </q-item>
-                        <!--TODO: Implementar a remoção de vagas-->
-                        <q-item clickable v-close-popup class="text-red"  >
-                            <q-item-section  >Remover </q-item-section>
-                        </q-item>
-                    </q-list>
-                </q-menu>
-            </q-btn>
-                <q-avatar color="primary" text-color="white"  icon="bar_chart"></q-avatar>
-
-
-
-          
-            <div style="">
-                <q-card-section>
-                    <div class="text-h6 text-primary">Licenca vitalicia</div>
-                    <div class="text-body1 ">
-                        
-                       Trabalho e pesquisa no campo     
-                       
-                    </div>
-                </q-card-section>
-
-               
-                <q-card-actions>
-                   
-                    <q-btn
-                            flat
-                            color="primary"
-                            class="full-width q-ma-sm"
-                            label = 'Ver detalhes'
-                            
-                            >
-                       
-                        <q-tooltip>
-                            Mais Informação sobre a licença
-                        </q-tooltip>
-                    </q-btn>
-                </q-card-actions>
-            </div>
-        </q-card>
-    </div>
-
+	<div class=" ">
+		<GChart
+			type="ColumnChart"
+			:data="chartData"
+			:options="chartOptions"
+			:settings="{ packages: ['corechart', 'table', 'map'] }"
+			resizeDebounce="500"
+		/>
+        
+	</div>
 </template>
 
 <script>
-    import { mapActions, mapState, mapGetters } from 'vuex'
-    import { date } from 'quasar'
+	import { GChart } from 'vue-google-charts';
 
-    export default {
-        name: "VacancyComponent",
-        props: ['vacancy', 'id'],
-        components: { },
+	export default {
+		components: {
+			GChart
+		},
+		data() {
+			return {
+				// Array will be automatically processed with visualization.arrayToDataTable function
+				chartData: [
+					['Ano', 'Saida', 'Entrada', 'Vendas'],
+					['2016', 1000, 400, 200],
 
-      data () {
-      return {
-   
-      }
-    },
-        computed: {
-        },
-       methods: {
-             ...mapActions ('vacancy', [
-                'deleteVacancy'
-            ]),
+					['2017', 100, 400, 200],
+					['2018', 1170, 460, 250],
+					['2019', 1500, 1120, 300],
+					['2020', 1030, 540, 350]
+				],
+				chartOptions: {
+                    width: 600,
 
-          
-            details(id){
-
-               this.$router.push('/admin/vacancy/' + id)
-      
-            }
-            
-            
-
-        },
-        filters: {
-            limitLength (val, length) {
-                return val.length > length ? val.substr(0, length) + '...' : val
-            }
-                
-           
-
-        }
-    }
+					chart: {
+						title: 'Company Performance',
+						subtitle: 'Entradas, Expenses, and Profit: 2014-2017'
+                    },
+                      series: {
+            0: { axis: 'distance' }, // Bind series 0 to an axis named 'distance'.
+            1: { axis: 'brightness' } // Bind series 1 to an axis named 'brightness'.
+          },
+				}
+			};
+		}
+	};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

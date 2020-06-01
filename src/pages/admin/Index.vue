@@ -142,22 +142,46 @@
 			</div>
 		</div>
 
-		<div class=" text-bold text-h5 text-center q-pt-xl">
-			Em breve aqui vai nascer um gráfico lindo, sozinho!
+		<div class="row ">
+			
+		<div class=" col text-bold  text-h5 text-center ">
+			<report-component/>
 		</div>
+			<div class="col"> 
+							<pieChartComponent/>
+							
+
+					</div>
+		 </div>		
+		 		<div class="row q-pt-md">
+					 <div class="col-6   q-pl-xl">
+					Gráfico de actividades dos ultimos 5 anos
+					</div><div class="col-6   q-pl-xl">
+						Diagrama de stock de produtos
+					</div>
+
+				 </div>
+				
+
+					
+
 	</q-page>
 </template>
 
 <script>
 	import { mapActions, mapState } from 'vuex';
+		import reportComponent from '../../components/admin/reports/reportComponent';
+		import pieChartComponent from '../../components/admin/reports/pieChartComponent';
+
 
 	import { date } from 'quasar';
 
 	export default {
-		components: {},
+		components: {reportComponent, pieChartComponent},
 		data() {
 			return {
 				chartData: {
+
 					labels: ['January', 'February'],
 					datasets: [
 						{

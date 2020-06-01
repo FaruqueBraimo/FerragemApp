@@ -21,7 +21,7 @@
 			<th class="text-left text-bold" style="font-weight: bold">Quantidade</th>
 			<th class="text-left text-bold" style="font-weight: bold">Preco de Venda</th>
 
-			<th class="text-left">Forncedor</th>
+			<th class="text-left " style="font-weight: bold">Forncedor</th>
 
 			<th class="text-center text-bold" style="font-weight: bold" >Data de Registo</th>
 			<th class="text-center text-bold" style="font-weight: bold">Acção</th>

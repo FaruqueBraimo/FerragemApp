@@ -2,7 +2,7 @@
   "name": "new",
   "version": "0.0.1",
   "description": "A Quasar Framework app",
-  "productName": "Quasar App",
+  "productName": "Ferragem App",
   "cordovaId": "org.cordova.quasar.app",
   "capacitorId": "",
   "author": "FaruqueBraimo <faruquebraimo@gmail.com>",
@@ -14,7 +14,8 @@
     "@quasar/extras": "^1.0.0",
     "core-js": "^2.6.5",
     "firebase": "^7.14.4",
-    "quasar": "^1.0.0"
+    "quasar": "^1.0.0",
+    "vue-google-charts": "^0.3.2"
   },
   "devDependencies": {
     "@quasar/app": "^1.0.0"
