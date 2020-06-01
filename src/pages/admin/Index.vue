@@ -211,11 +211,19 @@
 			...mapState('category', ['categories', ]),
 			...mapState('product', ['products',]),
 			...mapState('provider', ['providers', ]),
+		},
+
+meta: {
+  meta: {
+      description: { name: 'description', content: 'Page 1' },
+  
+}
 
 
 
 
 		},
+		
 		methods: {
 			...mapActions('settings', ['setActualPageTitle'])
 		}

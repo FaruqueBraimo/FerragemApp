@@ -9,7 +9,7 @@
 						/>
 					</q-avatar>
 					<div class="text-capitalize text-center q-py-sm">
-						<p>Gerson Muvavele</p>
+						<p>{{userName}}</p>
 						<small>Administrador</small>
 					</div>
 				</q-card-section>
@@ -158,7 +158,9 @@
 </template>
 
 <script>
-	export default {};
+	export default {
+		props:['userName']
+	};
 </script>
 
 <style scoped>

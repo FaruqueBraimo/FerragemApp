@@ -36,7 +36,10 @@
 			</q-toolbar>
 		</q-header>
 
-		<drawerComponent />
+		<drawerComponent
+		:userName='getUserName(userAuth)'
+		
+		 />
 
 		<q-page-container>
 			<router-view />
@@ -46,6 +49,8 @@
 
 <script>
 	import drawerComponent from '../components/admin/drawer/drawerComponent';
+		import { mapGetters, mapState } from 'vuex';
+
 	export default {
 		name: 'AdminLayout',
 
@@ -58,6 +63,13 @@
 				search: '',
 				storage: 0.26
 			};
+		},
+
+		computed: {
+			...mapState('auth', ['users', 'userAuth']),
+			...mapGetters('auth', ['getUserName'])
+			
+			
 		},
 		methods: {
 			confirm() {
