@@ -7,7 +7,7 @@
 						style="width: 70px"
 						:ratio="1"
 						class="rounded-borders"
-						src="https://img.icons8.com/officel/80/000000/supplier.png"/>
+						src="https://img.icons8.com/dusk/64/000000/user.png"/>
 					
 
 					<div class="text-h6 q-ml-md text-secondary">Clientes</div>
@@ -16,10 +16,10 @@
 		</tr>
 
 		<tr>
-			<th class="text-left">Nome</th>
-			<th class="text-left">Tipo de Cliente</th>
-			<th class="text-center">Data de Registo</th>
-			<th class="text-center">Acção</th>
+			<th class="text-left " style="font-weight: bold">Nome</th>
+			<th class="text-left " style="font-weight: bold">Tipo de Cliente</th>
+			<th class="text-center " style="font-weight: bold">Data de Registo</th>
+			<th class="text-left q-pl-md " style="font-weight: bold">Acção</th>
 		</tr>
 	</thead>
 </template>

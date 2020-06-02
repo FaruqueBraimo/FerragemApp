@@ -35,6 +35,7 @@
 			@closeDialog="dialog = false"
 			@emitData="addCustomer"
 		/>
+		
 	</q-page>
 </template>
 
@@ -62,7 +63,7 @@
 		components: {
 			CustomersHeaderComponent,
 			CustomersBodyComponent,
-			AddCustomerDialog
+			AddCustomerDialog,
 		}
 	};
 </script>

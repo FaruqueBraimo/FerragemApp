@@ -68,9 +68,9 @@ const getters = {
     },
     getUserName : (state) => (user) => {
         if (!user) {
-            return 'Carta Fácil'
+            return 'Anonimo'
         }
-        return user && user.name ? user.name : 'Miguel Matos'
+        return user && user.name ? user.name : 'Anonimo'
     },
     getUserLocation : (state, getters) => (user) => {
         if (!user) {
@@ -115,13 +115,13 @@ const actions = {
         Loading.show()
         firebaseAuth.signInWithEmailAndPassword(payload.email, payload.password)
             .then(resp => {
-                // commit('setUserAuth', {
-                //     id: resp.user.uid,
-                //     email: resp.user.email,
-                // })
+                commit('setUserAuth', {
+                    id: resp.user.uid,
+                    email: resp.user.email,
+                })
 
                 showSuccessMessage('Sessão iniciada com sucesso!')
-                this.$router.push(state.redirectTo)
+                this.$router.push('/admin')
 
                 Loading.hide()
             })

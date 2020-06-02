@@ -15,16 +15,16 @@
 			</th>
 		</tr>
 
-		<tr>
-			<th class="text-left">Nome</th>
-			<th class="text-left">Categoria</th>
-			<th class="text-left">Quantidade</th>
-			<th class="text-left">Preco de Venda</th>
+		<tr class="text-bold" style="font-weight: bold" >
+			<th class="text-left text-bold" style="font-weight: bold" >Nome</th>
+			<th class="text-left text-bold" style="font-weight: bold">Categoria</th>
+			<th class="text-left text-bold" style="font-weight: bold">Quantidade</th>
+			<th class="text-left text-bold" style="font-weight: bold">Preco de Venda</th>
 
-			<th class="text-left">Forncedor</th>
+			<th class="text-left " style="font-weight: bold">Forncedor</th>
 
-			<th class="text-center">Data de Registo</th>
-			<th class="text-center">Acção</th>
+			<th class="text-center text-bold" style="font-weight: bold" >Data de Registo</th>
+			<th class="text-center text-bold" style="font-weight: bold">Acção</th>
 		</tr>
 	</thead>
 </template>

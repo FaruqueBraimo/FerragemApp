@@ -113,9 +113,9 @@
 				model: [],
 				options: [
 					'Administrador',
-					'Acesso somente aos Produtos e Categorias',
-					'Acesso aos Clientes e Fornecedores',
-					'Acesso a gestão de Stock',
+					'Nivel 1 ',
+					'Nivel 2',
+					'Nivel 3',
 					'Nenhum Acesso'
 				]
 			};

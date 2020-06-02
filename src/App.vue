@@ -42,3 +42,15 @@
 		}
 	};
 </script>
+
+<style >
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@550&display=swap');
+
+#q-app{
+font-family: 'Dosis', sans-serif;
+
+
+}
+
+</style>
+

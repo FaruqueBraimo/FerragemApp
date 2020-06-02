@@ -10,17 +10,17 @@
 						src="https://img.icons8.com/officel/80/000000/supplier.png"/>
 					
 
-					<div class="text-h6 q-ml-md text-secondary">Forncedores</div>
+					<div class="text-h6 q-ml-md text-secondary">Fornecedores</div>
 				</div>
 			</th>
 		</tr>
 
-		<tr>
-			<th class="text-left">Nome</th>
-			<th class="text-left">Tipo de fonecedor</th>
-			<th class="text-left">Endereco</th>
-			<th class="text-center">Data de Registo</th>
-			<th class="text-center">Acção</th>
+		<tr >
+			<th class="text-left " style="font-weight: bold">Nome</th>
+			<th class="text-left " style="font-weight: bold">Tipo de fonecedor</th>
+			<th class="text-left " style="font-weight: bold">Endereco</th>
+			<th class="text-center " style="font-weight: bold">Data de Registo</th>
+			<th class="text-center " style="font-weight: bold">Acção</th>
 		</tr>
 	</thead>
 </template>

@@ -35,8 +35,9 @@
 						<q-input
 							square
 							filled
+							type="number"
 							label="Preco do producto"
-							v-model="saveObject.price_sale"
+							v-model="saveObject.price"
 							lazy-rules
 						/>
 					</div>
@@ -53,6 +54,7 @@
 						<q-input
 							square
 							filled
+							type="number"
 							label="Quantidade do producto"
 							v-model="saveObject.quantity"
 							lazy-rules
@@ -63,45 +65,34 @@
 						<q-input
 							square
 							filled
+							type="number"
 							label="Preço de compra "
 							v-model="saveObject.price_buy"
 							lazy-rules
 						/>
 					</div>
+					
 					<div class="col-6  q-pa-sm">
-						<q-input
-							square
-							filled
-							label="Outro "
-							class=""
-							v-model="saveObject.other"
-							lazy-rules
-						/>
+						 <q-input filled v-model="date" mask="date" label="Valido até">
+      <template v-slot:append>
+        <q-icon name="event" class="cursor-pointer">
+          <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+            <q-date v-model="saveObject.expires" @input="() => $refs.qDateProxy.hide()" />
+          </q-popup-proxy>
+        </q-icon>
+      </template>
+    </q-input>
 					</div>
 					<div class="col-6  q-pa-sm">
 						<q-input
 							square
 							filled
-							v-model="saveObject.expires"
-							label="Data de validade( *So se o produto tiver)"
-						>
-							<template v-slot:append>
-								<q-icon name="event" class="cursor-pointer">
-									<q-popup-proxy
-										ref="qDateProxy"
-										transition-show="scale"
-										transition-hide="scale"
-									>
-										<q-date
-											v-model="date"
-											@input="
-												() => $refs.qDateProxy.show()
-											"
-										/>
-									</q-popup-proxy>
-								</q-icon>
-							</template>
-						</q-input>
+							label=" Descrição "
+							autogrow
+							class=""
+							v-model="saveObject.description"
+							lazy-rules
+						/>
 					</div>
 				</div>
 				<div class="row text-center">
@@ -142,7 +133,7 @@
 			return {
 				date: 'AAAA/MM/DD',
 				optionalcategory : [],
-				Optionalprovider : [],
+				Optionalprovider : [{label : 'Nenhum'}],
 				utility: ['Venda', 'Uso Interno'],
 				saveObject: {
 					name: '',
@@ -156,8 +147,8 @@
 		},
 		computed: {
 			...mapState('product', ['products', 'loading']),
-			...mapState('category', ['categories', 'loading']),
-			...mapState('provider', ['providers', 'loading']),
+			...mapState('category', ['categories', ]),
+			...mapState('provider', ['providers', ]),
 
 
 			fetchCategories() {
@@ -192,8 +183,19 @@
 				product.quantity = this.saveObject.quantity;
 				product.provider = this.saveObject.provider;
 				product.price_buy = this.saveObject.price_buy;
+				product.description = this.saveObject.description
+				product.expires = this.saveObject.expires
+
 
 				this.$emit('emitData', product);
+
+				setTimeout(() =>{ 
+					this.onReset();		
+				}, 1000);
+
+				
+
+
 			},
 			onReset() {
 				this.saveObject = {};

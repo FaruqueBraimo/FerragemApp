@@ -4,7 +4,7 @@
 			<q-toolbar class="toolbar">
 				<div class="q-pr-lg" v-if="$q.screen.gt.xs">
 					<q-icon name="rv_hookup" size="xl" />
-					<span class="text-h6">SG Ferragem A</span>
+					<span class="text-h6" id='logo'>SG Ferragem A</span>
 				</div>
 
 				<q-space />
@@ -36,7 +36,10 @@
 			</q-toolbar>
 		</q-header>
 
-		<drawerComponent />
+		<drawerComponent
+		:userName='getUserName(userAuth)'
+		
+		 />
 
 		<q-page-container>
 			<router-view />
@@ -46,6 +49,8 @@
 
 <script>
 	import drawerComponent from '../components/admin/drawer/drawerComponent';
+		import { mapGetters, mapState } from 'vuex';
+
 	export default {
 		name: 'AdminLayout',
 
@@ -58,6 +63,13 @@
 				search: '',
 				storage: 0.26
 			};
+		},
+
+		computed: {
+			...mapState('auth', ['users', 'userAuth']),
+			...mapGetters('auth', ['getUserName'])
+			
+			
 		},
 		methods: {
 			confirm() {
@@ -79,8 +91,12 @@
 </script>
 
 <style >
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Lobster&display=swap');
 .toolbar{
   height: 54px;
+}
+#logo{
+font-family: 'Fredoka One', cursive;
 }
 
 </style>

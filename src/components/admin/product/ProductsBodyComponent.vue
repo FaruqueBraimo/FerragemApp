@@ -4,12 +4,18 @@
 			{{ product.name }}
 		</td>
 		<td class="text-left text-primary cursor-pointer"  >{{ product.category.label }}</td>
-		<td class="text-left">11</td>
-
 		<td class="text-left">{{ product.quantity }}</td>
+ 
+		<td class="text-left">  <q-chip square size="sm" color="red-5" class="text-white" >
+      {{ product.price ?  product.price  : 0   }} MZN
+      </q-chip>
+	  </td>
+
 
 		<td class="text-left ">
-			<span class="text-primary cursor-pointer	">{{product.provider.label}}</span>
+			<span class="text-primary cursor-pointer 	" v-if="product.provider.label!='Nenhum'">{{product.provider.label  }}</span>
+			<span class=" 	" v-else> Nenhum</span>
+
 		</td>
 
 		<td class="text-center ">
@@ -17,32 +23,41 @@
 		</td>
 
 		<td class="text-center ">
-			<q-btn
-				flat
-				size="sm"
-				rounded
-				text-color="secondary"
-				icon="visibility"
-			/>
-			<q-btn flat size="sm" rounded text-color="primary" icon="edit" />
-
-			<q-btn
-				flat
-				rounded
-				size="sm"
-				text-color="red"
-				icon="delete"
-				@click="$emit('deleteproduct')"
-			/>
+			<div class="row " style="width:100px;">
+				<div class="col text-center">
+					<product-details-dialog :product="product"/>
+				</div>
+				<div class="col">
+					<q-btn
+						flat
+						size="sm"
+						rounded
+						text-color="primary"
+						icon="edit"
+					/>
+				</div>
+				<div class="col">
+					<q-btn
+						flat
+						rounded
+						size="sm"
+						text-color="red"
+						icon="delete"
+						@click="$emit('deleteProduct')"
+					/>
+				</div>
+			</div>
 		</td>
 	</tr>
 </template>
 
 <script>
 	import { mapActions, mapState } from 'vuex';
+	import ProductDetailsDialog from './ProductDetailsDialog';
 	export default {
 		name: 'productBodyComponent',
 		props: ['product'],
+		components:{ProductDetailsDialog},
 		data() {
 			return {
 				role: null,

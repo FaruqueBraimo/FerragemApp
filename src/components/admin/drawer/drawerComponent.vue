@@ -9,7 +9,7 @@
 						/>
 					</q-avatar>
 					<div class="text-capitalize text-center q-py-sm">
-						<p>Gerson Muvavele</p>
+						<p>{{userName}}</p>
 						<small>Administrador</small>
 					</div>
 				</q-card-section>
@@ -101,12 +101,9 @@
 					class="ex-item"
 				>
 					<q-card>
-						<q-card-section>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur
-								adipisicing elit.
-							</p>
-						</q-card-section>
+						<div class="text-center text-caption text-red-4 q-pa-md">
+							Tudo sobre Relatórios brevemente
+						</div>
 					</q-card>
 				</q-expansion-item>
 
@@ -161,7 +158,9 @@
 </template>
 
 <script>
-	export default {};
+	export default {
+		props:['userName']
+	};
 </script>
 
 <style scoped>
