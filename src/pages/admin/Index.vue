@@ -197,15 +197,7 @@
 				}
 			};
 		},
-		mounted() {
-			this.setActualPageTitle('Página Inicial');
-
-			if (!this.users) {
-				this.$router.push('/');
-			}
-			let user = this.users[this.userAuth.uid];
-
-		},
+		
 		computed: {
 			...mapState('auth', ['users', 'userAuth']),
 			...mapState('category', ['categories', ]),
@@ -225,7 +217,6 @@ meta: {
 		},
 		
 		methods: {
-			...mapActions('settings', ['setActualPageTitle'])
 		}
 	};
 </script>

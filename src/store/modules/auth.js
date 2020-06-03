@@ -159,7 +159,7 @@ const actions = {
         firebaseAuth.signOut();
         showSuccessMessage('Sessão terminada com sucesso!')
         commit('setUserAuth', null)
-        this.$router.push('/login')
+        this.$router.push('/')
     },
 
     addUser ({commit}, payload) {        

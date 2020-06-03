@@ -24,7 +24,7 @@ const routes = [
     
     { path: '/users', component: () => import('pages/admin/UsersPage.vue') },
     { path: '/barcode', component: () => import('pages/admin/BarCodeReader.vue') },
-    // { path: 'relatorios', component: () => import('pages/admin/Reports.vue') },
+    { path: '/entradas', component: () => import('pages/admin/stockEntryPage.vue') },
 
 
   ],
