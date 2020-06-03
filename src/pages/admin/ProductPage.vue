@@ -2,8 +2,17 @@
 	<q-page padding>
 		<!-- content -->
 
-
+		<!-- content -->
+<div class="row justify-left q-py-md">
+			<q-btn
+				color="red"
+				label="Testar Codigo de Barra"
+				unelevated
+				@click="$router.push('/barcode')"
+			/>
+		</div>
 		<div class="row justify-end q-py-md">
+
 			<q-btn
 				color="primary"
 				icon="add"
