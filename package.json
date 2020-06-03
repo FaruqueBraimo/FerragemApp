@@ -17,6 +17,7 @@
     "firebase": "^7.14.4",
     "quasar": "^1.0.0",
     "vue": "^2.6.11",
+    "vue-barcode-reader": "0.0.3",
     "vue-google-charts": "^0.3.2"
   },
   "devDependencies": {

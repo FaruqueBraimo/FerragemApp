@@ -4,7 +4,7 @@
             <q-card-actions vertical align="center">
                 Clica no botão esquerdo do mouse sobre a figura abaixo, em seguida clica na opção <span class="text-bold text-italic">Salvar como imagem / save image as</span>
             </q-card-actions>
-          				<VueBarcode :value="value" :options="{ displayValue: true ,width: 1}"  tag="img"></VueBarcode>
+          				<VueBarcode :value="value" :options="{ displayValue: true }"  tag="img"></VueBarcode>
 
         </q-card>
 
