@@ -2,6 +2,7 @@
 	<q-page padding>
 		<!-- content -->
 
+
 		<div class="row justify-end q-py-md">
 			<q-btn
 				color="primary"
@@ -25,6 +26,7 @@
 					v-for="(product, index) in products"
 					:key="index"
 					:product="product"
+					:productId="index"
 					@deleteUser="deleteUserFromDb"
 				/>
 			</tbody>
@@ -40,7 +42,6 @@
 
 <script>
 	import { mapActions, mapState } from 'vuex';
-
 	import ProductsBodyComponent from '../../components/admin/product/ProductsBodyComponent';
 	import ProductsHeaderComponent from '../../components/admin/product/ProductsHeaderComponent';
 	import AddUserDialog from '../../components/admin/users/AddUserDialog';
@@ -62,7 +63,8 @@
 		components: {
 			ProductsHeaderComponent,
 			ProductsBodyComponent,
-			AddUserDialog
+			AddUserDialog,
+			 
 		}
 	};
 </script>
