@@ -1,21 +1,37 @@
 <template>
 	<tr>
+		<td class="text-center" @click="dialog=!dialog">
+			<img
+				src="https://img.icons8.com/material-rounded/24/000000/barcode.png"
+				
+			/>
+		
+			<bar-code-component
+			:value='productId' 
+			:dialog='dialog'
+			/>
+		</td>
 		<td class="text-left">
 			{{ product.name }}
 		</td>
-		<td class="text-left text-primary cursor-pointer"  >{{ product.category.label }}</td>
+		<td class="text-left text-primary cursor-pointer">
+			{{ product.category.label }}
+		</td>
 		<td class="text-left">{{ product.quantity }}</td>
- 
-		<td class="text-left">  <q-chip square size="sm" color="red-5" class="text-white" >
-      {{ product.price ?  product.price  : 0   }} MZN
-      </q-chip>
-	  </td>
 
+		<td class="text-left">
+			<q-chip square size="sm" color="red-5" class="text-white">
+				{{ product.price ? product.price : 0 }} MZN
+			</q-chip>
+		</td>
 
 		<td class="text-left ">
-			<span class="text-primary cursor-pointer 	" v-if="product.provider.label!='Nenhum'">{{product.provider.label  }}</span>
+			<span
+				class="text-primary cursor-pointer 	"
+				v-if="product.provider.label != 'Nenhum'"
+				>{{ product.provider.label }}</span
+			>
 			<span class=" 	" v-else> Nenhum</span>
-
 		</td>
 
 		<td class="text-center ">
@@ -25,8 +41,9 @@
 		<td class="text-center ">
 			<div class="row " style="width:100px;">
 				<div class="col text-center">
-					<product-details-dialog :product="product"/>
+					<product-details-dialog :product="product" />
 				</div>
+
 				<div class="col">
 					<q-btn
 						flat
@@ -36,6 +53,7 @@
 						icon="edit"
 					/>
 				</div>
+
 				<div class="col">
 					<q-btn
 						flat
@@ -54,26 +72,19 @@
 <script>
 	import { mapActions, mapState } from 'vuex';
 	import ProductDetailsDialog from './ProductDetailsDialog';
+	import barCodeComponent from './barCodeComponent'
 	export default {
 		name: 'productBodyComponent',
-		props: ['product'],
-		components:{ProductDetailsDialog},
+		props: ['product','productId'],
+		components: { ProductDetailsDialog,barCodeComponent },
 		data() {
 			return {
-				role: null,
-				options: [
-					'Administrador',
-					'Acesso somente aos Produtos e Categorias',
-					'Acesso aos Clientes e Fornecedores',
-					'Acesso a gestão de Stock',
-					'Nenhum Acesso'
-				]
+				dialog: false,
+				
 			};
 		},
 		computed: {
-			productRoleName() {
-				return this.product.role ? this.product.role : 'Outro';
-			}
+			
 		},
 		mounted() {
 			// console.log(this.product)

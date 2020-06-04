@@ -23,8 +23,8 @@ const routes = [
     { path: '/customers', component: () => import('pages/admin/CustomerPage.vue') },
     
     { path: '/users', component: () => import('pages/admin/UsersPage.vue') },
-    // { path: 'nopermission', component: () => import('pages/admin/NoPermission.vue') },
-    // { path: 'relatorios', component: () => import('pages/admin/Reports.vue') },
+    { path: '/barcode', component: () => import('pages/admin/BarCodeReader.vue') },
+    { path: '/entradas', component: () => import('pages/admin/stockEntryPage.vue') },
 
 
   ],

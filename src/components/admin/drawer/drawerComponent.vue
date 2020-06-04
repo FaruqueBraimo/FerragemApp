@@ -117,7 +117,7 @@
 					class="ex-item"
 				>
 					<q-list class="text-body1">
-						<q-item clickable v-ripple>
+						<q-item clickable v-ripple to="entradas">
 							<q-item-section avatar>
 								<q-icon
 									color="primary"
@@ -125,6 +125,7 @@
 								/>
 							</q-item-section>
 							<q-item-section>
+		
 								<p>Entrada de Produtos</p>
 							</q-item-section>
 						</q-item>

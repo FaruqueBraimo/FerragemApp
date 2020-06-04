@@ -49,7 +49,9 @@
 
 <script>
 	import drawerComponent from '../components/admin/drawer/drawerComponent';
-		import { mapGetters, mapState } from 'vuex';
+		import { mapGetters, mapState ,mapActions} from 'vuex';
+import { showErrorMessage } from "../functions/handle-error-messages";
+
 
 	export default {
 		name: 'AdminLayout',
@@ -64,14 +66,24 @@
 				storage: 0.26
 			};
 		},
+		mounted() {
+			if (!this.userAuth) {
+				this.$router.push('/');
+				 showErrorMessage('Sem permissão, por favor autentique-se');
+			}
+			
+
+		},
 
 		computed: {
 			...mapState('auth', ['users', 'userAuth']),
 			...mapGetters('auth', ['getUserName'])
 			
-			
+		
 		},
 		methods: {
+						...mapActions('auth', ['logoutUser']),
+
 			confirm() {
 				this.$q
 					.dialog({
@@ -83,9 +95,10 @@
 						persistent: true
 					})
 					.onOk(() => {
-						this.$router.push('/');
+							this.logoutUser();
 					});
 			}
+
 		}
 	};
 </script>

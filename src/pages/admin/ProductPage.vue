@@ -2,7 +2,17 @@
 	<q-page padding>
 		<!-- content -->
 
+		<!-- content -->
+<div class="row justify-left q-py-md">
+			<q-btn
+				color="red"
+				label="Testar Codigo de Barra"
+				unelevated
+				@click="$router.push('/barcode')"
+			/>
+		</div>
 		<div class="row justify-end q-py-md">
+
 			<q-btn
 				color="primary"
 				icon="add"
@@ -25,6 +35,7 @@
 					v-for="(product, index) in products"
 					:key="index"
 					:product="product"
+					:productId="index"
 					@deleteUser="deleteUserFromDb"
 				/>
 			</tbody>
@@ -40,7 +51,6 @@
 
 <script>
 	import { mapActions, mapState } from 'vuex';
-
 	import ProductsBodyComponent from '../../components/admin/product/ProductsBodyComponent';
 	import ProductsHeaderComponent from '../../components/admin/product/ProductsHeaderComponent';
 	import AddUserDialog from '../../components/admin/users/AddUserDialog';
@@ -62,7 +72,8 @@
 		components: {
 			ProductsHeaderComponent,
 			ProductsBodyComponent,
-			AddUserDialog
+			AddUserDialog,
+			 
 		}
 	};
 </script>
