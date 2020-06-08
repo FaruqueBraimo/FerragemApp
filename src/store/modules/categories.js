@@ -25,10 +25,10 @@ const mutations = {
 		Vue.set(state.categories, payload.id, payload.object);
 	},
 
-	updatecategory(state, payload) {
+	editCategory(state, payload) {
 		Object.assign(state.categories[payload.id], payload.updates);
 	},
-	deletecategory(state, id) {
+	deleteCategory(state, id) {
 		Vue.delete(state.categories, id);
 	},
 	
@@ -53,19 +53,20 @@ const actions = {
 			.onSnapshot(function(snapshot) {
 				snapshot.docChanges().forEach(function(change) {
 					if (change.type === 'added') {
+
 						commit('addcategory', {
 							id: change.doc.id,
 							object: change.doc.data()
 						});
 					}
 					if (change.type === 'modified') {
-						commit('updatecategory', {
+						commit('editCategory', {
 							id: change.doc.id,
 							updates: change.doc.data()
 						});
 					}
 					if (change.type === 'removed') {
-						commit('deletecategory', change.doc.id);
+						commit('deleteCategory', change.doc.id);
 					}
 				});
 			});
@@ -97,7 +98,7 @@ const actions = {
 			});
 	},
 
-	updatecategory({ commit, rootGetters }, payload) {
+	editCategory({ commit, rootGetters }, payload) {
 		commit('loading', true);
 
 		payload.updates.updatedAt = new Date()
@@ -112,9 +113,8 @@ const actions = {
 			.then(function(docRef) {
 				commit('loading', false);
 
-				if (payload.successMessage !== false) {
-					showSuccessMessage(sucessMessage);
-				}
+					showSuccessMessage('Categoria editada com sucesso!');
+				
 
 				return true;
 			})
@@ -128,7 +128,7 @@ const actions = {
 			});
 	},
 
-	deletecategory({ commit }, id) {
+	deleteCategory({ commit }, id) {
 		return dbcategories
 			.doc(id)
 			.delete()

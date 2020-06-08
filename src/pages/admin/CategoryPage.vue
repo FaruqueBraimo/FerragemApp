@@ -1,17 +1,23 @@
 <template>
-  <q-page :style-fn="myTweak" padding>
+  <q-page  padding>
 
          <div class="row q-mb-xl justify-left	">
           <div class=" col-4 q-pa-sm  " v-for="(category, index) in categories" :key="index">
             <category-component
-            :category='category'
+            
+            :category='Object.assign({id: index},category)'
+            :idCategory='index'
+            @removeCategory='removeCategory'
+            @updateCategory='updateCategory = $event'
              />
           </div>
         </div>
         <AddCategoryDialog
-                :dialog="dialog"
-                @closeDialog='dialog=false'
+                :dialog="dialog  || !!updateCategory "
+                @closeDialog='closeDialog'
                 @emitData='addcategory'
+                :updateCategory='updateCategory' 
+
 
         /> 
          <q-page-sticky position="bottom-right" :offset="[18, 18]">
@@ -26,7 +32,7 @@ import AddCategoryDialog from "../../components/admin/category/AddCategoryDialog
   import { mapActions, mapState } from 'vuex'
 
 export default {
- name : 'Category Page',
+ name : 'CategoryPage',
 
 components: {
     CategoryComponent,
@@ -42,12 +48,36 @@ components: {
   data () {
     return {
      dialog: false,
+     updateCategory : false
    
     }
   },
    methods: {
      
-    			...mapActions('category', ['addcategory'])
+          ...mapActions('category', ['addcategory','deleteCategory']),
+          
+          removeCategory(id) {
+            let categoryName = this.categories[id].name
+            this.$q
+					.dialog({
+						title: 'Confirme',
+						message: `Tem certeza que deseja apagar a categoria ${categoryName} ?`,
+						ok: 'Sim',
+						cancel: true,
+						cancel: 'Não',
+						persistent: true
+					})
+					.onOk(() => {
+							this.deleteCategory(id);
+					});
+
+          },
+          closeDialog() {
+            this.dialog=false;
+            this.updateCategory=false;
+          }
+
+          
 
   },
 }
