@@ -1,4 +1,5 @@
 <template>
+
 	<q-dialog
 		v-model="toggleDialog"
 		@show="onShowDialog"
@@ -7,7 +8,7 @@
 	>
 		<q-card style="width: 300px;">
 			<q-card-section class="row items-center">
-				<div class="text-h6 text-center">Registo de Categoria</div>
+				<div class="text-h6 text-center"> Categoria</div>
 				<q-space />
 				<q-btn
 					icon="close"
@@ -43,7 +44,7 @@
 
 						<div class="q-my-md">
 							<q-btn
-								label="Registar"
+								:label="updateCategory ? 'Actualizar' : 'Registar'"
 								size="md"
 								type="submit"
 								color="primary"
@@ -62,7 +63,7 @@
 	import { mapActions, mapState } from 'vuex';
 	export default {
 		name: 'DialogAddEditBlog',
-		props: ['dialog', 'editObject'],
+		props: ['dialog', 'updateCategory'],
 		data() {
 			return {
 				saveObject: {},
@@ -83,7 +84,12 @@
 				},
 				set(val) {
 					this.$emit('closeDialog');
-				}
+				},
+
+				
+			},
+			selectedId () {
+                return this.updateCategory ? this.updateCategory.id : null
             },
             
 			
@@ -93,18 +99,34 @@
 		},
 		methods: {
 
-			
+			          ...mapActions('category', ['editCategory']),
+
 			onSubmit() {
+				
+                if (this.selectedId) {
+
+					delete this.saveObject.id //deletando Id
+					console.log(this.selectedId);
+					
+
+                    this.editCategory ({
+                        id: this.selectedId,
+                        updates: this.saveObject
+					})
+										this.$emit('closeDialog');
+
+
+                } else {
 			
 				this.$emit('emitData', this.saveObject);
 				
 
 				this.$emit('closeDialog');
-			},
+			}},
 
 			onShowDialog() {
-				if (this.editObjectPost) {
-					this.saveObject = this.editObjectPost;
+				if (this.updateCategory) {
+					this.saveObject = this.updateCategory;
 				} else {
 				}
 			},

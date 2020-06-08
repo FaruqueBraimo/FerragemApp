@@ -19,10 +19,10 @@
                 <q-menu>
                     <q-list style="min-width: 100px">
                         <q-item clickable v-close-popup>
-                            <q-item-section  >Editar</q-item-section>
+                            <q-item-section  @click="$emit('updateCategory',category)">Editar</q-item-section>
                         </q-item>
                         <q-item clickable v-close-popup class="text-red"  >
-                            <q-item-section >Remover </q-item-section>
+                            <q-item-section @click="$emit('removeCategory',idCategory)">Remover  </q-item-section>
                         </q-item>
                     </q-list>
                 </q-menu>
@@ -49,7 +49,7 @@
 
 <script>
 export default {
-  props: ["category"]
+  props: ["category","idCategory"]
 };
 </script>
 
