@@ -73,15 +73,13 @@
 					</div>
 					
 					<div class="col-6  q-pa-sm">
-						 <q-input filled v-model="date" mask="date" label="Valido até">
-      <template v-slot:append>
-        <q-icon name="event" class="cursor-pointer">
-          <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-            <q-date v-model="saveObject.expires" @input="() => $refs.qDateProxy.hide()" />
-          </q-popup-proxy>
-        </q-icon>
-      </template>
-    </q-input>
+						  <q-input
+                                filled
+                                v-model="saveObject.expires"
+                                label="Válido até *"
+                                mask="##-##-####"
+                                hint="DD-MM-AAAA"
+                            />
 					</div>
 					<div class="col-6  q-pa-sm">
 						<q-input

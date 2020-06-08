@@ -1,5 +1,6 @@
 <template>
-	<tr>
+	<tr >
+
 		<td class="text-center" @click="dialog=!dialog">
 			<img
 				src="https://img.icons8.com/material-rounded/24/000000/barcode.png"
@@ -66,8 +67,11 @@
 					/>
 				</div>
 			</div>
+			
 		</td>
+
 	</tr>
+
 </template>
 
 <script>

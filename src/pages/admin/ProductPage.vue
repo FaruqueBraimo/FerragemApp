@@ -28,7 +28,9 @@
 			class="q-pa-md"
 			:style="$q.platform.is.mobile ? 'width: 100%' : ''"
 		>
-			<products-header-component class="q-pa-sm" />
+			<products-header-component class="q-pa-sm"
+			@productFilter ='filterproduct'
+			 />
 
 			<tbody>
 				<products-body-component
@@ -41,6 +43,9 @@
 				/>
 			</tbody>
 		</q-markup-table>
+					<div class="text-center text-body1" v-if="Object.keys(products).length == 0"> 
+					Não existe um produto cadastrado com esse nome. <span class="text-red-5"> Dica: </span> O sistema leva em consideração acentuações, diferença entre letras maiúsculas e minúsculos.  </div>
+
 
 		
 	</q-page>
@@ -56,14 +61,18 @@
 		// name: 'PageName',
 		data() {
 			return {
-				dialog: false
+				dialog: false,
+				search: ''
 			};
 		},
 		computed: {
 			...mapState('product', ['products'])
 		},
+		
+
 
 		methods: {
+			...mapActions('product', ['deleteProduct', 'filterDatafromDb']),
 
 
 			 removeProduct(id) {
@@ -85,7 +94,10 @@
           closeDialog() {
             this.dialog=false;
             this.updateCategory=false;
-          }
+		  },
+		  filterproduct(query){
+			  this.filterDatafromDb(query)
+		  }
 
 		},
 		components: {
