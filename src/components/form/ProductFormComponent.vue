@@ -98,7 +98,7 @@
 				<div class="row text-center">
 					<div class="col-6 q-pa-md">
 						<q-btn
-							label="Registar"
+							:label="productData ? 'Actualizar' : 'Registar'"
 							size="md"
 							type="submit"
 							color="primary"
@@ -129,6 +129,7 @@
 
 	export default {
 		name: 'ProductFormComponent',
+		props : ['productData'],
 		data() {
 			return {
 				date: 'AAAA/MM/DD',
@@ -145,11 +146,20 @@
 				}
 			};
 		},
+		mounted (){
+							if(this.productData!=null) {this.saveObject = this.productData.data}
+
+		},
 		computed: {
 			...mapState('product', ['products', 'loading']),
 			...mapState('category', ['categories', ]),
 			...mapState('provider', ['providers', ]),
+			
+			waitingForProductData() {
+				
+				if(this.productData!=null) {this.saveObject = this.productData.data}
 
+			},
 
 			fetchCategories() {
 				Object.keys(this.categories).forEach((element, key) => {
@@ -175,7 +185,22 @@
 		},
 
 		methods: {
+						...mapActions('product', ['updateProduct', ]),
+
 			onSubmit() {
+				 if (this.productData) {
+
+					delete this.saveObject.id //deletando Id
+					
+                    this.updateProduct ({
+                        id: this.productData.id,
+                        updates: this.saveObject
+					})
+					this.$router.push('/products')
+
+
+                } else {
+			
 				let product = {};
 				product.category = this.saveObject.category;
 				product.name = this.saveObject.name;
@@ -193,14 +218,18 @@
 					this.onReset();		
 				}, 1000);
 
-				
+				}	
 
 
 			},
 			onReset() {
 				this.saveObject = {};
 			}
-		}
+		},
+
+		 watch: { 
+    
+  }
 	};
 </script>
 

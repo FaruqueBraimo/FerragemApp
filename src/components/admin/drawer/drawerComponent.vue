@@ -61,7 +61,7 @@
 									</q-item-section>
 								</q-item>
 
-								<q-item clickable v-ripple to="/products/add">
+								<q-item clickable v-ripple 	@click="$router.push('/products/add/' + null)">
 									<q-item-section avatar>
 										<q-icon color="primary" name="add" />
 									</q-item-section>

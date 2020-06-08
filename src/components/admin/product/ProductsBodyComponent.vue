@@ -51,6 +51,7 @@
 						rounded
 						text-color="primary"
 						icon="edit"
+						@click="$router.push('/products/add/' + productId)"
 					/>
 				</div>
 
@@ -61,7 +62,7 @@
 						size="sm"
 						text-color="red"
 						icon="delete"
-						@click="$emit('deleteProduct')"
+						@click="$emit('deleteProduct',productId)"
 					/>
 				</div>
 			</div>
