@@ -18,7 +18,7 @@
 				icon="add"
 				label="Adicionar"
 				unelevated
-				@click="$router.push('/products/add')"
+				@click="$router.push('/products/add/' + null)"
 			/>
 		</div>
 		<q-markup-table
@@ -34,18 +34,15 @@
 				<products-body-component
 					v-for="(product, index) in products"
 					:key="index"
-					:product="product"
+					:product="Object.assign({id: index},product)"
 					:productId="index"
-					@deleteUser="deleteUserFromDb"
+					@deleteProduct="removeProduct"
+
 				/>
 			</tbody>
 		</q-markup-table>
 
-		<AddUserDialog
-			:dialog="dialog"
-			@closeDialog="dialog = false"
-			@emitData="registerUser"
-		/>
+		
 	</q-page>
 </template>
 
@@ -67,7 +64,29 @@
 		},
 
 		methods: {
-			...mapActions('auth', ['registerUser', 'deleteUserFromDb'])
+
+
+			 removeProduct(id) {
+            let productName = this.products[id].name
+            this.$q
+					.dialog({
+						title: 'Confirme',
+						message: `Tem certeza que deseja apagar o produto ${productName} ?`,
+						ok: 'Sim',
+						cancel: true,
+						cancel: 'Não',
+						persistent: true
+					})
+					.onOk(() => {
+							this.deleteProduct(id);
+					});
+
+          },
+          closeDialog() {
+            this.dialog=false;
+            this.updateCategory=false;
+          }
+
 		},
 		components: {
 			ProductsHeaderComponent,
