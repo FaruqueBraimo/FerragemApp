@@ -7,7 +7,7 @@
 	>
 		<q-card style="width: 100vw;">
 			<q-card-section class="row items-center">
-				<div class="text-h6 text-center">Registo de Clientes</div>
+				<div class="text-h6 q-px-md text-center">Entrada de Produtos</div>
 				<q-space />
 				<q-btn
 					icon="close"
@@ -19,31 +19,34 @@
 			</q-card-section>
 			<q-card-section>
 				<q-form @submit="onSubmit" @reset="onReset">
-					<q-input
-						outlined
-						v-model="saveObject.name"
-						label="Seu nome *"
-						lazy-rules
-						:rules="[
-							val =>
-								(val && val.length > 0) ||
-								'Por favor introduz o nome'
-						]"
-					/>
+					<div class="q-pa-md">
+						<q-select
+							label="Produto"
+							square
+							filled
+							:options="Optionalproducts"
+							v-model="saveObject.product"
+						/>
+					</div>
+					<div class="q-pa-md">
+						<q-input
+							square
+							filled
+							type="number"
+							label="Quantidade"
+							v-model="saveObject.quantity"
+							lazy-rules
+						/>
+					</div>
+					<div class="q-pa-md">
+						<q-input
+							v-model="saveObject.description"
+							filled
+							type="textarea"
+							label="Observação"
+						/>
+					</div>
 
-					<q-select
-						outlined
-						type="email"
-						:options="type"
-						v-model="saveObject.type"
-						label="Tipo de Cliente *"
-						lazy-rules
-						:rules="[
-							val =>
-								(val !== null && val !== '') ||
-								'Por favor insira o tipo de cliente'
-						]"
-					/>
 					<div class="text-center">
 						<!--<router-link to="/">LOgin</router-link>-->
 
@@ -66,20 +69,30 @@
 
 <script>
 	import { mapActions, mapState } from 'vuex';
+
 	export default {
 		name: 'DialogAddEditBlog',
 		props: ['dialog', 'editObject'],
 		data() {
 			return {
 				saveObject: {},
+				Optionalproducts: [],
 				model: [],
-				type: [
-					'Singular',
-					'Empresa',
-				]
+				type: ['Singular', 'Empresa']
 			};
 		},
 		computed: {
+				...mapState('product', ['products', 'loading']),
+
+				fetchProducts() {
+				Object.keys(this.products).forEach((element, key) => {
+					this.Optionalproducts.push({
+						value: element,
+						label: this.products[element].name
+					});
+				});
+				},
+
 			toggleDialog: {
 				get() {
 					return this.dialog;
@@ -93,14 +106,22 @@
 			}
 		},
 		mounted() {
+			this.fetchProducts()
 		},
 		methods: {
+			onSubmit() { 
+				if(this.saveObject.quantity <= 0 ) {
+					 
+      this.$q.dialog({
+        title: 'Quantidade Inválida',
+        message: 'Coloque uma quantidade real por favor'
+      })
 
-			
-			onSubmit() {
-			
-				this.$emit('emitData', this.saveObject);
-				
+				}
+				else{
+							this.$emit('emitData', this.saveObject);
+
+				}
 
 				this.$emit('closeDialog');
 			},
@@ -112,8 +133,7 @@
 				}
 			},
 
-			onReset() {
-			}
+			onReset() {}
 		}
 	};
 </script>

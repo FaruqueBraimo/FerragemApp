@@ -1,11 +1,7 @@
 <template>
 	<div id="q-app" class="text-grey-9">
-		<!-- v-if="!$q.platform.is.mobile" -->
 		<router-view> </router-view>
-		<!-- 
-		<div class="q-pa-xl text-h6 text-bold text-center ">
-			<p>Versao Mobile em desenvolvimento</p>
-		</div> -->
+		
 	</div>
 </template>
 
@@ -18,22 +14,21 @@
 			this.listenProductRealTimeChanges();
 			this.listencategoryRealTimeChanges();
 			this.listenProviderRealTimeChanges();
-			this.listenCustomerRealTimeChanges()
+			this.listenCustomerRealTimeChanges();
+			this.listenStockEntryRealTimeChanges()
 		},
 		methods: {
 			...mapActions('auth', [
 				'handleAuthStateChange',
 				'listenUsersRealTimeChanges',
 				'listenProductRealTimeChanges',
-				
-
-				
 			]),
 
 			...mapActions('product' , ['listenProductRealTimeChanges']),
 			...mapActions('category' , ['listencategoryRealTimeChanges']),
 			...mapActions('provider' , ['listenProviderRealTimeChanges']),
-			...mapActions('customer' , ['listenCustomerRealTimeChanges'])
+			...mapActions('customer' , ['listenCustomerRealTimeChanges']),
+			...mapActions('stockEntry' , ['listenStockEntryRealTimeChanges']),
 
 
 		},
