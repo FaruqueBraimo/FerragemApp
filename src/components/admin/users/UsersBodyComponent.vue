@@ -21,11 +21,11 @@
 		
 
     	<td class="text-center ">
-      <q-btn outline size="sm" unelevated  text-color="secondary" label="Activar" icon="toggle_on" />
+      <q-btn outline size="sm" unelevated  text-color="secondary" label="Activar" v-if="user.status == false"  icon="toggle_on"  @click="$emit('activeOrDesactiveUser',user)" />
+	        <q-btn outline size="sm" unelevated  text-color="red-5" label="Desactivar" v-else  icon="toggle_off"  @click="$emit('activeOrDesactiveUser',user)" />
+
       <q-btn  flat  size="sm" rounded text-color="primary" icon="visibility" />
       <q-btn  flat  rounded  size="sm" text-color="red" icon="delete" @click="$emit('deleteUser')" />
-
-
 		</td>
 	</tr>
 </template>

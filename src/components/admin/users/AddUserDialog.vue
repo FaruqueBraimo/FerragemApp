@@ -112,16 +112,14 @@
 				saveObject: {},
 				model: [],
 				options: [
-					'Administrador',
-					'Nivel 1 ',
-					'Nivel 2',
-					'Nivel 3',
-					'Nenhum Acesso'
+					
 				]
 			};
 		},
 		computed: {
 			toggleDialog: {
+							...mapState('role', ['roles'])
+
 				get() {
 					return this.dialog;
 				},
@@ -129,8 +127,15 @@
 					this.$emit('closeDialog');
 				}
 			},
-			selectedId() {
-				return this.editObjectPost ? this.editObjectPost.id : null;
+			fetchRoles() {
+				Object.keys(this.providers).forEach((element, key) => {
+					this.Optionalprovider.push({
+						value: element,
+						label: this.providers[element].name
+					});
+				});
+
+				return '';
 			}
 		},
 		mounted() {
