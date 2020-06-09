@@ -15,8 +15,8 @@ const routes = [
     { path: '/admin', component: () => import('pages/admin/Index.vue') },
     { path: '/category', component: () => import('pages/admin/CategoryPage.vue') },
 
-    { path: '/products/add', component: () => import('pages/admin/AddProductPage.vue') },
-    { path: '/products', component: () => import('pages/admin/ProductPage.vue') },
+    { path: '/products/add/:id', component: () => import('pages/admin/AddProductPage.vue') },
+    { path: '/products/', component: () => import('pages/admin/ProductPage.vue') },
 
     { path: '/providers', component: () => import('pages/admin/ProviderPage.vue') },
     

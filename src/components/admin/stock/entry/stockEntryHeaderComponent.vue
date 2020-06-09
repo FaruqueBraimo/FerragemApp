@@ -6,9 +6,9 @@
 					<q-img
 						style="width: 70px"
 						:ratio="1"
-						class="rounded-borders"
-						src="https://img.icons8.com/dusk/64/000000/user.png"/>
-					
+                        
+						class="rounded-borders    "
+ src="https://img.icons8.com/material-rounded/48/000000/import.png"/>					
 
 					<div class="text-h6 q-ml-md text-secondary">Entrada de Produtos </div>
 				</div>

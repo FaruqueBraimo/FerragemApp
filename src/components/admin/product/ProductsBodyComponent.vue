@@ -1,5 +1,6 @@
 <template>
-	<tr>
+	<tr >
+
 		<td class="text-center" @click="dialog=!dialog">
 			<img
 				src="https://img.icons8.com/material-rounded/24/000000/barcode.png"
@@ -51,6 +52,7 @@
 						rounded
 						text-color="primary"
 						icon="edit"
+						@click="$router.push('/products/add/' + productId)"
 					/>
 				</div>
 
@@ -61,12 +63,15 @@
 						size="sm"
 						text-color="red"
 						icon="delete"
-						@click="$emit('deleteProduct')"
+						@click="$emit('deleteProduct',productId)"
 					/>
 				</div>
 			</div>
+			
 		</td>
+
 	</tr>
+
 </template>
 
 <script>

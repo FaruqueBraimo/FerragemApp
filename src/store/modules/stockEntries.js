@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { dbcategories } from '../../boot/firebase';
+import { dbStockEntries } from '../../boot/firebase';
 import { Loading, date } from 'quasar';
 import { showErrorMessage } from '../../functions/handle-error-messages';
 import { showSuccessMessage } from '../../functions/show-success-messages';
@@ -7,10 +7,10 @@ import { showSuccessMessage } from '../../functions/show-success-messages';
 let lastVisible = null;
 
 const state = {
-	categories: {},
+	StockEntries: {},
 	uploadProgress: 0,
 	loading: false,
-	categoriesearchKey: ''
+	StockEntriesearchKey: ''
 };
 
 const mutations = {
@@ -21,15 +21,15 @@ const mutations = {
 	uploadProgress(state, val) {
 		state.uploadProgress = val;
 	},
-	addcategory(state, payload) {
-		Vue.set(state.categories, payload.id, payload.object);
+	addStockEntry(state, payload) {
+		Vue.set(state.StockEntries, payload.id, payload.object);
 	},
 
-	editCategory(state, payload) {
-		Object.assign(state.categories[payload.id], payload.updates);
+	editStockEntry(state, payload) {
+		Object.assign(state.StockEntries[payload.id], payload.updates);
 	},
-	deleteCategory(state, id) {
-		Vue.delete(state.categories, id);
+	deleteStockEntry(state, id) {
+		Vue.delete(state.StockEntries, id);
 	},
 	
 	
@@ -44,48 +44,48 @@ const actions = {
 
 	
 
-	listencategoryRealTimeChanges({ commit }) {
-		commit('resetcategory');
+	listenStockEntryRealTimeChanges({ commit }) {
+		commit('resetStockEntry');
 
-		dbcategories
+		dbStockEntries
 			.orderBy('createdAt', 'desc')
 			.limit(10)
 			.onSnapshot(function(snapshot) {
 				snapshot.docChanges().forEach(function(change) {
 					if (change.type === 'added') {
 
-						commit('addcategory', {
+						commit('addStockEntry', {
 							id: change.doc.id,
 							object: change.doc.data()
 						});
 					}
 					if (change.type === 'modified') {
-						commit('editCategory', {
+						commit('editStockEntry', {
 							id: change.doc.id,
 							updates: change.doc.data()
 						});
 					}
 					if (change.type === 'removed') {
-						commit('deleteCategory', change.doc.id);
+						commit('deleteStockEntry', change.doc.id);
 					}
 				});
 			});
 	},
 
-	addcategory({ commit, dispatch, rootGetters }, payload) {
+	addStockEntry({ commit, dispatch, rootGetters }, payload) {
 		payload.createdAt = new Date()
 		payload.updatedAt = new Date()
 		commit('loading', true);
 
-		return dbcategories
+		return dbStockEntries
 			.add(payload)
 			.then(docRef => {
 				commit('loading', false);
 
 				// 1. Limpar todas solicitações
-				commit('resetcategory');
+				commit('resetStockEntry');
 
-				showSuccessMessage('categoria Adicionada com sucesso!');
+				showSuccessMessage('Stock Adicionado com sucesso!');
 
 				return true;
 			})
@@ -98,7 +98,7 @@ const actions = {
 			});
 	},
 
-	editCategory({ commit, rootGetters }, payload) {
+	editStockEntry({ commit, rootGetters }, payload) {
 		commit('loading', true);
 
 		payload.updates.updatedAt = new Date()
@@ -107,7 +107,7 @@ const actions = {
 			? payload.successMessage
 			: state.defaultUpdateSuccessMessage;
 
-		return dbcategories
+		return dbStockEntries
 			.doc(payload.id)
 			.update(payload.updates)
 			.then(function(docRef) {
@@ -128,8 +128,8 @@ const actions = {
 			});
 	},
 
-	deleteCategory({ commit }, id) {
-		return dbcategories
+	deleteStockEntry({ commit }, id) {
+		return dbStockEntries
 			.doc(id)
 			.delete()
 			.then(function(docRef) {
@@ -144,7 +144,7 @@ const actions = {
 			});
 	},
 
-	getcategoryByUserId({ commit }, userId) {
+	getStockEntryByUserId({ commit }, userId) {
 		if (!userId) {
 			showErrorMessage(
 				'Algumas informações das solicitações que deseja visualizar, poderão não ser visualizadas neste momento. Favor favor, tente mais tarde.'
@@ -154,7 +154,7 @@ const actions = {
 
 		commit('loading', true);
 
-		return dbcategories
+		return dbStockEntries
 			.where('userId', '==', userId)
 			.orderBy('createdAt', 'desc')
 			.limit(50)
@@ -162,16 +162,16 @@ const actions = {
 			.then(resp => {
 				commit('loading', false);
 
-				let categories = [];
+				let StockEntries = [];
 				resp.docChanges().forEach(item => {
-					let categories = item.doc.data();
-					categories.id = item.doc.id;
+					let StockEntries = item.doc.data();
+					StockEntries.id = item.doc.id;
 
-					categories.push(categories);
+					StockEntries.push(StockEntries);
 				});
 				commit('loading', false);
 
-				return categories;
+				return StockEntries;
 			})
 			.catch(function(error) {
 				console.log('Error ocured: ', error);
@@ -180,11 +180,11 @@ const actions = {
 			});
 	},
 
-	setcategoriesearchKey({ commit, dispatch }, text) {
-		commit('setcategoriesearchKey', text);
+	setStockEntriesearchKey({ commit, dispatch }, text) {
+		commit('setStockEntriesearchKey', text);
 
 		commit('loading', true);
-		commit('resetcategory');
+		commit('resetStockEntry');
 
 		if ((text && text.length > 1) || !text) {
 			dispatch('getData', true);
@@ -192,11 +192,11 @@ const actions = {
 	},
 
 	resetDataToOnly20({ state, commit }) {
-		if (Object.keys(state.categories).length > 75) {
+		if (Object.keys(state.StockEntries).length > 75) {
 			console.log(
-				'Reset data to only20 not implemented yet. All categories where reseted for now...'
+				'Reset data to only20 not implemented yet. All StockEntries where reseted for now...'
 			);
-			commit('resetcategory');
+			commit('resetStockEntry');
 		}
 	}
 };

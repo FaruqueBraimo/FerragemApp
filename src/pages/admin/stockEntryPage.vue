@@ -3,13 +3,23 @@
 		<!-- content -->
 
 		<div class="row justify-end q-py-md">
-			<q-btn
-				color="primary"
-				icon="add"
-				label="Adicionar"
-				unelevated
-				@click="dialog = true"
-			/>
+		<q-btn-dropdown color="primary" unelevated label="Adicionar" dropdown-icon="change_history">
+      <q-list>
+        <q-item clickable v-close-popup @click="dialog=true">
+          <q-item-section>
+            <q-item-label>Produtos Cadastrados</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item clickable v-close-popup @click="$router.push('/products/add/' + null)">
+          <q-item-section>
+            <q-item-label>Novos Produtos</q-item-label>
+          </q-item-section>
+        </q-item>
+
+      </q-list>
+    </q-btn-dropdown>
+			
 		</div>
 		<q-markup-table
 			flat
@@ -30,10 +40,10 @@
 			</tbody>
 		</q-markup-table>
 
-		<add-customer-dialog
+		<add-Entry-stock-component
 			:dialog="dialog"
 			@closeDialog="dialog = false"
-			@emitData="addCustomer"
+			@emitData="addStockEntry"
 		/>
 		
 	</q-page>
@@ -54,11 +64,12 @@
 			};
 		},
 		computed: {
-			...mapState('customer', ['customers'])
 		},
 
 		methods: {
-			...mapActions('customer', ['addCustomer', 'deleteCustomer'])
+			...mapActions('stockEntry' , ['addStockEntry']),
+
+			
 		},
 		components: {
 			stockEntryHeaderComponent,

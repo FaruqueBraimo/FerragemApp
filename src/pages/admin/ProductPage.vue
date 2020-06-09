@@ -18,7 +18,7 @@
 				icon="add"
 				label="Adicionar"
 				unelevated
-				@click="$router.push('/products/add')"
+				@click="$router.push('/products/add/' + null)"
 			/>
 		</div>
 		<q-markup-table
@@ -28,24 +28,26 @@
 			class="q-pa-md"
 			:style="$q.platform.is.mobile ? 'width: 100%' : ''"
 		>
-			<products-header-component class="q-pa-sm" />
+			<products-header-component class="q-pa-sm"
+			@productFilter ='filterproduct'
+			 />
 
 			<tbody>
 				<products-body-component
 					v-for="(product, index) in products"
 					:key="index"
-					:product="product"
+					:product="Object.assign({id: index},product)"
 					:productId="index"
-					@deleteUser="deleteUserFromDb"
+					@deleteProduct="removeProduct"
+
 				/>
 			</tbody>
 		</q-markup-table>
+					<div class="text-center text-body1" v-if="Object.keys(products).length == 0"> 
+					Não existe um produto cadastrado com esse nome. <span class="text-red-5"> Dica: </span> O sistema leva em consideração acentuações, diferença entre letras maiúsculas e minúsculos.  </div>
 
-		<AddUserDialog
-			:dialog="dialog"
-			@closeDialog="dialog = false"
-			@emitData="registerUser"
-		/>
+
+		
 	</q-page>
 </template>
 
@@ -59,15 +61,44 @@
 		// name: 'PageName',
 		data() {
 			return {
-				dialog: false
+				dialog: false,
+				search: ''
 			};
 		},
 		computed: {
 			...mapState('product', ['products'])
 		},
+		
+
 
 		methods: {
-			...mapActions('auth', ['registerUser', 'deleteUserFromDb'])
+			...mapActions('product', ['deleteProduct', 'filterDatafromDb']),
+
+
+			 removeProduct(id) {
+            let productName = this.products[id].name
+            this.$q
+					.dialog({
+						title: 'Confirme',
+						message: `Tem certeza que deseja apagar o produto ${productName} ?`,
+						ok: 'Sim',
+						cancel: true,
+						cancel: 'Não',
+						persistent: true
+					})
+					.onOk(() => {
+							this.deleteProduct(id);
+					});
+
+          },
+          closeDialog() {
+            this.dialog=false;
+            this.updateCategory=false;
+		  },
+		  filterproduct(query){
+			  this.filterDatafromDb(query)
+		  }
+
 		},
 		components: {
 			ProductsHeaderComponent,

@@ -37,7 +37,7 @@ const mutations = {
 	},
 	resetProducts(state) {
 		state.products = {};
-		lastVisible = null;
+		console.log('chegou')
 	}
 };
 
@@ -78,36 +78,67 @@ const actions = {
 		}
 	},
 
-	executeQuery({ state, commit, getters }, query) {
-		commit('loading', true);
+	filterDatafromDb({ state, commit, getters },myQuery) {
+		
 
-		query
-			.get()
-			.then(snapshot => {
-				lastVisible = snapshot.docs[snapshot.docs.length - 1];
+		let query = dbProducts.where("name", "==", myQuery)
+		commit('resetProducts');
 
-				snapshot.docChanges().forEach(function(change) {
-					if (state.solicitationSearchKey) {
-						if (getters.isInSearch(change.doc.data())) {
-							commit('addProduct', {
-								id: change.doc.id,
-								object: change.doc.data()
-							});
-						}
-					} else {
-						commit('addProduct', {
-							id: change.doc.id,
-							object: change.doc.data()
-						});
-					}
-				});
+		query.onSnapshot(function(snapshot) {
+			snapshot.docChanges().forEach(function(change) {
+				console.log(change.doc.data());
+				commit('resetProducts');
 
-				commit('loading', false);
-			})
-			.catch(error => {
-				commit('loading', false);
+				if (change.type === 'added') {
+					commit('addProduct', {
+						id: change.doc.id,
+						object: change.doc.data()
+					});
+				}
+				if (change.type === 'modified') {
+					commit('updateProduct', {
+						id: change.doc.id,
+						updates: change.doc.data()
+					});
+				}
+				if (change.type === 'removed') {
+					commit('deleteProduct', change.doc.id);
+				}
 			});
+		});			
 	},
+
+
+	// executeQuery({ state, commit, getters }, query) {
+	// 	commit('loading', true);
+
+	// 	query
+	// 		.get()
+	// 		.then(snapshot => {
+	// 			lastVisible = snapshot.docs[snapshot.docs.length - 1];
+
+	// 			snapshot.docChanges().forEach(function(change) {
+	// 				if (state.solicitationSearchKey) {
+	// 					if (getters.isInSearch(change.doc.data())) {
+	// 						commit('addProduct', {
+	// 							id: change.doc.id,
+	// 							object: change.doc.data()
+	// 						});
+	// 					}
+	// 				} else {
+	// 					commit('addProduct', {
+	// 						id: change.doc.id,
+	// 						object: change.doc.data()
+	// 					});
+	// 				}
+	// 			});
+
+	// 			commit('loading', false);
+	// 		})
+	// 		.catch(error => {
+	// 			commit('loading', false);
+	// 		});
+	// },
 
 	listenProductRealTimeChanges({ commit }) {
 		commit('resetProduct');
@@ -177,9 +208,8 @@ const actions = {
 			.then(function(docRef) {
 				commit('loading', false);
 
-				if (payload.successMessage !== false) {
-					showSuccessMessage(sucessMessage);
-				}
+					showSuccessMessage('Producto Editado');
+				
 
 				return true;
 			})
