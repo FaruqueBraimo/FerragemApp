@@ -94,6 +94,7 @@ const actions = {
                 let user = payload
                 user.id = resp.user.uid
                 user.email = resp.user.email
+                user.status = true
                 user.createdAt = new Date()
                 user.updatedAt = new Date()
 
@@ -120,7 +121,6 @@ const actions = {
                     email: resp.user.email,
                 })
 
-                showSuccessMessage('Sessão iniciada com sucesso!')
                 this.$router.push('/admin')
 
                 Loading.hide()
@@ -181,9 +181,7 @@ const actions = {
         return dbUsers.doc(payload.id).update(payload.updates)
             .then(function(docRef) {      
                 commit('loading', false)
-                let message = payload.successMessage ? payload.successMessage : 'Dados actualizados com sucesso!'
-                showSuccessMessage(message)
-                return message
+                showSuccessMessage('Dados actualizados com sucesso!')
             })
             .catch(function(error) {
                 console.error("Error adding document: ", error);

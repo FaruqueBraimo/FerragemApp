@@ -71,8 +71,12 @@ import { showErrorMessage } from "../functions/handle-error-messages";
 				this.$router.push('/');
 				 showErrorMessage('Sem permissão, por favor autentique-se');
 			}
-			
 
+			if (!this.userAuth.status) {
+				this.$router.push('/');
+				 showErrorMessage('Conta bloqueada, contacte o administrador');
+			}
+			
 		},
 
 		computed: {

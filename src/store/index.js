@@ -6,6 +6,7 @@ import category from './modules/categories';
 import provider from './modules/providers';
 import customer from './modules/customers';
 import stockEntry from './modules/stockEntries';
+import role from './modules/roles';
 
 Vue.use(Vuex);
 
@@ -26,7 +27,8 @@ export default function(/* { ssrContext } */) {
 			category,
 			provider,
 			customer,
-			stockEntry
+			stockEntry,
+			role
 		},
 
 		// enable strict mode (adds overhead!)
