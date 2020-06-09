@@ -10,14 +10,13 @@
 		</td>
 		<td class="text-left">{{ user.email }}</td>
 		<td class="text-left ">
-		{{user.role}}
+		{{user.role.label || 'Não Definido'}}
     </div>
 		</td>
 
 		<td class="text-center ">
 			{{ user.createdAt | dateFormat }}
 		</td>
-
 		
 
     	<td class="text-center ">
@@ -39,11 +38,7 @@
 			return {
 				role: null,
 				options: [
-					'Administrador',
-					'Acesso somente aos Produtos e Categorias',
-					'Acesso aos Clientes e Fornecedores',
-					'Acesso a gestão de Stock',
-					'Nenhum Acesso'
+				
 				]
 			};
 		},

@@ -59,14 +59,30 @@
 		methods: {
 			...mapActions('auth', ['registerUser', 'updateUser']),
 
+			
+
 			activeUser(user) {
         let userUpdate = {}
-         userUpdate.status = !user.status
+		 userUpdate.status = !user.status
+		  let label = user.status ? 'Desactivar' : 'Activar'
+		 
+		  this.$q
+					.dialog({
+						title: 'Confirme',
+						message: `Tem certeza que deseja ${label} o  ${user.name} ?`,
+						ok: 'Sim',
+						cancel: true,
+						cancel: 'Não',
+						persistent: true
+					})
+					.onOk(() => {
 
 					this.updateUser({
 						id: user.id,
 						updates: userUpdate
-					});
+					});					});
+
+
 				
 			}
 		},
