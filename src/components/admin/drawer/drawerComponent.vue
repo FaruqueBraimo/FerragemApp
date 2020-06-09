@@ -144,15 +144,45 @@
 					</q-list>
 				</q-expansion-item>
 
-				<q-item clickable v-ripple to="/users" exact>
-					<q-item-section avatar>
-						<q-icon name="person" />
-					</q-item-section>
 
-					<q-item-section>
-						<p>Utlizadores</p>
-					</q-item-section>
-				</q-item>
+				<q-expansion-item
+					icon="person"
+					label="Utilizadores"
+					dense-toggle
+					my-active-class
+					my-exact-active-class
+					expand-icon-class="text-grey-8"
+					class="ex-item"
+				>
+					<q-list class="text-body1">
+						<q-item clickable v-ripple to="/users">
+							<q-item-section avatar>
+								<q-icon
+									color="primary"
+									name="list_alt"
+								/>
+							</q-item-section>
+							<q-item-section>
+		
+								<p>Lista de Utilizadores</p>
+							</q-item-section>
+						</q-item>
+
+						<q-item clickable v-ripple to='/roles'>
+							<q-item-section avatar>
+								<q-icon
+									color="red-5"
+									name="check_box"
+								/>
+							</q-item-section>
+							<q-item-section>
+								<p>Permissões</p>
+							</q-item-section>
+						</q-item>
+					</q-list>
+				</q-expansion-item>
+
+			
 			</q-list>
 		</div>
 	</q-drawer>

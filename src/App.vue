@@ -15,7 +15,8 @@
 			this.listencategoryRealTimeChanges();
 			this.listenProviderRealTimeChanges();
 			this.listenCustomerRealTimeChanges();
-			this.listenStockEntryRealTimeChanges()
+			this.listenStockEntryRealTimeChanges();
+			this.listenRoleRealTimeChanges();
 		},
 		methods: {
 			...mapActions('auth', [
@@ -29,6 +30,7 @@
 			...mapActions('provider' , ['listenProviderRealTimeChanges']),
 			...mapActions('customer' , ['listenCustomerRealTimeChanges']),
 			...mapActions('stockEntry' , ['listenStockEntryRealTimeChanges']),
+			...mapActions('role' , ['listenRoleRealTimeChanges']),
 
 
 		},

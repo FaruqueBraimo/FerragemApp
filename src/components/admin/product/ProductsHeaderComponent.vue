@@ -96,7 +96,12 @@
 		computed: {
 			...mapState('category', ['categories']),
 
-			fetchCategories() {
+		
+		},
+		methods: {
+			...mapActions('product', ['listenProductRealTimeChanges']),
+
+				fetchCategories() {
 				Object.keys(this.categories).forEach((element, key) => {
 					this.optionalcategory.push({
 						value: element,
@@ -104,11 +109,7 @@
 					});
 				});
 
-				return '';
 			}
-		},
-		methods: {
-			...mapActions('product', ['listenProductRealTimeChanges'])
 		},
 		mounted() {
 			this.fetchCategories();
@@ -120,6 +121,7 @@
 					this.listenProductRealTimeChanges();
 				}
 			},
+
 			filterCategory(val) {
 				if (val) {
 				this.$emit('productFilterCategory', this.filterCategory)				}
