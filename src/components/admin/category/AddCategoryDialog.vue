@@ -6,7 +6,7 @@
 		persistent
 		position="right"
 	>
-		<q-card style="width: 100px;">
+		<q-card style="width: 300px;">
 			<q-card-section class="row items-center">
 				<div class="text-h6 text-center"> Categoria</div>
 				<q-space />

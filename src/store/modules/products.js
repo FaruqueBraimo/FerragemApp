@@ -78,6 +78,42 @@ const actions = {
 		}
 	},
 
+	filterCategoryDatafromDb({ state, commit, dispatch },myQuery) {
+		let query = null
+		if(myQuery=='Todas') {
+			dispatch('listenProductRealTimeChanges')
+		}
+		else{
+		 query = dbProducts.where("category.value", "==", myQuery.value)
+				
+		let query = dbProducts.where("category.value", "==", myQuery.value)
+		commit('resetProducts');
+
+		query.onSnapshot(function(snapshot) {
+			snapshot.docChanges().forEach(function(change) {
+				console.log(change.doc.data());
+				commit('resetProducts');
+
+				if (change.type === 'added') {
+					commit('addProduct', {
+						id: change.doc.id,
+						object: change.doc.data()
+					});
+				}
+				if (change.type === 'modified') {
+					commit('updateProduct', {
+						id: change.doc.id,
+						updates: change.doc.data()
+					});
+				}
+				if (change.type === 'removed') {
+					commit('deleteProduct', change.doc.id);
+				}
+			});
+		});			
+	}
+	},
+
 	filterDatafromDb({ state, commit, getters },myQuery) {
 		
 
