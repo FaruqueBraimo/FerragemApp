@@ -13,7 +13,6 @@ const { addToDate } = date
 
 const state = {
     userAuth: null,
-    redirectTo: '/users',
     defaultUser: '/statics/users/default-user.png',
     users: {},
     loading: false,
@@ -48,8 +47,10 @@ const mutations = {
         state.uploadProgress = val
     },
     addUser (state, payload) {
+        console.log('chegou')
         Vue.set(state.users, payload.id, payload.object)
     },
+    
     updateUser (state, payload) {
         Object.assign(state.users[payload.id], payload.updates)
     },
@@ -70,8 +71,7 @@ const getters = {
         if (!user) {
             return 'Anonimo'
         }
-        return user && user.name ? user.name : 'Anonimo'
-    },
+        return user && user.name ? user.name : 'Anonimo'    },
     getUserLocation : (state, getters) => (user) => {
         if (!user) {
             return ''
@@ -94,14 +94,22 @@ const actions = {
                 let user = payload
                 user.id = resp.user.uid
                 user.email = resp.user.email
-                user.status = true
+                // user.status = true
                 user.createdAt = new Date()
                 user.updatedAt = new Date()
 
                  commit('setUserAuth', user)
-                 dispatch('addUser', user)
-                showSuccessMessage('A  conta foi criada com sucesso!')
-                this.$router.push(state.redirectTo)
+
+                 dbUsers.doc(payload.id).set(payload)
+                 .then(function(docRef) {
+                     // showSuccessMessage('Prato adicionado com sucesso!')
+                 })
+                 .catch(function(error) {
+                     console.error("Error adding document: ", error);
+                     commit('loading', false)
+                     showErrorMessage(error.message)
+                 });
+
 
                 Loading.hide()
                 return user
@@ -162,11 +170,10 @@ const actions = {
         this.$router.push('/')
     },
 
-    addUser ({commit}, payload) {        
-
-        dbUsers.doc(payload.id).set(payload)
-            .then(function(docRef) {
-                // gravado com sucesso...
+    addUser({commit}, payload) {        
+        payload.deletavel = true
+    dbUsers.add(payload).then(function(docRef) {
+                 showSuccessMessage('A  conta foi criada com sucesso!')
             })
             .catch(function(error) {
                 console.error("Error adding document: ", error);
@@ -192,19 +199,16 @@ const actions = {
     },
 
     deleteUser ({commit}, id) {
-        commit('loading', true)
         dbUsers.doc(id).delete()
             .then(function(docRef) {
                 commit('loading', false)
-                // showSuccessMessage('Serviço deletado com sucesso!')
+                console.log('user deletado com sucesso!')
             })
             .catch(function(error) {
                 console.error("Error removing document: ", error);
                 commit('loading', false)
                 showErrorMessage(error.message)
             });
-
-
 
     },
 
@@ -220,6 +224,7 @@ const actions = {
                         object: change.doc.data()
                     })
                 }
+
                 if (change.type === "modified") {
                     commit('updateUser', {
                         id: change.doc.id,

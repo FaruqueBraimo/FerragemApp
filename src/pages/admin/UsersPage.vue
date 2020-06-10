@@ -30,10 +30,10 @@
 			</tbody>
 		</q-markup-table>
 
-		<AddUserDialog
+		<add-user-dialog
 			:dialog="dialog"
 			@closeDialog="dialog = false"
-			@emitData="registerUser"
+			@emitData="saveUser"
 		/>
 	</q-page>
 </template>
@@ -57,16 +57,19 @@
 		},
 
 		methods: {
-			...mapActions('auth', ['registerUser', 'updateUser']),
-
+			...mapActions('auth', ['registerUser', 'updateUser', 'addUser']),
 			
+			saveUser(payload) {
+				this.registerUser(payload)
+				 this.addUser(payload)
+			},
 
 			activeUser(user) {
-        let userUpdate = {}
-		 userUpdate.status = !user.status
-		  let label = user.status ? 'Desactivar' : 'Activar'
-		 
-		  this.$q
+				let userUpdate = {};
+				userUpdate.status = !user.status;
+				let label = user.status ? 'Desactivar' : 'Activar';
+
+				this.$q
 					.dialog({
 						title: 'Confirme',
 						message: `Tem certeza que deseja ${label} o  ${user.name} ?`,
@@ -76,14 +79,11 @@
 						persistent: true
 					})
 					.onOk(() => {
-
-					this.updateUser({
-						id: user.id,
-						updates: userUpdate
-					});					});
-
-
-				
+						this.updateUser({
+							id: user.id,
+							updates: userUpdate
+						});
+					});
 			}
 		},
 		components: {

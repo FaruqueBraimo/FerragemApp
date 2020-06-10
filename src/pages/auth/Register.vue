@@ -9,7 +9,7 @@
 				</div>
 
 				<div class="q-px-md q-pb-md">
-					<form-component name="Register" @emitData="registerUser" />
+					<form-component name="Register" @emitData="registerNewUser" />
 				</div>
 			</q-card>
 		</div>
@@ -23,7 +23,15 @@
 		name: 'Register',
 		components: { FormComponent },
 		methods: {
-			...mapActions('auth', ['registerUser'])
+			...mapActions('auth', ['registerUser', 'addUser' ]),
+
+			registerNewUser(user) {
+
+				this.registerUser(user)
+				 this.addUser(user)
+
+			}
+
 		}
 	};
 </script>

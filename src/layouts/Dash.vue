@@ -4,7 +4,7 @@
 			<q-toolbar class="toolbar">
 				<div class="q-pr-lg" v-if="$q.screen.gt.xs">
 					<q-icon name="rv_hookup" size="xl" />
-					<span class="text-h6" id='logo'>SG Ferragem A</span>
+					<span class="text-h6" id='logo'>SG Ferragem A </span>
 				</div>
 
 				<q-space />
@@ -72,10 +72,10 @@ import { showErrorMessage } from "../functions/handle-error-messages";
 				 showErrorMessage('Sem permissão, por favor autentique-se');
 			}
 
-			if (!this.userAuth.status) {
-				this.$router.push('/');
-				 showErrorMessage('Conta bloqueada, contacte o administrador');
-			}
+			// if (!this.userAuth.status) {
+			// 	this.$router.push('/');
+			// 	 showErrorMessage('Conta bloqueada, contacte o administrador');
+			// }
 			
 		},
 

@@ -10,7 +10,7 @@
 		</td>
 		<td class="text-left">{{ user.email }}</td>
 		<td class="text-left ">
-		{{user.role.label || 'Não Definido'}}
+		{{user.role ?  user.role.label : 'Não Definido' || 'Não Definido'}}
     </div>
 		</td>
 
