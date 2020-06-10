@@ -3,15 +3,15 @@
 		<!-- content -->
 
 		<!-- content -->
-<div class="row justify-left q-py-md">
-			<q-btn
+<div class="row justify-left">
+			<!-- <q-btn
 				color="red"
 				label="Testar Codigo de Barra"
 				unelevated
 				@click="$router.push('/barcode')"
-			/>
+			/> -->
 		</div>
-		<div class="row justify-end q-py-md">
+		<div class="row justify-end q-py-sm">
 
 			<q-btn
 				color="primary"
@@ -30,6 +30,7 @@
 		>
 			<products-header-component class="q-pa-sm"
 			@productFilter ='filterproduct'
+			@productFilterCategory='productFilterCategory'
 			 />
 
 			<tbody>
@@ -44,7 +45,7 @@
 			</tbody>
 		</q-markup-table>
 					<div class="text-center text-body1" v-if="Object.keys(products).length == 0"> 
-					Não existe um produto cadastrado com esse nome. <span class="text-red-5"> Dica: </span> O sistema leva em consideração acentuações, diferença entre letras maiúsculas e minúsculos.  </div>
+			 <q-icon name="sentiment_very_dissatisfied" color="red" size="lg"/>	<span class="text-red-5">  Sem dados retornados </span>  </div>
 
 
 		
@@ -72,7 +73,7 @@
 
 
 		methods: {
-			...mapActions('product', ['deleteProduct', 'filterDatafromDb']),
+			...mapActions('product', ['deleteProduct', 'filterDatafromDb','filterCategoryDatafromDb']),
 
 
 			 removeProduct(id) {
@@ -97,6 +98,9 @@
 		  },
 		  filterproduct(query){
 			  this.filterDatafromDb(query)
+		  },
+		   productFilterCategory(query){
+			  this.filterCategoryDatafromDb(query)
 		  }
 
 		},

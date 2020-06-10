@@ -33,6 +33,7 @@ export const dbCustomers= db.collection("customers");
 export const dbcategories = db.collection("categories");
 
 export const dbStockEntries = db.collection("stockEntry");
+export const dbRoles = db.collection("roles");
 
 
 

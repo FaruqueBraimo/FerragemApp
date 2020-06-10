@@ -23,6 +23,8 @@ const routes = [
     { path: '/customers', component: () => import('pages/admin/CustomerPage.vue') },
     
     { path: '/users', component: () => import('pages/admin/UsersPage.vue') },
+    { path: '/roles', component: () => import('pages/admin/userRoles.vue') },
+
     { path: '/barcode', component: () => import('pages/admin/BarCodeReader.vue') },
     { path: '/entradas', component: () => import('pages/admin/stockEntryPage.vue') },
 

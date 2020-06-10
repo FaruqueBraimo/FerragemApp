@@ -10,22 +10,21 @@
 		</td>
 		<td class="text-left">{{ user.email }}</td>
 		<td class="text-left ">
-		{{user.role}}
+		{{user.role ?  user.role.label : 'Não Definido' || 'Não Definido'}}
     </div>
 		</td>
 
 		<td class="text-center ">
 			{{ user.createdAt | dateFormat }}
 		</td>
-
 		
 
     	<td class="text-center ">
-      <q-btn outline size="sm" unelevated  text-color="secondary" label="Activar" icon="toggle_on" />
+      <q-btn outline size="sm" unelevated  text-color="secondary" label="Activar" v-if="user.status == false"  icon="toggle_on"  @click="$emit('activeOrDesactiveUser',user)" />
+	        <q-btn outline size="sm" unelevated  text-color="red-5" label="Desactivar" v-else  icon="toggle_off"  @click="$emit('activeOrDesactiveUser',user)" />
+
       <q-btn  flat  size="sm" rounded text-color="primary" icon="visibility" />
       <q-btn  flat  rounded  size="sm" text-color="red" icon="delete" @click="$emit('deleteUser')" />
-
-
 		</td>
 	</tr>
 </template>
@@ -39,11 +38,7 @@
 			return {
 				role: null,
 				options: [
-					'Administrador',
-					'Acesso somente aos Produtos e Categorias',
-					'Acesso aos Clientes e Fornecedores',
-					'Acesso a gestão de Stock',
-					'Nenhum Acesso'
+				
 				]
 			};
 		},

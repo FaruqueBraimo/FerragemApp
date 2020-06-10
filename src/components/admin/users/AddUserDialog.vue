@@ -7,7 +7,7 @@
 	>
 		<q-card style="width: 100vw;">
 			<q-card-section class="row items-center">
-				<div class="text-h6 text-center">Registo de Utilizador</div>
+				<div class="text-h6 text-center">Registo de Utilizador {{fetchRoles}}</div>
 				<q-space />
 				<q-btn
 					icon="close"
@@ -22,7 +22,7 @@
 					<q-input
 						outlined
 						v-model="saveObject.name"
-						label="Seu nome *"
+						label="Nome *"
 						lazy-rules
 						:rules="[
 							val =>
@@ -112,16 +112,15 @@
 				saveObject: {},
 				model: [],
 				options: [
-					'Administrador',
-					'Nivel 1 ',
-					'Nivel 2',
-					'Nivel 3',
-					'Nenhum Acesso'
+					
 				]
 			};
 		},
 		computed: {
+										...mapState('role', ['roles']),
+
 			toggleDialog: {
+
 				get() {
 					return this.dialog;
 				},
@@ -129,8 +128,15 @@
 					this.$emit('closeDialog');
 				}
 			},
-			selectedId() {
-				return this.editObjectPost ? this.editObjectPost.id : null;
+			fetchRoles() {
+				Object.keys(this.roles).forEach((element, key) => {
+					this.options.push({
+						value: element,
+						label: this.roles[element].name
+					});
+				});
+
+				return '';
 			}
 		},
 		mounted() {
