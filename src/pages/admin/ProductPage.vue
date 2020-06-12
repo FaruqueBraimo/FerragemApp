@@ -10,6 +10,11 @@
 				unelevated
 				@click="$router.push('/barcode')"
 			/> -->
+			<!-- <q-btn
+				color="deep-orange"
+				label="Imprimir"
+				@click="printTable()"
+			/> -->
 		</div>
 		<div class="row justify-end q-py-sm">
 
@@ -22,6 +27,7 @@
 			/>
 		</div>
 		<q-markup-table
+			id="printMe"
 			flat
 			bordered
 			square
@@ -57,13 +63,16 @@
 	import ProductsBodyComponent from '../../components/admin/product/ProductsBodyComponent';
 	import ProductsHeaderComponent from '../../components/admin/product/ProductsHeaderComponent';
 	import AddUserDialog from '../../components/admin/users/AddUserDialog';
-
+	import VueHtmlToPaper from 'vue-html-to-paper';
 	export default {
-		// name: 'PageName',
+		 name: 'ProductPage',
 		data() {
 			return {
 				dialog: false,
-				search: ''
+				search: '',
+				options : [
+					
+				]
 			};
 		},
 		computed: {
@@ -74,7 +83,10 @@
 
 		methods: {
 			...mapActions('product', ['deleteProduct', 'filterDatafromDb','filterCategoryDatafromDb']),
-
+	printTable () {
+      // Pass the element id here
+      this.$htmlToPaper('printMe');
+    },
 
 			 removeProduct(id) {
             let productName = this.products[id].name

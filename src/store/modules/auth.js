@@ -79,7 +79,7 @@ const getters = {
         return getters.isUserPro(user) ? 'Utilizador PRO' : 'Conta gratuíta'
     },
     getUserAuth : (state) => {
-        return state.userAuth && state.users ? state.users[state.userAuth.id] : null
+        LocalStorage.getItem('userAuthId')    
     },
     
 }

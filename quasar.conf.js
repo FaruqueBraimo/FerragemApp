@@ -13,8 +13,8 @@ module.exports = function (/* ctx */) {
     // https://quasar.dev/quasar-cli/cli-documentation/boot-files
     boot: [
       'firebase',
-      'gchart'
-
+      'gchart',
+      'print'
       
     ],
 
