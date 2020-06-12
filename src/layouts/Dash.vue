@@ -4,7 +4,7 @@
 			<q-toolbar class="toolbar">
 				<div class="q-pr-lg" v-if="$q.screen.gt.xs">
 					<q-icon name="rv_hookup" size="xl" />
-					<span class="text-h6" id='logo'>SG Ferragem A </span>
+					<span class="text-h6" id='logo'>SG Ferragem A {{}}  </span>
 				</div>
 
 				<q-space />
@@ -42,6 +42,7 @@
 		 />
 
 		<q-page-container>
+			{{userAuth}}
 			<router-view />
 		</q-page-container>
 	</q-layout>
@@ -80,7 +81,7 @@ import { showErrorMessage } from "../functions/handle-error-messages";
 		},
 
 		computed: {
-			...mapState('auth', ['users', 'userAuth']),
+			...mapState('auth', ['users', 'userAuth','getUserAuth']),
 			...mapGetters('auth', ['getUserName'])
 			
 		

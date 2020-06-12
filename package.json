@@ -18,7 +18,8 @@
     "quasar": "^1.0.0",
     "vue": "^2.6.11",
     "vue-barcode-reader": "0.0.3",
-    "vue-google-charts": "^0.3.2"
+    "vue-google-charts": "^0.3.2",
+    "vue-html-to-paper": "^1.3.1"
   },
   "devDependencies": {
     "@quasar/app": "^1.0.0"
