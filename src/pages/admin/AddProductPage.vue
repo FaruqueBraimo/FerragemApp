@@ -1,5 +1,5 @@
 <template>
-	<q-page class="q-pa-xl">
+	<q-page class="q-pa-md">
 		<product-form-component @emitData="addProduct" :productData='productData' />
 	</q-page>
 </template>
