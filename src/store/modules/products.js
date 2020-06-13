@@ -231,29 +231,22 @@ const actions = {
 
 	updateProduct({ commit, rootGetters }, payload) {
 		commit('loading', true);
-
 		payload.updates.updatedAt = new Date()
-
-		let sucessMessage = payload.successMessage
-			? payload.successMessage
-			: state.defaultUpdateSuccessMessage;
 
 		return dbProducts
 			.doc(payload.id)
 			.update(payload.updates)
 			.then(function(docRef) {
 				commit('loading', false);
-
 					showSuccessMessage('Producto Editado');
-				
-
+			
 				return true;
 			})
 			.catch(function(error) {
 				console.error('Error adding document: ', error);
 				commit('loading', false);
 
-				showErrorMessage(error.message);
+				showErrorMessage('Erro');
 
 				return false;
 			});

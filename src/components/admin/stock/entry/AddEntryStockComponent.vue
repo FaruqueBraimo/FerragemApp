@@ -7,7 +7,7 @@
 	>
 		<q-card style="width: 100vw;">
 			<q-card-section class="row items-center">
-				<div class="text-h6 q-px-md text-center">Entrada de Produtos</div>
+				<div class="text-h6 q-px-sm text-center">Entrada de Produtos {{fetchProducts}}  {{fetchProviders}}</div>
 				<q-space />
 				<q-btn
 					icon="close"
@@ -19,16 +19,39 @@
 			</q-card-section>
 			<q-card-section>
 				<q-form @submit="onSubmit" @reset="onReset">
-					<div class="q-pa-md">
+					<div class="q-px-sm">
 						<q-select
 							label="Produto"
 							square
 							filled
 							:options="Optionalproducts"
 							v-model="saveObject.product"
+							lazy-rules
+							:rules="[
+								val =>
+									(val !== null && val !== '') ||
+									'Por favor escolha o produto'
+							]"
 						/>
 					</div>
-					<div class="q-pa-md">
+
+						<div class=" q-px-sm">
+							<q-select
+								label="Fornecedor do Produto"
+								square
+								
+								filled
+								:options="Optionalprovider"
+								v-model="saveObject.provider"
+												:rules="[
+								val =>
+									(val !== null && val !== '') ||
+									'Por favor insira o fornecedor'
+							]"
+			
+							/>
+						</div>
+					<div class="q-px-sm">
 						<q-input
 							square
 							filled
@@ -36,9 +59,14 @@
 							label="Quantidade"
 							v-model="saveObject.quantity"
 							lazy-rules
+							:rules="[
+								val =>
+									(val !== null && val !== '') ||
+									'Por favor insira o codigo'
+							]"
 						/>
 					</div>
-					<div class="q-pa-md">
+					<div class="q-px-sm">
 						<q-input
 							v-model="saveObject.description"
 							filled
@@ -75,14 +103,20 @@
 		props: ['dialog', 'editObject'],
 		data() {
 			return {
-				saveObject: {},
-				Optionalproducts: [],
+				saveObject: {
+					productCode  : '',
+					quantity : 0
+				},
+				Optionalproducts:[],
+				Optionalprovider: [],
 				model: [],
 				type: ['Singular', 'Empresa']
 			};
 		},
 		computed: {
 				...mapState('product', ['products', 'loading']),
+				...mapState('provider', ['providers']),
+
 
 				fetchProducts() {
 				Object.keys(this.products).forEach((element, key) => {
@@ -90,8 +124,18 @@
 						value: element,
 						label: this.products[element].name
 					});
+					this.saveObject.productCode = element;
 				});
 				},
+
+				fetchProviders() {
+				Object.keys(this.providers).forEach((element, key) => {
+					this.Optionalprovider.push({
+						value: element,
+						label: this.providers[element].name
+					});
+				});
+			},
 
 			toggleDialog: {
 				get() {
@@ -106,7 +150,7 @@
 			}
 		},
 		mounted() {
-			this.fetchProducts()
+		
 		},
 		methods: {
 			onSubmit() { 

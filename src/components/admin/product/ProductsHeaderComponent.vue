@@ -53,8 +53,8 @@
 		</tr>
 
 		<tr class="text-bold" style="font-weight: bold">
-			<th class="text-left text-bold" style="font-weight: bold">
-				Codigo de Barra
+			<th class="text-center text-bold" style="font-weight: bold">
+				Codigo 
 			</th>
 
 			<th class="text-left text-bold" style="font-weight: bold">Nome</th>

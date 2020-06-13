@@ -1,6 +1,7 @@
 <template>
 	<q-page padding>
 		<!-- content -->
+		
 
 		<div class="row justify-end q-py-md">
 		<q-btn-dropdown color="primary" unelevated label="Adicionar" dropdown-icon="change_history">
@@ -30,20 +31,22 @@
 		>
 			<stock-entry-header-component class="q-pa-sm" />
 
+
 			<tbody>
-				<customers-body-component
-					v-for="(customer, index) in customers"
+				<stock-entry-body-component
+					v-for="(stock, index) in stockEntries"
 					:key="index"
-					:customer="customer"
-					@deleteUser="deleteCustomer"
-				/>
+					:stock="Object.assign({id: index},stock)"
+					:stockId="index"
+					/>
+				
 			</tbody>
 		</q-markup-table>
 
 		<add-Entry-stock-component
 			:dialog="dialog"
 			@closeDialog="dialog = false"
-			@emitData="addStockEntry"
+			@emitData="register"
 		/>
 		
 	</q-page>
@@ -64,10 +67,25 @@
 			};
 		},
 		computed: {
+				...mapState('product', ['products']),
+		     	...mapState('stockEntry', ['stockEntries'])
+
+
 		},
 
 		methods: {
 			...mapActions('stockEntry' , ['addStockEntry']),
+			...mapActions('product', ['updateProduct', ]),
+
+				register(stockData) {
+					this.addStockEntry(stockData);
+					let lastQtd = ~~ this.products[stockData.productCode].quantity
+					let newQtd =  ~~ stockData.quantity
+					this.updateProduct( {
+						id : stockData.productCode,
+						updates : { quantity : +lastQtd+newQtd  } })
+
+				}
 
 			
 		},

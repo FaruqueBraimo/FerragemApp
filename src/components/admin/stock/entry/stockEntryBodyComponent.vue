@@ -1,33 +1,114 @@
 <template>
-	<thead>
-		<tr>
-			<th colspan="7">
-				<div class="row no-wrap items-center">
-					<q-img
-						style="width: 70px"
-						:ratio="1"
-						class="rounded-borders"
-						src="https://img.icons8.com/dusk/64/000000/user.png"/>
-					
+	<tr >
 
-					<div class="text-h6 q-ml-md text-secondary">Clientes</div>
+		<td class="text-left">
+			{{ stock.product.label }}
+		</td>
+		<td class="text-left text-primary cursor-pointer">
+			{{ stock.provider.label || 'Nenhum'}}
+		</td>
+		<td class="text-center">{{ stock.quantity }}</td>
+
+		
+		<td class="text-center ">
+			{{ stock.createdAt | dateFormat }}
+		</td>
+
+		<td class=" text-center ">
+			<div class="row justify-center items-center" style="width:100px;">
+					<div class="col">
+					<q-btn
+						flat
+						size="sm"
+						rounded
+						text-color="teal"
+						icon="info"
+						@click="$router.push('/stocks/add/' + stockId)"
+					/>
 				</div>
-			</th>
-		</tr>
 
-		<tr>
-			<th class="text-left " style="font-weight: bold">Nome</th>
-			<th class="text-left " style="font-weight: bold">Tipo de Cliente</th>
-			<th class="text-center " style="font-weight: bold">Data de Registo</th>
-			<th class="text-left q-pl-md " style="font-weight: bold">Acção</th>
-		</tr>
-	</thead>
+				<div class="col">
+					<q-btn
+						flat
+						size="sm"
+						rounded
+						text-color="primary"
+						icon="edit"
+						@click="$router.push('/stocks/add/' + stockId)"
+					/>
+				</div>
+
+				<div class="col">
+					<q-btn
+						flat
+						rounded
+						size="sm"
+						text-color="red"
+						icon="delete"
+						@click="$emit('deletestock',stockId)"
+					/>
+				</div>
+			</div>
+			
+		</td>
+
+	</tr>
+
 </template>
 
 <script>
+	import { mapActions, mapState } from 'vuex';
 	export default {
-		name: 'CustomerHeaderComponent'
+		name: 'stockBodyComponent',
+		props: ['stock','stockId'],
+		components: {  },
+		data() {
+			return {
+				dialog: false,
+				
+			};
+		},
+		computed: {
+			
+		},
+		mounted() {
+			// console.log(this.stock)
+		},
+		methods: {
+			...mapActions('settings', ['setGlobalConfirm']),
+			...mapActions('stock', ['updatestock'])
+		},
+		filters: {
+			dateFormat(val) {
+				var months = [
+					'Janeiro',
+					'Fevereiro',
+					'Março',
+					'Abril',
+					'Maio',
+					'Junho',
+					'Julho',
+					'Agosto',
+					'Setembro',
+					'Outubro',
+					'Novembro',
+					'Dezembro'
+				];
+				let dateCreated = new Date(val.seconds * 1000);
+				return (
+					dateCreated.getDate() +
+					' de ' +
+					months[dateCreated.getMonth()] +
+					' de ' +
+					dateCreated.getFullYear()
+				);
+			}
+		}
 	};
 </script>
 
-<style scoped></style>
+<style scoped>
+	.active-class {
+		background: rgb(240, 240, 240);
+	}
+</style>

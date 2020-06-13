@@ -94,20 +94,6 @@
 				</q-item>
 
 				<q-expansion-item
-					icon="assessment"
-					label="Relatórios"
-					expand-icon-class="text-grey-8"
-					dense-toggle
-					class="ex-item"
-				>
-					<q-card>
-						<div class="text-center text-caption text-red-4 q-pa-md">
-							Tudo sobre Relatórios brevemente
-						</div>
-					</q-card>
-				</q-expansion-item>
-
-				<q-expansion-item
 					icon="work"
 					label="Stock"
 					dense-toggle
@@ -145,6 +131,22 @@
 				</q-expansion-item>
 
 
+
+				<q-expansion-item
+					icon="assessment"
+					label="Relatórios"
+					expand-icon-class="text-grey-8"
+					dense-toggle
+					class="ex-item"
+				>
+					<q-card>
+						<div class="text-center text-caption text-red-4 q-pa-md">
+							Tudo sobre Relatórios brevemente
+						</div>
+					</q-card>
+				</q-expansion-item>
+
+				
 				<q-expansion-item
 					icon="person"
 					label="Utilizadores"
