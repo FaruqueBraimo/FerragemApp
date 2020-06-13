@@ -7,7 +7,7 @@ import { showSuccessMessage } from '../../functions/show-success-messages';
 let lastVisible = null;
 
 const state = {
-	StockEntries: {},
+	stockEntries: {},
 	uploadProgress: 0,
 	loading: false,
 	StockEntriesearchKey: ''
@@ -22,14 +22,14 @@ const mutations = {
 		state.uploadProgress = val;
 	},
 	addStockEntry(state, payload) {
-		Vue.set(state.StockEntries, payload.id, payload.object);
+		Vue.set(state.stockEntries, payload.id, payload.object);
 	},
 
 	editStockEntry(state, payload) {
-		Object.assign(state.StockEntries[payload.id], payload.updates);
+		Object.assign(state.stockEntries[payload.id], payload.updates);
 	},
 	deleteStockEntry(state, id) {
-		Vue.delete(state.StockEntries, id);
+		Vue.delete(state.stockEntries, id);
 	},
 	
 	

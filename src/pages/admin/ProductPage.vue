@@ -23,7 +23,7 @@
 				icon="add"
 				label="Adicionar"
 				unelevated
-				@click="$router.push('/products/add/' + null)"
+				@click="$router.push('/products/add/' + 0)"
 			/>
 		</div>
 		<q-markup-table
