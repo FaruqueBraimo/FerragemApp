@@ -19,21 +19,12 @@
 			</q-card-section>
 			<q-card-section>
 				<q-form @submit="onSubmit" @reset="onReset">
-					<q-input
-						outlined
-						v-model="saveObject.name"
-						label="Seu nome *"
-						lazy-rules
-						:rules="[
-							val =>
-								(val && val.length > 0) ||
-								'Por favor introduz o nome'
-						]"
-					/>
 
-					<q-select
+						<q-select
+						filled
+						dense
 						outlined
-						type="email"
+						square
 						:options="type"
 						v-model="saveObject.type"
 						label="Tipo de fornecdor *"
@@ -44,17 +35,79 @@
 								'Por favor insira o tipo de fornecedor'
 						]"
 					/>
+
 					<q-input
-						outlined
+						filled
+						square
+						v-model="saveObject.name"
+						label="Nome *"
+						lazy-rules
+						dense
+						:rules="[
+							val =>
+								(val && val.length > 0) ||
+								'Por favor introduz o nome'
+						]"
+					/>
+
+
+					<q-input
+					filled
+						square
+						v-model="saveObject.email"
+						label="Email *"
+						type="email"
+						lazy-rules
+						dense
+						:rules="[
+							val =>
+								(val && val.length > 0) ||
+								'Por favor introduz o email'
+						]"
+					/>
+
+					<q-input
+						filled
+						square
+						v-model="saveObject.name"
+						label="Contacto *"
+						type="number"
+						lazy-rules
+						dense
+						:rules="[
+							val =>
+								(val && val.length > 0) ||
+								'Por favor introduz o contacto'
+						]"
+					/>
+
+				
+					<q-input
+						filled
+						square
 						v-model="saveObject.address"
-						label="Endereco do fornecedor *"
+						label="Endereço  *"
 						type="text"
+
+						dense
 						lazy-rules
 						:rules="[
 							val =>
 								(val !== null && val !== '') ||
 								'Por favor, insira endereco do fornecedor'
 						]"
+					/>
+
+					<q-input
+						outlined
+						filled
+						square
+						v-model="saveObject.website"
+						label="Website  *"
+						type="text"
+						lazy-rules
+						dense
+						
 					/>
 
 					<div class="text-center">
@@ -94,8 +147,10 @@
 					'Nenhum Acesso'
 				],
 				type: [
-					'Singular',
+					'Singular Externo',
+					'Singular Interno',
 					'Empresa',
+					'Externo'
 				]
 			};
 		},
