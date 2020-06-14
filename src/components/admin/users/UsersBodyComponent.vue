@@ -5,7 +5,7 @@
 				<q-img
          src="https://img.icons8.com/dotty/80/000000/businessman.png"				/>
 			</q-avatar>
-
+			
 			{{ user.name }}
 		</td>
 		<td class="text-left">{{ user.email }}</td>
@@ -18,12 +18,15 @@
 			{{ user.createdAt | dateFormat }}
 		</td>
 		
+								
 
     	<td class="text-center ">
       <q-btn outline size="sm" unelevated  text-color="secondary" label="Activar" v-if="user.status == false"  icon="toggle_on"  @click="$emit('activeOrDesactiveUser',user)" />
 	        <q-btn outline size="sm" unelevated  text-color="red-5" label="Desactivar" v-else  icon="toggle_off"  @click="$emit('activeOrDesactiveUser',user)" />
 
-      <q-btn  flat  size="sm" rounded text-color="primary" icon="visibility" />
+      <q-btn  flat  size="sm" rounded text-color="teal" icon="visibility" />
+	    <q-btn  flat  rounded  size="sm" text-color="primary" icon="edit" @click="$emit('updateUser', user)" />
+
       <q-btn  flat  rounded  size="sm" text-color="red" icon="delete" @click="$emit('deleteUser')" />
 		</td>
 	</tr>
