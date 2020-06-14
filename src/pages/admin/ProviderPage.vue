@@ -23,9 +23,10 @@
 			<tbody>
 				<providers-body-component
 					v-for="(provider, index) in providers"
+
 					:key="index"
-					:provider="provider"
-					@deleteUser="deleteProvider"
+					:provider="Object.assign({id: index},provider)"
+					@deleteProvider="removeProvider"
 				/>
 			</tbody>
 		</q-markup-table>
@@ -57,7 +58,10 @@
 		},
 
 		methods: {
-			...mapActions('provider', ['addProvider', 'deleteProvider'])
+			...mapActions('provider', ['addProvider', 'deleteProvider']),
+
+			
+	customer
 		},
 		components: {
 			ProvidersHeaderComponent,

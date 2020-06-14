@@ -23,7 +23,8 @@
 						rounded
 						text-color="teal"
 						icon="info"
-						@click="$router.push('/stocks/add/' + stockId)"
+						disable
+						
 					/>
 				</div>
 
@@ -32,9 +33,10 @@
 						flat
 						size="sm"
 						rounded
+						disable
 						text-color="primary"
 						icon="edit"
-						@click="$router.push('/stocks/add/' + stockId)"
+					
 					/>
 				</div>
 
@@ -45,6 +47,7 @@
 						size="sm"
 						text-color="red"
 						icon="delete"
+						disable
 						@click="$emit('deletestock',stockId)"
 					/>
 				</div>

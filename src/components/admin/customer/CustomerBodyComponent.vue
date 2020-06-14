@@ -19,7 +19,7 @@
 				<div class="col text-left">
 					<customer-details-dialog :customer="customer"/>
 				</div>
-				<div class="col">
+				<!-- <div class="col">
 					<q-btn
 						flat
 						size="sm"
@@ -27,7 +27,7 @@
 						text-color="primary"
 						icon="edit"
 					/>
-				</div>
+				</div> -->
 				<div class="col">
 					<q-btn
 						flat
@@ -35,7 +35,7 @@
 						size="sm"
 						text-color="red"
 						icon="delete"
-						@click="$emit('deleteCustomer')"
+						@click="$emit('deleteCustomer',customer.id)"
 					/>
 				</div>
 			</div>
