@@ -2,7 +2,7 @@
 	<q-page padding>
 		<!-- content -->
 
-		<div class="row justify-end q-py-md">
+		<div class="row justify-end q-py-sm">
 			<q-btn
 				color="primary"
 				icon="add"

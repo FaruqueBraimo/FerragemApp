@@ -16,10 +16,13 @@
 		</tr>
 
 		<tr>
-			<th class="text-left " style="font-weight: bold">Nome</th>
+				<th class="text-left " style="font-weight: bold">Nome</th>
 			<th class="text-left " style="font-weight: bold">Tipo de Cliente</th>
+			<th class="text-center " style="font-weight: bold">Endereço</th>
+			<th class="text-left " style="font-weight: bold">Email</th>
+			<th class="text-left " style="font-weight: bold">Telefone</th>
 			<th class="text-center " style="font-weight: bold">Data de Registo</th>
-			<th class="text-left q-pl-md " style="font-weight: bold">Acção</th>
+			<th class="text-center " style="font-weight: bold">Acção</th>
 		</tr>
 	</thead>
 </template>

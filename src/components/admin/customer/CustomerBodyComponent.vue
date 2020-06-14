@@ -5,10 +5,15 @@
 		</td>
 		<td class="text-left">{{ customer.type }}</td>
 
+		<td class="text-left">{{ customer.address || 'Não Informado'}}</td>
+
+		<td class="text-left">{{ customer.email || 'Não Informado'}}</td>
+		<td class="text-left">{{ customer.phone || 'Não Informado' }}</td>
+
+
 		<td class="text-center ">
 			{{ customer.createdAt | dateFormat }}
 		</td>
-
 		<td class="text-left ">
 			<div class="row " style="width:100px;">
 				<div class="col text-left">
