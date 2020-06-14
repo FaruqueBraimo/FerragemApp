@@ -67,21 +67,22 @@ import { showErrorMessage } from "../functions/handle-error-messages";
 			};
 		},
 		mounted() {
-			if (!this.userAuth) {
-				this.$router.push('/');
-				 showErrorMessage('Sem permissão, por favor autentique-se');
+			if (!this.getUserAuth) {
+				this.$router.push('/');				
+				   this.$router.go()
+				    showErrorMessage('Sem permissão, por favor autentique-se');
 			}
 
-			// if (!this.userAuth.status) {
-			// 	this.$router.push('/');
-			// 	 showErrorMessage('Conta bloqueada, contacte o administrador');
-			// }
+			if (!this.userAuth.status) {
+				this.$router.push('/');
+				 showErrorMessage('Conta bloqueada, contacte o administrador');
+			}
 			
 		},
 
 		computed: {
-			...mapState('auth', ['users', 'userAuth','getUserAuth']),
-			...mapGetters('auth', ['getUserName'])
+			...mapState('auth', ['users', 'userAuth',]),
+			...mapGetters('auth', ['getUserName', 'getUserAuth'])
 			
 		
 		},

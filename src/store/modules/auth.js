@@ -29,6 +29,8 @@ const mutations = {
 
             if (Object.keys(state.users).length && state.users[val.id]) {
                 state.userAuth = state.users[val.id]
+                LocalStorage.set('userAuth', state.users[val.id])
+
             }
 
         } else {
@@ -78,8 +80,10 @@ const getters = {
         }
         return getters.isUserPro(user) ? 'Utilizador PRO' : 'Conta gratuíta'
     },
-    getUserAuth : (state) => {
-        LocalStorage.getItem('userAuthId')    
+    getUserAuth : () => {
+      let userAuth = LocalStorage.getItem('userAuth')
+     return userAuth
+
     },
     
 }
@@ -164,10 +168,16 @@ const actions = {
 
     
     logoutUser ({ commit }) {
+        LocalStorage.remove('userAuth')
+
         firebaseAuth.signOut();
         showSuccessMessage('Sessão terminada com sucesso!')
+
         commit('setUserAuth', null)
+
+        
         this.$router.push('/')
+        this.$router.go()
     },
 
     addUser({commit}, payload) {        
@@ -290,12 +300,6 @@ const actions = {
             });
         });
     },
-
-    // =======================================================
-
-    // ============ ePayment API comunication
-
-    // =======================================================
 
    
     
