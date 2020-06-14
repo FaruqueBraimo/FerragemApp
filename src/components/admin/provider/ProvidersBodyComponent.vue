@@ -20,7 +20,7 @@
 				<div class="col text-center">
 					<provider-details-dialog :provider="provider"/>
 				</div>
-				<div class="col">
+				<!-- <div class="col">
 					<q-btn
 						flat
 						size="sm"
@@ -28,7 +28,7 @@
 						text-color="primary"
 						icon="edit"
 					/>
-				</div>
+				</div> -->
 				<div class="col">
 					<q-btn
 						flat
@@ -36,7 +36,7 @@
 						size="sm"
 						text-color="red"
 						icon="delete"
-						@click="$emit('deleteProvider')"
+						@click="$emit('deleteProvider', provider.id)"
 					/>
 				</div>
 			</div>

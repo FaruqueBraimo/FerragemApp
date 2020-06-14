@@ -24,8 +24,8 @@
 				<customers-body-component
 					v-for="(customer, index) in customers"
 					:key="index"
-					:customer="customer"
-					@deleteUser="deleteCustomer"
+					:customer="Object.assign({id: index},customer)"
+					@deleteCustomer="removeCustumer"
 				/>
 			</tbody>
 		</q-markup-table>
@@ -58,7 +58,24 @@
 		},
 
 		methods: {
-			...mapActions('customer', ['addCustomer', 'deleteCustomer'])
+			...mapActions('customer', ['addCustomer', 'deleteCustomer']),
+
+			removeCustumer(id) {
+            let customerName = this.customers[id].name
+            this.$q
+					.dialog({
+						title: 'Confirme',
+						message: `Tem certeza que deseja apagar o cliente ${customerName} ?`,
+						ok: 'Sim',
+						cancel: true,
+						cancel: 'Não',
+						persistent: true
+					})
+					.onOk(() => {
+							this.deleteCustomer(id);
+					});
+
+          },
 		},
 		components: {
 			CustomersHeaderComponent,
