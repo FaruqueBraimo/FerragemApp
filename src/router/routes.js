@@ -8,6 +8,15 @@ const routes = [
         { path: '/register', component: () => import('pages/auth/Register.vue') },
     ]
 },
+
+{
+  path: '/sales',
+  component: () => import('layouts/salesLayout.vue'),
+  children: [
+      { path: '/', component: () => import('pages/sales/index.vue') },
+  ]
+},
+
 {
   path: '/admin',
   component: () => import('layouts/Dash.vue'),

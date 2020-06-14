@@ -24,10 +24,10 @@
       <q-btn outline size="sm" unelevated  text-color="secondary" label="Activar" v-if="user.status == false"  icon="toggle_on"  @click="$emit('activeOrDesactiveUser',user)" />
 	        <q-btn outline size="sm" unelevated  text-color="red-5" label="Desactivar" v-else  icon="toggle_off"  @click="$emit('activeOrDesactiveUser',user)" />
 
-      <q-btn  flat  size="sm" rounded text-color="teal" icon="visibility" />
+      <!-- <q-btn  flat  size="sm" rounded text-color="teal" icon="visibility" /> -->
 	    <q-btn  flat  rounded  size="sm" text-color="primary" icon="edit" @click="$emit('updateUser', user)" />
 
-      <q-btn  flat  rounded  size="sm" text-color="red" icon="delete" @click="$emit('deleteUser')" />
+      <!-- <q-btn  flat  rounded  size="sm" text-color="red" icon="delete" @click="$emit('deleteUser')" /> -->
 		</td>
 	</tr>
 </template>
