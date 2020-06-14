@@ -118,8 +118,8 @@
 								dense
 								v-model="expires"
 								label="Válido até *"
-								mask="##-##-####"
-								hint="DD-MM-AAAA"
+								mask="####-##-##"
+								hint="Ano-Mês-Dia"
 							/>
 						</div>
 					</div>
@@ -221,6 +221,12 @@
 								label="Quantidade que vai ao balcão"
 								v-model="qtdBalcony"
 								type="number"
+								lazy-rules
+												:rules="[
+								val =>
+									( val < quantity ) ||
+									'Por for basea-se na quantidade total do produto'
+							]"
 							>
 							</q-input>
 						</div>
@@ -368,13 +374,16 @@
 
 			fetchProviders() {
 			/// WE also use this computed proprities as any opportunity for realize calculus
-				
+			if( this.qtdBalcony) {
+						this.qtdWarehouse = this.quantity - this.qtdBalcony
+
+			}
+
 				if(this.price_buy !=0 &&  this.price_payd !=0 ) {
 
 				this.profit = (this.price_buy - this.price_payd) + ' MZN , Sem o Iva' ;
 		       	let profitLocal = ( (this.price_buy - this.price_payd)/(this.price_payd) )
 				this.profitMargin =   profitLocal.toFixed(3) * 100   + ' % '  + ' , Sem o Iva'
-
 				}
 				Object.keys(this.providers).forEach((element, key) => {
 					this.Optionalprovider.push({

@@ -53,6 +53,8 @@ const getters = {
 		);
 	},
 
+	
+
 	canGetMoreProducts: state => {
 		return Object.keys(state.products).length % 10 === 0;
 	}

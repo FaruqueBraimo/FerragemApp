@@ -1,21 +1,63 @@
 <template>
-	<q-layout view="hHh LpR fFf" class="bg-grey-1">
-		<q-header class="bg-primary shadow-1" reveal height-hint="60">
+	<q-layout view="hHh LpR fFf" class="bg-grey-1 ">
+		<q-header class="bg-primary shadow-1 q-pb-xs" reveal height-hint="60">
 			<q-toolbar class="toolbar">
 				<div class="q-pr-lg" v-if="$q.screen.gt.xs">
 					<q-icon name="rv_hookup" size="xl" />
-					<span class="text-h6" id='logo'>SG Ferragem A </span>
+					<span class="text-h6" id="logo">SG Ferragem A </span>
 				</div>
 
 				<q-space />
 
 				<div class="q-pl-md q-gutter-sm row no-wrap items-center">
-					<q-btn round dense flat color="white" icon="notifications">
-						<q-badge color="red" text-color="white" floating>
-							2
-						</q-badge>
-						<q-tooltip>Notificacoes</q-tooltip>
-					</q-btn>
+					<q-btn-dropdown
+						round
+						dense
+						flat
+						color="white"
+						class="q-pt-md q-pl-md"
+						icon-right="notifications"
+					>
+						<q-card style="width: 400px;">
+							<q-card-section class="row items-center" >
+								  <q-list>
+								      <q-item-label header v-if='Object.keys(productsLowWithQantity).length !== 0 && Object.keys(outDatedProducts).length !== 0' >Notificações</q-item-label>
+	  					<q-item-label header v-else  class="text-secondary"> Sem Notificações</q-item-label>
+
+              <q-item-label caption class='q-pl-md q-py-sm text-deep-orange'>Produtos abaixo do Stock</q-item-label>
+
+								<notificationComponent
+									v-for="(notification,
+									index) in productsLowWithQantity"
+									:key="index"
+									:notification="
+										Object.assign(
+											{ id: index },
+											notification
+										)
+									"
+								/>
+              <q-item-label caption class='q-pl-md q-py-sm text-deep-orange' >Produtos Fora do Prazo</q-item-label>
+
+
+								<notificationComponent2
+									v-for="(notification,
+									index) in outDatedProducts"
+									:key="index"
+									:notification="
+										Object.assign(
+											{ id: index },
+											notification
+										)
+									"
+								/>
+								 </q-list>
+							</q-card-section>
+						</q-card>
+					</q-btn-dropdown>
+					<q-badge color="red " align="bottom" v-if="Object.keys(productsLowWithQantity).length !== 0   || Object.keys(outDatedProducts).length !== 0 " >
+						{{ Object.keys(productsLowWithQantity).length + Object.keys(outDatedProducts).length   }}
+					</q-badge>
 
 					<q-btn
 						exact
@@ -24,6 +66,7 @@
 						icon="exit_to_app"
 						label="Sair"
 						@click="confirm"
+						class="q-pt-md"
 					>
 						<q-tooltip
 							content-class="text-white shadow-4"
@@ -36,10 +79,7 @@
 			</q-toolbar>
 		</q-header>
 
-		<drawerComponent
-		:userName='getUserName(userAuth)'
-		
-		 />
+		<drawerComponent :userName="getUserName(userAuth)" />
 
 		<q-page-container>
 			<router-view />
@@ -49,45 +89,100 @@
 
 <script>
 	import drawerComponent from '../components/admin/drawer/drawerComponent';
-		import { mapGetters, mapState ,mapActions} from 'vuex';
-import { showErrorMessage } from "../functions/handle-error-messages";
+	import notificationComponent from '../components/admin/notification/notificationComponent';
+		import notificationComponent2 from '../components/admin/notification/notificationComponent2';
 
+    import { date } from 'quasar'
+	import { mapGetters, mapState, mapActions } from 'vuex';
+	import { showErrorMessage } from '../functions/handle-error-messages';
 
 	export default {
 		name: 'AdminLayout',
 
 		components: {
-			drawerComponent
+			drawerComponent,
+			notificationComponent,
+			notificationComponent2
 		},
 		data() {
 			return {
 				leftDrawerOpen: false,
 				search: '',
-				storage: 0.26
+				storage: 0.26,
+				dialog: false
 			};
 		},
 		mounted() {
+			/// Verify if user is logged or no
 			if (!this.getUserAuth) {
-				this.$router.push('/');				
-				   this.$router.go()
-				    showErrorMessage('Sem permissão, por favor autentique-se');
+				this.$router.push('/');
+				this.$router.go();
+				showErrorMessage('Sem permissão, por favor autentique-se');
 			}
-
+			//Verify if user account has blocked
 			if (!this.userAuth.status) {
 				this.$router.push('/');
-				 showErrorMessage('Conta bloqueada, contacte o administrador');
+				showErrorMessage('Conta bloqueada, contacte o administrador');
 			}
-			
 		},
 
 		computed: {
-			...mapState('auth', ['users', 'userAuth',]),
-			...mapGetters('auth', ['getUserName', 'getUserAuth'])
+			...mapState('auth', ['users', 'userAuth']),
+			...mapGetters('auth', ['getUserName', 'getUserAuth']),
+			...mapState('product', ['products']),
+
+
 			
-		
+			outDatedProducts() {
+				let produtReturned = {};
+
+				Object.keys(this.products).forEach((element, key) => {
+					let products = this.products[element];
+					
+					let nowDate = Date.now();
+					let date30 = date.addToDate(nowDate, { days: 0, month: 1 })
+
+					let formattedNowDate = date.formatDate(date30, 'YYYY-MM-DD')
+
+					
+					if ( formattedNowDate  > products.expires ) {
+							let produtReturned2 = {}
+							produtReturned2[element] = products;
+						     produtReturned2[element].message2 = `Olá, Em um mês o Produto ${products.name} estára fora de prazo, A data: ${products.expires}`;
+						
+						     Object.assign(produtReturned, produtReturned2);
+	
+					
+					}
+					
+					
+				});
+
+				return produtReturned;
+			},
+
+			productsLowWithQantity() {
+				let produtReturned = {};
+
+				Object.keys(this.products).forEach((element, key) => {
+					let products = this.products[element];
+
+
+					if (products.quantity <= products.stockBreak) {
+						produtReturned[element] = products;
+						produtReturned[element].message = `Olá, o Produto ${products.name} está em roptura do stock, restam apenas ${products.quantity} unidades.`;
+					}
+
+				
+					
+					
+				});
+
+				return produtReturned;
+			}
 		},
 		methods: {
-						...mapActions('auth', ['logoutUser']),
+			...mapActions('auth', ['logoutUser']),
 
 			confirm() {
 				this.$q
@@ -100,21 +195,19 @@ import { showErrorMessage } from "../functions/handle-error-messages";
 						persistent: true
 					})
 					.onOk(() => {
-							this.logoutUser();
+						this.logoutUser();
 					});
 			}
-
 		}
 	};
 </script>
 
-<style >
-@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Lobster&display=swap');
-.toolbar{
-  height: 54px;
-}
-#logo{
-font-family: 'Fredoka One', cursive;
-}
-
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Lobster&display=swap');
+	.toolbar {
+		height: 54px;
+	}
+	#logo {
+		font-family: 'Fredoka One', cursive;
+	}
 </style>
