@@ -35,6 +35,9 @@ export const dbcategories = db.collection("categories");
 export const dbStockEntries = db.collection("stockEntry");
 export const dbRoles = db.collection("roles");
 
+export const dbNotifications = db.collection("notifications");
+
+
 
 
 // ==== Firebase file storage

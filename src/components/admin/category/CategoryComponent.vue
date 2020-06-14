@@ -9,10 +9,10 @@
 			square
 		>
 			<div class="text-left q-pa-sm	">
-				<q-chip square size="sm">
+				<!-- <q-chip square size="sm">
 					<q-avatar color="red-4" text-color="white">50</q-avatar>
 					Productos
-				</q-chip>
+				</q-chip> -->
 			</div>
 			<q-btn
 				flat
