@@ -18,7 +18,9 @@
 		<tr >
 			<th class="text-left " style="font-weight: bold">Nome</th>
 			<th class="text-left " style="font-weight: bold">Tipo de fonecedor</th>
-			<th class="text-left " style="font-weight: bold">Endereco</th>
+			<th class="text-center " style="font-weight: bold">Endereço</th>
+			<th class="text-left " style="font-weight: bold">Email</th>
+			<th class="text-left " style="font-weight: bold">Telefone</th>
 			<th class="text-center " style="font-weight: bold">Data de Registo</th>
 			<th class="text-center " style="font-weight: bold">Acção</th>
 		</tr>

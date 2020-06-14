@@ -26,14 +26,16 @@
 					:key="index"
 					:user="user"
 					@activeOrDesactiveUser="activeUser"
+					@updateUser="updateUserObject = $event"
 				/>
 			</tbody>
 		</q-markup-table>
 
 		<add-user-dialog
 			:dialog="dialog"
-			@closeDialog="dialog = false"
+			@closeDialog="dialog = false; "
 			@emitData="saveUser"
+			:updateUserObject='updateUserObject'
 		/>
 	</q-page>
 </template>
@@ -49,7 +51,8 @@
 		name: 'UserPage',
 		data() {
 			return {
-				dialog: false
+				dialog: false,
+				updateUserObject : {}
 			};
 		},
 		computed: {
@@ -63,6 +66,7 @@
 				this.registerUser(payload)
 				 this.addUser(payload)
 			},
+
 
 			activeUser(user) {
 				let userUpdate = {};
@@ -90,6 +94,15 @@
 			UsersHeaderComponent,
 			UsersBodyComponent,
 			AddUserDialog
+		},
+
+		watch: {
+			updateUserObject(val) {
+				if(val) {
+					this.dialog = true
+				}
+			},
+			
 		}
 	};
 </script>

@@ -31,7 +31,17 @@
 						]"
 					/>
 					<div>Acesso a:  </div>
+					<div class="row">
+						
+						<q-checkbox
+							v-model="saveObject.sales"
+							label="Vendas"
+							true-value=true
+                           false-value=false
+						   color="teal-5"
 
+						/>
+					</div>
 					<div class="row">
 						
 						<q-checkbox

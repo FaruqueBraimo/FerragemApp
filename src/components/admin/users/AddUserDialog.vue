@@ -7,7 +7,9 @@
 	>
 		<q-card style="width: 100vw;">
 			<q-card-section class="row items-center">
-				<div class="text-h6 text-center">Registo de Utilizador {{fetchRoles}}</div>
+				<div class="text-h6 text-center" v-if="!updateUserObject">  Registo de Utilizador {{fetchRoles}}</div>
+				<div class="text-h6 text-center" v-else> Mudança de privilêgios {{fetchRoles}}</div>
+
 				<q-space />
 				<q-btn
 					icon="close"
@@ -20,6 +22,8 @@
 			<q-card-section>
 				<q-form @submit="onSubmit" @reset="onReset">
 					<q-input
+						v-if="!updateUserObject.name"
+					
 						outlined
 						v-model="saveObject.name"
 						label="Nome *"
@@ -32,6 +36,8 @@
 					/>
 
 					<q-input
+					v-if="!updateUserObject.email"
+					
 						outlined
 						type="email"
 						v-model="saveObject.email"
@@ -51,9 +57,15 @@
 						v-model="saveObject.role"
 						:options="options"
 						class="q-pb-md"
+						:rules="[
+							val =>
+								(val !== null && val !== '') ||
+								'Por favor, insira os privelegios'
+						]"
 					/>
 
 					<q-input
+					v-if="!updateUserObject.password"
 						outlined
 						v-model="saveObject.password"
 						label="Senha *"
@@ -68,6 +80,8 @@
 
 					<q-input
 						outlined
+						v-if="!updateUserObject.confirmPassword"
+
 						v-model="saveObject.confirmPassword"
 						label="Confirme senha *"
 						type="password"
@@ -87,7 +101,7 @@
 
 						<div class="q-my-md">
 							<q-btn
-								label="Registar"
+								:label="updateUserObject  ? 'Actualizar' : 'Registar'"
 								size="md"
 								type="submit"
 								color="primary"
@@ -106,7 +120,7 @@
 	import { mapActions, mapState } from 'vuex';
 	export default {
 		name: 'DialogAddEditBlog',
-		props: ['dialog', 'editObject'],
+		props: ['dialog', 'updateUserObject'],
 		data() {
 			return {
 				saveObject: {},
@@ -140,27 +154,47 @@
 			}
 		},
 		mounted() {
+			
 		},
 		methods: {
+			...mapActions('auth', ['updateUser',]),
 
 			
 			onSubmit() {
-			
-				this.$emit('emitData', this.saveObject);
+					if(this.updateUserObject)  {
+
+
+							this.updateUser({
+								id: this.updateUserObject.id,
+								updates : {role : this.saveObject.role}
+
+							})
+					} 
+					else {
+							  this.$emit('emitData', this.saveObject);
+					}
 				
 
 				this.$emit('closeDialog');
 			},
 
 			onShowDialog() {
-				if (this.editObjectPost) {
-					this.saveObject = this.editObjectPost;
-				} else {
-				}
+				
 			},
 
 			onReset() {
 			}
+		},
+		watch: {
+			
+			updateUserObject(val) {
+				if(val) {
+				this.saveObject= this.updateUserObject
+				console.log(this.updateUserObject)
+			}
+
+			}
+			
 		}
 	};
 </script>

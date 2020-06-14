@@ -27,7 +27,7 @@
 						square
 						:options="type"
 						v-model="saveObject.type"
-						label="Tipo de fornecdor *"
+						label="Tipo de Fornecdor *"
 						lazy-rules
 						:rules="[
 							val =>
@@ -69,8 +69,8 @@
 					<q-input
 						filled
 						square
-						v-model="saveObject.name"
-						label="Contacto *"
+						v-model="saveObject.phone"
+						label="Telefone *"
 						type="number"
 						lazy-rules
 						dense

@@ -21,9 +21,12 @@
 				<q-form @submit="onSubmit" @reset="onReset">
 					<q-input
 						outlined
+						filled
+						square
 						v-model="saveObject.name"
-						label="Seu nome *"
+						label=" Nome *"
 						lazy-rules
+						dense
 						:rules="[
 							val =>
 								(val && val.length > 0) ||
@@ -33,6 +36,9 @@
 
 					<q-select
 						outlined
+							filled
+						square
+						dense
 						type="email"
 						:options="type"
 						v-model="saveObject.type"
@@ -43,6 +49,63 @@
 								(val !== null && val !== '') ||
 								'Por favor insira o tipo de cliente'
 						]"
+					/>
+						<q-input
+					filled
+						square
+						v-model="saveObject.email"
+						label="Email *"
+						type="email"
+						lazy-rules
+						dense
+						:rules="[
+							val =>
+								(val && val.length > 0) ||
+								'Por favor introduz o email'
+						]"
+					/>
+
+					<q-input
+						filled
+						square
+						v-model="saveObject.phone"
+						label="Telefone *"
+						type="number"
+						lazy-rules
+						dense
+						:rules="[
+							val =>
+								(val && val.length > 0) ||
+								'Por favor introduz o contacto'
+						]"
+					/>
+
+				
+					<q-input
+						filled
+						square
+						v-model="saveObject.address"
+						label="Endereço  *"
+						type="text"
+
+						dense
+						lazy-rules
+						:rules="[
+							val =>
+								(val !== null && val !== '') ||
+								'Por favor, insira endereco do cliente'
+						]"
+					/>
+
+					<q-input
+						outlined
+						filled
+						square
+						v-model="saveObject.obs"
+						label="Obervação  "
+						type="text"
+						dense
+						
 					/>
 					<div class="text-center">
 						<!--<router-link to="/">LOgin</router-link>-->

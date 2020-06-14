@@ -7,6 +7,8 @@ import provider from './modules/providers';
 import customer from './modules/customers';
 import stockEntry from './modules/stockEntries';
 import role from './modules/roles';
+import notification from './modules/notifications';
+
 
 Vue.use(Vuex);
 
@@ -28,7 +30,8 @@ export default function(/* { ssrContext } */) {
 			provider,
 			customer,
 			stockEntry,
-			role
+			role,
+			notification
 		},
 
 		// enable strict mode (adds overhead!)

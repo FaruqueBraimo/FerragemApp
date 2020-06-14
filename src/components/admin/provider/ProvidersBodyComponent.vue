@@ -7,6 +7,10 @@
 
 		<td class="text-left">{{ provider.address }}</td>
 
+		<td class="text-left">{{ provider.email || 'Não Informado'}}</td>
+		<td class="text-left">{{ provider.phone || 'Não Informado' }}</td>
+
+
 		<td class="text-center ">
 			{{ provider.createdAt | dateFormat }}
 		</td>

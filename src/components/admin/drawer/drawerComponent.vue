@@ -10,7 +10,7 @@
 					</q-avatar>
 					<div class="text-capitalize text-center q-py-sm">
 						<p>{{userName}}</p>
-						<small>Administrador</small>
+						<small>{{userAuth.role.label || ''}}</small>
 					</div>
 				</q-card-section>
 			</q-card>
@@ -32,12 +32,12 @@
 					</q-item-section>
 				</q-item>
 
-				<q-item clickable v-ripple exact to="/category">
+				<q-item clickable v-ripple exact to="/category" v-if="roles[userAuth.role.value].category  === 'true'">
 					<q-item-section avatar>
 						<q-icon name="apps" />
 					</q-item-section>
 
-					<q-item-section>
+					<q-item-section  >
 						<p>Categorias</p>
 					</q-item-section>
 				</q-item>
@@ -48,6 +48,7 @@
 					header-class="grey-8"
 					expand-icon-class="text-grey-8"
 					class="ex-item blue"
+					v-if="roles[userAuth.role.value].products  === 'true'"
 				>
 					<q-list class="text-body1">
 						<q-item clickable v-ripple>
@@ -74,7 +75,7 @@
 					</q-list>
 				</q-expansion-item>
 
-				<q-item clickable v-ripple exact to="/providers">
+				<q-item clickable v-ripple exact to="/providers" v-if="roles[userAuth.role.value].providers  === 'true'">
 					<q-item-section avatar>
 						<q-icon name="group" />
 					</q-item-section>
@@ -84,7 +85,7 @@
 					</q-item-section>
 				</q-item>
 
-				<q-item clickable v-ripple exact to="/customers">
+				<q-item clickable v-ripple exact to="/customers" v-if="roles[userAuth.role.value].clients  === 'true'">
 					<q-item-section avatar>
 						<q-icon name="people_alt" />
 					</q-item-section>
@@ -101,6 +102,8 @@
 					my-exact-active-class
 					expand-icon-class="text-grey-8"
 					class="ex-item"
+					v-if="roles[userAuth.role.value].stocks  === 'true'"
+					
 				>
 					<q-list class="text-body1">
 						<q-item clickable v-ripple to="entradas">
@@ -116,7 +119,7 @@
 							</q-item-section>
 						</q-item>
 
-						<q-item clickable v-ripple>
+						<q-item disable v-ripple>
 							<q-item-section avatar>
 								<q-icon
 									color="red-5"
@@ -138,6 +141,7 @@
 					expand-icon-class="text-grey-8"
 					dense-toggle
 					class="ex-item"
+					v-if="roles[userAuth.role.value].reports  === 'true'"
 				>
 					<q-card>
 						<div class="text-center text-caption text-red-4 q-pa-md">
@@ -155,6 +159,7 @@
 					my-exact-active-class
 					expand-icon-class="text-grey-8"
 					class="ex-item"
+					v-if="roles[userAuth.role.value].users === 'true'"
 				>
 					<q-list class="text-body1">
 						<q-item clickable v-ripple to="/users">
@@ -191,8 +196,18 @@
 </template>
 
 <script>
+		import { mapGetters, mapState ,mapActions} from 'vuex';
+
 	export default {
-		props:['userName']
+		props:['userName'],
+
+		computed: {
+			...mapState('auth', ['users', 'userAuth',]),
+			...mapState('role', ['roles']),
+			...mapGetters('auth', ['getUserName', 'getUserAuth'])
+			
+		
+		},
 	};
 </script>
 

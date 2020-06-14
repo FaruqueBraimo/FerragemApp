@@ -18,6 +18,7 @@
 			this.listenCustomerRealTimeChanges();
 			this.listenStockEntryRealTimeChanges();
 			this.listenRoleRealTimeChanges();
+			this.listenNotificationRealTimeChanges()
 		},
 				computed: {
 			...mapState('auth', ['users']),
@@ -53,6 +54,8 @@
 			...mapActions('customer' , ['listenCustomerRealTimeChanges']),
 			...mapActions('stockEntry' , ['listenStockEntryRealTimeChanges']),
 			...mapActions('role' , ['listenRoleRealTimeChanges']),
+			...mapActions('notification' , ['listenNotificationRealTimeChanges']),
+
 
 
 		},

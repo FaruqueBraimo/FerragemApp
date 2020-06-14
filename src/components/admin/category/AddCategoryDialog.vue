@@ -61,6 +61,7 @@
 
 <script>
 	import { mapActions, mapState } from 'vuex';
+
 	export default {
 		name: 'DialogAddEditBlog',
 		props: ['dialog', 'updateCategory'],
@@ -78,6 +79,8 @@
 			};
 		},
 		computed: {
+						...mapState('auth', ['users', 'userAuth',]),
+
 			toggleDialog: {
 				get() {
 					return this.dialog;
@@ -102,10 +105,13 @@
 			          ...mapActions('category', ['editCategory']),
 
 			onSubmit() {
-				
-                if (this.selectedId) {
 
+				
+					
+                if (this.selectedId) {
+					this.saveObject.updatedBy = this.userAuth.id
 					delete this.saveObject.id //deletando Id
+				
 					console.log(this.selectedId);
 					
 
@@ -117,6 +123,7 @@
 
 
                 } else {
+					this.saveObject.createdBy = this.userAuth.id
 			
 				this.$emit('emitData', this.saveObject);
 				
