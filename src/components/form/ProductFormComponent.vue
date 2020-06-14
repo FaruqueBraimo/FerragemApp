@@ -347,6 +347,8 @@
 			...mapState('product', ['products', 'loading']),
 			...mapState('category', ['categories']),
 			...mapState('provider', ['providers']),
+			...mapState('auth', ['users', 'userAuth',]),
+
 
 			waitingForProductData() {
 				if (this.productData) {
@@ -404,15 +406,19 @@
 					product.iva = this.iva;
 					product.profit = this.profit;
 					product.profitMargin = this.profitMargin;
-
+					product.createdBy = this.userAuth.id
+		
 
 					product.discount_iva = this.discount_iva;
 					product.qtdBalcony = this.qtdBalcony;
 					product.qtdWarehouse = this.qtdWarehouse;
 					product.stockBreak = this.stockBreak;
+					
 
 				if (this.productData.data) {
-					
+					delete product.createdBy 
+					product.updatedBy = this.userAuth.id
+
 					this.updateProduct({
 						id: this.productData.id,
 						updates: product

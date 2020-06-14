@@ -174,10 +174,9 @@ const actions = {
         showSuccessMessage('Sessão terminada com sucesso!')
 
         commit('setUserAuth', null)
-
-        
+  
         this.$router.push('/')
-        this.$router.go()
+      
     },
 
     addUser({commit}, payload) {        
