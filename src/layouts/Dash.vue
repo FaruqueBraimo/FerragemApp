@@ -113,7 +113,15 @@
 			};
 		},
 		mounted() {
+
+			 if(this.$q.platform.is.desktop) {
+                }
+                
+                else if (this.$q.platform.is.mobile) {
+                    this.$router.push('/sales')
+                }
 			/// Verify if user is logged or no
+
 			if (!this.getUserAuth) {
 				this.$router.push('/');
 				this.$router.go();

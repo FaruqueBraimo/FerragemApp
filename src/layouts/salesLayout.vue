@@ -1,6 +1,6 @@
 <template>
 	<q-layout view="lHh Lpr lFf">
-		<q-header elevated class="bg-light-green-6">
+		<q-header elevated class="bg-white">
 			<q-toolbar>
 				<q-btn
 					flat
@@ -10,6 +10,7 @@
 					@click="leftDrawerOpen = !leftDrawerOpen"
 					icon="menu"
 					aria-label="Menu"
+					color="black"
 				/>
 
 				<q-toolbar-title class="text-subtitle1">
@@ -88,6 +89,13 @@
 			};
 		},
 		mounted() {
+			 if(this.$q.platform.is.desktop) {
+				  this.$router.push('/admin')
+                }
+                
+                else if (this.$q.platform.is.mobile) {
+                   
+                }
 			/// Verify if user is logged or no
 			if (!this.getUserAuth) {
 				this.$router.push('/');

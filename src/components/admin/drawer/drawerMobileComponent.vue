@@ -9,7 +9,7 @@
 					style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd"
 				>
 					<q-list padding class="text-grey-9">
-						<q-item clickable v-ripple to="" exact>
+						<q-item clickable v-ripple to="/sales" exact>
 							<q-item-section avatar>
 								<q-icon name="home" />
 							</q-item-section>
@@ -19,7 +19,7 @@
 							</q-item-section>
 						</q-item>
 
-                        <q-item clickable v-ripple to="" exact>
+                        <q-item clickable v-ripple to="/sales/products" exact>
 							<q-item-section avatar>
 								<q-icon name="local_grocery_store" />
 							</q-item-section>
@@ -77,14 +77,14 @@
 					</q-list>
 				</q-scroll-area>
 				<q-img
-					class="absolute-top bg-light-green-6"
+					class="absolute-top bg-white"
 					style="height: 150px "
 				>
 					<div class="absolute-center bg-transparent">
 						<q-avatar size="56px" class="">
 							<img 							src="https://img.icons8.com/color/96/000000/user-male-circle.png"/>
 						</q-avatar>
-						<div class="text-white text-center text-bold text-body1">
+						<div class="text-white text-center text-black text-bold text-body1">
                             						@<small>{{userName}}</small>
 
                         </div>

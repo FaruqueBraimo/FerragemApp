@@ -4,6 +4,7 @@ import {firebaseAuth, dbUsers, imagesUsers} from "../../boot/firebase";
 import { showErrorMessage } from "../../functions/handle-error-messages";
 import { showSuccessMessage } from "../../functions/show-success-messages";
 import { showLoading } from "../../functions/show-loading";
+import { Platform } from 'quasar'
 
 const { addToDate } = date
 
@@ -132,8 +133,15 @@ const actions = {
                     id: resp.user.uid,
                     email: resp.user.email,
                 })
+                if(Platform.is.desktop) {
+                    this.$router.push('/admin')
+                }
+                
+                else if (Platform.is.mobile) {
+                    this.$router.push('/sales')
+                }
 
-                this.$router.push('/admin')
+                
 
                 Loading.hide()
             })
