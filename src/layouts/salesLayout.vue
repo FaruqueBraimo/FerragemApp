@@ -12,9 +12,10 @@
 					aria-label="Menu"
 					color="black"
 				/>
+				<q-space/>
 
-				<q-toolbar-title class="text-subtitle1">
-					Ferragm-Vendas 
+				<q-toolbar-title class="text-subtitle1 q-pl-md text-bold text-center text-grey-6">
+					{{pageTitle}} 
 				</q-toolbar-title>
                 <q-space/>
                  <q-avatar>
@@ -113,6 +114,8 @@
 			...mapState('auth', ['users', 'userAuth']),
 			...mapGetters('auth', ['getUserName', 'getUserAuth']),
 			...mapState('product', ['products']),
+			...mapState('setting', ['pageTitle']),
+
 
 
 		},

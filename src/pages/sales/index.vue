@@ -26,9 +26,25 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
+
 export default {
 
+ methods: {
+      			...mapActions('setting', ['setPageTitle']),
+
+    },
+    mounted() {
+      this.setPageTitle('Ferragem A')
+    }
+,
+      destroyed() {
+              this.setPageTitle('')
+
+      }
+    
 }
+
 </script>
 
 <style>
