@@ -61,7 +61,6 @@
 			...mapActions('provider', ['addProvider', 'deleteProvider']),
 
 			
-	customer
 		},
 		components: {
 			ProvidersHeaderComponent,
