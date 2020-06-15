@@ -161,9 +161,16 @@
 					</div>
 
 				 </div>
-								
+					<div class="container body-content">
+   
+    <footer class="fixarRodape">
+        <hr />
+        <p>Desenvolvido pela Gest Midia. Lda &copy; 2020</p>
+    </footer>
+</div>			
 
 	</q-page>
+	
 </template>
 
 <script>
@@ -218,6 +225,14 @@ meta: {
 		}
 	};
 </script>
+<style>
+    .fixarRodape {
+        bottom: 0;
+        position: fixed;
+        width: 90%;
+        text-align: center;
+    }
+</style>
 <style scoped>
 	.report-card {
     box-shadow:none;
