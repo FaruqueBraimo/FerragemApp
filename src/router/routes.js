@@ -15,6 +15,8 @@ const routes = [
   children: [
       { path: '/', component: () => import('pages/sales/index.vue') },
       { path: '/sales/products', component: () => import('pages/sales/Products.vue') },
+      { path: '/sales/invoices', component: () => import('pages/sales/priceInvoice.vue') },
+
 
   ]
 },
