@@ -35,6 +35,8 @@
 							</q-item-section>
 						</q-item>
 
+
+
 						<q-item clickable v-ripple>
 							<q-item-section avatar top>
 								<q-avatar
@@ -52,6 +54,90 @@
 								}}</q-item-label>
 							</q-item-section>
 						</q-item>
+
+
+							<q-item clickable v-ripple>
+							<q-item-section avatar top>
+								<q-avatar
+									icon="phone"
+									text-color="primary"
+								/>
+							</q-item-section>
+
+							<q-item-section>
+								<q-item-label class="text-subtitle1"
+									>Telefone</q-item-label
+								>
+								<q-item-label lines="1">{{
+									customer.phone || 'Não Informado'
+								}}</q-item-label>
+							</q-item-section>
+						</q-item>
+
+						<q-item clickable v-ripple>
+							<q-item-section avatar top>
+								<q-avatar
+									icon="mail"
+									text-color="primary"
+								/>
+							</q-item-section>
+
+							<q-item-section>
+								<q-item-label class="text-subtitle1"
+									>Email</q-item-label
+								>
+								<q-item-label lines="1">{{
+									customer.email || 'Não Informado'
+								}}</q-item-label>
+							</q-item-section>
+						</q-item>
+
+
+
+
+						<q-item clickable v-ripple>
+							<q-item-section avatar top>
+								<q-avatar
+									icon="location_on"
+									text-color="primary"
+								/>
+							</q-item-section>
+
+							<q-item-section>
+								<q-item-label class="text-subtitle1"
+									>Endereço</q-item-label
+								>
+								<q-item-label lines="1">{{
+									customer.address || 'Não Informado'
+								}}</q-item-label>
+							</q-item-section>
+						</q-item>
+
+
+
+
+
+
+						<q-item clickable v-ripple>
+							<q-item-section avatar top>
+								<q-avatar
+									icon="info"
+									text-color="primary"
+								/>
+							</q-item-section>
+
+							<q-item-section>
+								<q-item-label class="text-subtitle1"
+									>Observação</q-item-label
+								>
+								<q-item-label lines="1">{{
+									customer.obs || 'Não Informado'
+								}}</q-item-label>
+							</q-item-section>
+						</q-item>
+
+
+
 					</q-list>
 				</q-card-section>
 
