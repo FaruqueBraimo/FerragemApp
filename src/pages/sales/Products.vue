@@ -1,5 +1,6 @@
 <template>
   <q-page  padding>
+    
         <div class="q-pa-md">
          <q-input
         v-model="search"
@@ -36,7 +37,7 @@
 
 <script>
 	import ProductComponent from '../../components/sales/products/ProductsComponent';
-	import { mapActions, mapState } from 'vuex';
+	import { mapActions, mapState ,mapGetters} from 'vuex';
 
 export default {
     data() {
@@ -47,7 +48,7 @@ export default {
     },
 	computed: {
       ...mapState('product', ['products']),
-
+      ...mapGetters('checkedProduct',['getCheckedProducts'])
       
 		},
     components : {
@@ -55,9 +56,12 @@ export default {
     } ,
     methods: {
             ...mapActions('setting', ['setPageTitle']),
+              ...mapActions('checkedProduct', ['addCheckedProducts']),
+
+            
             
             addToCard(product) {
-              alert(product.id)
+              this.addCheckedProducts(product)
 
             }
 

@@ -1,13 +1,10 @@
 import { Notify, Loading } from 'quasar'
 
-export function showSuccessMessage(successMessage) {
-    Loading.hide()
+export function showMobileSuccessMessage(successMessage) {
     Notify.create({
-        position: 'top-right',
-        type: 'positive',
         color:      'green',
         message:    successMessage,
         actions: [{ icon: 'close', color: 'white' }]
     })
 
-} 
+}
