@@ -9,7 +9,6 @@
 	import ProductFormComponent from '../../components/form/ProductFormComponent.vue';
 	export default {
 		components: { ProductFormComponent },
-
 			computed: {
 				...mapState('product', ['products']),
 				productId(){
@@ -22,14 +21,10 @@
 					return   product
 				}
 			},		
-
 		methods: {
 			...mapActions('product', ['addProduct']),
 			...mapState('product', ['products'])
-
 		}
 	};
 	
 </script>
-
-<style></style>

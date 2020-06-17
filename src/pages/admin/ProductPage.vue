@@ -14,7 +14,9 @@
 				color="deep-orange"
 				label="Imprimir"
 				@click="printTable()"
+
 			/> -->
+			
 		</div>
 		<div class="row justify-end q-py-sm">
 
@@ -41,7 +43,7 @@
 
 			<tbody>
 				<products-body-component
-					v-for="(product, index) in products"
+					v-for="(product, index) in Object.keys(productFiltered).length > 0 ?  productFiltered  : products"
 					:key="index"
 					:product="Object.assign({id: index},product)"
 					:productId="index"
@@ -50,7 +52,7 @@
 				/>
 			</tbody>
 		</q-markup-table>
-					<div class="text-center text-body1" v-if="Object.keys(products).length == 0"> 
+					<div class="text-center text-body1" v-if="Object.keys(products).length == 0   &&  Object.keys(productFiltered).length == 0 "> 
 			 <q-icon name="sentiment_very_dissatisfied" color="red" size="lg"/>	<span class="text-red-5">  Sem dados retornados </span>  </div>
 
 
@@ -59,7 +61,7 @@
 </template>
 
 <script>
-	import { mapActions, mapState } from 'vuex';
+	import { mapActions, mapState , mapGetters } from 'vuex';
 	import ProductsBodyComponent from '../../components/admin/product/ProductsBodyComponent';
 	import ProductsHeaderComponent from '../../components/admin/product/ProductsHeaderComponent';
 	import AddUserDialog from '../../components/admin/users/AddUserDialog';
@@ -70,19 +72,21 @@
 			return {
 				dialog: false,
 				search: '',
+				
 				options : [
 					
 				]
 			};
 		},
 		computed: {
-			...mapState('product', ['products'])
+			...mapState('product', ['products', 'productFiltered']),
+			...mapGetters('product', ['searchProduct'])
 		},
 		
 
 
 		methods: {
-			...mapActions('product', ['deleteProduct', 'filterDatafromDb','filterCategoryDatafromDb']),
+			...mapActions('product', ['deleteProduct', 'filterDatafromDb','filterCategoryDatafromDb', 'setProductSearchKey']),
 	printTable () {
       // Pass the element id here
       this.$htmlToPaper('printMe');
@@ -109,7 +113,9 @@
             this.updateCategory=false;
 		  },
 		  filterproduct(query){
+			
 			  this.filterDatafromDb(query)
+
 		  },
 		   productFilterCategory(query){
 			  this.filterCategoryDatafromDb(query)
@@ -121,6 +127,15 @@
 			ProductsBodyComponent,
 			AddUserDialog,
 			 
-		}
+		},
+
+		watch: {
+			search(val) {
+
+					
+				
+			}
+		},
+		
 	};
 </script>

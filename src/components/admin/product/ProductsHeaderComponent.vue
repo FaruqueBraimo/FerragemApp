@@ -12,6 +12,17 @@
 
 					<div class="text-h6 col-1 text-secondary">Produtos</div>
 					<div class=" col-5  q-ml-xl justify-right text-right">
+						<q-select
+							dense
+							label="Filtrar Por Categoria do Produto"
+							square
+							v-model="filterCategory"
+							filled
+							:options="optionalcategory"
+						/>
+						
+					</div>
+					<div class=" col-4 ">
 						<template>
 							<q-input
 								v-model="search"
@@ -28,25 +39,11 @@
 										@click="search = ''"
 										class="cursor-pointer"
 									/>
-									<q-btn
-										unelevated
-										flat
-										icon="search"
-										@click="$emit('productFilter', search)"
-									/>
+									
 								</template>
 							</q-input>
 						</template>
-					</div>
-					<div class=" col-4 ">
-						<q-select
-							dense
-							label="Filtrar Por Categoria do Produto"
-							square
-							v-model="filterCategory"
-							filled
-							:options="optionalcategory"
-						/>
+						
 					</div>
 				</div>
 			</th>
@@ -120,6 +117,11 @@
 				if (!val) {
 					this.listenProductRealTimeChanges();
 				}
+				else {
+					this.$emit('productFilter', this.search)
+
+				}
+				
 			},
 
 			filterCategory(val) {
