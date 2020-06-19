@@ -116,6 +116,7 @@ const actions = {
 	},
 
 	filterCategoryDatafromDb({ state, commit, dispatch },myQuery) {
+	console.log(myQuery)
 		let query = null
 		if(myQuery=='Todas') {
 			dispatch('listenProductRealTimeChanges')
