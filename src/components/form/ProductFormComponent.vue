@@ -1,9 +1,11 @@
 <template>
+	<div class="flex fixed flex-center"> qu
 	<div class="row justify-center ">
 		<p class="text-h6 text-center q-pb-md text-center ">
 			Preencha os campos abaixo para registar um produto
 			{{ fetchCategories }} {{ fetchProviders }}  
 		</p>
+		
 		<q-card square bordered>
 			<q-tabs
 				v-model="tab"
@@ -209,6 +211,12 @@
 								label="Roptura de Stock"
 								v-model="stockBreak"
 								type="number"
+									lazy-rules
+												:rules="[
+								val =>
+									( val > ~~quantity ) ||
+									'Por for basea-se na quantidade total do produto'
+							]"
 							>
 							</q-input>
 						</div>
@@ -224,7 +232,7 @@
 								lazy-rules
 												:rules="[
 								val =>
-									( val < quantity ) ||
+									( val < ~~quantity ) ||
 									'Por for basea-se na quantidade total do produto'
 							]"
 							>
@@ -292,6 +300,7 @@
 				</div>
 			</div>
 		</q-card>
+		</div>
 	</div>
 </template>
 
@@ -344,7 +353,6 @@
 			this.stockBreak = this.productData.data.stockBreak;
 			this.code = this.productData.data.code;
 			this.profitMargin = this.productData.data.profitMargin;
-
 			
 			}
 			
@@ -354,13 +362,10 @@
 			...mapState('category', ['categories']),
 			...mapState('provider', ['providers']),
 			...mapState('auth', ['users', 'userAuth',]),
-
-
 			waitingForProductData() {
 				if (this.productData) {
 				}
 			},
-
 			fetchCategories() {
 				Object.keys(this.categories).forEach((element, key) => {
 					this.optionalcategory.push({
@@ -368,19 +373,14 @@
 						label: this.categories[element].name
 					});
 				});
-
 				return '';
 			},
-
 			fetchProviders() {
 			/// WE also use this computed proprities as any opportunity for realize calculus
 			if( this.qtdBalcony) {
-						this.qtdWarehouse = this.quantity - this.qtdBalcony
-
+						this.qtdWarehouse = ~~ +this.quantity - ~~this.qtdBalcony
 			}
-
 				if(this.price_buy !=0 &&  this.price_payd !=0 ) {
-
 				this.profit = (this.price_buy - this.price_payd) + ' MZN , Sem o Iva' ;
 		       	let profitLocal = ( (this.price_buy - this.price_payd)/(this.price_payd) )
 				this.profitMargin =   profitLocal.toFixed(3) * 100   + ' % '  + ' , Sem o Iva'
@@ -391,16 +391,12 @@
 						label: this.providers[element].name
 					});
 				});
-
 				return '';
 			}
 		},
-
 		methods: {
 			...mapActions('product', ['updateProduct']),
-
 			onSubmit() {
-
 				let product = {};
 					product.category = this.category;
 					product.code = this.code;
@@ -417,17 +413,14 @@
 					product.profitMargin = this.profitMargin;
 					product.createdBy = this.userAuth.id
 		
-
 					product.discount_iva = this.discount_iva;
 					product.qtdBalcony = this.qtdBalcony;
 					product.qtdWarehouse = this.qtdWarehouse;
 					product.stockBreak = this.stockBreak;
 					
-
 				if (this.productData.data) {
 					delete product.createdBy 
 					product.updatedBy = this.userAuth.id
-
 					this.updateProduct({
 						id: this.productData.id,
 						updates: product
@@ -435,9 +428,7 @@
 					this.$router.push('/products');
 				} else {
 					
-
 					this.$emit('emitData', product);
-
 					setTimeout(() => {
 						this.onReset();
 					}, 1000);
@@ -462,7 +453,6 @@
 			this.profitMargin = '';
 			}
 		},
-
 	};
 </script>
 

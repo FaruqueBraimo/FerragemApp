@@ -29,7 +29,7 @@
 					['Discos de Travão', 7]
 				],
 				chartOptions: {
-					width: 600,
+					width: 500,
 
 					chart: {
           title: 'My Daily Activities',

@@ -29,9 +29,20 @@
 							</q-item-section>
 						</q-item>
 
+						
+						<q-item clickable v-ripple to="/sales/invoices">
+							<q-item-section avatar>
+								<q-icon name="payment" />
+							</q-item-section>
+
+							<q-item-section>
+								Cotação-Factura
+							</q-item-section>
+						</q-item>
 						<q-item
 							clickable
 							v-ripple
+							disable
 							to="diario"
 							active-color="light-green-6"
 						>
@@ -44,17 +55,8 @@
 							</q-item-section>
 						</q-item>
 
-						<q-item clickable v-ripple to="">
-							<q-item-section avatar>
-								<q-icon name="payment" />
-							</q-item-section>
 
-							<q-item-section>
-								Cotação-Factura
-							</q-item-section>
-						</q-item>
-
-						<q-item clickable v-ripple to="">
+						<q-item clickable v-ripple 							disable>
 							<q-item-section avatar>
 								<q-icon name="account_circle" />
 							</q-item-section>
@@ -64,7 +66,7 @@
 							</q-item-section>
 						</q-item>
 
-						<q-item clickable v-ripple to="">
+						<q-item clickable v-ripple to="" disable>
 							<q-item-section avatar>
 								<q-icon name="arrow_back" />
 							</q-item-section>

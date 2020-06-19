@@ -10,6 +10,7 @@
             @removeCategory='removeCategory'
             @updateCategory='updateCategory = $event'
              />
+             
           </div>
         </div>
         <AddCategoryDialog

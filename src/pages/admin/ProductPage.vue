@@ -3,7 +3,7 @@
 		<!-- content -->
 
 		<!-- content -->
-<div class="row justify-left">
+		<div class="row justify-left">
 			<!-- <q-btn
 				color="red"
 				label="Testar Codigo de Barra"
@@ -14,10 +14,10 @@
 				color="deep-orange"
 				label="Imprimir"
 				@click="printTable()"
+
 			/> -->
 		</div>
 		<div class="row justify-end q-py-sm">
-
 			<q-btn
 				color="primary"
 				icon="add"
@@ -34,63 +34,93 @@
 			class="q-pa-md"
 			:style="$q.platform.is.mobile ? 'width: 100%' : ''"
 		>
-			<products-header-component class="q-pa-sm"
-			@productFilter ='filterproduct'
-			@productFilterCategory='productFilterCategory'
-			 />
+			<products-header-component
+				class="q-pa-sm"
+				@productFilter="filterproduct"
+				@productFilterCategory="productFilterCategory"
+			/>
+
+			<tbody v-if="productFiltered || products">
+				<products-body-component
+					v-for="(product, index) in Object.keys(productFiltered)
+						.length > 0
+						? productFiltered
+						: products"
+					:key="index"
+					:product="Object.assign({ id: index }, product)"
+					:productId="index"
+					@deleteProduct="removeProduct"
+				/>
+			</tbody>
 
 			<tbody>
 				<products-body-component
-					v-for="(product, index) in products"
+					v-for="(product, index) in productFilteredCategory"
 					:key="index"
-					:product="Object.assign({id: index},product)"
+					:product="Object.assign({ id: index }, product)"
 					:productId="index"
 					@deleteProduct="removeProduct"
-
 				/>
 			</tbody>
 		</q-markup-table>
-					<div class="text-center text-body1" v-if="Object.keys(products).length == 0"> 
-			 <q-icon name="sentiment_very_dissatisfied" color="red" size="lg"/>	<span class="text-red-5">  Sem dados retornados </span>  </div>
-
-
-		
+		<div
+			class="text-center text-body1"
+			v-if="
+				Object.keys(products).length == 0 &&
+					Object.keys(productFiltered).length == 0 &&
+					Object.keys(productFilteredCategory).length == 0
+			"
+		>
+			<q-icon name="sentiment_very_dissatisfied" color="red" size="lg" />
+			<span class="text-red-5"> Sem dados retornados </span>
+		</div>
 	</q-page>
 </template>
 
 <script>
-	import { mapActions, mapState } from 'vuex';
+	import { mapActions, mapState, mapGetters } from 'vuex';
 	import ProductsBodyComponent from '../../components/admin/product/ProductsBodyComponent';
 	import ProductsHeaderComponent from '../../components/admin/product/ProductsHeaderComponent';
 	import AddUserDialog from '../../components/admin/users/AddUserDialog';
 	import VueHtmlToPaper from 'vue-html-to-paper';
 	export default {
-		 name: 'ProductPage',
+		name: 'ProductPage',
 		data() {
 			return {
 				dialog: false,
 				search: '',
-				options : [
-					
-				]
+
+				options: []
 			};
 		},
 		computed: {
-			...mapState('product', ['products'])
+			...mapState('product', [
+				'products',
+				'productFiltered',
+				'productFilteredCategory'
+			]),
+			...mapGetters('product', ['searchProduct'])
 		},
-		
-
+		mounted() {
+			this.listenProductRealTimeChanges();
+		},
 
 		methods: {
-			...mapActions('product', ['deleteProduct', 'filterDatafromDb','filterCategoryDatafromDb']),
-	printTable () {
-      // Pass the element id here
-      this.$htmlToPaper('printMe');
-    },
+			...mapActions('product', [
+				'deleteProduct',
+				'listenProductRealTimeChanges',
+				'filterDatafromDb',
+				'filterCategoryDatafromDb',
+				'setProductSearchKey'
+			]),
+			printTable() {
+				// Pass the element id here
+				this.$htmlToPaper('printMe');
+			},
 
-			 removeProduct(id) {
-            let productName = this.products[id].name
-            this.$q
+			removeProduct(id) {
+				let productName = this.products[id].name;
+				this.$q
 					.dialog({
 						title: 'Confirme',
 						message: `Tem certeza que deseja apagar o produto ${productName} ?`,
@@ -100,27 +130,28 @@
 						persistent: true
 					})
 					.onOk(() => {
-							this.deleteProduct(id);
+						this.deleteProduct(id);
 					});
-
-          },
-          closeDialog() {
-            this.dialog=false;
-            this.updateCategory=false;
-		  },
-		  filterproduct(query){
-			  this.filterDatafromDb(query)
-		  },
-		   productFilterCategory(query){
-			  this.filterCategoryDatafromDb(query)
-		  }
-
+			},
+			closeDialog() {
+				this.dialog = false;
+				this.updateCategory = false;
+			},
+			filterproduct(query) {
+				this.filterDatafromDb(query);
+			},
+			productFilterCategory(query) {
+				this.filterCategoryDatafromDb(query);
+			}
 		},
 		components: {
 			ProductsHeaderComponent,
 			ProductsBodyComponent,
-			AddUserDialog,
-			 
+			AddUserDialog
+		},
+
+		watch: {
+			search(val) {}
 		}
 	};
 </script>
