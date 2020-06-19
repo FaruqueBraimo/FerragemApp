@@ -10,7 +10,7 @@
          src="https://img.icons8.com/bubbles/100/000000/user.png"
               />
 
-              <div class="text-h6 q-ml-md text-secondary">Utilizadores</div>
+              <div class="text-h6 q-ml-md text-secondary">Funcionários</div>
             </div>
           </th>
         </tr>

@@ -104,7 +104,7 @@ const actions = {
 			.then(function(docRef) {
 				commit('loading', false);
 
-				showSuccessMessage('Categoria editada com sucesso!');
+				showSuccessMessage(' Permissão  Editada!');
 
 				return true;
 			})
@@ -123,7 +123,7 @@ const actions = {
 			.doc(id)
 			.delete()
 			.then(function(docRef) {
-				showSuccessMessage('categoria eliminada com sucesso...');
+				showSuccessMessage(' Eliminada com sucesso...');
 				return true;
 			})
 			.catch(function(error) {

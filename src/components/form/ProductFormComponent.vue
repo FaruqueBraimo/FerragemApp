@@ -1,5 +1,5 @@
 <template>
-	<div class="flex fixed flex-center"> qu
+	<div class="flex fixed flex-center"> 
 	<div class="row justify-center ">
 		<p class="text-h6 text-center q-pb-md text-center ">
 			Preencha os campos abaixo para registar um produto
@@ -281,6 +281,7 @@
 						@click="onSubmit"
 						type="submit"
 						color="primary"
+						:disable='disable'
 						:loading="loading"
 						unelevated
 						class="full-width "
@@ -317,6 +318,7 @@
 				Optionalprovider: [{ label: 'Nenhum' }],
 				utility: ['Venda', 'Uso Interno'],
 				name: '',
+				disable : true,
 				category : '',
 				price : '',
 				utility: '',
@@ -380,6 +382,10 @@
 			if( this.qtdBalcony) {
 						this.qtdWarehouse = ~~ +this.quantity - ~~this.qtdBalcony
 			}
+			if(this.name !== '' && this.category !== '' && this.quantity !== '' && this.provider !== '' && this.price_buy !== '' && this.price_payd !== '' && this.stockBreak !== ''  && this.qtdBalcony !==  '') {
+				this.disable = false
+			}
+
 				if(this.price_buy !=0 &&  this.price_payd !=0 ) {
 				this.profit = (this.price_buy - this.price_payd) + ' MZN , Sem o Iva' ;
 		       	let profitLocal = ( (this.price_buy - this.price_payd)/(this.price_payd) )

@@ -5,9 +5,12 @@
 		persistent
 		position="right"
 	>
+	{{updateObject}}
 		<q-card style="width: 100vw;">
 			<q-card-section class="row items-center">
-				<div class="text-h6 q-px-sm text-center">Entrada de Produtos {{fetchProducts}}  {{fetchProviders}}</div>
+				<div class="text-h6 q-px-sm text-center">
+					Entrada de Produtos {{ fetchProducts }} {{ fetchProviders }}
+				</div>
 				<q-space />
 				<q-btn
 					icon="close"
@@ -35,22 +38,20 @@
 						/>
 					</div>
 
-						<div class=" q-px-sm">
-							<q-select
-								label="Fornecedor do Produto"
-								square
-								
-								filled
-								:options="Optionalprovider"
-								v-model="saveObject.provider"
-												:rules="[
+					<div class=" q-px-sm">
+						<q-select
+							label="Fornecedor do Produto"
+							square
+							filled
+							:options="Optionalprovider"
+							v-model="saveObject.provider"
+							:rules="[
 								val =>
 									(val !== null && val !== '') ||
 									'Por favor insira o fornecedor'
 							]"
-			
-							/>
-						</div>
+						/>
+					</div>
 					<div class="q-px-sm">
 						<q-input
 							square
@@ -80,7 +81,9 @@
 
 						<div class="q-my-md">
 							<q-btn
-								label="Registar"
+								:label="
+									updateObject.id ? ' Actualizar' : 'Registar'
+								"
 								size="md"
 								type="submit"
 								color="primary"
@@ -100,25 +103,24 @@
 
 	export default {
 		name: 'DialogAddEditBlog',
-		props: ['dialog', 'editObject'],
+		props: ['dialog', 'updateObject'],
 		data() {
 			return {
 				saveObject: {
-					productCode  : '',
-					quantity : 0
+					productCode: '',
+					quantity: 0
 				},
-				Optionalproducts:[],
+				Optionalproducts: [],
 				Optionalprovider: [],
 				model: [],
 				type: ['Singular', 'Empresa']
 			};
 		},
 		computed: {
-				...mapState('product', ['products', 'loading']),
-				...mapState('provider', ['providers']),
+			...mapState('product', ['products', 'loading']),
+			...mapState('provider', ['providers']),
 
-
-				fetchProducts() {
+			fetchProducts() {
 				Object.keys(this.products).forEach((element, key) => {
 					this.Optionalproducts.push({
 						value: element,
@@ -126,9 +128,9 @@
 					});
 					this.saveObject.productCode = element;
 				});
-				},
+			},
 
-				fetchProviders() {
+			fetchProviders() {
 				Object.keys(this.providers).forEach((element, key) => {
 					this.Optionalprovider.push({
 						value: element,
@@ -145,39 +147,45 @@
 					this.$emit('closeDialog');
 				}
 			},
-			selectedId() {
-				return this.editObjectPost ? this.editObjectPost.id : null;
-			}
+			
 		},
-		mounted() {
-		
-		},
+		mounted() {},
 		methods: {
-			onSubmit() { 
-				if(this.saveObject.quantity <= 0 ) {
-					 
-      this.$q.dialog({
-        title: 'Quantidade Inválida',
-        message: 'Coloque uma quantidade real por favor'
-      })
 
-				}
-				else{
-							this.$emit('emitData', this.saveObject);
 
+			...mapActions('stockEntry' , ['editStockEntry']),
+
+			onSubmit() {
+				if (this.updateObject.id) {
+					this.editStockEntry({
+						id: this.updateObject.id,
+						updates: this.saveObject
+					});
+				} else {
+					this.$emit('emitData', this.saveObject);
+
+					if (this.saveObject.quantity <= 0) {
+						this.$q.dialog({
+							title: 'Quantidade Inválida',
+							message: 'Coloque uma quantidade real por favor'
+						});
+					} else {
+						this.$emit('emitData', this.saveObject);
+					}
 				}
 
 				this.$emit('closeDialog');
 			},
 
-			onShowDialog() {
-				if (this.editObjectPost) {
-					this.saveObject = this.editObjectPost;
-				} else {
-				}
-			},
+			onShowDialog() {}
+		},
 
-			onReset() {}
+		watch: {
+			updateObject(val) {
+				if (val) {
+					this.saveObject = this.updateObject;
+				}
+			}
 		}
 	};
 </script>

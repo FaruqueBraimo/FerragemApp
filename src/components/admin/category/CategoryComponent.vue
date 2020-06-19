@@ -7,7 +7,7 @@
 			flat
 			bordered
 			square
-			@click="productFilterCategory({ value: category.id })"
+			
 		>
 			<div class="text-left q-pa-sm	">
 				<!-- <q-chip square size="sm">
@@ -23,7 +23,14 @@
 			>
 				<q-menu>
 					<q-list style="min-width: 100px">
+						<q-item clickable v-close-popup class="text-primary">
+							<q-item-section
+							@click="productFilterCategory({ value: category.id })"
+								>Produtos
+							</q-item-section>
+						</q-item>
 						<q-item clickable v-close-popup>
+							
 							<q-item-section
 								@click="$emit('updateCategory', category)"
 								>Editar</q-item-section
@@ -35,6 +42,8 @@
 								>Remover
 							</q-item-section>
 						</q-item>
+
+						
 					</q-list>
 				</q-menu>
 			</q-btn>
