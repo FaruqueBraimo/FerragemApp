@@ -1,5 +1,5 @@
 <template>
-	<div class="flex fixed flex-center"> 
+	<div class="flex fixed flex-center"> qu
 	<div class="row justify-center ">
 		<p class="text-h6 text-center q-pb-md text-center ">
 			Preencha os campos abaixo para registar um produto

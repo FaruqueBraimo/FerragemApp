@@ -11,7 +11,8 @@ const state = {
 	uploadProgress: 0,
 	loading: false,
 	productSearchKey: '',
-	productFiltered : {}
+	productFiltered : {},
+	productFilteredCategory : {}
 	
 	}
 
@@ -38,16 +39,24 @@ const mutations = {
 	setProductSearchKey(state, val) {
 		state.productSearchKey = val;
 	},
-	addProduct2(state, payload) {
+	addProductSearch(state, payload) {
 		// Vue.set(state.products, payload.id, payload.object);
 		Vue.set(state.productFiltered, payload.id, payload.object);
+	},
+	addProductByCategory(state, payload) {
+		// Vue.set(state.products, payload.id, payload.object);
+		Vue.set(state.productFilteredCategory, payload.id, payload.object);
 	},
 	resetProducts(state) {
 		state.products = {};
 	},
 	productFiltered(state) {
 		state.productFiltered = {};
+	},
+	productFilteredCategory(state) {
+		state.productFilteredCategory = {};
 	}
+
 };
 
 const getters = {
@@ -65,7 +74,7 @@ const getters = {
 	},
 	
 	getProductData:(state) => {
-				return state.products;
+				return state.products || state.productFilteredCategory ;
 	},
 
 	searchProduct: (state) => (products) => {
@@ -117,6 +126,8 @@ const actions = {
 		let query = dbProducts.where("category.value", "==", myQuery.value)
 		commit('resetProducts');
 		commit('productFiltered');
+		commit('productFilteredCategory');
+
 
 
 		query.onSnapshot(function(snapshot) {
@@ -125,7 +136,7 @@ const actions = {
 				commit('resetProducts');
 
 				if (change.type === 'added') {
-					commit('addProduct', {
+					commit('addProductByCategory', {
 						id: change.doc.id,
 						object: change.doc.data()
 					});
@@ -147,37 +158,14 @@ const actions = {
 	filterDatafromDb({ state, commit, getters },myQuery) {
 		
 
-		// let query = dbProducts.where("name", "==", myQuery)
-
-		// query.onSnapshot(function(snapshot) {
-		// 	snapshot.docChanges().forEach(function(change) {
-		// 		console.log(change.doc.data());
-		// 		commit('resetProducts');
-
-		// 		if (change.type === 'added') {
-		// 			commit('addProduct', {
-		// 				id: change.doc.id,
-		// 				object: change.doc.data()
-		// 			});
-		// 		}
-		// 		if (change.type === 'modified') {
-		// 			commit('updateProduct', {
-		// 				id: change.doc.id,
-		// 				updates: change.doc.data()
-		// 			});
-		// 		}
-		// 		if (change.type === 'removed') {
-		// 			commit('deleteProduct', change.doc.id);
-		// 		}
-		// 	});
-		// });		
-		
+	
 		let products =	getters.getProductData;
 		Object.keys(products).forEach(key => {
             let product = products[key]
             if (product.name.toLowerCase().includes(myQuery.toLowerCase())) {
 				commit('resetProducts');
-				commit('addProduct2', {
+				commit('productFilteredCategory');				
+				commit('addProductSearch', {
 					id : key,
 					object : product
 				 } );
@@ -198,6 +186,7 @@ const actions = {
 	listenProductRealTimeChanges({ commit }) {
 		commit('resetProducts');
 		commit('productFiltered');
+		commit('productFilteredCategory');
 
 		
 
@@ -211,7 +200,7 @@ const actions = {
 							id: change.doc.id,
 							object: change.doc.data()
 						});
-						// commit('addProduct2', { 	id: change.doc.id,
+						// commit('addProductSearch', { 	id: change.doc.id,
 						// 	object: change.doc.data()} );
 					}
 					if (change.type === 'modified') {

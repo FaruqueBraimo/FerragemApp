@@ -41,21 +41,37 @@
 			@productFilterCategory='productFilterCategory'
 			 />
 
-			<tbody>
+			<tbody v-if="productFiltered || products ">
 				<products-body-component
 					v-for="(product, index) in Object.keys(productFiltered).length > 0 ?  productFiltered  : products"
 					:key="index"
 					:product="Object.assign({id: index},product)"
 					:productId="index"
 					@deleteProduct="removeProduct"
+					
 
 				/>
+		
 			</tbody>
+			
+			<tbody >
+				<products-body-component
+					v-for="(product, index) in productFilteredCategory"
+					:key="index"
+					:product="Object.assign({id: index},product)"
+					:productId="index"
+					@deleteProduct="removeProduct"
+					
+
+				/>
+		
+			</tbody>
+			
 		</q-markup-table>
-					<div class="text-center text-body1" v-if="Object.keys(products).length == 0   &&  Object.keys(productFiltered).length == 0 "> 
+					<div class="text-center text-body1" v-if="Object.keys(products).length == 0   &&  Object.keys(productFiltered).length == 0     &&  Object.keys(productFilteredCategory).length == 0 " > 
 			 <q-icon name="sentiment_very_dissatisfied" color="red" size="lg"/>	<span class="text-red-5">  Sem dados retornados </span>  </div>
 
-
+		
 		
 	</q-page>
 </template>
@@ -79,7 +95,7 @@
 			};
 		},
 		computed: {
-			...mapState('product', ['products', 'productFiltered']),
+			...mapState('product', ['products', 'productFiltered' , 'productFilteredCategory']),
 			...mapGetters('product', ['searchProduct'])
 		},
 		
