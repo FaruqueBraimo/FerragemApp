@@ -44,6 +44,7 @@ const actions = {
 
 
 	addCheckedProducts({ dispatch }, payload) {
+
 		let checked = [];
 		var data = localStorage.getItem('checkedProducts');
 		data = data ? JSON.parse(data) : [];
@@ -66,13 +67,65 @@ const actions = {
 			if (element.payload.id == payload) {
                 productChecked.splice(element, 1)
 
-			} else {
-			
-			}
+			} 
         });
-        console.log(productChecked)
 
 	    localStorage.setItem('checkedProducts', JSON.stringify(productChecked));
+        dispatch('listenCheckedProductRealTime')
+
+	},
+
+	decrementQuantity({ dispatch }, payload) {
+		let checked = [];
+		var data = localStorage.getItem('checkedProducts');
+		let productChecked = JSON.parse(data);
+		let quantityIncremented = payload.updates.qtdUnit  - 1
+
+		if(quantityIncremented >= 1) {
+			let priceIncremented = payload.updates.price_buy * quantityIncremented
+			payload.updates.price = priceIncremented
+
+			payload.updates.qtdUnit = quantityIncremented
+
+
+		}
+		let products = payload.updates
+		products.test ='llll'
+		
+		productChecked.forEach((element,key) => {
+			if (element.payload.id == payload.id) {
+			
+				productChecked[key] = {payload : products}
+
+			} 
+		});
+		
+		localStorage.setItem('checkedProducts', JSON.stringify(productChecked));
+        dispatch('listenCheckedProductRealTime')
+
+	},
+
+	
+	incrementQuantity({ dispatch }, payload) {
+		let checked = [];
+		var data = localStorage.getItem('checkedProducts');
+		let productChecked = JSON.parse(data);
+		let quantityIncremented = payload.updates.qtdUnit  + 1
+		let priceIncremented = payload.updates.price_buy * quantityIncremented
+		payload.updates.price = priceIncremented,
+		payload.updates.qtdUnit = quantityIncremented
+		let products = payload.updates
+		products.test ='llll'
+		
+		productChecked.forEach((element,key) => {
+			if (element.payload.id == payload.id) {
+			
+				productChecked[key] = {payload : products}
+
+			} 
+		});
+		
+		localStorage.setItem('checkedProducts', JSON.stringify(productChecked));
         dispatch('listenCheckedProductRealTime')
 
 	}

@@ -10,12 +10,11 @@
 			</q-item-section>
 			<q-item-section>
 				<q-item-label>
-                  
                    
 
                     <div class="row q-pt-sm">
 					<div class="col ">
-						 {{ product.name }}
+						 {{ product.payload.name }}
 					</div>
 					
 					<div class="col justify-end  text-right">
@@ -24,7 +23,7 @@
 						size="xs"
 						icon="close"
 						unelevated
-						@click="$emit('removeChecked', product.id)"
+						@click="$emit('removeChecked', product.payload.id)"
 						round
 						
 					/>
@@ -35,7 +34,7 @@
 
                 </q-item-label>
 				<q-item-label class="text-bold text-grey-7">
-					{{ product.price_buy }} MT</q-item-label
+					{{ product.payload.price }} MT</q-item-label
 				>
 
 				<div class="row q-pt-sm">
@@ -46,10 +45,13 @@
 							flat
                             class='text-bold'
 							outline
+							v-if="product.payload.qtdUnit >= 1"
 							icon="remove"
+							@click="LocalDecrementQuantity(product.payload)"
 						/>
 					</div>
-					<div class="col text-center">1</div>
+					
+					<div class="col text-center">{{ product.payload.qtdUnit }}</div>
 					<div class="col   text-right">
                         <q-btn
 							color="primary"
@@ -57,6 +59,7 @@
 							flat
 							outline
 							icon="add"
+							@click="LocalIncrementQuantity(product.payload)"
 						/>
 						
 					</div>
@@ -95,7 +98,34 @@
 		methods: {
 			addToCard(product) {
 				this.$emit('addToCard', product);
+			},
+			...mapActions('checkedProduct', [
+				'addCheckedProducts',
+				'removeChecked',
+				'incrementQuantity',
+				'decrementQuantity'
+			]),
+
+			LocalIncrementQuantity(val) {
+					let product = val
+					// 
+					
+
+					this.incrementQuantity(
+						{id : val.id, updates : product }
+					) 
+			},
+
+			LocalDecrementQuantity(val) {
+					let product = val
+					// 
+
+					this.decrementQuantity(
+						{id : val.id, updates : product }
+					) 
 			}
+
+
 		}
 	};
 </script>
