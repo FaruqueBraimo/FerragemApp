@@ -52,7 +52,7 @@
 						rounded
 						text-color="teal"
 						icon="info"
-						@click="$router.push('/products/add/' + productId)"
+						@click="$router.push('/products/' + productId)"
 					/>
 				</div>
 

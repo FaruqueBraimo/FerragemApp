@@ -306,7 +306,7 @@
 </template>
 
 <script>
-	import { mapActions, mapState } from 'vuex';
+	import { mapGetters, mapState, mapActions } from 'vuex';
 	export default {
 		name: 'ProductFormComponent',
 		props: ['productData'],
@@ -364,6 +364,9 @@
 			...mapState('category', ['categories']),
 			...mapState('provider', ['providers']),
 			...mapState('auth', ['users', 'userAuth',]),
+			...mapGetters('auth', ['getUserName', 'getUserAuth']),
+
+			
 			waitingForProductData() {
 				if (this.productData) {
 				}
@@ -417,7 +420,7 @@
 					product.iva = this.iva;
 					product.profit = this.profit;
 					product.profitMargin = this.profitMargin;
-					product.createdBy = this.userAuth.id
+					product.createdBy = this.getUserAuth.id
 		
 					product.discount_iva = this.discount_iva;
 					product.qtdBalcony = this.qtdBalcony;
@@ -426,7 +429,7 @@
 					
 				if (this.productData.data) {
 					delete product.createdBy 
-					product.updatedBy = this.userAuth.id
+					product.updatedBy = this.getUserAuth.id
 					this.updateProduct({
 						id: this.productData.id,
 						updates: product

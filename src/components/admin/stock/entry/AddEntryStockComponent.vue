@@ -5,7 +5,7 @@
 		persistent
 		position="right"
 	>
-	{{updateObject}}
+	
 		<q-card style="width: 100vw;">
 			<q-card-section class="row items-center">
 				<div class="text-h6 q-px-sm text-center">
@@ -102,7 +102,7 @@
 	import { mapActions, mapState } from 'vuex';
 
 	export default {
-		name: 'DialogAddEditBlog',
+		name: 'DialogAddEditStock',
 		props: ['dialog', 'updateObject'],
 		data() {
 			return {
@@ -119,6 +119,8 @@
 		computed: {
 			...mapState('product', ['products', 'loading']),
 			...mapState('provider', ['providers']),
+							...mapState('product', ['products']),
+
 
 			fetchProducts() {
 				Object.keys(this.products).forEach((element, key) => {
@@ -154,6 +156,7 @@
 
 
 			...mapActions('stockEntry' , ['editStockEntry']),
+			...mapActions('product', ['updateProduct', ]),
 
 			onSubmit() {
 				if (this.updateObject.id) {
@@ -161,6 +164,12 @@
 						id: this.updateObject.id,
 						updates: this.saveObject
 					});
+					let lastQtd = ~~ this.products[this.saveObject.productCode].quantity
+					let newQtd =  ~~ this.saveObject.quantity
+					this.updateProduct( {
+						id : this.saveObject.productCode,
+						updates : { quantity : +lastQtd+newQtd  } })
+					
 				} else {
 					this.$emit('emitData', this.saveObject);
 
