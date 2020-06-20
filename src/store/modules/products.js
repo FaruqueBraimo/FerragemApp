@@ -12,7 +12,8 @@ const state = {
 	loading: false,
 	productSearchKey: '',
 	productFiltered : {},
-	productFilteredCategory : {}
+	productFilteredCategory : {},
+	notifications : {}
 	
 	}
 
@@ -28,6 +29,8 @@ const mutations = {
 	},
 	addProduct(state, payload) {
 		Vue.set(state.products, payload.id, payload.object);
+		Vue.set(state.notifications, payload.id, payload.object);
+
 	},
 
 	updateProduct(state, payload) {

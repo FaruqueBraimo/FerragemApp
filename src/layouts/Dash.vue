@@ -21,7 +21,7 @@
 						<q-card style="width: 400px;">
 							<q-card-section class="row items-center" >
 								  <q-list>
-								      <q-item-label header v-if='Object.keys(productsLowWithQantity).length !== 0 && Object.keys(outDatedProducts).length !== 0' >Notificações</q-item-label>
+								      <q-item-label header v-if='Object.keys(productsLowWithQantity).length !== 0 || Object.keys(outDatedProducts).length !== 0' >Notificações</q-item-label>
 	  					<q-item-label header v-else  class="text-secondary"> Sem Notificações</q-item-label>
 
               <q-item-label caption class='q-pl-md q-py-sm text-deep-orange'>Produtos abaixo do Stock</q-item-label>
@@ -137,15 +137,15 @@
 		computed: {
 			...mapState('auth', ['users', 'userAuth']),
 			...mapGetters('auth', ['getUserName', 'getUserAuth']),
-			...mapState('product', ['products']),
+			...mapState('product', ['products','notifications']),
 
 
 			
 			outDatedProducts() {
 				let produtReturned = {};
 
-				Object.keys(this.products).forEach((element, key) => {
-					let products = this.products[element];
+				Object.keys(this.notifications).forEach((element, key) => {
+					let products = this.notifications[element];
 					
 					let nowDate = Date.now();
 					let date30 = date.addToDate(nowDate, { days: 0, month: 1 })
@@ -159,7 +159,6 @@
 						     produtReturned2[element].message2 = `Olá, Em um mês o Produto ${products.name} estára fora de prazo, A data: ${products.expires}`;
 						
 						     Object.assign(produtReturned, produtReturned2);
-	
 					
 					}
 					
@@ -172,8 +171,8 @@
 			productsLowWithQantity() {
 				let produtReturned = {};
 
-				Object.keys(this.products).forEach((element, key) => {
-					let products = this.products[element];
+				Object.keys(this.notifications).forEach((element, key) => {
+					let products = this.notifications[element];
 
 
 					if (products.quantity <= products.stockBreak) {

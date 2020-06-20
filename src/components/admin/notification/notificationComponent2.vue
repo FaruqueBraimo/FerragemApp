@@ -24,9 +24,9 @@
         </q-item-section>
 
         <q-item-section side top>
-        <q-btn color="green-6" size="xs" round icon="done_all"  flat/>
+        <!-- <q-btn color="green-6" size="xs" round icon="done_all"  flat/>
    
-        <q-btn color="red" size="xs" round icon="delete"  flat/>
+        <q-btn color="red" size="xs" round icon="delete"  flat/> -->
         </q-item-section>
         
       </q-item>

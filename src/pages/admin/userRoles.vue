@@ -24,7 +24,8 @@
 				<users-roles-body-component
 					v-for="(role, index) in roles"
 					:key="index"
-					:role="role"
+			     	:role="Object.assign({ id: index }, role)"
+					@updtateRole='updateRoleObject =$event'
 				/>
 			</tbody>
 		</q-markup-table>
@@ -33,6 +34,7 @@
 			:dialog="dialog"
 			@closeDialog="dialog = false"
 			@emitData="addRole"
+			:updateRoleObject='updateRoleObject'
 		/>
 	</q-page>
 </template>
@@ -48,7 +50,8 @@
 		 name: 'userRole',
 		data() {
 			return {
-				dialog: false
+				dialog: false,
+				updateRoleObject : {}
 			};
 		},
 		computed: {
@@ -56,7 +59,7 @@
 		},
 
 		methods: {
-			...mapActions('role', ['addRole']),
+			...mapActions('role', ['addRole' , 'updateRole'] ),
 
 			
 		},
@@ -64,6 +67,14 @@
 			UsersRoleHeaderComponent,
             UsersRolesBodyComponent,
 			AddUserRoleDialog
+		},
+		watch: {
+			updateRoleObject(val) {
+				if(val) {
+					this.dialog = true
+				}
+			},
 		}
+		
 	};
 </script>

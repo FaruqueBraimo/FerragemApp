@@ -5,6 +5,7 @@
 		persistent
 		position="right"
 	>
+	
 		<q-card style="width: 100vw;">
 			<q-card-section class="row items-center">
 				<div class="text-h6 text-center">Atribuição</div>
@@ -112,7 +113,7 @@
 
 						<div class="q-my-md">
 							<q-btn
-								label="Registar"
+								:label="updateRoleObject.id ? ' Actualizar' : 'Registar'"
 								size="md"
 								type="submit"
 								color="primary"
@@ -131,7 +132,7 @@
 	import { mapActions, mapState } from 'vuex';
 	export default {
 		name: 'DialogAddEditBlog',
-		props: ['dialog', 'editObject'],
+		props: ['dialog', 'updateRoleObject'],
 		data() {
 			return {
 				saveObject: {
@@ -156,14 +157,25 @@
 					this.$emit('closeDialog');
 				}
 			},
-			selectedId() {
-				return this.editObjectPost ? this.editObjectPost.id : null;
-			}
+		
 		},
 		mounted() {},
 		methods: {
+						...mapActions('role', ['addRole' , 'editRole'] ),
+
 			onSubmit() {
-				this.$emit('emitData', this.saveObject);
+				if(this.updateRoleObject.id)  {
+
+
+							this.editRole({
+								id: this.updateRoleObject.id,
+								updates :   this.saveObject
+
+							})
+					} 
+					else {
+							  this.$emit('emitData', this.saveObject);
+					}
 
 				this.$emit('closeDialog');
 			},
@@ -176,6 +188,16 @@
 			},
 
 			onReset() {}
+		},
+		watch: {
+			
+			updateRoleObject(val) {
+				if(val) {
+				this.saveObject= this.updateRoleObject
+			}
+
+			}
+			
 		}
 	};
 </script>

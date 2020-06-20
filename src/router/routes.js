@@ -16,6 +16,7 @@ const routes = [
       { path: '/', component: () => import('pages/sales/index.vue') },
       { path: '/sales/products', component: () => import('pages/sales/Products.vue') },
       { path: '/sales/invoices', component: () => import('pages/sales/priceInvoice.vue') },
+      { path: '/sales/card', component: () => import('pages/sales/productCard.vue') },
 
 
   ]
@@ -29,6 +30,8 @@ const routes = [
     { path: '/category', component: () => import('pages/admin/CategoryPage.vue') },
 
     { path: '/products/add/:id', component: () => import('pages/admin/AddProductPage.vue') },
+    { path: '/products/:id', component: () => import('pages/admin/ProductDatailsPage.vue') },
+
     { path: '/products/', component: () => import('pages/admin/ProductPage.vue') },
 
     { path: '/providers', component: () => import('pages/admin/ProviderPage.vue') },

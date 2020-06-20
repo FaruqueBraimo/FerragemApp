@@ -5,6 +5,8 @@
 			outlined
 			v-model="saveObject.name"
 			label="Seu nome *"
+			
+			dense
 			lazy-rules
 			:rules="[
 				val => (val && val.length > 0) || 'Por favor introduz o nome'
@@ -15,6 +17,8 @@
 			outlined
 			type="email"
 			v-model="saveObject.email"
+			
+			dense
 			label="Email *"
 			lazy-rules
 			:rules="[
@@ -28,6 +32,8 @@
 			outlined
 			v-model="saveObject.password"
 			label="Senha *"
+			
+			dense
 			type="password"
 			lazy-rules
 			:rules="[
@@ -68,6 +74,7 @@
 				/>
 				<!--<q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />-->
 			</div>
+			<div  v-if='Object.keys(users).length === 0 '> 
 				<span v-if="name === 'Entrar'"> Não tem conta? </span>
 				<span v-else> Tem conta? </span>
 
@@ -87,11 +94,15 @@
 				label="Faça login"
 				color="primary"
 			/>
+			</div>
+				
 		</div>
 	</q-form>
 </template>
 
 <script>
+	import { mapGetters, mapState, mapActions } from 'vuex';
+
 	export default {
 		name: 'FormComponent',
 		props: ['name'],
@@ -106,6 +117,10 @@
 			};
 		},
 
+	computed : {
+			...mapState('auth', ['users', 'userAuth']),
+
+	},
 		methods: {
 			onSubmit() {
 				// alert('Submited')

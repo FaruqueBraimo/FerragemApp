@@ -1,8 +1,8 @@
 <template>
-	<q-page>
+	<q-page class='bg-primary'>
 		<div class="row ">
 			<div class="col-xs-12 col-sm-6 col-md-4 offset-sm-3 offset-sm-4 ">
-				<q-card class="q-mt-xl shadow-0">
+				<q-card class="q-mt-xl " square>
 					<div class="text-center ">
 						<q-icon
 							name="person_pin"

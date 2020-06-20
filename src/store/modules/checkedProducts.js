@@ -2,38 +2,79 @@ import { showErrorMessage } from '../../functions/handle-error-messages';
 import { showSuccessMessage } from '../../functions/show-success-messages';
 
 const state = {
-	checkedProducts: ''
+	checkedProducts: []
 };
 
 const mutations = {
 	setCheckedProduct(state, payload) {
-		state.checkedProducts = payload;
-	}
+        state.checkedProducts = payload;
+    },
+    
+
 };
 
 const getters = {
-    getCheckedProducts() {
-        var data = localStorage.getItem('checkedProducts');
-        return data;
-    }
+	getCheckedProducts() {
+		var data = localStorage.getItem('checkedProducts');
+		return data;
+	},
+	checkIncludes: state => id => {
+		var data = localStorage.getItem('checkedProducts');
+		let response = false;
+		const productChecked = JSON.parse(data);
+		productChecked.forEach(element => {
+			if (element.payload.id === id) {
+				response = true;
+			}
+		});
+		return response;
+	}
 };
 
 const actions = {
-	addCheckedProducts({ commit }, payload) {
-         let checked = []
-         var data = localStorage.getItem('checkedProducts');
-         data = data ? JSON.parse(data) : [];
 
-         data.push({
-            products : {'products' : payload}
-         })
+    listenCheckedProductRealTime({ commit }) {
+		 let checked = [];
+		 let data = localStorage.getItem('checkedProducts');
+         const productChecked = data ? JSON.parse(data) : [];
+        
+         commit('setCheckedProduct', productChecked);
 
-         localStorage.setItem('checkedProducts', JSON.stringify(data));
+	},        
 
-	
-;
-	
-showSuccessMessage(' Adicionado na lista')
+
+	addCheckedProducts({ dispatch }, payload) {
+		let checked = [];
+		var data = localStorage.getItem('checkedProducts');
+		data = data ? JSON.parse(data) : [];
+
+		data.push({
+			payload
+		});
+
+		localStorage.setItem('checkedProducts', JSON.stringify(data));
+        dispatch('listenCheckedProductRealTime')
+        showSuccessMessage(' Adicionado na lista');
+        
+	},
+
+	removeChecked({ dispatch }, payload) {
+		let checked = [];
+		var data = localStorage.getItem('checkedProducts');
+		let productChecked = JSON.parse(data);
+		productChecked.forEach(element => {
+			if (element.payload.id == payload) {
+                productChecked.splice(element, 1)
+
+			} else {
+			
+			}
+        });
+        console.log(productChecked)
+
+	    localStorage.setItem('checkedProducts', JSON.stringify(productChecked));
+        dispatch('listenCheckedProductRealTime')
+
 	}
 };
 

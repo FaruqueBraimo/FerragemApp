@@ -16,26 +16,18 @@
 
 		<td class=" text-center ">
 			<div class="row justify-center items-center" style="width:100px;">
-					<div class="col">
-					<q-btn
-						flat
-						size="sm"
-						rounded
-						text-color="teal"
-						icon="info"
-						disable
-						
-					/>
-				</div>
+					
 
 				<div class="col">
 					<q-btn
 						flat
 						size="sm"
 						rounded
-						disable
+						
 						text-color="primary"
 						icon="edit"
+						@click="$emit('updateObject', stock)"
+
 					
 					/>
 				</div>
@@ -47,7 +39,7 @@
 						size="sm"
 						text-color="red"
 						icon="delete"
-						disable
+						
 						@click="$emit('deletestock',stockId)"
 					/>
 				</div>

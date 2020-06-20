@@ -47,8 +47,8 @@
 		</td>
 		<td class="text-center ">
       
-      <q-btn  flat  size="sm" rounded text-color="primary" icon="edit" />
-      <q-btn  flat  rounded  size="sm" text-color="red" icon="delete" @click="$emit('deleteUser')" />
+      <q-btn  flat  size="sm" rounded text-color="primary" icon="edit" @click="$emit('updtateRole' ,role)"/>
+      <q-btn  flat  rounded  size="sm" text-color="red" disable icon="delete" @click="$emit('deleteUser')" />
 		</td>
 	</tr>
 </template>

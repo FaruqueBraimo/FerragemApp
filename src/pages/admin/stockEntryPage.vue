@@ -38,6 +38,8 @@
 					:key="index"
 					:stock="Object.assign({id: index},stock)"
 					:stockId="index"
+					@deletestock='removeCategory'
+					@updateObject='updateObject =$event'
 					/>
 				
 			</tbody>
@@ -47,6 +49,7 @@
 			:dialog="dialog"
 			@closeDialog="dialog = false"
 			@emitData="register"
+				:updateObject='updateObject'
 		/>
 		
 	</q-page>
@@ -63,7 +66,8 @@
 		// name: 'PageName',
 		data() {
 			return {
-				dialog: false
+				dialog: false,
+				updateObject : {}
 			};
 		},
 		computed: {
@@ -74,7 +78,7 @@
 		},
 
 		methods: {
-			...mapActions('stockEntry' , ['addStockEntry']),
+			...mapActions('stockEntry' , ['addStockEntry','deleteStockEntry']),
 			...mapActions('product', ['updateProduct', ]),
 
 				register(stockData) {
@@ -85,7 +89,22 @@
 						id : stockData.productCode,
 						updates : { quantity : +lastQtd+newQtd  } })
 
-				}
+				},
+				 removeCategory(id) {
+            this.$q
+					.dialog({
+						title: 'Confirme',
+						message: `Tem certeza que deseja apagar entrada  ?`,
+						ok: 'Sim',
+						cancel: true,
+						cancel: 'Não',
+						persistent: true
+					})
+					.onOk(() => {
+							this.deleteStockEntry(id);
+					});
+
+          },
 
 			
 		},
@@ -93,6 +112,13 @@
 			stockEntryHeaderComponent,
 			stockEntryBodyComponent,
 			AddEntryStockComponent,
+		},
+		watch: {
+			updateObject(val) {
+				if(val) {
+					this.dialog = true
+				}
+			},
 		}
 	};
 </script>
