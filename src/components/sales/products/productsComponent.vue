@@ -41,7 +41,7 @@
 						color="red-5"
 						size="xs"
 						icon="remove"
-						v-if="checkIncludes(product.id)"
+						v-if="checkIncludes(product.id )"
 						unelevated
 						@click="$emit('removeChecked', product.id)"
 						round

@@ -36,6 +36,7 @@
     </q-scroll-area>
 
       
+      
 
 
           </q-list>
@@ -90,6 +91,8 @@ export default {
             
             
             addToCard(product) {
+              product.qtdUnit =  1;
+              product.price = product.price_buy
               this.addCheckedProducts(product)
 
             }

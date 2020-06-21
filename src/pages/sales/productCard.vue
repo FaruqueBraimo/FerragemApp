@@ -9,7 +9,7 @@
 				style="height: 400px; "
 			>
 				<div
-					v-for="(product, index) in products"
+					v-for="(product, index) in checkedProducts"
 					:key="index"
 					class="q-pa-xs"
 				>
@@ -86,7 +86,8 @@
 			...mapActions('setting', ['setPageTitle']),
 			...mapActions('checkedProduct', [
 				'addCheckedProducts',
-				'removeChecked'
+				'removeChecked',
+				'updateCheckedProducts'
 			]),
 
 			addToCard(product) {
