@@ -22,7 +22,13 @@
 				</div>
 			</q-scroll-area>
 		</q-list>
-		<div class="row q-pa-xs">
+		
+		<div class="row q-pa-md text-green-8 text-center"> 
+			<div class="col"> Subtotal : </div>
+			<div class="col-6 text-center">   --------------------- </div>
+			<div class="col text-right q-pr-md"> {{getSubTotal}} </div>	
+		</div>
+		<div class="row q-pa-lg">
 		<div class="q-pa-sm col">
 				<q-btn
 					color="primary"
@@ -76,7 +82,7 @@
 		},
 		computed: {
 			...mapState('product', ['products', 'checkedProducts']),
-			...mapGetters('checkedProduct', ['getCheckedProducts']),
+			...mapGetters('checkedProduct', ['getSubTotal']),
 			...mapState('checkedProduct', ['checkedProducts'])
 		},
 		components: {
