@@ -32,7 +32,7 @@ const getters = {
 		let total = 0;
 		let productChecked = state.checkedProducts
 		state.checkedProducts.forEach((element, key) => {
-			total = total + productChecked[key].payload.price
+			total = +total + ~~productChecked[key].payload.price
 		});
 
 		return total;

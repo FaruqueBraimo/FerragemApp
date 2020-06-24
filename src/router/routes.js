@@ -17,6 +17,7 @@ const routes = [
       { path: '/sales/products', component: () => import('pages/sales/Products.vue') },
       { path: '/sales/invoices', component: () => import('pages/sales/priceInvoice.vue') },
       { path: '/sales/card', component: () => import('pages/sales/productCard.vue') },
+      { path: '/sales/sale', component: () => import('pages/sales/Sales.vue') },
 
 
   ]

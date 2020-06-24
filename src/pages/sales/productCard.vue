@@ -6,7 +6,7 @@
 			<q-scroll-area
 				:thumb-style="thumbStyle"
 				:bar-style="barStyle"
-				style="height: 400px; "
+				style="height: 380px; "
 			>
 				<div
 					v-for="(product, index) in checkedProducts"
@@ -22,12 +22,14 @@
 				</div>
 			</q-scroll-area>
 		</q-list>
-		
-		<div class="row q-pa-md text-green-8 text-center"> 
+		<q-card class="my-card bg-green-11 q-mx-md" flat bordered square>
+			<div class="row q-pa-md text-green-8 text-center"> 
 			<div class="col"> Subtotal : </div>
 			<div class="col-6 text-center">   --------------------- </div>
-			<div class="col text-right q-pr-md"> {{getSubTotal}} </div>	
+			<div class="col text-right q-pr-md"> {{getSubTotal}} ,00 MT </div>	
 		</div>
+		</q-card>
+		
 		<div class="row q-pa-lg">
 		<div class="q-pa-sm col">
 				<q-btn
@@ -37,6 +39,7 @@
 					unelevated
 					icon="euro"
 					label="Efetuar Venda"
+					@click="$router.push('/sales/sale')"
 				/>
 			</div>
 
