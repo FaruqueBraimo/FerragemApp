@@ -21,6 +21,11 @@
               <q-btn color="red-5" no-caps class=" full-width"  unelevated  icon="close" label="Feixar Caixa" />
         </div>
 
+    <div class='text-center text-bold q-pt-xl text-grey-8 absolute-bottom'> 
+		 <hr  class="q-mb-sm"/>
+		  <p>Desenvolvido pela Gest Midia. Lda &copy; 2020</p>
+	 </div>
+
     </q-page>
     
 </template>

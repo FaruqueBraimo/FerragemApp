@@ -7,8 +7,8 @@
 					dense
 					round
 					drawerOrNor
-					@click="leftDrawerOpen = !leftDrawerOpen"
-					icon="menu"
+					@click="clickLeftDrawerOpen"
+					 :icon="icon"
 					aria-label="Menu"
 					color="black"
 				/>
@@ -115,12 +115,29 @@
 			...mapGetters('auth', ['getUserName', 'getUserAuth']),
 			...mapState('product', ['products']),
 			...mapState('setting', ['pageTitle']),
+icon (){
+  let caminho =  this.$route.fullPath
+  let icon = ''          
+             if ( caminho === "/sales" ) {
+				 icon = "menu"
+			 }
+              else icon =  "arrow_back"
 
-
+              return icon
+     }
 
 		},
 		methods: {
 			...mapActions('auth', ['logoutUser']),
+
+			clickLeftDrawerOpen() {
+				if(this.icon == 'menu') {
+					this.leftDrawerOpen = !this.leftDrawerOpen
+				}
+				else{
+					this.$router.go(-1)
+				}
+			},
 
 			confirm() {
 				this.$q
