@@ -1,5 +1,35 @@
 <template>
-	<div class="q-pb-md">
+	<div class="q-pb-md ">
+            <q-card class="my-card q-mb-lg" flat bordered>
+                	<div class="row q-pa-sm ">
+								<!-- <p class="text-h6 text-primary text-bold"> Detalhes do producto </p> -->
+
+								<div class="col-12 q-px-sm">
+                                    	<q-input
+								square
+								filled
+								dense
+								v-model="value"
+								type="number"
+								label="Valor Pago "
+								lazy-rules
+							:rules="[
+								val =>
+									(val !== null && val !== '') ||
+									'Por favor insira o valor'
+							]"
+											>
+							</q-input>
+									
+								</div>
+
+
+							
+							</div>
+              
+            </q-card>
+
+
 		<div class="" style="">
 			{{ fetchClients }}
 			<q-card square class="">
@@ -26,6 +56,20 @@
 							bordered
 							square
 						>
+                        	<div class="row q-pa-sm text-green-8">
+								<div class="col">Valor dado :</div>
+								<div class="col text-right q-pr-md">
+									{{ value }} ,00 MT
+								</div>
+							</div>
+
+                            	<div class="row q-pa-sm text-green-8">
+								<div class="col">Troco :</div>
+								<div class="col text-right q-pr-md">
+									{{ change }} ,00 MT
+								</div>
+							</div>
+
 							<div class="row q-pa-sm text-green-8 ">
 								<div class="col">Subtotal :</div>
 								<div class="col text-right q-pr-md">
@@ -47,6 +91,7 @@
 									{{ getSubTotal }} ,00 MT
 								</div>
 							</div>
+
 						</q-card>
 					</q-tab-panel>
 
@@ -104,7 +149,10 @@
 			return {
 				tab: 'mails',
 				client: '',
-				optionalClient: []
+                optionalClient: [],
+                value : 0,
+                change : 0
+
 			};
 		},
 		computed: {
@@ -112,6 +160,10 @@
 			...mapState('customer', ['customers']),
 
 			fetchClients() {
+                if(this.value) {
+                                    this.change = this.value - this.getSubTotal
+
+                }
 				Object.keys(this.customers).forEach((element, key) => {
 					this.optionalClient.push({
 						value: element,
@@ -127,7 +179,7 @@
             onReset() {},
             finalCheck() {
 
-                
+
             }
 		}
 	};
