@@ -7,10 +7,8 @@ const state = {
 
 const mutations = {
 	setCheckedProduct(state, payload) {
-        state.checkedProducts = payload;
-    },
-    
-
+		state.checkedProducts = payload;
+	}
 };
 
 const getters = {
@@ -28,23 +26,29 @@ const getters = {
 			}
 		});
 		return response;
+	},
+
+	getSubTotal: state => {
+		let total = 0;
+		let productChecked = state.checkedProducts
+		state.checkedProducts.forEach((element, key) => {
+			total = +total + ~~productChecked[key].payload.price
+		});
+
+		return total;
 	}
 };
 
 const actions = {
+	listenCheckedProductRealTime({ commit }) {
+		let checked = [];
+		let data = localStorage.getItem('checkedProducts');
+		const productChecked = data ? JSON.parse(data) : [];
 
-    listenCheckedProductRealTime({ commit }) {
-		 let checked = [];
-		 let data = localStorage.getItem('checkedProducts');
-         const productChecked = data ? JSON.parse(data) : [];
-        
-         commit('setCheckedProduct', productChecked);
-
-	},        
-
+		commit('setCheckedProduct', productChecked);
+	},
 
 	addCheckedProducts({ dispatch }, payload) {
-
 		let checked = [];
 		var data = localStorage.getItem('checkedProducts');
 		data = data ? JSON.parse(data) : [];
@@ -54,9 +58,8 @@ const actions = {
 		});
 
 		localStorage.setItem('checkedProducts', JSON.stringify(data));
-        dispatch('listenCheckedProductRealTime')
-        showSuccessMessage(' Adicionado na lista');
-        
+		dispatch('listenCheckedProductRealTime');
+		showSuccessMessage(' Adicionado na lista');
 	},
 
 	removeChecked({ dispatch }, payload) {
@@ -65,69 +68,59 @@ const actions = {
 		let productChecked = JSON.parse(data);
 		productChecked.forEach(element => {
 			if (element.payload.id == payload) {
-                productChecked.splice(element, 1)
+				productChecked.splice(element, 1);
+			}
+		});
 
-			} 
-        });
-
-	    localStorage.setItem('checkedProducts', JSON.stringify(productChecked));
-        dispatch('listenCheckedProductRealTime')
-
+		localStorage.setItem('checkedProducts', JSON.stringify(productChecked));
+		dispatch('listenCheckedProductRealTime');
 	},
 
 	decrementQuantity({ dispatch }, payload) {
 		let checked = [];
 		var data = localStorage.getItem('checkedProducts');
 		let productChecked = JSON.parse(data);
-		let quantityIncremented = payload.updates.qtdUnit  - 1
+		let quantityIncremented = payload.updates.qtdUnit - 1;
 
-		if(quantityIncremented >= 1) {
-			let priceIncremented = payload.updates.price_buy * quantityIncremented
-			payload.updates.price = priceIncremented
+		if (quantityIncremented >= 1) {
+			let priceIncremented =
+				payload.updates.price_buy * quantityIncremented;
+			payload.updates.price = priceIncremented;
 
-			payload.updates.qtdUnit = quantityIncremented
-
-
+			payload.updates.qtdUnit = quantityIncremented;
 		}
-		let products = payload.updates
-		products.test ='llll'
-		
-		productChecked.forEach((element,key) => {
+		let products = payload.updates;
+		products.test = 'llll';
+
+		productChecked.forEach((element, key) => {
 			if (element.payload.id == payload.id) {
-			
-				productChecked[key] = {payload : products}
-
-			} 
+				productChecked[key] = { payload: products };
+			}
 		});
-		
-		localStorage.setItem('checkedProducts', JSON.stringify(productChecked));
-        dispatch('listenCheckedProductRealTime')
 
+		localStorage.setItem('checkedProducts', JSON.stringify(productChecked));
+		dispatch('listenCheckedProductRealTime');
 	},
 
-	
 	incrementQuantity({ dispatch }, payload) {
 		let checked = [];
 		var data = localStorage.getItem('checkedProducts');
 		let productChecked = JSON.parse(data);
-		let quantityIncremented = payload.updates.qtdUnit  + 1
-		let priceIncremented = payload.updates.price_buy * quantityIncremented
-		payload.updates.price = priceIncremented,
-		payload.updates.qtdUnit = quantityIncremented
-		let products = payload.updates
-		products.test ='llll'
-		
-		productChecked.forEach((element,key) => {
+		let quantityIncremented = payload.updates.qtdUnit + 1;
+		let priceIncremented = payload.updates.price_buy * quantityIncremented;
+		(payload.updates.price = priceIncremented),
+			(payload.updates.qtdUnit = quantityIncremented);
+		let products = payload.updates;
+		products.test = 'llll';
+
+		productChecked.forEach((element, key) => {
 			if (element.payload.id == payload.id) {
-			
-				productChecked[key] = {payload : products}
-
-			} 
+				productChecked[key] = { payload: products };
+			}
 		});
-		
-		localStorage.setItem('checkedProducts', JSON.stringify(productChecked));
-        dispatch('listenCheckedProductRealTime')
 
+		localStorage.setItem('checkedProducts', JSON.stringify(productChecked));
+		dispatch('listenCheckedProductRealTime');
 	}
 };
 

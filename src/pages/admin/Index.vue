@@ -163,10 +163,12 @@
 				 </div>
 					<div class="container body-content">
    
-    <footer class="fixarRodape">
-        <hr />
-        <p>Desenvolvido pela Gest Midia. Lda &copy; 2020</p>
-    </footer>
+    
+	<div class='text-center text-bold q-pt-xl'> 
+		 <hr  class="q-mb-sm"/>
+		  <p>Desenvolvido pela Gest Midia. Lda &copy; 2020</p>
+	 </div>
+
 </div>			
 
 	</q-page>
