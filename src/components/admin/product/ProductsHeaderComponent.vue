@@ -59,7 +59,7 @@
 				Categoria
 			</th>
 			<th class="text-left text-bold" style="font-weight: bold">
-				Quantidade
+				Quantidade no Stock
 			</th>
 			<th class="text-left text-bold" style="font-weight: bold">
 				Preco de Venda
