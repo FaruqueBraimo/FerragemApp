@@ -18,8 +18,8 @@
 		<tr>
 			<th class="text-left " style="font-weight: bold">Produto</th>
 			<th class="text-left " style="font-weight: bold">Fornecedor</th>
-
-			<th class="text-center " style="font-weight: bold">Quantidade de entrada</th>
+			<th class="text-center " style="font-weight: bold">Quantidade antiga</th>
+			<th class="text-center " style="font-weight: bold">Quantidade nova</th>
 			<th class="text-center " style="font-weight: bold">Data de entrada</th>
 			<th class="text-left  " style="font-weight: bold">Acção</th>
 		</tr>

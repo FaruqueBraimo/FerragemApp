@@ -83,11 +83,11 @@
 
 				register(stockData) {
 					this.addStockEntry(stockData);
-					let lastQtd = ~~ this.products[stockData.productCode].quantity
+					let lastQtd = ~~ this.products[stockData.product.value].qtdWarehouse
 					let newQtd =  ~~ stockData.quantity
 					this.updateProduct( {
-						id : stockData.productCode,
-						updates : { quantity : +lastQtd+newQtd  } })
+						id : stockData.product.value,
+						updates : { qtdWarehouse : +lastQtd+newQtd  } })
 
 				},
 				 removeCategory(id) {

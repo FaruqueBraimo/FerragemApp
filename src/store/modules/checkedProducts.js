@@ -121,6 +121,32 @@ const actions = {
 
 		localStorage.setItem('checkedProducts', JSON.stringify(productChecked));
 		dispatch('listenCheckedProductRealTime');
+	},
+
+	addQuantity({ dispatch }, payload) {
+		console.log(payload)
+
+		let checked = [];
+		var data = localStorage.getItem('checkedProducts');
+		let productChecked = JSON.parse(data);
+
+		let quantityIncremented =  ~~payload.quantity;
+
+		let priceIncremented = payload.updates.price_buy * quantityIncremented;
+		console.log(priceIncremented)
+		payload.updates.price = priceIncremented,
+		payload.updates.qtdUnit = quantityIncremented;
+		let products = payload.updates;
+		products.test = 'llll';
+
+		productChecked.forEach((element, key) => {
+			if (element.payload.id == payload.updates.id) {
+				productChecked[key] = { payload: products };
+			}
+		});
+
+		localStorage.setItem('checkedProducts', JSON.stringify(productChecked));
+		dispatch('listenCheckedProductRealTime');
 	}
 };
 

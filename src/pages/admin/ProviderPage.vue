@@ -23,7 +23,6 @@
 			<tbody>
 				<providers-body-component
 					v-for="(provider, index) in providers"
-
 					:key="index"
 					:provider="Object.assign({id: index},provider)"
 					@deleteProvider="removeProvider"
@@ -58,8 +57,24 @@
 		},
 
 		methods: {
-			...mapActions('provider', ['addProvider', 'deleteProvider']),
+		...mapActions('provider', ['addProvider', 'deleteProvider']),
 
+		removeProvider(id) {
+            let providerName = this.providers[id].name
+            this.$q
+					.dialog({
+						title: 'Confirme',
+						message: `Tem certeza que deseja apagar o funcionário ${providerName} ?`,
+						ok: 'Sim',
+						cancel: true,
+						cancel: 'Não',
+						persistent: true
+					})
+					.onOk(() => {
+							this.deleteProvider(id);
+					});
+
+          },
 			
 		},
 		components: {

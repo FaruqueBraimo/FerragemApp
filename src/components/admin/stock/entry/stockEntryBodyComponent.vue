@@ -7,7 +7,9 @@
 		<td class="text-left text-primary cursor-pointer">
 			{{ stock.provider.label || 'Nenhum'}}
 		</td>
+		<td class="text-center">{{ stock.oldQuantity || '0 '}}</td>
 		<td class="text-center">{{ stock.quantity }}</td>
+
 
 		
 		<td class="text-center ">

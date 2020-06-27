@@ -21,7 +21,7 @@
 				/>
 			</q-card-section>
 			<q-card-section>
-				<q-form @submit="onSubmit" @reset="onReset">
+				<q-form @submit="onSubmit" >
 					<div class="q-px-sm">
 						<q-select
 							label="Produto"
@@ -51,13 +51,15 @@
 									'Por favor insira o fornecedor'
 							]"
 						/>
+
 					</div>
+				 <div class="text-green q-pa-sm" v-if="saveObject.product "> Quantidade Actual:	{{ saveObject.product ? products[saveObject.product.value].qtdWarehouse : 0}} </div>
 					<div class="q-px-sm">
 						<q-input
 							square
 							filled
 							type="number"
-							label="Quantidade"
+							label="Nova Quantidade "
 							v-model="saveObject.quantity"
 							lazy-rules
 							:rules="[
@@ -108,7 +110,9 @@
 			return {
 				saveObject: {
 					productCode: '',
-					quantity: 0
+					quantity: 0,
+					product: '',
+					oldQuantity : 0,
 				},
 				Optionalproducts: [],
 				Optionalprovider: [],
@@ -129,7 +133,10 @@
 						label: this.products[element].name
 					});
 					this.saveObject.productCode = element;
+					this.saveObject.oldQuantity = this.saveObject.product ? this.products[this.saveObject.product.value].qtdWarehouse : 20;
+
 				});
+
 			},
 
 			fetchProviders() {
@@ -171,7 +178,6 @@
 						updates : { quantity : +lastQtd+newQtd  } })
 					
 				} else {
-					this.$emit('emitData', this.saveObject);
 
 					if (this.saveObject.quantity <= 0) {
 						this.$q.dialog({

@@ -22,7 +22,7 @@
 		<td class="text-left text-primary cursor-pointer">
 			{{ product.category.label }}
 		</td>
-		<td class="text-left">{{ product.quantity }}</td>
+		<td class="text-left">{{ product.qtdWarehouse }}</td>
 
 		<td class="text-left">
 			<q-chip square size="sm" color="teal" class="text-white">
