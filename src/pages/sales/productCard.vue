@@ -25,7 +25,7 @@
 		<q-card class="my-card bg-green-11 q-mx-md" flat bordered square>
 			<div class="row q-pa-md text-green-8 text-center"> 
 			<div class="col"> Subtotal : </div>
-			<div class="col-6 text-center">   --------------------- </div>
+			<div class="col text-center">   -------- </div>
 			<div class="col text-right q-pr-md"> {{getSubTotal}} ,00 MT </div>	
 		</div>
 		</q-card>
@@ -59,6 +59,8 @@
 
 <script>
 	import ProductCardComponent from '../../components/sales/products/ProductCardComponent';
+		import addQuantity from '../../components/sales/products/addQuantity';
+
 	import { mapActions, mapState, mapGetters } from 'vuex';
 
 	export default {

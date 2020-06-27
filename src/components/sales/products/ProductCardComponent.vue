@@ -38,7 +38,7 @@
 				>
 
 				<div class="row q-pt-sm">
-					<div class="col ">
+					<div class="col q-pt-sm ">
 						<q-btn
 							color="red"
 							size="sm"
@@ -51,8 +51,8 @@
 						/>
 					</div>
 					
-					<div class="col text-center">{{ product.payload.qtdUnit }}</div>
-					<div class="col   text-right">
+					<div class="col text-center"> <addQuantity :quantity='product.payload.qtdUnit' :product='product.payload'  :id="product.payload.id"/></div>
+					<div class="col  q-pt-sm text-right">
                         <q-btn
 							color="primary"
 							size="sm"
@@ -66,11 +66,6 @@
 				</div>
 			</q-item-section>
 
-			<!-- <q-item-section side top>
-				
-
-
-			</q-item-section> -->
 		</q-item>
 		<q-separator spaced inset="item" />
 		<div></div>
@@ -79,6 +74,7 @@
 
 <script>
 	import { mapActions, mapState, mapGetters } from 'vuex';
+		import addQuantity from './addQuantity';
 
 	export default {
 		props: ['product', 'productChecked'],
@@ -93,6 +89,9 @@
 				'checkIncludes'
 			]),
 			...mapState('checkedProduct', ['checkedProducts'])
+		},
+		components:{
+			addQuantity
 		},
 
 		methods: {
