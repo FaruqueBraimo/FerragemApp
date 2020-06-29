@@ -1,7 +1,7 @@
 <template>
 	<div class="">
         {{getQuantity}}
-		<q-input v-model="text" type="text"  dense filled outlined   />
+		<q-input v-model="text" type="text"   dense filled outlined   />
        
 	</div>
 </template>
@@ -29,9 +29,7 @@
 		},
 
 		methods: {
-			addToCard(product) {
-				this.$emit('addToCard', product);
-			},
+			
 			...mapActions('checkedProduct', [
 				'addCheckedProducts',
 				'removeChecked',
@@ -40,34 +38,33 @@
                 'addQuantity',
 			]),
 
-			LocalIncrementQuantity(val) {
-					let product = val
-					// 
-					
-
-					this.incrementQuantity(
-						{id : val.id, updates : product }
-					) 
-			},
-
-			LocalDecrementQuantity(val) {
-					let product = val
-					// 
-
-					this.decrementQuantity(
-						{id : val.id, updates : product }
-					) 
-			}
 
 
         },
 
          watch: {
             text(val) {
-                	this.addQuantity(
+				if ( this.text >  ~~this.product.qtdBalcony) {
+
+					this.$q
+					.dialog({
+						title: 'Quantidade Inválida',
+						message: `O Produto ${this.product.name}  somente possui  ${this.product.qtdBalcony} unidades no balcão. 
+						Por favor, contacte o administrador para aumento de quantidade.
+						`,
+						ok: 'Sim',
+					})
+					.onOk(() => {
+					});
+				} else {
+					this.addQuantity(
                         
 						{quantity : this.text, updates : this.product }
-					) 
+					)
+					
+				}
+				
+                	 
 
             }
         }

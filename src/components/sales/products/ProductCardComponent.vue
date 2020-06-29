@@ -34,7 +34,7 @@
 
                 </q-item-label>
 				<q-item-label class="text-bold text-grey-7">
-					{{ product.payload.price }} MT</q-item-label
+					{{ product.payload.price }} ,00 MT</q-item-label
 				>
 
 				<div class="row q-pt-sm">
@@ -59,8 +59,10 @@
 							flat
 							outline
 							icon="add"
+							v-if="product.payload.qtdUnit <= ~~product.payload.qtdBalcony-1"
 							@click="LocalIncrementQuantity(product.payload)"
 						/>
+						<span v-else class="text-red"> Acabaram </span>
 						
 					</div>
 				</div>
@@ -105,14 +107,20 @@
 				'decrementQuantity'
 			]),
 
+				...mapActions('product', [
+				'addCheckedProducts',
+				'removeChecked',
+				
+			]),
+
+
 			LocalIncrementQuantity(val) {
 					let product = val
-					// 
-					
-
+			
 					this.incrementQuantity(
 						{id : val.id, updates : product }
 					) 
+					
 			},
 
 			LocalDecrementQuantity(val) {

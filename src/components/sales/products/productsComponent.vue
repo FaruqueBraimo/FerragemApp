@@ -15,7 +15,7 @@
 				>
 				<q-item-label
 					class="text-bold text-left text-primary text-overline "
-					>{{ product.quantity }}</q-item-label
+					>{{ product.qtdBalcony || 0 }}</q-item-label
 				>
 			</q-item-section>
 

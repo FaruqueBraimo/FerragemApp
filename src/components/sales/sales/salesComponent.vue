@@ -59,13 +59,13 @@
                         	<div class="row q-pa-sm text-green-8">
 								<div class="col">Valor dado :</div>
 								<div class="col text-right q-pr-md">
-									{{ value }} ,00 MT
+									{{ value || 0}} ,00 MT
 								</div>
 							</div>
 
                             	<div class="row q-pa-sm text-green-8">
-								<div class="col">Troco :</div>
-								<div class="col text-right q-pr-md">
+								<div class="col text-deep-orange">Troco :</div>
+								<div class="col text-deep-orange text-right q-pr-md">
 									{{ change }} ,00 MT
 								</div>
 							</div>
@@ -127,6 +127,7 @@
 										type="reset"
 										color="primary"
 										flat
+										
 										class="q-ml-sm text-center full-width"
 									/>
 									
@@ -137,6 +138,25 @@
 					</q-tab-panel>
 				</q-tab-panels>
 			</q-card>
+		</div>
+		<div class="row q-pa-lg">
+		<div class=' text-center text-red-5 col-12'>Valor  no Caixa : 50000 , 00 MT</div>	
+		<div class="q-pt-xl col-12">
+				<q-btn
+					color="indigo"
+					no-caps
+					class=" full-width"
+					unelevated
+					icon="done"
+					:disable="disable"
+					label="Finalizar"
+					@click="$emit('sales',{ value : value, change : change, subtotal : getSubTotal, iva:0, client :client})"
+
+				/>
+
+			</div>
+
+		
 		</div>
 	</div>
 </template>
@@ -151,7 +171,9 @@
 				client: '',
                 optionalClient: [],
                 value : 0,
-                change : 0
+				change : 0,
+				disable:true,
+
 
 			};
 		},
@@ -160,10 +182,16 @@
 			...mapState('customer', ['customers']),
 
 			fetchClients() {
-                if(this.value) {
-                                    this.change = this.value - this.getSubTotal
+                if(this.value >= this.getSubTotal   ) {
+									this.change = this.value - this.getSubTotal
+									this.disable =false
 
-                }
+				}
+				else{
+			this.change = 0
+		 this.disable =true
+
+				}
 				Object.keys(this.customers).forEach((element, key) => {
 					this.optionalClient.push({
 						value: element,
