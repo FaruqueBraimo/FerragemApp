@@ -9,6 +9,7 @@ import stockEntry from './modules/stockEntries';
 import role from './modules/roles';
 import notification from './modules/notifications';
 import setting from './modules/settings';
+import sale from './modules/sales';
 import checkedProduct from './modules/checkedProducts';
 
 
@@ -34,6 +35,7 @@ export default function(/* { ssrContext } */) {
 			customer,
 			stockEntry,
 			role,
+			sale,
 			notification,
 			setting,
 			checkedProduct
