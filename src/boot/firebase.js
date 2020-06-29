@@ -34,7 +34,7 @@ export const dbcategories = db.collection("categories");
 
 export const dbStockEntries = db.collection("stockEntry");
 export const dbRoles = db.collection("roles");
-
+export const dbSales = db.collection("sales");
 export const dbNotifications = db.collection("notifications");
 
 

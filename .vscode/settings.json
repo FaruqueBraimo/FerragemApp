@@ -3,5 +3,6 @@
   "vetur.experimental.templateInterpolationService": true,
   "prettier.packageManager": "yarn",
   "prettier.requireConfig": true,
-  "python.pythonPath": "C:\\Users\\Faruque Braimo\\Anaconda3\\python.exe"
+  "python.pythonPath": "C:\\Users\\Faruque Braimo\\Anaconda3\\python.exe",
+  "eslint.enable": false
 }
