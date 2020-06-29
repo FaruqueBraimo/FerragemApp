@@ -14,7 +14,6 @@
         </template>
       </q-input>
 
-
         </div>
 
     <q-list  	 >
@@ -24,7 +23,7 @@
       :bar-style="barStyle"
       style="height: 400px; "
     >
-      <div v-for="(product, index) in products" 	:key="index" class="q-pa-xs">
+      <div v-for="(product, index) in Object.keys(products).length > 0 ?  products :  productFiltered" 	:key="index" class="q-pa-xs">
         <product-component
 					:product="Object.assign({id: index},product)"
 					:productId="index"
@@ -77,7 +76,7 @@ export default {
       }
     },
 	computed: {
-      ...mapState('product', ['products','checkedProducts']), 
+      ...mapState('product', ['products','checkedProducts','productFiltered']), 
       ...mapGetters('checkedProduct',['getCheckedProducts']),
        ...mapState('checkedProduct', ['checkedProducts']),
 		},
@@ -87,8 +86,9 @@ export default {
     methods: {
             ...mapActions('setting', ['setPageTitle']),
               ...mapActions('checkedProduct', ['addCheckedProducts' , 'removeChecked']),
+              ...mapActions('product', ['filterDatafromDb','listenProductRealTimeChanges']),
 
-            
+
             
             addToCard(product) {
               product.qtdUnit =  1;
@@ -106,7 +106,21 @@ export default {
 ,
       destroyed() {
               this.setPageTitle('')
+              this.listenProductRealTimeChanges()
 
+      },
+
+      watch:{
+      search(val) {
+				if (!val) {
+					this.listenProductRealTimeChanges();
+				}
+				else {
+          	this.filterDatafromDb(val);
+
+				}
+				
+			},
       }
     
 

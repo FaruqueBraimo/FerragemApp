@@ -52,6 +52,7 @@
 					@deleteProduct="removeProduct"
 				/>
 			</tbody>
+			
 
 			<tbody>
 				<products-body-component

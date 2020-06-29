@@ -175,9 +175,9 @@
 					let products = this.notifications[element];
 
 
-					if (products.quantity <= products.stockBreak) {
+					if (products.qtdWarehouse <= products.stockBreak) {
 						produtReturned[element] = products;
-						produtReturned[element].message = `Olá, o Produto ${products.name} está em roptura do stock, restam apenas ${products.quantity} unidades.`;
+						produtReturned[element].message = `Olá, o Produto ${products.name} está em roptura do stock, restam apenas ${products.qtdWarehouse} unidades.`;
 					}
 
 				

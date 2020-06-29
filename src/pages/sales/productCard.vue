@@ -23,7 +23,7 @@
 			</q-scroll-area>
 		</q-list>
 		<q-card class="my-card bg-green-11 q-mx-md" flat bordered square>
-			<div class="row q-pa-md text-green-8 text-center"> 
+			<div class="row q-pa-md text-deep-orange text-center"> 
 			<div class="col"> Subtotal : </div>
 			<div class="col text-center">   -------- </div>
 			<div class="col text-right q-pr-md"> {{getSubTotal}} ,00 MT </div>	
@@ -107,6 +107,12 @@
 		},
 		mounted() {
 			this.setPageTitle('Carinha ');
+			if(this.checkedProducts.length===0) {
+		      this.$router.push('/sales/products')			
+			}
+			else{
+				console.log('nop')
+			}
 		},
 		destroyed() {
 			this.setPageTitle('');
