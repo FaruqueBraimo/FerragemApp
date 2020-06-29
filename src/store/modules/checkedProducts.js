@@ -76,6 +76,13 @@ const actions = {
 		dispatch('listenCheckedProductRealTime');
 	},
 
+	emptyChecked({ dispatch }, payload) {
+		let checked = [];
+
+		localStorage.setItem('checkedProducts', checked);
+		dispatch('listenCheckedProductRealTime');
+	},
+
 	decrementQuantity({ dispatch }, payload) {
 		let checked = [];
 		var data = localStorage.getItem('checkedProducts');
@@ -129,11 +136,9 @@ const actions = {
 		let checked = [];
 		var data = localStorage.getItem('checkedProducts');
 		let productChecked = JSON.parse(data);
-
 		let quantityIncremented =  ~~payload.quantity;
-
 		let priceIncremented = payload.updates.price_buy * quantityIncremented;
-		console.log(priceIncremented)
+
 		payload.updates.price = priceIncremented,
 		payload.updates.qtdUnit = quantityIncremented;
 		let products = payload.updates;

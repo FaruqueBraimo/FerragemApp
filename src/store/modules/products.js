@@ -161,8 +161,6 @@ const actions = {
 
 	filterDatafromDb({ state, commit, getters },myQuery) {
 		
-
-	
 		let products =	getters.getProductData;
 		Object.keys(products).forEach(key => {
             let product = products[key]
