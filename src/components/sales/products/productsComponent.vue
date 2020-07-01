@@ -9,7 +9,7 @@
 				</q-avatar>
 			</q-item-section>
 			<q-item-section>
-				<q-item-label>{{ product.name }}</q-item-label>
+				<q-item-label class='text-capitalize'>{{ product.name }}</q-item-label>
 				<q-item-label caption class="text-jusstify">
 					{{ product.description || 'Não definido' }}</q-item-label
 				>

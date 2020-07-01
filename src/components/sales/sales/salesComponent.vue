@@ -1,10 +1,7 @@
 <template>
 	<div class="q-pb-md ">
-            <q-card class="my-card q-mb-lg" flat bordered>
-                	<div class="row q-pa-sm ">
 								<!-- <p class="text-h6 text-primary text-bold"> Detalhes do producto </p> -->
-
-								<div class="col-12 q-px-sm">
+								<div class=" q-px-sm">
                                     	<q-input
 								square
 								filled
@@ -25,9 +22,7 @@
 
 
 							
-							</div>
               
-            </q-card>
 
 
 		<div class="" style="">
