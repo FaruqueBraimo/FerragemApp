@@ -115,14 +115,16 @@
 						</div>
 
 						<div class="col-6 q-pa-sm">
-							<q-input
-								filled
-								dense
-								v-model="expires"
-								label="Válido até *"
-								mask="####-##-##"
-								hint="Ano-Mês-Dia"
-							/>
+	<q-input filled v-model="expires" placeholder='Prazo de Validade' dense>
+      <template v-slot:append>
+        <q-icon name="event" class="cursor-pointer">
+          <q-popup-proxy transition-show="scale" transition-hide="scale">
+            <q-date v-model="expires" mask="DD-MM-YYYY "  />
+          </q-popup-proxy>
+        </q-icon>
+      </template>
+	  
+	  </q-input>
 						</div>
 					</div>
 				</q-tab-panel>
