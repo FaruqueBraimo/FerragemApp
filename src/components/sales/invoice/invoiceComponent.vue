@@ -1,29 +1,18 @@
 <template>
 	<div class="q-pb-md ">
-								<!-- <p class="text-h6 text-primary text-bold"> Detalhes do producto </p> -->
-								<div class=" q-px-sm">
-                                    	<q-input
-								square
-								filled
-								dense
-								v-model="value"
-								type="number"
-								label="Valor Pago "
-								lazy-rules
-							:rules="[
-								val =>
-									(val !== null && val !== '') ||
-									'Por favor insira o valor'
-							]"
-											>
-							</q-input>
-									
-								</div>
-
-
-							
-              
-
+          
+ <div class="q-py-md" >
+   <q-input filled v-model="date" placeholder='Prazo de Validade' dense>
+      <template v-slot:append>
+        <q-icon name="event" class="cursor-pointer">
+          <q-popup-proxy transition-show="scale" transition-hide="scale">
+            <q-date v-model="date" mask="DD-MM-YYYY "  />
+          </q-popup-proxy>
+        </q-icon>
+      </template>
+	  
+	  </q-input>
+  </div>
 
 		<div class="" style="">
 			{{ fetchClients }}
@@ -37,7 +26,7 @@
 					align="justify"
 					narrow-indicator
 				>
-					<q-tab name="mails" label="Detalhes da Venda" />
+					<q-tab name="mails" label="Detalhes da Factura" />
 					<q-tab name="alarms" label="Cliente" />
 				</q-tabs>
 
@@ -46,32 +35,20 @@
 				<q-tab-panels v-model="tab" animated>
 					<q-tab-panel name="mails">
 						<q-card
-							class="my-card bg-green-11"
+							class="my-card bg-deep-orange-1
+"
 							flat
 							bordered
 							square
 						>
-                        	<div class="row q-pa-sm text-green-8">
-								<div class="col">Valor dado :</div>
-								<div class="col text-right q-pr-md">
-									{{ value || 0}} ,00 MT
-								</div>
-							</div>
-
-                            	<div class="row q-pa-sm text-green-8">
-								<div class="col text-deep-orange">Troco :</div>
-								<div class="col text-deep-orange text-right q-pr-md">
-									{{ change }} ,00 MT
-								</div>
-							</div>
-
-							<div class="row q-pa-sm text-green-8 ">
+                        	
+							<div class="row q-pa-sm text-deep-orange-5 ">
 								<div class="col">Subtotal :</div>
 								<div class="col text-right q-pr-md">
 									{{ getSubTotal }} ,00 MT
 								</div>
 							</div>
-							<div class="row q-pa-sm text-green-8 ">
+							<div class="row q-pa-sm text-deep-orange-5 ">
 								<div class="col-6 text-left">
 									Desconto de Iva :
 								</div>
@@ -80,12 +57,29 @@
 								</div>
 							</div>
 
-							<div class="row q-pa-sm text-green-8">
+							<div class="row q-pa-sm text-deep-orange-5">
 								<div class="col">Total :</div>
 								<div class="col text-right q-pr-md">
 									{{ getSubTotal }} ,00 MT
 								</div>
 							</div>
+
+							<div class="row q-pa-sm text-deep-orange-5">
+								<div class="col">Prazo :</div>
+								<div class="col text-right q-pr-md">
+									{{ date || 'Por Preencher'}} 
+								</div>
+							</div>
+
+
+							<div class="row q-pa-sm text-deep-orange-5">
+								<div class="col">Cliente :</div>
+								<div class="col text-right q-pr-md">
+									{{ client.label || 'Não Informado' }} 
+								</div>
+							</div>
+
+
 
 						</q-card>
 					</q-tab-panel>
@@ -122,7 +116,6 @@
 										type="reset"
 										color="primary"
 										flat
-										
 										class="q-ml-sm text-center full-width"
 									/>
 									
@@ -135,7 +128,6 @@
 			</q-card>
 		</div>
 		<div class="row q-pa-lg">
-		<div class=' text-center text-red-5 col-12'>Valor  no Caixa : 50000 , 00 MT</div>	
 		<div class="q-pt-xl col-12">
 				<q-btn
 					color="indigo"
@@ -143,9 +135,9 @@
 					class=" full-width"
 					unelevated
 					icon="done"
-					:disable="disable"
 					label="Finalizar"
-					@click="$emit('sales',{ value : value, change : change, subtotal : getSubTotal, iva:0, client :client})"
+					:disable="disable"
+					@click="$emit('invoice',{  subtotal : getSubTotal, iva:0, client :client , deadline : date})"
 
 				/>
 
@@ -158,6 +150,7 @@
 
 <script>
 	import { mapActions, mapState, mapGetters } from 'vuex';
+	import { date } from 'quasar';
 
 	export default {
 		data() {
@@ -168,6 +161,8 @@
                 value : 0,
 				change : 0,
 				disable:true,
+			    date: ''
+
 
 
 			};
@@ -177,16 +172,24 @@
 			...mapState('customer', ['customers']),
 
 			fetchClients() {
-                if(this.value >= this.getSubTotal   ) {
-									this.change = this.value - this.getSubTotal
-									this.disable =false
+			
+			const dateReturn = date.extractDate(this.date, 'DD-MM-YYYY ')
+            const dateNow = new Date
+			  if(this.date !='' && dateReturn < dateNow) {
+					   this.disable = true 
+					   
+					this.$q
+					.dialog({
+						title: 'Data Inválida',
+						message: `A data Introduzida é inferior a data actual. 
+						`,
+						ok: 'Sim',
+					})
+			  }
+			  else {
+				 this.disable = false 	
+			  }
 
-				}
-				else{
-			this.change = 0
-		 this.disable =true
-
-				}
 				Object.keys(this.customers).forEach((element, key) => {
 					this.optionalClient.push({
 						value: element,
@@ -204,6 +207,11 @@
 
 
             }
+		},
+
+		mounted() {
+		
 		}
 	};
 </script>
+

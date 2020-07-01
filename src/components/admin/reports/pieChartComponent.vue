@@ -5,7 +5,7 @@
 			:data="chartData"
 			:options="chartOptions"
 			:settings="{ packages: ['corechart', 'table', 'map'] }"
-			resizeDebounce="500"
+			resizeDebounce="400"
 		/>
 	</div>
 </template>
@@ -29,7 +29,7 @@
 					['Discos de Travão', 7]
 				],
 				chartOptions: {
-					width: 500,
+					width: 450,
 
 					chart: {
           title: 'My Daily Activities',

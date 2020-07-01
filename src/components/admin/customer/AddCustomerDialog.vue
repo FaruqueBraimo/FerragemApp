@@ -112,10 +112,12 @@
 
 						<div class="q-my-md">
 							<q-btn
-								label="Registar"
 								size="md"
 								type="submit"
 								color="primary"
+								:label="
+									updateObject.id ? ' Actualizar' : 'Registar'
+								"
 								unelevated
 								class="full-width "
 							/>
@@ -131,7 +133,7 @@
 	import { mapActions, mapState } from 'vuex';
 	export default {
 		name: 'DialogAddEditBlog',
-		props: ['dialog', 'editObject'],
+		props: ['dialog', 'updateObject'],
 		data() {
 			return {
 				saveObject: {},
@@ -158,11 +160,23 @@
 		mounted() {
 		},
 		methods: {
+		...mapActions('customer', ['updateCustomer']),
 
 			
 			onSubmit() {
 			
+			if(this.updateObject.id) {
+
+					this.updateCustomer({
+						id: this.updateObject.id,
+						updates: this.saveObject
+					});
+					}
+					else {
 				this.$emit('emitData', this.saveObject);
+
+					}
+				
 				
 
 				this.$emit('closeDialog');
@@ -176,6 +190,13 @@
 			},
 
 			onReset() {
+			}
+		},
+		watch: {
+			updateObject(val) {
+				if (val) {
+					this.saveObject = this.updateObject;
+				}
 			}
 		}
 	};

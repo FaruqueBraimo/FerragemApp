@@ -26,6 +26,7 @@
 					:key="index"
 					:customer="Object.assign({id: index},customer)"
 					@deleteCustomer="removeCustumer"
+					@updateObject='updateObject=$event'
 				/>
 			</tbody>
 		</q-markup-table>
@@ -34,6 +35,7 @@
 			:dialog="dialog"
 			@closeDialog="dialog = false"
 			@emitData="addCustomer"
+				:updateObject='updateObject'
 		/>
 		
 	</q-page>
@@ -50,7 +52,8 @@
 		// name: 'PageName',
 		data() {
 			return {
-				dialog: false
+				dialog: false,
+				updateObject : ''
 			};
 		},
 		computed: {
@@ -81,6 +84,13 @@
 			CustomersHeaderComponent,
 			CustomersBodyComponent,
 			AddCustomerDialog,
+		},
+		watch: {
+			updateObject(val) {
+				if(val) {
+					this.dialog = true
+				}
+			},
 		}
 	};
 </script>

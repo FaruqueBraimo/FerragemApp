@@ -20,15 +20,17 @@
 				<div class="col text-center">
 					<provider-details-dialog :provider="provider"/>
 				</div>
-				<!-- <div class="col">
+				<div class="col">
 					<q-btn
 						flat
 						size="sm"
 						rounded
 						text-color="primary"
 						icon="edit"
+					@click="$emit('updateObject', provider)"
+
 					/>
-				</div> -->
+				</div>
 				<div class="col">
 					<q-btn
 						flat

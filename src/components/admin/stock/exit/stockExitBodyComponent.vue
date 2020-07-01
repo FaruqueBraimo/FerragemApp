@@ -1,31 +1,36 @@
 <template>
-	<tr>
+	<tr >
+
 		<td class="text-left">
-			{{ customer.name }}
+			{{ stock.product.label }}
 		</td>
-		<td class="text-left">{{ customer.type }}</td>
-		<td class="text-left">{{ customer.address || 'Não Informado'}}</td>
-		<td class="text-left">{{ customer.email || 'Não Informado'}}</td>
-		<td class="text-left">{{ customer.phone || 'Não Informado' }}</td>
+		
+		<td class="text-center">{{ stock.quantity }}</td>
+
+
+		
 		<td class="text-center ">
-			{{ customer.createdAt | dateFormat }}
+			{{ stock.createdAt | dateFormat }}
 		</td>
-		<td class="text-left ">
-			<div class="row " style="width:100px;">
-				<div class="col text-left">
-					<customer-details-dialog :customer="customer"/>
-				</div>
+
+		<td class=" text-center ">
+			<div class="row justify-center items-center" style="width:100px;">
+					
+
 				<div class="col">
 					<q-btn
 						flat
 						size="sm"
 						rounded
+						
 						text-color="primary"
 						icon="edit"
-						@click="$emit('updateObject', customer)"
+						@click="$emit('updateObject', stock)"
 
+					
 					/>
 				</div>
+
 				<div class="col">
 					<q-btn
 						flat
@@ -33,45 +38,39 @@
 						size="sm"
 						text-color="red"
 						icon="delete"
-						@click="$emit('deleteCustomer',customer.id)"
+						
+						@click="$emit('deletestock',stockId)"
 					/>
 				</div>
 			</div>
+			
 		</td>
+
 	</tr>
+
 </template>
 
 <script>
 	import { mapActions, mapState } from 'vuex';
-	import CustomerDetailsDialog from './CustomerDetailsDialog';
 	export default {
-		name: 'CustomerBodyComponent',
-		props: ['customer'],
-		components: { CustomerDetailsDialog },
+		name: 'stockBodyComponent',
+		props: ['stock','stockId'],
+		components: {  },
 		data() {
 			return {
 				dialog: false,
-				role: null,
-				options: [
-					'Administrador',
-					'Acesso somente aos Produtos e Categorias',
-					'Acesso aos Clientes e Fornecedores',
-					'Acesso a gestão de Stock',
-					'Nenhum Acesso'
-				]
+				
 			};
 		},
 		computed: {
-			productRoleName() {
-				return this.customer.role ? this.customer.role : 'Outro';
-			}
+			
 		},
 		mounted() {
-			// console.log(this.customer)
+			// console.log(this.stock)
 		},
 		methods: {
 			...mapActions('settings', ['setGlobalConfirm']),
-			...mapActions('customer', ['updateCustomer'])
+			...mapActions('stock', ['updatestock'])
 		},
 		filters: {
 			dateFormat(val) {

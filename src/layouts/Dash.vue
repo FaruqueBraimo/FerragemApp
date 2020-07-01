@@ -37,7 +37,7 @@
 										)
 									"
 								/>
-              <q-item-label caption class='q-pl-md q-py-sm text-deep-orange' >Produtos Fora do Prazo</q-item-label>
+              <q-item-label caption class='q-pl-md q-py-sm text-deep-orange' >Validade de Produtos </q-item-label>
 
 
 								<notificationComponent2
@@ -128,7 +128,7 @@
 				showErrorMessage('Sem permissão, por favor autentique-se');
 			}
 			//Verify if user account has blocked
-			if (!this.userAuth.status) {
+			if (!this.getUserAuth.status) {
 				this.$router.push('/');
 				showErrorMessage('Conta bloqueada, contacte o administrador');
 			}
@@ -149,17 +149,25 @@
 					
 					let nowDate = Date.now();
 					let date30 = date.addToDate(nowDate, { days: 0, month: 1 })
+					const dateReturn = date.extractDate( products.expires, 'DD-MM-YYYY ')
 
-					let formattedNowDate = date.formatDate(date30, 'YYYY-MM-DD')
-
+						
 					
-					if ( formattedNowDate  > products.expires ) {
+					if ( date30  > dateReturn ) {
 							let produtReturned2 = {}
 							produtReturned2[element] = products;
 						     produtReturned2[element].message2 = `Olá, Em um mês o Produto ${products.name} estára fora de prazo, A data: ${products.expires}`;
 						
 						     Object.assign(produtReturned, produtReturned2);
 					
+					}
+					 if (nowDate > dateReturn) {
+							let produtReturned2 = {}
+							produtReturned2[element] = products;
+						     produtReturned2[element].message2 = `Olá, o Produto ${products.name} está fora de prazo, Expirou em: ${products.expires}`;
+						
+						     Object.assign(produtReturned, produtReturned2);
+
 					}
 					
 					

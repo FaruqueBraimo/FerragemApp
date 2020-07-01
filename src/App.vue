@@ -20,7 +20,10 @@
 			this.listenRoleRealTimeChanges();
 			this.listenNotificationRealTimeChanges()
 			this.listenCheckedProductRealTime();
-			this.listenSaleRealTimeChanges()
+			this.listenSaleRealTimeChanges();
+			this.listeninvoiceRealTimeChanges()
+			this.listenStockExitRealTimeChanges()
+			this.listenBoxRealTimeChanges()
 		},
 				computed: {
 			...mapState('auth', ['users']),
@@ -48,17 +51,21 @@
 				'listenUsersRealTimeChanges',
 				'deleteUser',
 			]),
-		
+	
 
 			...mapActions('product' , ['listenProductRealTimeChanges']),
 			...mapActions('category' , ['listencategoryRealTimeChanges']),
 			...mapActions('provider' , ['listenProviderRealTimeChanges']),
 			...mapActions('customer' , ['listenCustomerRealTimeChanges']),
 			...mapActions('stockEntry' , ['listenStockEntryRealTimeChanges']),
+			...mapActions('stockExit' , ['listenStockExitRealTimeChanges']),
 			...mapActions('role' , ['listenRoleRealTimeChanges']),
 			...mapActions('notification' , ['listenNotificationRealTimeChanges']),
 			...mapActions('checkedProduct', ['listenCheckedProductRealTime']),
 			...mapActions('sale', ['listenSaleRealTimeChanges']),
+			...mapActions('invoice', ['listeninvoiceRealTimeChanges']),
+			...mapActions('box', ['listenBoxRealTimeChanges']),
+
 
 		},
 		beforeDestroy() {

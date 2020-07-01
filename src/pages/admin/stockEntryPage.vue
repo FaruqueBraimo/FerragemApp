@@ -42,6 +42,7 @@
 					@updateObject='updateObject =$event'
 					/>
 				
+
 			</tbody>
 		</q-markup-table>
 
@@ -49,7 +50,7 @@
 			:dialog="dialog"
 			@closeDialog="dialog = false"
 			@emitData="register"
-				:updateObject='updateObject'
+			:updateObject='updateObject'
 		/>
 		
 	</q-page>

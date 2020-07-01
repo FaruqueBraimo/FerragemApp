@@ -26,6 +26,8 @@
 					:key="index"
 					:provider="Object.assign({id: index},provider)"
 					@deleteProvider="removeProvider"
+										@updateObject='updateObject =$event'
+
 				/>
 			</tbody>
 		</q-markup-table>
@@ -34,6 +36,8 @@
 			:dialog="dialog"
 			@closeDialog="dialog = false"
 			@emitData="addProvider"
+							:updateObject='updateObject'
+
 		/>
 	</q-page>
 </template>
@@ -49,7 +53,8 @@
 		// name: 'PageName',
 		data() {
 			return {
-				dialog: false
+				dialog: false,
+				updateObject : ''
 			};
 		},
 		computed: {
@@ -81,6 +86,13 @@
 			ProvidersHeaderComponent,
 			ProvidersBodyComponent,
 			AddProviderDialog
+		},
+		watch: {
+			updateObject(val) {
+				if(val) {
+					this.dialog = true
+				}
+			},
 		}
 	};
 </script>

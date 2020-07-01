@@ -149,7 +149,7 @@ const actions = {
 				// 1. Limpar todas solicitações
 				commit('resetCustomer');
 
-				showSuccessMessage('Customero Adicionado com sucesso!');
+				showSuccessMessage('Cliente Adicionado com sucesso!');
 
 				return true;
 			})
@@ -176,10 +176,8 @@ const actions = {
 			.update(payload.updates)
 			.then(function(docRef) {
 				commit('loading', false);
+				showSuccessMessage('Editado com sucesso');
 
-				if (payload.successMessage !== false) {
-					showSuccessMessage(sucessMessage);
-				}
 
 				return true;
 			})

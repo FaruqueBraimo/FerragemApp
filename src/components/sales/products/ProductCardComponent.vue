@@ -13,7 +13,7 @@
                    
 
                     <div class="row q-pt-sm">
-					<div class="col ">
+					<div class="col text-capitalize ">
 						 {{ product.payload.name }}
 					</div>
 					

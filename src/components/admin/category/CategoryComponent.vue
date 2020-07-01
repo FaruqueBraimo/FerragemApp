@@ -23,7 +23,7 @@
 			>
 				<q-menu>
 					<q-list style="min-width: 100px">
-						<q-item clickable v-close-popup class="text-primary">
+						<q-item clickable v-close-popup square class="text-primary">
 							<q-item-section
 							@click="productFilterCategory({ value: category.id })"
 								>Produtos

@@ -1,7 +1,7 @@
 <template>
 	<thead>
 		<tr>
-			<th colspan="9">
+			<th colspan="10">
 				<div class="row no-wrap items-center">
 					<q-img
 						style="width: 70px"
@@ -24,6 +24,7 @@
 			<th class="text-left">Fornecedores</th>
 			<th class="text-left">Stock</th>
 			<th class="text-left">Relátorios</th>
+			<th class="text-left">Vendas</th>
 			<th class="text-left">Utilizadores</th>
 			<th class="text-center">Ação</th>
 		</tr>

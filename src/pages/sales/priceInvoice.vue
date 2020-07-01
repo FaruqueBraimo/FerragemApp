@@ -8,15 +8,15 @@
         
       </q-img>
     </q-card>
-        <p class="text-center text-bold">Emita Cotação ou Factura </p>
+        <p class="text-center text-bold">Veja Cotação ou Factura </p>
 
          <div class="q-pa-md" > 
-              <q-btn color="primary" no-caps class=" full-width"  unelevated  icon="list" label="Emitir Cotação" />
+              <q-btn color="primary" no-caps class=" full-width"  unelevated  icon="list" label="Minhas Cotaçoes" />
         </div>
 
         
          <div class="q-px-md" > 
-              <q-btn color="deep-orange" no-caps class=" full-width"  unelevated  icon="book" label="Emitir Factura" />
+              <q-btn color="deep-orange" no-caps class=" full-width"  unelevated  icon="book" label="Minhas Facturas" />
         </div>
 
 

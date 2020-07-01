@@ -1,5 +1,5 @@
 <template>
-	<q-page padding class="q-pt-xl">
+	<q-page padding class="q-pt-sm">
 		<div class="row  q-pa-md justify-center items-center">
 			<div class="col q-pa-sm">
 				<q-card class="report-card text-grey-10" bordered>

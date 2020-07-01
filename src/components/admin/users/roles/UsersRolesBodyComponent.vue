@@ -39,6 +39,13 @@
 		<td class="text-left" v-else>
 			<q-icon color="red" size="sm" name="cancel" />
 		</td>
+		<td class="text-left" v-if="role.sales == 'true'">
+			<q-icon color="green" size="sm" name="check_circle" />
+		</td>
+		<td class="text-left" v-else>
+			<q-icon color="red" size="sm" name="cancel" />
+		</td>
+
 		<td class="text-left" v-if="role.users == 'true'">
 			<q-icon color="green" size="sm" name="check_circle" />
 		</td>

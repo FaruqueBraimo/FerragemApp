@@ -6,10 +6,11 @@
 		position="right"
 	>
 	
+	
 		<q-card style="width: 100vw;">
 			<q-card-section class="row items-center">
 				<div class="text-h6 q-px-sm text-center">
-					Entrada de Produtos {{ fetchProducts }} {{ fetchProviders }}
+					Saida de Produtos {{ fetchProducts }} {{ fetchProviders }}
 				</div>
 				<q-space />
 				<q-btn
@@ -38,28 +39,15 @@
 						/>
 					</div>
 
-					<div class=" q-px-sm">
-						<q-select
-							label="Fornecedor do Produto"
-							square
-							filled
-							:options="Optionalprovider"
-							v-model="saveObject.provider"
-							:rules="[
-								val =>
-									(val !== null && val !== '') ||
-									'Por favor insira o fornecedor'
-							]"
-						/>
+			     <div class="text-red-5 q-pa-sm" v-if="saveObject.product "> Quantidade No Balcao:	{{ saveObject.product ? products[saveObject.product.value].qtdBalcony : 0}} </div>
 
-					</div>
-				 <div class="text-green q-pa-sm" v-if="saveObject.product "> Quantidade Actual:	{{ saveObject.product ? products[saveObject.product.value].qtdWarehouse : 0}} </div>
+				 <div class="text-green q-pa-sm" v-if="saveObject.product "> Quantidade No Armazém:	{{ saveObject.product ? products[saveObject.product.value].qtdWarehouse : 0}} </div>
 					<div class="q-px-sm">
 						<q-input
 							square
 							filled
 							type="number"
-							label="Nova Quantidade "
+							label="Quantidade de Retirada"
 							v-model="saveObject.quantity"
 							lazy-rules
 							:rules="[
@@ -162,28 +150,31 @@
 		methods: {
 
 
-			...mapActions('stockEntry' , ['editStockEntry']),
+			...mapActions('stockExit' , ['editStockExit']),
 			...mapActions('product', ['updateProduct', ]),
 
 			onSubmit() {
 				if (this.updateObject.id) {
-					this.editStockEntry({
+					this.editStockExit({
 						id: this.updateObject.id,
 						updates: this.saveObject
 					});
-					let lastQtd = ~~ this.products[this.saveObject.productCode].qtdWarehouse
+					let lastQtd = ~~ this.products[this.saveObject.product.value].qtdBalcony
 					let newQtd =  ~~ this.saveObject.quantity
 					this.updateProduct( {
 						id : this.saveObject.product.value,
 						updates : { qtdWarehouse : +lastQtd+newQtd  } })
-					
+					 
 				} else {
 
-					if (this.saveObject.quantity <= 0) {
+					if (this.saveObject.quantity > this.products[this.saveObject.product.value].qtdWarehouse ) {
 						this.$q.dialog({
 							title: 'Quantidade Inválida',
-							message: 'Coloque uma quantidade real por favor'
+							message: `Não existe quantidade de ${this.products[this.saveObject.product.value].name} suficiente
+							somente tem ${this.products[this.saveObject.product.value].qtdWarehouse } unidades no armazém
+							`
 						});
+
 					} else {
 						this.$emit('emitData', this.saveObject);
 					}

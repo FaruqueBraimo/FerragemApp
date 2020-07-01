@@ -134,7 +134,8 @@ const actions = {
                     email: resp.user.email,
                 })
                 if(Platform.is.desktop) {
-                    this.$router.push('/admin')
+                    this.$router.push('/choice')
+
                 }
                 
                 else if (Platform.is.mobile) {
