@@ -29,13 +29,17 @@ export const dbUsers = db.collection("users");
 export const dbProducts = db.collection("products");
 export const dbProviders= db.collection("providers");
 export const dbCustomers= db.collection("customers");
-
 export const dbcategories = db.collection("categories");
-
+export const dbAccounts = db.collection("accounts");
 export const dbStockEntries = db.collection("stockEntry");
 export const dbRoles = db.collection("roles");
 export const dbSales = db.collection("sales");
+export const dbInvoices = db.collection("invoice");
+export const dbPrices = db.collection("price");
+export const dbBox = db.collection("box");
 export const dbNotifications = db.collection("notifications");
+export const dbStockExits = db.collection("stockExit");
+
 
 
 

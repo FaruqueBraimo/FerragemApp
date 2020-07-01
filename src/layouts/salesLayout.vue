@@ -19,7 +19,7 @@
 				</q-toolbar-title>
                 <q-space/>
                  <q-avatar>
-      <img src="https://img.icons8.com/color/96/000000/user-male-circle.png">
+      <img src="https://img.icons8.com/color/96/000000/user-male-circle.png"  @click='confirm()'>
     </q-avatar>
 			</q-toolbar>
 		</q-header>
@@ -27,7 +27,7 @@
 		</transition>
 
 		<transition appear>
-				<drawerMobileComponent :drawer='leftDrawerOpen' :userName="getUserName(userAuth)" />
+				<drawerMobileComponent :drawer='leftDrawerOpen' :userName="getUserName(getUserAuth)" @exit ='confirm' />
 		</transition>
 
 
@@ -90,13 +90,7 @@
 			};
 		},
 		mounted() {
-			 if(this.$q.platform.is.desktop) {
-				  this.$router.push('/admin')
-                }
-                
-                else if (this.$q.platform.is.mobile) {
-                   
-                }
+			
 			/// Verify if user is logged or no
 			if (!this.getUserAuth) {
 				this.$router.push('/');
@@ -104,14 +98,25 @@
 				showErrorMessage('Sem permissão, por favor autentique-se');
 			}
 			//Verify if user account has blocked
-			if (!this.userAuth.status) {
+			if (!this.getUserAuth.status) {
 				this.$router.push('/');
 				showErrorMessage('Conta bloqueada, contacte o administrador');
+			}
+
+			if(!this.roles[this.getUserAuth.role.value].sales ) {
+				showErrorMessage('Sem permissão');
+					this.$router.go(-1);
+
+			}
+			else {
+			console.log(this.roles[this.getUserAuth.role.value] )
+
 			}
 		},
 
 		computed: {
 			...mapState('auth', ['users', 'userAuth']),
+			...mapState('role', ['roles']),
 			...mapGetters('auth', ['getUserName', 'getUserAuth']),
 			...mapState('product', ['products']),
 			...mapState('setting', ['pageTitle']),
