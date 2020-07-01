@@ -4,13 +4,9 @@
 			{{ customer.name }}
 		</td>
 		<td class="text-left">{{ customer.type }}</td>
-
 		<td class="text-left">{{ customer.address || 'Não Informado'}}</td>
-
 		<td class="text-left">{{ customer.email || 'Não Informado'}}</td>
 		<td class="text-left">{{ customer.phone || 'Não Informado' }}</td>
-
-
 		<td class="text-center ">
 			{{ customer.createdAt | dateFormat }}
 		</td>
@@ -19,15 +15,17 @@
 				<div class="col text-left">
 					<customer-details-dialog :customer="customer"/>
 				</div>
-				<!-- <div class="col">
+				<div class="col">
 					<q-btn
 						flat
 						size="sm"
 						rounded
 						text-color="primary"
 						icon="edit"
+						@click="$emit('updateObject', customer)"
+
 					/>
-				</div> -->
+				</div>
 				<div class="col">
 					<q-btn
 						flat

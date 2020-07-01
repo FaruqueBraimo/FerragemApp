@@ -1,5 +1,4 @@
 <template>
-
 	<q-dialog
 		v-model="toggleDialog"
 		@show="onShowDialog"
