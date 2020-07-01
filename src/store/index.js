@@ -11,7 +11,10 @@ import notification from './modules/notifications';
 import setting from './modules/settings';
 import sale from './modules/sales';
 import checkedProduct from './modules/checkedProducts';
-
+import invoice from './modules/invoices';
+import price from './modules/prices';
+import box from './modules/Boxes';
+import stockExit from './modules/stockExits';
 
 
 Vue.use(Vuex);
@@ -35,10 +38,14 @@ export default function(/* { ssrContext } */) {
 			customer,
 			stockEntry,
 			role,
+			invoice,
 			sale,
+			price,
 			notification,
 			setting,
-			checkedProduct
+			stockExit,
+			checkedProduct,
+			box
 		},
 
 		// enable strict mode (adds overhead!)

@@ -1,7 +1,5 @@
 <template>
-	<q-page padding>
-		
-
+	<q-page  class=''>
 		<q-list>
 			<q-scroll-area
 				:thumb-style="thumbStyle"
@@ -22,37 +20,59 @@
 				</div>
 			</q-scroll-area>
 		</q-list>
-		<q-card class="my-card bg-green-11 q-mx-md" flat bordered square>
-			<div class="row q-pa-md text-deep-orange text-center"> 
+		<q-card class="my-card q-mt-lg q-mb-xs  bg-green-11 q-mx-md" flat bordered square>
+			<div class="row q-pa-sm text-deep-orange text-center"> 
 			<div class="col"> Subtotal : </div>
 			<div class="col text-center">   -------- </div>
 			<div class="col text-right q-pr-md"> {{getSubTotal}} ,00 MT </div>	
 		</div>
 		</q-card>
-		
-		<div class="row q-pa-lg">
-		<div class="q-pa-sm col">
-				<q-btn
+
+
+		<div class="q-pa-sm row">
+			<div class="col-12">
+	         <q-btn
 					color="primary"
 					no-caps
-					class=" full-width"
+					class="full-width q-pa-sm text-bold"
 					unelevated
 					icon="euro"
 					label="Efetuar Venda"
 					@click="$router.push('/sales/sale')"
 				/>
 			</div>
-
-			<div class="q-pa-sm col">
+			
+			</div>
+			
+			<div class="row q-pa-xs">
+		
+			<div class="q-pa-sm col-6">
 				<q-btn
-					color="deep-orange"
+					color="blue-grey-10"
+					no-caps
+					class=" full-width"
+					unelevated
+					icon="receipt"
+					label="Emitir Factura"
+					@click="$router.push('/sales/invoice')"
+
+				/>
+			</div>
+
+			<div class="q-pa-sm  col-6">
+				<q-btn
+					color="teal"
 					no-caps
 					class=" full-width"
 					unelevated
 					icon="book"
-					label="Emitir Factura"
+					label="Emitir Cotação"
+					@click="$router.push('/sales/price')"
+
 				/>
 			</div>
+
+			
 		</div>
 	</q-page>
 </template>
@@ -118,6 +138,6 @@
 			this.setPageTitle('');
 		}
 	};
-</script>
+</script>q
 
 <style></style>
