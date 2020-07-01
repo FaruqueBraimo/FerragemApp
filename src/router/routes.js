@@ -6,6 +6,8 @@ const routes = [
     children: [
         { path: '/', component: () => import('pages/auth/Login.vue') },
         { path: '/register', component: () => import('pages/auth/Register.vue') },
+        { path: '/choice', component: () => import('pages/Choice.vue') },
+
     ]
 },
 
@@ -18,6 +20,8 @@ const routes = [
       { path: '/sales/invoices', component: () => import('pages/sales/priceInvoice.vue') },
       { path: '/sales/card', component: () => import('pages/sales/productCard.vue') },
       { path: '/sales/sale', component: () => import('pages/sales/Sales.vue') },
+      { path: '/sales/invoice', component: () => import('pages/sales/Invoice.vue') },
+      { path: '/sales/price', component: () => import('pages/sales/Price.vue') },
 
 
   ]
@@ -44,8 +48,10 @@ const routes = [
 
     { path: '/barcode', component: () => import('pages/admin/BarCodeReader.vue') },
     { path: '/entradas', component: () => import('pages/admin/stockEntryPage.vue') },
+    { path: '/saidas', component: () => import('pages/admin/stockExitPage.vue') },
+    { path: '/reportSale', component: () => import('pages/admin/SalesReport.vue') },
 
-
+    
   ],
 
 },

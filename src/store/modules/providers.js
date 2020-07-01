@@ -177,9 +177,7 @@ const actions = {
 			.then(function(docRef) {
 				commit('loading', false);
 
-				if (payload.successMessage !== false) {
-					showSuccessMessage(sucessMessage);
-				}
+				showSuccessMessage('Editado com sucesso');
 
 				return true;
 			})
