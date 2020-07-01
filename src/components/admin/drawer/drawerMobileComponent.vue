@@ -66,7 +66,7 @@
 							</q-item-section>
 						</q-item>
 
-						<q-item clickable v-ripple to="" disable>
+						<q-item clickable v-ripple @click="$emit('exit')" >
 							<q-item-section avatar>
 								<q-icon name="arrow_back" />
 							</q-item-section>

@@ -119,7 +119,7 @@
 							</q-item-section>
 						</q-item>
 
-						<q-item disable v-ripple>
+						<q-item to="saidas" v-ripple>
 							<q-item-section avatar>
 								<q-icon
 									color="red-5"
@@ -144,9 +144,32 @@
 					v-if="roles[getUserAuth.role.value].reports  === 'true'"
 				>
 					<q-card>
-						<div class="text-center text-caption text-red-4 q-pa-md">
-							Tudo sobre Relatórios brevemente
-						</div>
+						<q-list class="text-body1">
+						<q-item clickable v-ripple disable>
+							<q-item-section avatar>
+								<q-icon
+									color="primary"
+									name="assignment_turned_in"
+								/>
+							</q-item-section>
+							<q-item-section>
+		
+								<p>De Stock</p>
+							</q-item-section>
+						</q-item>
+
+						<q-item to="reportSale" v-ripple>
+							<q-item-section avatar>
+								<q-icon
+									color="cyan-5"
+									name="shopping_basket"
+								/>
+							</q-item-section>
+							<q-item-section>
+								<p>De Vendas</p>
+							</q-item-section>
+						</q-item>
+					</q-list>
 					</q-card>
 				</q-expansion-item>
 
