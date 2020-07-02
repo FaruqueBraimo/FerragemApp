@@ -7,7 +7,7 @@ import { showSuccessMessage } from '../../functions/show-success-messages';
 let lastVisible = null;
 
 const state = {
-	box: {},
+	boxs: {},
 	uploadProgress: 0,
 	loading: false,
 	boxearchKey: ''
@@ -22,14 +22,14 @@ const mutations = {
 		state.uploadProgress = val;
 	},
 	addBox(state, payload) {
-		Vue.set(state.box, payload.id, payload.object);
+		Vue.set(state.boxs, payload.id, payload.object);
 	},
 
 	editBox(state, payload) {
-		Object.assign(state.box[payload.id], payload.updates);
+		Object.assign(state.boxs[payload.id], payload.updates);
 	},
 	deleteBox(state, id) {
-		Vue.delete(state.box, id);
+		Vue.delete(state.boxs, id);
 	},
 	
 	
@@ -39,22 +39,14 @@ const getters = {
 	
 };
 
-const actions = {
-	
-
-	
+const actions = {	
 
 	listenBoxRealTimeChanges({ commit }) {
-		commit('resetbox');
-
-		dbBox
-			.orderBy('createdAt', 'desc')
-			.limit(10)
-			.onSnapshot(function(snapshot) {
+		dbBox.onSnapshot(function(snapshot) {
 				snapshot.docChanges().forEach(function(change) {
 					if (change.type === 'added') {
 
-						commit('addcategory', {
+						commit('addBox', {
 							id: change.doc.id,
 							object: change.doc.data()
 						});
@@ -72,7 +64,7 @@ const actions = {
 			});
 	},
 
-	addcategory({ commit, dispatch, rootGetters }, payload) {
+	addBox({ commit, dispatch, rootGetters }, payload) {
 		payload.createdAt = new Date()
 		payload.updatedAt = new Date()
 		commit('loading', true);
@@ -83,7 +75,6 @@ const actions = {
 				commit('loading', false);
 
 				// 1. Limpar todas solicitações
-				commit('resetcategory');
 
 				showSuccessMessage('Caixa aberta !');
 
@@ -99,7 +90,6 @@ const actions = {
 	},
 
 	editBox({ commit, rootGetters }, payload) {
-		commit('loading', true);
 
 		payload.updates.updatedAt = new Date()
 
@@ -113,7 +103,7 @@ const actions = {
 			.then(function(docRef) {
 				commit('loading', false);
 
-					showSuccessMessage('Valor editado !');
+				showSuccessMessage(payload.message || 'Sucesso');
 				
 
 				return true;

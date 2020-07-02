@@ -82,6 +82,7 @@ const actions = {
 		localStorage.setItem('checkedProducts', checked);
 		dispatch('listenCheckedProductRealTime');
 	},
+	
 
 	decrementQuantity({ dispatch }, payload) {
 		let checked = [];
