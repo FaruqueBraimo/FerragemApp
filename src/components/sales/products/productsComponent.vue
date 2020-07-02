@@ -1,6 +1,6 @@
 <template>
-	<div class="q-pa-sm">
-		<q-item>
+	<div class="q-pa-sm" v-if="product.qtdBalcony > 0">
+		<q-item  v-if="product.qtdBalcony > 0"> 
 			<q-item-section avatar>
 				<q-avatar size="50px" square>
 					<img
@@ -15,7 +15,7 @@
 				>
 				<q-item-label
 					class="text-bold text-left text-primary text-overline "
-					>{{ product.qtdBalcony || 0 }}</q-item-label
+					> qtd :{{ product.qtdBalcony || 0 }}</q-item-label
 				>
 			</q-item-section>
 
@@ -24,7 +24,7 @@
 					{{ product.price_buy }} MT
 				</small>
 
-				<q-space />
+				<q-space  />
 				<div v-if="Object.keys(checkedProducts).length === 0">
 					<q-btn
 						color="deep-purple"
@@ -59,8 +59,7 @@
 				</div>
 			</q-item-section>
 		</q-item>
-		<q-separator spaced inset="item" />
-		<div></div>
+		<q-separator spaced inset="item" v-if="product.qtdBalcony > 0" />
 	</div>
 </template>
 

@@ -226,7 +226,6 @@
 			this.setPageTitle('');
 		},
 		updated() {
-				this.getLocalBoxStatus()
 		}
 	};
 </script>

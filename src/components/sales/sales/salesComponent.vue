@@ -1,29 +1,23 @@
 <template>
 	<div class="q-pb-md ">
-								<!-- <p class="text-h6 text-primary text-bold"> Detalhes do producto </p> -->
-								<div class=" q-px-sm">
-                                    	<q-input
-								square
-								filled
-								dense
-								v-model="value"
-								type="number"
-								label="Valor Pago "
-								lazy-rules
-							:rules="[
-								val =>
-									(val !== null && val !== '') ||
-									'Por favor insira o valor'
-							]"
-											>
-							</q-input>
-									
-								</div>
-
-
-							
-              
-
+		<!-- <p class="text-h6 text-primary text-bold"> Detalhes do producto </p> -->
+		<div class=" q-px-sm">
+			<q-input
+				square
+				filled
+				dense
+				v-model="value"
+				type="number"
+				label="Valor Pago "
+				lazy-rules
+				:rules="[
+					val =>
+						(val !== null && val !== '') ||
+						'Por favor insira o valor'
+				]"
+			>
+			</q-input>
+		</div>
 
 		<div class="" style="">
 			{{ fetchClients }}
@@ -51,16 +45,18 @@
 							bordered
 							square
 						>
-                        	<div class="row q-pa-sm text-green-8">
+							<div class="row q-pa-sm text-green-8">
 								<div class="col">Valor dado :</div>
 								<div class="col text-right q-pr-md">
-									{{ value || 0}} ,00 MT
+									{{ value || 0 }} ,00 MT
 								</div>
 							</div>
 
-                            	<div class="row q-pa-sm text-green-8">
+							<div class="row q-pa-sm text-green-8">
 								<div class="col text-deep-orange">Troco :</div>
-								<div class="col text-deep-orange text-right q-pr-md">
+								<div
+									class="col text-deep-orange text-right q-pr-md"
+								>
 									{{ change }} ,00 MT
 								</div>
 							</div>
@@ -86,7 +82,6 @@
 									{{ getSubTotal }} ,00 MT
 								</div>
 							</div>
-
 						</q-card>
 					</q-tab-panel>
 
@@ -109,25 +104,19 @@
 										v-model="client"
 									/>
 								</div>
-
-							
 							</div>
 
 							<div class="row  items-center">
-									<div class=" col-12 text-primary q-pl-sm  ">
-									
+								<div class=" col-12 text-primary q-pl-sm  ">
 									<q-btn
-                                    no-caps
+										no-caps
 										label="Ou registe um novo cliente"
 										type="reset"
 										color="primary"
 										flat
-										
 										class="q-ml-sm text-center full-width"
 									/>
-									
 								</div>
-								
 							</div>
 						</q-form>
 					</q-tab-panel>
@@ -135,8 +124,10 @@
 			</q-card>
 		</div>
 		<div class="row q-pa-lg">
-		<div class=' text-center text-red-5 col-12'>Valor  no Caixa : 50000 , 00 MT</div>	
-		<div class="q-pt-xl col-12">
+			<div class=" text-center text-red-5 col-12">
+				Valor no Caixa : 50000 , 00 MT
+			</div>
+			<div class="q-pt-xl col-12">
 				<q-btn
 					color="indigo"
 					no-caps
@@ -145,13 +136,17 @@
 					icon="done"
 					:disable="disable"
 					label="Finalizar"
-					@click="$emit('sales',{ value : value, change : change, subtotal : getSubTotal, iva:0, client :client})"
-
+					@click="
+						$emit('sales', {
+							value: value,
+							change: change,
+							subtotal: getSubTotal,
+							iva: 0,
+							client: client
+						})
+					"
 				/>
-
 			</div>
-
-		
 		</div>
 	</div>
 </template>
@@ -164,12 +159,10 @@
 			return {
 				tab: 'mails',
 				client: '',
-                optionalClient: [],
-                value : 0,
-				change : 0,
-				disable:true,
-
-
+				optionalClient: [],
+				value: 0,
+				change: 0,
+				disable: true
 			};
 		},
 		computed: {
@@ -177,15 +170,12 @@
 			...mapState('customer', ['customers']),
 
 			fetchClients() {
-                if(this.value >= this.getSubTotal   ) {
-									this.change = this.value - this.getSubTotal
-									this.disable =false
-
-				}
-				else{
-			this.change = 0
-		 this.disable =true
-
+				if (this.value >= this.getSubTotal) {
+					this.change = this.value - this.getSubTotal;
+					this.disable = false;
+				} else {
+					this.change = 0;
+					this.disable = true;
 				}
 				Object.keys(this.customers).forEach((element, key) => {
 					this.optionalClient.push({
@@ -199,11 +189,8 @@
 
 		methods: {
 			onSubmit() {},
-            onReset() {},
-            finalCheck() {
-
-
-            }
+			onReset() {},
+			finalCheck() {}
 		}
 	};
 </script>
