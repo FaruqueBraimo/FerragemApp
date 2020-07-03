@@ -1,58 +1,98 @@
 <template>
-	<tr >
+	
+<q-card class="my-card">
+	<q-card-section>
+		<div id="printMe" >
+			
 
-		<td class="text-center">
-			{{ sale[0].payload.name }}
-		</td>
-		
-		<td class="text-left">{{ sale[0].payload.qtdUnit }}</td>
+			<div class="row q-pa-sm ">
+				<div class="col text-bold text-grey-7">Produto</div>
 
-            <td class="text-left ">
-			{{ sale[0].payload.price }} , 00 MT
-		</td>
+				<div class="col  text-bold text-grey-7 text-right q-pr-md">
+					Quantidade
+				</div>
 
-		<td class="text-left ">
-			{{ sale.salesMan.name || 'Desconhecido' }} 
-		</td>
+				<div class="col  text-bold text-grey-7 text-right q-pr-md">
+					Preço
+				</div>
+			</div>
 
-        	
+				<div class="row q-pa-sm" v-for="i in sale.products" :key="i" >
+					<div class="col">{{ i.payload.name }}</div>
 
-        	
-        <td class="text-center ">
-			{{ sale.updatedAt | dateFormat }} 
-		</td>
+					<div class="col text-right q-pr-md">
+						{{ i.payload.qtdUnit }}
+					</div>
 
-        	
-    
+					<div class="col text-right q-pr-md">
+						{{ i.payload.price }},00 MT
+					</div>
+			
+			</div>
+			<hr class="text-center q-ma-sm" />
 
+			<div class="row q-pa-sm  ">
+				<div class="col-6 text-left">
+					Desconto de Iva :
+				</div>
+				<div class="col text-right q-pr-md">
+					{{ sale.details.iva || 0 }}
+				</div>
+			</div>
 
-		
-		<!-- <td class="text-center ">
-			{{ sale[0].createdAt }}
-		</td>  -->
+			<div class="row q-pa-sm ">
+				<div class="col">Cliente :</div>
+				<div class="col text-right q-pr-md">
+					{{
+						sale.details.client
+							? sale.details.client.label
+							: 'Nao informado'
+					}}
+				</div>
+			</div>
 
-       
+			<div class="row q-pa-sm ">
+				<div class="col">Data de Venda:</div>
+				<div class="col text-right q-pr-md">
+					{{ sale.createdAt  | dateFormat  }}
+				</div>
+			</div>
 
-		<td class="  ">
-		
-					
+			<div class="row q-pa-sm ">
+				<div class="col">Vendedor:</div>
+				<div class="col text-right q-pr-md">
+					{{ sale.details.salesMan.name || ''   }}
+				</div>
+			</div>
 
-				<div class="col">
-					<q-btn
-						flat
-						rounded
-						size="sm"
-						text-color="red"
+			<hr class="text-center q-ma-sm" />
+
+			<div class="row q-pa-sm ">
+				<div class="col text-bold">Total :</div>
+				<div class="col text-right q-pr-md">
+					{{ sale.details.subtotal || 0 }} ,00 MT
+				</div>
+			</div>
+		</div>
+		<div class="q-pt-md col-12" >
+			<q-btn
+				no-caps
+				class=" full-width"
+				unelevated
+			
+				label="Apagar"
+
+				
+						color="red-5"
 						icon="delete"
 						
 						@click="$emit('deletesale',saleId)"
-					/>
-				</div>
-			
-			
-		</td>
+			/>
+		</div>
+	</q-card-section>
+	
+</q-card>	
 
-	</tr>
 
 </template>
 

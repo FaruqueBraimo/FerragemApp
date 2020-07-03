@@ -1,7 +1,7 @@
 <template>
 	<thead>
 		<tr>
-			<th >
+			<th colspan="8">
 				<div class="row no-wrap items-center">
 					<q-img
 						style="width: 70px"
@@ -65,6 +65,28 @@
 			</th>
 		</tr>
 
+		<tr class="text-bold" style="font-weight: bold">
+			<th class="text-center text-bold" style="font-weight: bold">
+				Produto 
+			</th>
+
+			<th class="text-left text-bold" style="font-weight: bold">
+				Quantidade 
+			</th>
+			<th class="text-left text-bold" style="font-weight: bold">
+				Preço total
+			</th>
+		
+            <th class="text-left text-bold" style="font-weight: bold">Vendedor</th>
+
+
+			<th class="text-center text-bold" style="font-weight: bold">
+				Data de venda
+			</th>
+			<th class="text-left text-bold" style="font-weight: bold">
+				Acção
+			</th>
+		</tr>
 	</thead>
 </template>
 

@@ -79,9 +79,15 @@
 					}}
 				</div>
 			</div>
+				<div class="row q-pa-sm ">
+				<div class="col">Vendedor:</div>
+				<div class="col text-right q-pr-md">
+					{{ getUserAuth.name || ''   }}
+				</div>
+			</div>
 
 			<div class="row q-pa-sm ">
-				<div class="col">Data :</div>
+				<div class="col">Data de compra :</div>
 				<div class="col text-right q-pr-md">
 					{{ new Date() | dateFormat }}
 				</div>
@@ -145,9 +151,10 @@
 				this.saleObject = sale;
 				this.saleObject.salesMan = this.getUserAuth;
 				let saleDone = Object.assign(
-					this.saleObject,
-					this.checkedProducts
+				{  details :	this.saleObject},
+				 { products :  this.checkedProducts}
 				);
+				
 				this.addSale(saleDone);
 				this.updateQuantity();
 				this.updateCash(sale.subtotal);

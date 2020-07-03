@@ -1,6 +1,7 @@
 <template>
 	<q-dialog
 		v-model="toggleDialog"
+		@show="onShowDialog"
 		
     :maximized="maximizedToggle"
       transition-show="slide-up"
@@ -9,7 +10,7 @@
     <q-card >
 			<q-card-section class="row items-center">
 				<div class="text-h6 text-left col " > Relatorios de Vendas </div>
-				<div class="text-h6 text-cyan-10 col text-center" > Dinheiro Arrecadado  : {{getTotalMoney}}, 00 MT </div>
+				<div class="text-h6 text-cyan-10 col text-center" > Dinheiro Arrecadado  : 70000, 00 MT </div>
 
 				<q-space />
 				<q-btn
@@ -22,6 +23,7 @@
 			</q-card-section>
 			<q-card-section>
                 <q-markup-table
+			id="printMe"
 			flat
 			bordered
 			square
@@ -32,21 +34,19 @@
 				class="q-pa-sm"
 				@saleFilter="filtersale"
 				@saleFilterCategory="saleFilterCategory"
-			/>
-                </q-markup-table>		
+			/>		
 		
-		  <div class="row justify-left	">
-          <div class=" col-4 q-pa-md  "	v-for="(sale, index) in sales" :key="index">
+			<tbody>
+              
 				<sale-body-component
-				
+					v-for="(sale, index) in sales"
 					:key="index"
 					:sale="Object.assign({ id: index }, sale)"
 					:saleId="index"
 					@deletesale="removeSale"
-
 				/>
-			</div>
-			</div>
+			</tbody>
+		</q-markup-table>
 			
 			</q-card-section>
 		</q-card>
@@ -76,19 +76,7 @@
 		computed: {
 			...mapState('sale', [
 				'sales',
-			]),
-			
-			getTotalMoney() {
-
-				let money = 0;
-				Object.keys(this.sales).forEach((element, key) => {
-					let prod = this.sales[element].details.subtotal
-					
-					money =  money + prod
-
-				});
-				return money
-			},
+            ]),
             
             
 			toggleDialog: {
@@ -103,6 +91,7 @@
             
 		},
 		mounted() {
+			this.listenProductRealTimeChanges();
 		},
 
 		methods: {
