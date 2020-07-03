@@ -1,21 +1,22 @@
 <template>
 	<thead>
 		<tr>
-			<th >
+			<th colspan="8">
 				<div class="row no-wrap items-center">
 					<q-img
 						style="width: 70px"
 						:ratio="1"
 						class="rounded-borders"
-						src="https://img.icons8.com/plasticine/100/000000/yard-sale.png"
+						src="https://img.icons8.com/color/96/000000/receipt.png"
 					/>
-                    
+                                                       
 
-					<div class="text-h6 col-1 text-secondary">Vendas</div>
+
+					<div class="text-h6 col-1 text-secondary">Faturas</div>
 					<div class=" col  q-ml-md justify-right text-right">
 						<q-select
 							dense
-							label="Filtrar venda por data "
+							label="Filtrar por data de emissão"
 							square
 							v-model="filterCategory"
 							filled
@@ -65,6 +66,7 @@
 			</th>
 		</tr>
 
+		
 	</thead>
 </template>
 

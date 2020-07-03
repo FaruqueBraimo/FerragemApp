@@ -79,9 +79,15 @@
 					}}
 				</div>
 			</div>
+				<div class="row q-pa-sm ">
+				<div class="col">Vendedor:</div>
+				<div class="col text-right q-pr-md">
+					{{ getUserAuth.name || ''   }}
+				</div>
+			</div>
 
 			<div class="row q-pa-sm ">
-				<div class="col">Data :</div>
+				<div class="col">Data de compra :</div>
 				<div class="col text-right q-pr-md">
 					{{ new Date() | dateFormat }}
 				</div>
@@ -128,7 +134,7 @@
 			...mapState('product', ['products']),
 			...mapGetters('checkedProduct', ['getSubTotal']),
 			...mapGetters('auth', ['getUserName', 'getUserAuth']),
-
+			...mapState('box', ['boxs']),
 			...mapState('checkedProduct', ['checkedProducts'])
 		},
 		components: {
@@ -138,19 +144,20 @@
 			...mapActions('setting', ['setPageTitle']),
 			...mapActions('sale', ['addSale', 'removeChecked']),
 			...mapActions('checkedProduct', ['emptyChecked']),
-			...mapActions('product', ['updateProduct', ]),
-
+			...mapActions('product', ['updateProduct']),
+			...mapActions('box', ['addBox', 'editBox']),
 
 			makeSale(sale) {
 				this.saleObject = sale;
 				this.saleObject.salesMan = this.getUserAuth;
 				let saleDone = Object.assign(
-					this.saleObject,
-					this.checkedProducts
+				{  details :	this.saleObject},
+				 { products :  this.checkedProducts}
 				);
-				this.addSale(saleDone);
-				this.updateQuantity()
 				
+				this.addSale(saleDone);
+				this.updateQuantity();
+				this.updateCash(sale.subtotal);
 			},
 			printTable() {
 				// Pass the element id here
@@ -158,24 +165,40 @@
 				this.emptyChecked();
 			},
 
+			updateCash(newChas) {
+				Object.keys(this.boxs).forEach(element => {
+					let box = this.boxs[element];
+					const oldChash = box.value;
+
+					if (
+						box.createdBy.id === this.getUserAuth.id &&
+						box.status
+					) {
+						this.editBox({
+							id: element,
+							updates: { value: ~~oldChash + ~~newChas }
+						});
+					}
+				});
+			},
+
 			updateQuantity() {
-					// Abatendo a quantidade no stock
-				let qtdBalcony = 0
-				Object.keys(this.products).forEach((element,key) => {
+				// Abatendo a quantidade no stock
+				let qtdBalcony = 0;
+				Object.keys(this.products).forEach((element, key) => {
 					this.checkedProducts.forEach(element2 => {
 						if (element == element2.payload.id) {
-						let product = this.products[element]
-						qtdBalcony = product.qtdBalcony - element2.payload.qtdUnit
-					this.updateProduct( {
-						id : element,
-						updates : { qtdBalcony : qtdBalcony  } })
-
+							let product = this.products[element];
+							qtdBalcony =
+								product.qtdBalcony - element2.payload.qtdUnit;
+							this.updateProduct({
+								id: element,
+								updates: { qtdBalcony: qtdBalcony }
+							});
 						}
-
 					});
 				});
-
-			},
+			}
 		},
 		mounted() {
 			this.setPageTitle('Venda ');

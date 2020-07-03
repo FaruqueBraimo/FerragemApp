@@ -46,6 +46,12 @@
 				</div>
 			</div>
 			<hr class="text-center q-ma-sm" />
+			<div class="row q-pa-sm ">
+				<div class="col">Vendedor:</div>
+				<div class="col text-right q-pr-md">
+					{{ getUserAuth.name || ''   }}
+				</div>
+			</div>
 			
 	        <div class="row q-pa-sm ">
 				<div class="col">Data de Emissão :</div>
@@ -140,9 +146,10 @@
 				this.priceObject = price;
 				this.priceObject.pricesMan = this.getUserAuth;
 				let priceDone = Object.assign(
-					this.priceObject,
-					this.checkedProducts
+					{  details :	this.priceObject},
+				 { products :  this.checkedProducts}
 				);
+
                 this.addPrice(priceDone);
 				
 			},

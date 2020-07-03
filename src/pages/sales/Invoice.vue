@@ -46,6 +46,12 @@
 				</div>
 			</div>
 			<hr class="text-center q-ma-sm" />
+				<div class="row q-pa-sm ">
+				<div class="col">Vendedor:</div>
+				<div class="col text-right q-pr-md">
+					{{ getUserAuth.name || ''   }}
+				</div>
+			</div>
 
 			<div class="row q-pa-sm ">
 				<div class="col">Data de Emissão :</div>
@@ -140,9 +146,10 @@
 			makeInvoice(invoice) {
 				this.invoiceObject = invoice;
 				this.invoiceObject.invoicesMan = this.getUserAuth;
+
 				let invoiceDone = Object.assign(
-					this.invoiceObject,
-					this.checkedProducts
+				 {  details :	this.invoiceObject},
+				 { produts :  this.checkedProducts}
 				);
 				this.addInvoice(invoiceDone);
 				this.updateQuantity();

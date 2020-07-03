@@ -6,10 +6,11 @@
       transition-show="slide-up"
       transition-hide="slide-down"
 	>
+	
     <q-card >
 			<q-card-section class="row items-center">
-				<div class="text-h6 text-left col " > Relatorios de Vendas </div>
-				<div class="text-h6 text-cyan-10 col text-center" > Dinheiro Arrecadado  : {{getTotalMoney}}, 00 MT </div>
+				<div class="text-h6 text-left col " > Relatorios de Facturas geradas </div>
+				<div class="text-h6 text-red-5 col text-center" > Dinheiro por Receber  : {{getTotalMoney}}, 00 MT </div>
 
 				<q-space />
 				<q-btn
@@ -28,25 +29,26 @@
 			class="q-pa-md"
 			style=" width: 100%"
 		>
-			<sale-header-component
+			<invoice-header-component
 				class="q-pa-sm"
-				@saleFilter="filtersale"
-				@saleFilterCategory="saleFilterCategory"
+				@invoiceFilter="filterinvoice"
+				@invoiceFilterCategory="invoiceFilterCategory"
 			/>
                 </q-markup-table>		
 		
-		  <div class="row justify-left	">
-          <div class=" col-4 q-pa-md  "	v-for="(sale, index) in sales" :key="index">
-				<sale-body-component
-				
-					:key="index"
-					:sale="Object.assign({ id: index }, sale)"
-					:saleId="index"
-					@deletesale="removeSale"
-
+		
+            <div class="row justify-left	">
+          <div class=" col-4 q-pa-md  "	v-for="(invoice, index) in invoices" :key="index">
+				<invoice-body-component
+					:invoice="Object.assign({ id: index }, invoice)"
+					:invoiceId="index"
+					@deleteinvoice="removeInvoice"
 				/>
+				</div>
 			</div>
-			</div>
+		
+			
+		
 			
 			</q-card-section>
 		</q-card>
@@ -57,13 +59,13 @@
 
 <script>
 	import { mapActions, mapState, mapGetters } from 'vuex';
-	import saleBodyComponent from './saleBodyComponent';
-	import saleHeaderComponent from './saleHeaderComponent';
+	import invoiceBodyComponent from './invoiceBodyComponent';
+	import invoiceHeaderComponent from './invoiceHeaderComponent';
 
 	export default {
 
-        name: 'salesReportComponent',
-        props: ['showSale'],
+        name: 'invoicesReportComponent',
+        props: ['showInvoice'],
 
 		data() {
 			return {
@@ -74,15 +76,15 @@
 			};
 		},
 		computed: {
-			...mapState('sale', [
-				'sales',
+			...mapState('invoice', [
+				'invoices',
 			]),
 			
-			getTotalMoney() {
+        getTotalMoney() {
 
 				let money = 0;
-				Object.keys(this.sales).forEach((element, key) => {
-					let prod = this.sales[element].details.subtotal
+				Object.keys(this.invoices).forEach((element, key) => {
+					let prod = this.invoices[element].details.subtotal
 					
 					money =  money + prod
 
@@ -90,11 +92,10 @@
 				return money
 			},
             
-            
 			toggleDialog: {
 
 				get() {
-					return this.showSale;
+					return this.showInvoice;
 				},
 				set(val) {
 					this.$emit('closeDialog');
@@ -106,44 +107,39 @@
 		},
 
 		methods: {
-			...mapActions('sale', [
-				'deleteSale',
-			
+			...mapActions('invoice', [
+				'deleteInvoice',
 			]),
-			printTable() {
-				// Pass the element id here
-				this.$htmlToPaper('printMe');
-			},
+		
 
-			removeSale(id) {
-				let saleName = this.sales[id].name;
+			removeInvoice(id) {
 				this.$q
 					.dialog({
 						title: 'Confirme',
-						message: `Tem certeza que deseja apagar esta venda ?`,
+						message: `Tem certeza que deseja apagar esta factura ?`,
 						ok: 'Sim',
 						cancel: true,
 						cancel: 'Não',
 						persistent: true
 					})
 					.onOk(() => {
-						this.deleteSale(id);
+						this.deleteInvoice(id);
 					});
 			},
 			closeDialog() {
 				this.dialog = false;
 				this.updateCategory = false;
 			},
-			filtersale(query) {
+			filterinvoice(query) {
 				this.filterDatafromDb(query);
 			},
-			saleFilterCategory(query) {
+			invoiceFilterCategory(query) {
 				this.filterCategoryDatafromDb(query);
 			}
 		},
 		components: {
-			saleHeaderComponent,
-			saleBodyComponent,
+			invoiceHeaderComponent,
+			invoiceBodyComponent,
 		
 		},
 
