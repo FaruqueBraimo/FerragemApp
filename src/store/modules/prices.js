@@ -36,7 +36,7 @@ const mutations = {
 const getters = {};
 
 const actions = {
-	listenpriceRealTimeChanges({ commit }) {
+	listenPriceRealTimeChanges({ commit }) {
 		commit('resetprice');
 
 		dbPrices
