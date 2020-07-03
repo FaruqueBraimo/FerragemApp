@@ -24,6 +24,7 @@
 			this.listeninvoiceRealTimeChanges()
 			this.listenStockExitRealTimeChanges()
 			this.listenBoxRealTimeChanges()
+			this.listenPriceRealTimeChanges()
 		},
 				computed: {
 			...mapState('auth', ['users']),
@@ -54,6 +55,9 @@
 	
 
 			...mapActions('product' , ['listenProductRealTimeChanges']),
+						...mapActions('price' , ['listenPriceRealTimeChanges']),
+
+			
 			...mapActions('category' , ['listencategoryRealTimeChanges']),
 			...mapActions('provider' , ['listenProviderRealTimeChanges']),
 			...mapActions('customer' , ['listenCustomerRealTimeChanges']),

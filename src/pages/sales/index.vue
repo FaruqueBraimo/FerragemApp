@@ -192,6 +192,7 @@
 										updates: { status: false }
 									});
 									this.$router.go()
+									
 								}
 								
 								);
@@ -215,7 +216,8 @@
 
 						if(eguality == false) {
 						localStorage.setItem('boxStatus', [])
-						console.log(this.getLocalBoxStatus.data)
+						this.$router.go()
+						
 						}
 						else {
 						}
