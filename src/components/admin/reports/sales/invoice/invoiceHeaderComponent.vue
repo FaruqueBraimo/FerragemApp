@@ -16,6 +16,7 @@
 					<div class=" col  q-ml-md justify-right text-right">
 						<q-select
 							dense
+							disable
 							label="Filtrar por data de emissão"
 							square
 							v-model="filterCategory"
@@ -41,7 +42,7 @@
 							dense
 							label="Por Funcionário "
 							square
-							
+							disable
 							filled
 							:options="optionalUsers"
 						/>
@@ -49,7 +50,7 @@
 					</div>
 
                     <div class=" col q-ml-md justify-right text-right">
-					<q-input filled v-model="date" placeholder='Data aleatoria' dense>
+					<q-input disable filled v-model="date" placeholder='Data aleatoria' dense>
                         <template v-slot:append>
                             <q-icon name="event" class="cursor-pointer">
                             <q-popup-proxy transition-show="scale" transition-hide="scale">
