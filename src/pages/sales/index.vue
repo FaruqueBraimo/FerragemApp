@@ -19,10 +19,17 @@
 					no-caps
 					class="q-pa-sm  full-width text-body1"
 					unelevated
+					v-if="!getBoxStatus"
 					icon="open_in_browser"
 					@click="openBox()"
 					label="Abrir Caixa"
 				/>
+				<div
+					class="text-deep-purple text-bold text-center"
+					v-if="getBoxStatus"
+				>
+					Dinheiro no Caixa : {{ myBoxCash }} , 00 MT
+				</div>
 			</div>
 
 			<div class="q-px-xl">
@@ -32,6 +39,7 @@
 					class=" q-pa-sm full-width text-body1"
 					unelevated
 					icon="close"
+					v-if="getBoxStatus"
 					label="Fechar Caixa"
 				/>
 			</div>

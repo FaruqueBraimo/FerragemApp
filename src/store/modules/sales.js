@@ -3,12 +3,14 @@ import { dbSales } from '../../boot/firebase';
 import { Loading, date } from 'quasar';
 import { showErrorMessage } from '../../functions/handle-error-messages';
 import { showSuccessMessage } from '../../functions/show-success-messages';
+import products from './products';
 
 let lastVisible = null;
 
 const state = {
 	sales: {},
 	uploadProgress: 0,
+	saleFiltered: {},
 	loading: false,
 	SalesearchKey: ''
 };
@@ -21,8 +23,18 @@ const mutations = {
 	uploadProgress(state, val) {
 		state.uploadProgress = val;
 	},
+	resetSale(state) {
+		state.sales = {};
+	},
+	resetSaleFiltered(state) {
+		state.saleFiltered = {};
+	},
+
 	addSale(state, payload) {
 		Vue.set(state.sales, payload.id, payload.object);
+	},
+	addSaleFiltered(state, payload) {
+		Vue.set(state.saleFiltered, payload.id, payload.object);
 	},
 
 	editSale(state, payload) {
@@ -33,12 +45,77 @@ const mutations = {
 	}
 };
 
-const getters = {};
+const getters = {
+	filterSaleByTime: (state) => (time) => {
+		let saleReturn = {};
+		Object.keys(state.sales).forEach(element => {
+			const sale = state.sales[element];
+			const today = new Date();
+			const yesterday = date.subtractFromDate(today, {
+				hours: 24,
+				milliseconds: 10000
+			});
+			const thisMonth = today.getMonth();
+			const thisYear = today.getFullYear();
+			const thisWeak = date.getWeekOfYear(today);
+			const dateCreated = new Date(sale.createdAt.seconds * 1000);
+
+			switch (time) {
+				case 'De Hoje':
+					let equality = date.isSameDate(dateCreated, today, 'day');
+
+					if (equality) {
+						saleReturn[element] = sale;
+						console.log(saleReturn);
+					}
+
+					break;
+				case 'De Ontém':
+					equality = date.isSameDate(dateCreated, yesterday, 'day');
+
+					if (equality) {
+						saleReturn[element] = sale;
+						console.log(saleReturn);
+					}
+					break;
+				case 'Esta Semana':
+					const weekCompare = date.getWeekOfYear(dateCreated);
+					if (weekCompare === thisWeak) {
+						saleReturn[element] = sale;
+
+						console.log(saleReturn);
+					}
+					break;
+				case 'Deste Mês':
+					const monthCompare = dateCreated.getMonth();
+					if (monthCompare === thisMonth) {
+						saleReturn[element] = sale;
+						console.log(saleReturn);
+					}
+
+					break;
+
+				case 'Deste Ano':
+					const yearCompare = dateCreated.getFullYear();
+					if (yearCompare === thisYear) {
+						saleReturn[element] = sale;
+						console.log(saleReturn);
+					}
+
+					break;
+
+				default:
+					saleReturn[element] = sale;
+					console.log(saleReturn);
+			}
+		});
+
+		return saleReturn;
+	}
+};
 
 const actions = {
 	listenSaleRealTimeChanges({ commit }) {
-		commit('resetSale');
-
 		dbSales
 			.orderBy('createdAt', 'desc')
 			.limit(10)
@@ -74,7 +151,6 @@ const actions = {
 				commit('loading', false);
 
 				// 1. Limpar todas solicitações
-				commit('resetSale');
 
 				showSuccessMessage('Venda Efectuda!');
 
@@ -170,23 +246,20 @@ const actions = {
 			});
 	},
 
-	setSalesearchKey({ commit, dispatch }, text) {
-		commit('setSalesearchKey', text);
+	setSalesearchKey({ commit, getters }, text) {
+		let sales = {};
+		commit('resetSaleFiltered');
 
-		commit('loading', true);
-		commit('resetSale');
-
-		if ((text && text.length > 1) || !text) {
-			dispatch('getData', true);
-		}
-	},
-
-	resetDataToOnly20({ state, commit }) {
-		if (Object.keys(state.Sales).length > 75) {
-			console.log(
-				'Reset data to only20 not implemented yet. All Sales where reseted for now...'
-			);
-			commit('resetSale');
+		if (text) {
+			sales = getters.filterSaleByTime(text);
+			Object.keys(sales).forEach(key => {
+				let sale = sales[key];
+				commit('addSaleFiltered', {
+					id: key,
+					object: sale
+				});
+			});
+			
 		}
 	}
 };
