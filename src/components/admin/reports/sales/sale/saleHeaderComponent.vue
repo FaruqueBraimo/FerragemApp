@@ -40,7 +40,7 @@
 							dense
 							label="Por Funcionário "
 							square
-							
+							disable
 							filled
 							:options="optionalUsers"
 						/>
@@ -48,7 +48,7 @@
 					</div>
 
                     <div class=" col q-ml-md justify-right text-right">
-					<q-input filled v-model="date" placeholder='Data aleatoria' dense>
+					<q-input  disable filled v-model="date" placeholder='Data aleatoria' dense>
                         <template v-slot:append>
                             <q-icon name="event" class="cursor-pointer">
                             <q-popup-proxy transition-show="scale" transition-hide="scale">
@@ -76,7 +76,7 @@
 
 		data() {
 			return {
-				optionalcategory: ['Todas','De Hoje' , 'De Ontém' , 'Deste Mês' ,' Deste Ano'],
+				optionalcategory: ['Todas','De Hoje' , 'De Ontém' ,'Esta Semana', 'Deste Mês' ,'Deste Ano'],
                 filterCategory :'',
                 date: '',
                 optionalTrade: ['Mais Vendidos'],
@@ -121,7 +121,8 @@
 
 			filterCategory(val) {
 				if (val) {
-				this.$emit('productFilterCategory', this.filterCategory)				}
+				this.$emit('filterCategory', val)	
+				}
 			}
 		}
 	};

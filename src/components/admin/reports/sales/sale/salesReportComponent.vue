@@ -6,10 +6,11 @@
       transition-show="slide-up"
       transition-hide="slide-down"
 	>
+	
     <q-card >
 			<q-card-section class="row items-center">
 				<div class="text-h6 text-left col " > Relatorios de Vendas </div>
-				<div class="text-h6 text-cyan-10 col text-center" > Dinheiro Arrecadado  : {{getTotalMoney}}, 00 MT </div>
+				<div class="text-h6 text-cyan-10 col text-center" > Dinheiro Arrecadado  : {{  getTotalFilteredMoney|| getTotalMoney }}, 00 MT </div>
 
 				<q-space />
 				<q-btn
@@ -30,16 +31,17 @@
 		>
 			<sale-header-component
 				class="q-pa-sm"
-				@saleFilter="filtersale"
-				@saleFilterCategory="saleFilterCategory"
+				@filterCategory="setSalesearchKey"
 			/>
                 </q-markup-table>		
 		
 		  <div class="row justify-left	">
-          <div class=" col-4 q-pa-md  "	v-for="(sale, index) in sales" :key="index">
+          <div class=" col-4 q-pa-md  "	v-for="(sale, index) in  Object.keys(saleFiltered).length > 0
+						?  saleFiltered
+						: sales"
+		  
+		   :key="index">
 				<sale-body-component
-				
-					:key="index"
 					:sale="Object.assign({ id: index }, sale)"
 					:saleId="index"
 					@deletesale="removeSale"
@@ -75,14 +77,33 @@
 		},
 		computed: {
 			...mapState('sale', [
-				'sales',
+				'sales', 'saleFiltered'
 			]),
+			...mapGetters('sale', [
+				'filterSaleByTime',
+			]),
+			
+
+            
 			
 			getTotalMoney() {
 
 				let money = 0;
-				Object.keys(this.sales).forEach((element, key) => {
+				Object.keys(this.sales ).forEach((element, key) => {
 					let prod = this.sales[element].details.subtotal
+					
+					money =  money + prod
+
+				});
+				return money
+			},
+
+			getTotalFilteredMoney() {
+
+				let money = 0;
+				if(Object.keys(this.saleFiltered).length > 0) 
+				Object.keys(this.saleFiltered).forEach((element, key) => {
+					let prod = this.saleFiltered[element].details.subtotal
 					
 					money =  money + prod
 
@@ -99,7 +120,11 @@
 				set(val) {
 					this.$emit('closeDialog');
 				}
-            },
+			},
+			
+			getFilterdValueByTime(value) {
+					console.log(value)
+			}
             
 		},
 		mounted() {
@@ -107,7 +132,7 @@
 
 		methods: {
 			...mapActions('sale', [
-				'deleteSale',
+				'deleteSale', 'setSalesearchKey'
 			
 			]),
 			printTable() {
