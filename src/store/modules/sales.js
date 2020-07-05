@@ -66,7 +66,10 @@ const getters = {
 
 					if (equality) {
 						saleReturn[element] = sale;
-						console.log(saleReturn);
+					}
+					else {
+						showErrorMessage('Não houve vendas hoje.');
+
 					}
 
 					break;
@@ -76,6 +79,10 @@ const getters = {
 					if (equality) {
 						saleReturn[element] = sale;
 						console.log(saleReturn);
+					}
+					else {
+						showErrorMessage('Não houve vendas Ontém.');
+
 					}
 					break;
 				case 'Esta Semana':

@@ -56,7 +56,7 @@
 			</div>
 
             <div class="col-4 q-pa-md">
-				<q-card class="my-card" clickable 	v-ripple square>
+				<q-card class="my-card" clickable  @click='showBox =true'	v-ripple square>
 					<q-card-section>
 						<div class="text-center">
 							<q-avatar size="100px" font-size="42px" square>
@@ -83,6 +83,13 @@
 		@closeDialog='closeDialog'
 		/>
 
+		
+		<box-report-component
+		:showBox='showBox'
+		@closeDialog='closeDialog'
+		/>
+
+
 
 	</q-page>
 </template>
@@ -90,6 +97,7 @@
 <script>
 	import salesReportComponent from '../../components/admin/reports/sales/sale/salesReportComponent';
 	import priceReportComponent from '../../components/admin/reports/sales/price/priceReportComponent';
+	import boxReportComponent from '../../components/admin/reports/sales/box/boxReportComponent';
 
 	import invoiceReportComponent from '../../components/admin/reports/sales/invoice/invoiceReportComponent';
 	import { mapActions, mapState } from 'vuex';
@@ -99,7 +107,7 @@
 
 		components: {
 			
-			salesReportComponent,invoiceReportComponent,priceReportComponent
+			salesReportComponent,invoiceReportComponent,priceReportComponent,boxReportComponent
 		},
 		computed: {
 			...mapState('sale', ['sales'])
@@ -110,7 +118,9 @@
 				dialog: false,
 				showSale: false,
 				showInvoice: false,
-				showPrice:false
+				showPrice:false,
+				showBox:false
+
 			};
 		},
 		methods: {
@@ -136,6 +146,7 @@
 				this.showInvoice = false;
 				this.showPrice=false
 				this.updateCategory = false;
+				this.showBox = false
 			}
 		}
 	};

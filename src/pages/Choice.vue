@@ -56,7 +56,7 @@
                         class=" full-width q-pa-xl text-h6"
                         unelevated
                         label="Vendas"
-                        @click="$router.push('/sales')"
+                        @click="info"
 			/>
                     </q-card-section>
 				</q-card>
@@ -76,7 +76,23 @@
 		name: 'Login',
 		components: {  },
 		methods: {
-			...mapActions('auth', ['logoutUser'])
+			...mapActions('auth', ['logoutUser']),
+
+			info() {
+				// $router.push('/sales')
+
+				this.$q
+					.dialog({
+						title: 'Em Manutenção',
+						message: 'Por favor, aceda o site atraves do celular para poder vender produtos, gerar faturas, cotacão e muito mais.',
+						ok: 'Sim',
+						cancel: false,
+						persistent: true
+					})
+					.onOk(() => {
+						// this.logoutUser();
+					});
+			}
 		}
 	};
 </script>

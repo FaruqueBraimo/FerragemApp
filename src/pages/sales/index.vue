@@ -185,7 +185,9 @@
 								.dialog({
 									title: 'Confirme',
 									message:
-										'Tem certeza que deseja fechar a caixa?',
+										`Tem certeza que deseja fechar o caixa? 
+										Isto irá  interromper as actividades do dia!
+										`,
 									ok: 'Sim',
 									cancel: true,
 									cancel: 'Não',
@@ -199,7 +201,7 @@
 										message: 'Caixa Fechada',
 										updates: { status: false }
 									});
-									this.$router.go()
+									// this.$router.go()
 									
 								}
 								
@@ -220,7 +222,6 @@
 							date2,
 							unit
 						);
-							console.log(eguality)
 
 						if(eguality == false) {
 						localStorage.setItem('boxStatus', [])
