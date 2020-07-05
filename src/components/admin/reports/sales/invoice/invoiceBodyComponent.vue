@@ -97,7 +97,7 @@
 				no-caps
 				unelevated
 				icon="done"
-				label="Fatura Paga ?"
+				label=" Paga ?  "
 				disable
 			/>
 		</div>

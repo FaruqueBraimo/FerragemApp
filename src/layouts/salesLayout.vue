@@ -148,7 +148,9 @@ icon (){
 				this.$q
 					.dialog({
 						title: 'Confirme',
-						message: 'Tem certeza que deseja sair do sistema?',
+						message: `Tem certeza que deseja sair do sistema? 
+						Certifique-te de fechar a caixa, primeiro.
+						 `,
 						ok: 'Sim',
 						cancel: true,
 						cancel: 'Não',
