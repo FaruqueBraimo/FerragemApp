@@ -1,0 +1,187 @@
+<template>
+	<q-dialog
+		v-model="toggleDialog"
+		
+    :maximized="maximizedToggle"
+      transition-show="slide-up"
+      transition-hide="slide-down"
+	>
+	
+    <q-card >
+			<q-card-section class="row items-center">
+				<div class="text-h6 text-left col " > Relatorios de Fluxo de Caixa </div>
+				<div class="text-h6 text-cyan-10 col text-center" > Somatorio de Dinheiro   : {{  totalMoney|| 0 }}, 00 MT </div>
+				<q-space />
+				<q-btn
+					icon="close"
+					flat
+					round
+					dense
+					@click="$emit('closeDialog')"
+				/>
+			</q-card-section>
+			<q-card-section>
+                <q-markup-table
+			flat
+			bordered
+			square
+			class="q-pa-md"
+			style=" width: 100%"
+		>
+			<box-header-component
+				class="q-pa-sm"
+				@filterCategory="setSalesearchKey"
+			/>
+                </q-markup-table>		
+		
+		  <div class="row justify-left	">
+          <div class=" col-4 q-pa-md  "	v-for="(box, index, count) in   getBox"
+		   :key="index">
+
+				<box-body-component
+					:box="Object.assign({ id: index }, box)"
+					:boxId="index"
+					@closeBox="closeBox"
+					:count='count'
+
+				/>
+			</div>
+			</div>
+			
+			</q-card-section>
+		</q-card>
+		
+	
+	</q-dialog>
+</template>
+
+<script>
+	import { mapActions, mapState, mapGetters } from 'vuex';
+	import boxBodyComponent from './boxBodyComponent';
+	import boxHeaderComponent from './boxHeaderComponent';
+	import { date } from 'quasar';
+
+	export default {
+
+        name: 'boxsReportComponent',
+        props: ['showBox'],
+
+		data() {
+			return {
+				maximizedToggle: true,
+				search: '',
+				totalMoney:0,
+				options: []
+			};
+		},
+		computed: {
+			...mapState('box', [
+				'boxs', 'boxFiltered'
+			]),
+			...mapGetters('box', [
+				'filterSaleByTime',
+			]),
+			
+			getBox() {
+				
+			let boxs = {};
+
+			const dateCreated = new Date();
+			const unit = 'day';
+				Object.keys(this.boxs).forEach((element, key) => {
+
+			let box = this.boxs[element]	
+			let date2 = new Date(box.createdAt.seconds * 1000) ;
+					
+			const equality = date.isSameDate(
+							dateCreated,
+							date2,
+							unit
+						);
+						if(equality) {
+							boxs[element] =  box  
+							this.totalMoney = this.totalMoney + ~~box.value
+						}
+
+				});
+				return boxs
+
+			},
+
+			
+		
+
+			
+            
+            
+			toggleDialog: {
+
+				get() {
+					return this.showBox;
+				},
+				set(val) {
+					this.$emit('closeDialog');
+				}
+			},
+			
+			getFilterdValueByTime(value) {
+					console.log(value)
+			}
+            
+		},
+		mounted() {
+		},
+
+		methods: {
+			...mapActions('box', [
+				'deleteSale', 'setSalesearchKey' ,'editBox'
+			
+			]),
+			printTable() {
+				// Pass the element id here
+				this.$htmlToPaper('printMe');
+			},
+
+			closeBox(id) {
+				this.$q
+					.dialog({
+						title: 'Confirme',
+						message: `Tem certeza que deseja fechar o caixa?
+								Isto irá  interromper as actividades do dia!
+
+						`,
+						ok: 'Sim',
+						cancel: true,
+						cancel: 'Não',
+						persistent: true
+					})
+					.onOk(() => {
+						this.editBox({
+										id: id,
+										message: 'Caixa Fechada',
+										updates: { status: false }
+									});
+					});
+			},
+			closeDialog() {
+				this.dialog = false;
+				this.updateCategory = false;
+			},
+			filterbox(query) {
+				this.filterDatafromDb(query);
+			},
+			boxFilterCategory(query) {
+				this.filterCategoryDatafromDb(query);
+			}
+		},
+		components: {
+			boxHeaderComponent,
+			boxBodyComponent,
+		
+		},
+
+		watch: {
+			search(val) {}
+		}
+	};
+</script>
