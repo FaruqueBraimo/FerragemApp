@@ -124,9 +124,9 @@
 			</q-card>
 		</div>
 		<div class="row q-pa-lg">
-			<div class=" text-center text-red-5 col-12">
+			<!-- <div class=" text-center text-red-5 col-12">
 				Valor no Caixa : 50000 , 00 MT
-			</div>
+			</div> -->
 			<div class="q-pt-xl col-12">
 				<q-btn
 					color="indigo"
