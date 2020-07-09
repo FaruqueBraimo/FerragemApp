@@ -1,7 +1,7 @@
 <template>
 	
-<q-card class="my-card" square>
-	<q-card-section>
+<q-card class="my-card" square >
+	<q-card-section >
 		<div id="printMe" >
 			
 			<div class="row q-pa-sm text-bold ">
@@ -68,7 +68,9 @@
 		</div>
 	</q-card-section>
 	
+	
 </q-card>	
+
 
 
 </template>

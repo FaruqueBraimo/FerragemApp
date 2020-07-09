@@ -30,8 +30,24 @@
 		>
 			<box-header-component
 				class="q-pa-sm"
-				@filterCategory="setSalesearchKey"
+				@openHistory='changeHistory'
+				:openHistory='openHistory'
+
 			/>
+		
+		<tbody   v-if='openHistory'>		
+
+				<box-history-component
+				v-for="(box, index, count) in   getHistoryBox"
+		   :key="index"
+					:box="Object.assign({ id: index }, box)"
+					:boxId="index"
+					@closeBox="closeBox"
+					:count='count'
+					@deleteProduct='removeBox'
+					
+				/>
+				</tbody >
                 </q-markup-table>		
 		
 		  <div class="row justify-left	">
@@ -39,13 +55,25 @@
 		   :key="index">
 
 				<box-body-component
+				v-if="!openHistory"
 					:box="Object.assign({ id: index }, box)"
 					:boxId="index"
 					@closeBox="closeBox"
 					:count='count'
 
 				/>
+				
 			</div>
+
+
+		
+			<q-card flat class="my-card  q-pa-lg fixed-center q-ma-lg" v-if="Object.keys(getBox).length == 0 && !openHistory">
+				<q-card-actions vertical align="center">
+					<div class="text-green text-bold text-h6">Nenhum caixa aberto no dia de hoje</div>
+				</q-card-actions>
+			</q-card>
+
+
 			</div>
 			
 			</q-card-section>
@@ -58,6 +86,8 @@
 <script>
 	import { mapActions, mapState, mapGetters } from 'vuex';
 	import boxBodyComponent from './boxBodyComponent';
+	import boxHistoryComponent from './history/boxHistoryComponent';
+
 	import boxHeaderComponent from './boxHeaderComponent';
 	import { date } from 'quasar';
 
@@ -71,7 +101,8 @@
 				maximizedToggle: true,
 				search: '',
 				totalMoney:0,
-				options: []
+				options: [],
+				openHistory:false
 			};
 		},
 		computed: {
@@ -81,8 +112,30 @@
 			...mapGetters('box', [
 				'filterSaleByTime',
 			]),
+	
 			
-			getBox() {
+			getHistoryBox() {
+				
+			let boxs = {};
+
+			const dateCreated = new Date();
+			const unit = 'day';
+				Object.keys(this.boxs).forEach((element, key) => {
+
+			let box = this.boxs[element]	
+			let date2 = new Date(box.createdAt.seconds * 1000) ;
+					
+		
+					
+							boxs[element] =  box  
+					
+
+				});
+				return boxs
+
+			},
+
+				getBox() {
 				
 			let boxs = {};
 
@@ -134,12 +187,26 @@
 
 		methods: {
 			...mapActions('box', [
-				'deleteSale', 'setSalesearchKey' ,'editBox'
+				'deleteBox', 'setSalesearchKey' ,'editBox'
 			
 			]),
-			printTable() {
-				// Pass the element id here
-				this.$htmlToPaper('printMe');
+
+				removeBox(id) {
+				this.$q
+					.dialog({
+						title: 'Confirme',
+						message: `Tem certeza que deseja apagar este fluxo ?`,
+						ok: 'Sim',
+						cancel: true,
+						cancel: 'Não',
+						persistent: true
+					})
+					.onOk(() => {
+						this.deleteBox(id);
+					});
+			},
+			changeHistory(){
+				this.openHistory =!this.openHistory
 			},
 
 			closeBox(id) {
@@ -177,6 +244,7 @@
 		components: {
 			boxHeaderComponent,
 			boxBodyComponent,
+			boxHistoryComponent
 		
 		},
 

@@ -1,40 +1,34 @@
 <template>
+	
+
 	<thead>
 		<tr>
-			<th>
+			<th colspan="8">
 				<div class="row no-wrap items-center">
 					<q-img
 						style="width: 70px"
 						:ratio="1"
 						class="rounded-borders"
-						src="https://img.icons8.com/plasticine/100/000000/yard-sale.png"
+					src="https://img.icons8.com/office/80/000000/box.png"
 					/>
+                                                       
+
 
 					<div class="text-h6 col text-secondary">Fluxo de Caixa</div>
 					<div class=" col  q-ml-md justify-right text-right">
 						<q-select
 							dense
-							label="Filtrar  por data "
-							square
 							disable
+							label="Filtrar por data de emissão"
+							square
 							v-model="filterCategory"
 							filled
 							:options="optionalcategory"
 						/>
-					</div>
-					<!-- <div class=" col-2  q-ml-md justify-right text-right">
-						<q-select
-							dense
-							label="Tendências "
-							square
-							v-model="optionalTrade"
-							filled
-							:options="optionalTrade"
-						/>
 						
-					</div> -->
-
-					<div class=" col  q-ml-md justify-right text-right">
+					</div>
+              
+                    <div class=" col  q-ml-md justify-right text-right">
 						<q-select
 							dense
 							label="Por Funcionário "
@@ -43,44 +37,64 @@
 							filled
 							:options="optionalUsers"
 						/>
+						
 					</div>
 
-				
-					<div class=" col q-ml-md justify-right text-right">
-						<q-input
-							disable
-							filled
-							v-model="date"
-							placeholder="Data aleatoria"
-							dense
-						>
-							<template v-slot:append>
-								<q-icon name="event" class="cursor-pointer">
-									<q-popup-proxy
-										transition-show="scale"
-										transition-hide="scale"
-									>
-										<q-date
-											v-model="date"
-											mask="DD-MM-YYYY "
-										/>
-									</q-popup-proxy>
-								</q-icon>
-							</template>
-						</q-input>
+                    <div class=" col q-ml-md justify-right text-right">
+					<q-input disable filled v-model="date" placeholder='Data aleatoria' dense>
+                        <template v-slot:append>
+                            <q-icon name="event" class="cursor-pointer">
+                            <q-popup-proxy transition-show="scale" transition-hide="scale">
+                                <q-date v-model="date" mask="DD-MM-YYYY "  />
+                            </q-popup-proxy>
+                            </q-icon>
+                        </template>
+                        
+	  </q-input>
+						
 					</div>
-						<div class=" col  q-ml-md justify-right text-right">
+					<div class=" col  q-ml-md justify-right text-right">
 						<q-btn
 							no-caps
 							class=" full-width"
 							unelevated
-							label=" Historico de Caixa"
-							color="primary"
+							:label=" !openHistory ? 'Historico de Caixa' : 'Ocultar Historico' "
+							:color="!openHistory ? 'primary' : 'red-5'"
 							icon="timeline"
+							@click="$emit('openHistory' , true)"
 						/>
 					</div>
-
+					
 				</div>
+
+						
+				</div>
+
+			</th>
+		</tr>
+
+		<tr class="text-bold" style="font-weight: bold" v-if='openHistory'>
+			<th class="text-left text-bold" style="font-weight: bold">
+				Data  
+			</th>
+
+			<th class="text-left text-bold" style="font-weight: bold">Hora de Abertura</th>
+			<th class="text-left text-bold" style="font-weight: bold">
+				Hora de Fechamento
+			</th>
+			<th class="text-left text-bold" style="font-weight: bold">
+			Montante Inicial			
+			</th>
+
+			<th class="text-left text-bold" style="font-weight: bold">
+			Montante Final		
+			</th>
+			<th class="text-left text-bold" style="font-weight: bold">
+			Vendedor			
+			</th>
+		
+			<th class="text-left text-bold" style="font-weight: bold">
+				Acção
 			</th>
 		</tr>
 	</thead>
@@ -91,6 +105,7 @@
 
 	export default {
 		name: 'ProductHeaderComponent',
+		props:['openHistory'],
 
 		data() {
 			return {
