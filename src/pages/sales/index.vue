@@ -199,7 +199,7 @@
 									this.editBox({
 										id: element,
 										message: 'Caixa Fechada',
-										updates: { status: false }
+										updates: { status: false , closedAt : new Date()}
 									});
 									// this.$router.go()
 									
