@@ -144,6 +144,7 @@
 					this.saveObject.createdBy = this.getUserAuth;
 					this.saveObject.status = true;
 					this.saveObject.dayEnd = false;
+					this.saveObject.beginValue = 	this.saveObject.value;
 					
 					this.$emit('emitData', this.saveObject);
 					this.$emit('closeDialog');
