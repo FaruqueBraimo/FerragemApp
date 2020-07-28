@@ -8,10 +8,6 @@ import { Platform } from 'quasar'
 
 const { addToDate } = date
 
-
-
-
-
 const state = {
     userAuth: null,
     defaultUser: '/statics/users/default-user.png',
@@ -125,8 +121,9 @@ const actions = {
             })
     },
 
-    loginUser ({ commit, state }, payload) {
+    loginUser ({ commit, dispatch }, payload) {
         Loading.show()
+            dispatch('')
         firebaseAuth.signInWithEmailAndPassword(payload.email, payload.password)
             .then(resp => {
                 commit('setUserAuth', {
@@ -151,20 +148,25 @@ const actions = {
             })
     },
 
-    handleAuthStateChange ({ commit }) {
-
-        commit('setUserAuth', {id: LocalStorage.getItem('userAuthId')})
-
+    changeUser ({ commit } , payload) {
         firebaseAuth.onAuthStateChanged(user => {
             if (user) {
+                console.log(user)
+                user.updatePassword('ssssssss').then(function() {
+                        console.log('yes')
+                  }).catch(function(error) {
+                    // An error happened.
+                  })
 
-                commit('setUserAuth', {
-                    id: user.uid,
-                    email: user.email,
-                })
+             //   user.updateEmail('fb@gmail.com').then(function() {
+                //     // Update successful.
+                //     console.log('yes Also')
+
+                //   })
+                
 
             } else {
-                commit('setUserAuth', null)
+              
             }
         })
     },

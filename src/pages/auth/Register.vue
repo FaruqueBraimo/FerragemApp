@@ -26,7 +26,7 @@
 			...mapActions('auth', ['registerUser', 'addUser' ]),
 
 			registerNewUser(user) {
-				user.role = {labeL : 'FirstAdmin' , value : 'xlh2bDrhuy6RQT2OImRC'}	
+				user.role = {labeL : 'Admin' , value : 'YAGdTfwriEp4WcU8Nw56'}	
 				this.registerUser(user)
 				 this.addUser(user)
 
