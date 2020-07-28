@@ -37,7 +37,7 @@
                 </q-markup-table>		
 		
 		
-            <div class="row justify-left	">
+            <div class="row 	">
           <div class=" col-4 q-pa-md  "	v-for="(invoice, index) in invoices" :key="index">
 				<invoice-body-component
 					:invoice="Object.assign({ id: index }, invoice)"
@@ -84,7 +84,7 @@
 
 				let money = 0;
 				Object.keys(this.invoices).forEach((element, key) => {
-					let prod = this.invoices[element].details.subtotal
+					let prod = this.invoices[element] ? this.invoices[element].details.subtotal : 0
 					
 					money =  money + prod
 

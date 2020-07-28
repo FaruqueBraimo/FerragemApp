@@ -117,7 +117,7 @@
 			getHistoryBox() {
 				
 			let boxs = {};
-
+ if(Object.keys(this.boxs).length >0 ) { 
 			const dateCreated = new Date();
 			const unit = 'day';
 				Object.keys(this.boxs).forEach((element, key) => {
@@ -131,6 +131,7 @@
 					
 
 				});
+				}
 				return boxs
 
 			},
@@ -141,6 +142,8 @@
 
 			const dateCreated = new Date();
 			const unit = 'day';
+
+				 if(Object.keys(this.boxs).length >0 )  {  
 				Object.keys(this.boxs).forEach((element, key) => {
 
 			let box = this.boxs[element]	
@@ -157,6 +160,7 @@
 						}
 
 				});
+				}
 				return boxs
 
 			},
