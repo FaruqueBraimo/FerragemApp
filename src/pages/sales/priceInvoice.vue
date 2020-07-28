@@ -4,6 +4,7 @@
       <q-img
         src="/statics/invoice.png"
         basic
+        	style="height: 320px; max-width: 300px"
       >
         
       </q-img>

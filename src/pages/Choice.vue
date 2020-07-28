@@ -79,18 +79,18 @@
 			...mapActions('auth', ['logoutUser']),
 
 			info() {
-				// $router.push('/sales')
+			
 
 				this.$q
 					.dialog({
 						title: 'Em Manutenção',
-						message: 'Por favor, aceda o site atraves do celular para poder vender produtos, gerar faturas, cotacão e muito mais.',
-						ok: 'Sim',
-						cancel: false,
-						persistent: true
+						message: 'Poderá encontrar  algumas coisas desorganizadas, Pretende continuar mesmo assim?',
+						ok: 'Sim,Pretendo',
+						cancel: 'Não, Obrigado',
+
 					})
 					.onOk(() => {
-						// this.logoutUser();
+							this.$router.push('/sales')
 					});
 			}
 		}

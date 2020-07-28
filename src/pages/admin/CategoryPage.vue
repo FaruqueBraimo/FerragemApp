@@ -13,6 +13,15 @@
              
           </div>
         </div>
+        
+			<q-card flat class="my-card bg-grey-1  q-pa-lg fixed-center q-ma-lg" v-if="Object.keys(categories).length == 0">
+				<q-card-actions vertical align="center">
+					<div class="text-green text-bold text-h6">Sem Categorias</div>
+          <div class="text-green  text-body">Toque no botão abaixo, para adicionar</div>
+
+				</q-card-actions>
+			</q-card>
+
         <AddCategoryDialog
                 :dialog="dialog  || !!updateCategory "
                 @closeDialog='closeDialog'

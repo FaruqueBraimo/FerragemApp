@@ -1,16 +1,33 @@
 <template>
 	<q-page padding>
 		<!-- content -->
+		
+		<div class="row  q-py-md">
+		
 
-		<div class="row justify-end q-py-md">
+				<div class="col-10 justify-left">
 			<q-btn
+				color="teal"
+				icon="person"
+				label="Minha Conta"
+				unelevated
+				@click="account = true"
+			/>
+		</div>
+
+	<div class="justify-right col"> <q-btn
 				color="primary"
 				icon="add"
 				label="Adicionar"
 				unelevated
 				@click="dialog = true"
-			/>
-		</div>
+			/> </div>
+
+		</div> 
+		
+			
+
+	
 		<q-markup-table
 			flat
 			bordered
@@ -37,26 +54,41 @@
 			@emitData="saveUser"
 			:updateUserObject='updateUserObject'
 		/>
+
+			<my-account-dialog
+			:account="account"
+			@closeDialog="account = false; "
+			@emitData="saveUser"
+			:updateUserObject='getUserAuth'
+		/>
+
+
+
 	</q-page>
 </template>
 
 <script>
-	import { mapActions, mapState } from 'vuex';
+	import { mapActions,mapGetters, mapState } from 'vuex';
 
 	import UsersBodyComponent from '../../components/admin/users/UsersBodyComponent';
 	import UsersHeaderComponent from '../../components/admin/users/UsersHeaderComponent';
 	import AddUserDialog from '../../components/admin/users/AddUserDialog';
+	import myAccountDialog from '../../components/admin/users/myAccountDialog';
+
 
 	export default {
 		name: 'UserPage',
 		data() {
 			return {
 				dialog: false,
+				account: false,
 				updateUserObject : {}
 			};
 		},
 		computed: {
-			...mapState('auth', ['users'])
+			...mapState('auth', ['users']),
+						...mapGetters('auth', ['getUserName', 'getUserAuth'])
+
 		},
 
 		methods: {
@@ -93,13 +125,15 @@
 		components: {
 			UsersHeaderComponent,
 			UsersBodyComponent,
-			AddUserDialog
+			AddUserDialog,
+			myAccountDialog
 		},
 
 		watch: {
 			updateUserObject(val) {
 				if(val) {
 					this.dialog = true
+					this.account = true
 				}
 			},
 			

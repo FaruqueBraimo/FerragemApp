@@ -10,9 +10,9 @@
                     <q-card flat bordered class="my-card">
                     
                     <q-card-section class="q-pt-none text-center">
-                   <div class="text-body1 q-pa-md text-green ">Codigo</div>
+                   <div class="text-body1 q-pa-md text-pink-5 ">Codigo</div>
                       <q-separator inset />
-                     SA-- {{product.code}}
+                     KM-- {{product.code}}
                     </q-card-section>
                   
                  </q-card>
@@ -25,7 +25,7 @@
                     <q-card-section class="q-pt-none text-center">
                    <div class="text-body1 q-pa-md text-green ">Stock Actual</div>
                       <q-separator inset />
-                     {{product.quantity}} Unidades
+                     {{product.qtdWarehouse}} Unidades
                     </q-card-section>
                   
                  </q-card>
@@ -149,6 +149,19 @@
                     <q-card flat bordered class="my-card">
                     
                     <q-card-section class="q-pt-none text-center">
+                   <div class="text-body1 q-pa-md text-pink-5">Referência</div>
+                      <q-separator inset />
+                      {{product.reference }} 
+                    </q-card-section>
+                  
+                 </q-card>
+               
+              </div>      
+
+              <div class ='col q-pa-xs'>
+                    <q-card flat bordered class="my-card">
+                    
+                    <q-card-section class="q-pt-none text-center">
                    <div class="text-body1 q-pa-md text-green">Lucro</div>
                       <q-separator inset />
                       {{product.profit}} 
@@ -156,7 +169,9 @@
                   
                  </q-card>
                
-              </div>                  
+              </div>   
+              
+                             
                <div class ='col q-pa-xs'>
                     <q-card flat bordered class="my-card">
                     

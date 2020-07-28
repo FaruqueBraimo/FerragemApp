@@ -7,9 +7,7 @@
 	>
 		<q-card style="width: 100vw;">
 			<q-card-section class="row items-center">
-				<div class="text-h6 text-center" v-if="!updateUserObject.id">  Registo de Utilizador {{fetchRoles}}</div>
-				<div class="text-h6 text-center" v-else> Mudança de privilêgios {{fetchRoles}}</div>
-
+				<div class="text-h6 text-center">  Minha Conta {{fetchRoles}}</div>
 				<q-space />
 				<q-btn
 					icon="close"
@@ -22,7 +20,6 @@
 			<q-card-section>
 				<q-form @submit="onSubmit" @reset="onReset">
 					<q-input
-						v-if="!updateUserObject.name"
 					
 						outlined
 						v-model="saveObject.name"
@@ -36,7 +33,6 @@
 					/>
 
 					<q-input
-					v-if="!updateUserObject.email"
 					
 						outlined
 						type="email"
@@ -49,23 +45,9 @@
 								'Por favor insira o seu email'
 						]"
 					/>
-					<q-select
-						label="Privilêgios"
-						transition-show="jump-up"
-						transition-hide="jump-up"
-						filled
-						v-model="saveObject.role"
-						:options="options"
-						class="q-pb-md"
-						:rules="[
-							val =>
-								(val !== null && val !== '') ||
-								'Por favor, insira os privelegios'
-						]"
-					/>
+				
 
 					<q-input
-					v-if="!updateUserObject.password"
 						outlined
 						v-model="saveObject.password"
 						label="Senha *"
@@ -80,7 +62,6 @@
 
 					<q-input
 						outlined
-						v-if="!updateUserObject.confirmPassword"
 
 						v-model="saveObject.confirmPassword"
 						label="Confirme senha *"
@@ -101,7 +82,7 @@
 
 						<div class="q-my-md">
 							<q-btn
-								:label="updateUserObject.id  ? 'Actualizar' : 'Registar'"
+								:label="updateUserObject  ? 'Actualizar' : 'Registar'"
 								size="md"
 								type="submit"
 								color="primary"
@@ -120,7 +101,7 @@
 	import { mapActions, mapState } from 'vuex';
 	export default {
 		name: 'DialogAddEditBlog',
-		props: ['dialog', 'updateUserObject'],
+		props: ['account', 'updateUserObject'],
 		data() {
 			return {
 				saveObject: {},
@@ -136,7 +117,7 @@
 			toggleDialog: {
 
 				get() {
-					return this.dialog;
+					return this.account;
 				},
 				set(val) {
 					this.$emit('closeDialog');
@@ -154,25 +135,22 @@
 			}
 		},
 		mounted() {
-			
+				this.saveObject= this.updateUserObject
+
 		},
 		methods: {
-			...mapActions('auth', ['updateUser',]),
+			...mapActions('auth', ['updateUser','changeUser']),
 
 			
 			onSubmit() {
-					if(this.updateUserObject.id)  {
+					
+							// this.updateUser({
+							// 	id: this.updateUserObject.id,
+							// 	updates : {updates :  this.saveObject  }
 
-
-							this.updateUser({
-								id: this.updateUserObject.id,
-								updates : {role : this.saveObject.role}
-
-							})
-					} 
-					else {
-							  this.$emit('emitData', this.saveObject);
-					}
+							// })
+							this.changeUser({ payload : this.saveObject })
+							
 				
 
 				this.$emit('closeDialog');

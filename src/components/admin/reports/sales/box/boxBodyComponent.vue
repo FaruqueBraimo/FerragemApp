@@ -101,6 +101,9 @@
 		},
 		filters: {
 			dateFormat(val) {
+				if (val ) {
+
+				
 				var months = [
 					'Janeiro',
 					'Fevereiro',
@@ -123,7 +126,7 @@
 					
 				);
 			}
-		}
+		}}
 	};
 </script>
 

@@ -98,7 +98,7 @@
 				showErrorMessage('Sem permissão, por favor autentique-se');
 			}
 			//Verify if user account has blocked
-			if (!this.getUserAuth.status) {
+			if (this.getUserAuth.status == false) {
 				this.$router.push('/');
 				showErrorMessage('Conta bloqueada, contacte o administrador');
 			}

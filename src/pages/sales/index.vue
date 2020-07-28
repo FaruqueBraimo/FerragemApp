@@ -1,6 +1,6 @@
 <template>
 	<q-page class="q-pa-md">
-		<tamplate v-if="$q.platform.is.desktop">
+		<div v-if="$q.platform.is.desktop">
 			<q-card class="my-card text-bold text-center " square flat>
 				<q-img
 					src="/statics/welcome.png"
@@ -21,7 +21,7 @@
 					unelevated
 					v-if="!getBoxStatus"
 					icon="open_in_browser"
-					@click="openBox()"
+					@click="openBox"
 					label="Abrir Caixa"
 				/>
 				<div
@@ -43,6 +43,11 @@
 					label="Fechar Caixa"
 				/>
 			</div>
+			<openBoxComponent
+				:open="open"
+				@emitData="addBox"
+				@closeDialog="open = false"
+			/>
 
 			<div
 				class="text-center text-bold q-pt-xl text-grey-8 absolute-bottom"
@@ -50,7 +55,7 @@
 				<hr class="q-mb-sm" />
 				<p>Desenvolvido pela Gest Midia. Lda &copy; 2020</p>
 			</div>
-		</tamplate>
+		</div>
 
 		<tamplate v-if="$q.platform.is.mobile">
 			<q-card class="my-card text-bold text-center " square flat>

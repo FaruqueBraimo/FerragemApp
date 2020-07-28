@@ -28,7 +28,7 @@
 					</q-item-section>
 
 					<q-item-section>
-						<p>Inicio</p>
+						<p>Início</p>
 					</q-item-section>
 				</q-item>
 

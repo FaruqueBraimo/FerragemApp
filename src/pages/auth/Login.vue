@@ -1,8 +1,8 @@
 <template>
-	<q-page class='bg-primary'>
+	<q-page :class="$q.platform.is.desktop ? 'bg-primary ': 'bg-white q-py-xl'">
 		<div class="row ">
 			<div class="col-xs-12 col-sm-6 col-md-4 offset-sm-3 offset-sm-4 ">
-				<q-card class="q-mt-xl " square>
+				<q-card class="q-mt-xl " :flat="$q.platform.is.desktop ? false: true" square>
 					<div class="text-center ">
 						<q-icon
 							name="person_pin"
