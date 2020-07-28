@@ -1,1 +1,5 @@
 [0630/094128.076:ERROR:settings.cc(320)] Settings magic is not 1129342067
+[0719/093734.439:ERROR:crash_report_database_win.cc(429)] unexpected header
+[0727/140605.928:ERROR:crash_report_database_win.cc(429)] unexpected header
+[0728/150459.215:ERROR:crash_report_database_win.cc(429)] unexpected header
+[0728/205050.871:ERROR:crash_report_database_win.cc(429)] unexpected header

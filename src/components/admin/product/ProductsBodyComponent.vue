@@ -6,7 +6,7 @@
 				src="https://img.icons8.com/material-rounded/24/000000/barcode.png"
 				
 			/>
-			<p class="text-caption"> SA-- {{product.code}} </p>
+			<p class="text-caption"> KM-- {{product.code}} </p>
 		
 			<bar-code-component
 			:value='productId' 
