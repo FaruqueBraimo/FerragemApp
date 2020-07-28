@@ -35,7 +35,7 @@
 								dense
 								v-model="code"
 								type="number"
-								prefix="SA--"
+								prefix="KM--"
 								placeholder="Codigo"
 								lazy-rules
 							:rules="[
@@ -102,13 +102,13 @@
 								square
 								filled
 								dense
-								label="Quantidade"
-								v-model="quantity"
+								label="Referência"
+								v-model="reference"
 								lazy-rules
 												:rules="[
 								val =>
 									(val !== null && val !== '') ||
-									'Por favor insira a quantidade'
+									'Por favor insira a referencia'
 							]"
 			
 							/>
@@ -204,8 +204,26 @@
 
 				<q-tab-panel name="movies" style="min-weight:1000px">
 					<div class="row q-px-sm" style="min-weight:1000px">
-						<!-- <p class="text-h6 text-primary text-bold"> Detalhes do producto </p> -->
+						<div class="col-12 ">
+							
+							<q-input
+								square
+								filled
+								dense
+								label="Quantidade Total"
+								v-model="quantity"
+								type="number"
+									lazy-rules
+												:rules="[
+								val =>
+									(val !== null && val !== '') ||
+									'Por favor insira a quantidade'
+							]"
+							/>
+
+							</div>
 						<div class="col-6 ">
+							
 							<q-input
 								square
 								filled
@@ -216,8 +234,8 @@
 									lazy-rules
 												:rules="[
 								val =>
-									( val > ~~quantity ) ||
-									'Por for basea-se na quantidade total do produto'
+									( val <= ~~quantity ) ||
+									'Quantidade Superior a quantidade total'
 							]"
 							>
 							</q-input>
@@ -309,6 +327,8 @@
 
 <script>
 	import { mapGetters, mapState, mapActions } from 'vuex';
+		import { date } from 'quasar';
+
 	export default {
 		name: 'ProductFormComponent',
 		props: ['productData'],
@@ -338,6 +358,7 @@
 				qtdWarehouse : '',
 				stockBreak : '',
 				description : '',
+				reference : ''
 			};
 		},
 		mounted() {
@@ -356,6 +377,7 @@
 			this.qtdWarehouse = this.productData.data.qtdWarehouse;
 			this.stockBreak = this.productData.data.stockBreak;
 			this.code = this.productData.data.code;
+			this.reference = this.productData.data.reference;
 			this.profitMargin = this.productData.data.profitMargin;
 			
 			}
@@ -374,6 +396,21 @@
 				}
 			},
 			fetchCategories() {
+
+			const dateReturn = date.extractDate(this.expires, 'DD-MM-YYYY ')
+            const dateNow = new Date
+			  if(this.expires !='' && dateReturn < dateNow) {	
+				  this.expires = ''				   
+					this.$q
+					.dialog({
+						title: 'Data Inválida',
+						message: `A data Introduzida é inferior a data actual. 
+						`,
+						ok: 'Sim',
+					})
+			  }
+
+
 				Object.keys(this.categories).forEach((element, key) => {
 					this.optionalcategory.push({
 						value: element,
@@ -381,6 +418,8 @@
 					});
 				});
 				return '';
+
+
 			},
 			fetchProviders() {
 			/// WE also use this computed proprities as any opportunity for realize calculus
@@ -420,10 +459,12 @@
 					product.description = this.description;
 					product.expires = this.expires;
 					product.iva = this.iva;
+					product.reference = this.reference;
+
 					product.profit = this.profit;
 					product.profitMargin = this.profitMargin;
 					product.createdBy = this.getUserAuth.id
-		
+
 					product.discount_iva = this.discount_iva;
 					product.qtdBalcony = this.qtdBalcony;
 					product.qtdWarehouse = this.qtdWarehouse;
@@ -462,6 +503,7 @@
 			this.code = '';
 			this.profit = '';
 			this.profitMargin = '';
+			this.reference=''
 			}
 		},
 	};

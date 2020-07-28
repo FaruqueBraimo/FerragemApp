@@ -1,5 +1,5 @@
 <template>
-	<tr>
+	<tr v-if="!user.secret">
 		<td class="text-left">
 			<q-avatar  text-color="white">
 				<q-img
