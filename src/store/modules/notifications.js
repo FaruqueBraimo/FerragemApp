@@ -40,8 +40,7 @@ const actions = {
 		commit('resetNotification');
 
 		dbNotifications
-			.orderBy('createdAt', 'desc')
-			.limit(10)
+		
 			.onSnapshot(function(snapshot) {
 				snapshot.docChanges().forEach(function(change) {
 					if (change.type === 'added') {
@@ -76,7 +75,6 @@ const actions = {
 				// 1. Limpar todas solicitações
 				commit('resetNotification');
 
-				showSuccessMessage('Permissão Adicionada com sucesso!');
 
 				return true;
 			})
@@ -104,7 +102,6 @@ const actions = {
 			.then(function(docRef) {
 				commit('loading', false);
 
-				showSuccessMessage('Categoria editada com sucesso!');
 
 				return true;
 			})
