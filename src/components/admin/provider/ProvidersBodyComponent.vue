@@ -1,13 +1,13 @@
 <template>
 	<tr>
 		<td class="text-left">
-			{{ provider.name }}
+			{{ provider.name | limitLength(25) }}
 		</td>
 		<td class="text-left">{{ provider.type }}</td>
 
-		<td class="text-left">{{ provider.address }}</td>
+		<td class="text-left">{{ provider.address | limitLength(17) }}</td>
 
-		<td class="text-left">{{ provider.email || 'Não Informado'}}</td>
+		<td class="text-left">{{ provider.email  || 'Não Informado' | limitLength(17)}}</td>
 		<td class="text-left">{{ provider.phone || 'Não Informado' }}</td>
 
 
@@ -71,13 +71,20 @@
 			}
 		},
 		mounted() {
-			// console.log(this.provider)
 		},
 		methods: {
 			...mapActions('settings', ['setGlobalConfirm']),
 			...mapActions('auth', ['updateprovider'])
 		},
+
+
+
 		filters: {
+
+			 limitLength (val, length) {
+                return val.length > length ? val.substr(0, length) + '...' : val
+			},
+			
 			dateFormat(val) {
 				var months = [
 					'Janeiro',

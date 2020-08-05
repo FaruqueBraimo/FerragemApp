@@ -38,15 +38,17 @@
 				class="q-pa-sm"
 				@productFilter="filterproduct"
 				@productFilterCategory="productFilterCategory"
+				@referenceFilter='productFilterByReference'
 			/>
 
 			<tbody v-if="productFiltered || products">
 				<products-body-component
-					v-for="(product, index) in Object.keys(productFiltered)
+					v-for="(product, index, posiction) in Object.keys(productFiltered)
 						.length > 0
 						? productFiltered
 						: products"
 					:key="index"
+					:posiction='posiction'
 					:product="Object.assign({ id: index }, product)"
 					:productId="index"
 					@deleteProduct="removeProduct"
@@ -98,7 +100,8 @@
 			...mapState('product', [
 				'products',
 				'productFiltered',
-				'productFilteredCategory'
+				'productFilteredCategory',
+				
 			]),
 			...mapGetters('product', ['searchProduct'])
 		},
@@ -112,7 +115,8 @@
 				'listenProductRealTimeChanges',
 				'filterDatafromDb',
 				'filterCategoryDatafromDb',
-				'setProductSearchKey'
+				'setProductSearchKey',
+				'filterByReference'
 			]),
 			printTable() {
 				// Pass the element id here
@@ -143,7 +147,13 @@
 			},
 			productFilterCategory(query) {
 				this.filterCategoryDatafromDb(query);
-			}
+			
+				},
+				productFilterByReference(query) {
+					this.filterByReference(query);
+				}
+
+
 		},
 		components: {
 			ProductsHeaderComponent,

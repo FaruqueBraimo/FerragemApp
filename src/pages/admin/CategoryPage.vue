@@ -25,7 +25,7 @@
         <AddCategoryDialog
                 :dialog="dialog  || !!updateCategory "
                 @closeDialog='closeDialog'
-                @emitData='addcategory'
+                @emitData='registerCategory'
                 :updateCategory='updateCategory' 
 
 
@@ -64,8 +64,13 @@ components: {
   },
    methods: {
      
-          ...mapActions('category', ['addcategory','deleteCategory']),
+          ...mapActions('category', ['addCategory','deleteCategory']),
           
+
+
+          registerCategory(data) {
+            this.addCategory(data)
+          },
           removeCategory(id) {
             let categoryName = this.categories[id].name
             this.$q
