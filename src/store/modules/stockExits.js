@@ -48,7 +48,6 @@ const actions = {
 
 		dbStockExits
 			.orderBy('createdAt', 'desc')
-			.limit(10)
 			.onSnapshot(function(snapshot) {
 				snapshot.docChanges().forEach(function(change) {
 					if (change.type === 'added') {
