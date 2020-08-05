@@ -11,7 +11,7 @@
 					/>
 
 					<div class="text-h6 col-1 text-secondary">Produtos</div>
-					<div class=" col-5  q-ml-xl justify-right text-right">
+					<div class=" col  q-ml-xl justify-right text-right">
 						<q-select
 							dense
 							label="Filtrar Por Categoria do Produto"
@@ -22,13 +22,13 @@
 						/>
 						
 					</div>
-					<div class=" col-4 ">
+					<div class=" col q-pl-sm ">
 						<template>
 							<q-input
 								v-model="search"
 								dense
 								debounce="300"
-								placeholder="Pesquise Pelo nome do Producto"
+								placeholder="Pesquise pelo codigo"
 								square
 								filled
 							>
@@ -41,10 +41,46 @@
 									/>
 									
 								</template>
+								
+							</q-input>
+
+						</template>
+						
+						
+					</div>
+				<q-btn color="primary"   outline label="OK" @click="emitCodeData" />
+
+
+
+
+						<div class=" col q-pl-sm ">
+						<template>
+							<q-input
+								v-model="referenceSearch"
+								dense
+								debounce="300"
+								placeholder="Pesquise pela referência"
+								square
+								filled
+							>
+								<template v-slot:append>
+									<q-icon
+										v-if="referenceSearch !== ''"
+										name="close"
+										@click="referenceSearch = ''"
+										class="cursor-pointer"
+									/>
+									
+								</template>
 							</q-input>
 						</template>
 						
 					</div>
+
+				<q-btn color="primary"   outline label="OK" @click="emitData" />
+
+
+
 				</div>
 			</th>
 		</tr>
@@ -52,6 +88,9 @@
 		<tr class="text-bold" style="font-weight: bold">
 			<th class="text-center text-bold" style="font-weight: bold">
 				Codigo 
+			</th>
+				<th class="text-center text-bold" style="font-weight: bold">
+				Referência
 			</th>
 
 			<th class="text-left text-bold" style="font-weight: bold">Nome</th>
@@ -67,9 +106,7 @@
 
 			<th class="text-left " style="font-weight: bold">Forncedor</th>
 
-			<th class="text-center text-bold" style="font-weight: bold">
-				Data de Registo
-			</th>
+		
 			<th class="text-center text-bold" style="font-weight: bold">
 				Acção
 			</th>
@@ -87,7 +124,8 @@
 			return {
 				optionalcategory: ['Todas'],
                 filterCategory :'',
-				search: ''
+				search: '',
+				referenceSearch : ''
 			};
 		},
 		computed: {
@@ -97,6 +135,16 @@
 		},
 		methods: {
 			...mapActions('product', ['listenProductRealTimeChanges']),
+
+			emitData(){
+				this.$emit('referenceFilter', this.referenceSearch)
+			},
+
+			emitCodeData(){
+						this.$emit('productFilter', this.search)
+
+
+			},
 
 				fetchCategories() {
 				Object.keys(this.categories).forEach((element, key) => {
@@ -117,16 +165,24 @@
 				if (!val) {
 					this.listenProductRealTimeChanges();
 				}
-				else {
-					this.$emit('productFilter', this.search)
+				// else {
+				// 	this.$emit('productFilter', this.search)
 
+				// }
+			}
+					,
+			referenceSearch(val) {
+				if (!val) {
+					this.listenProductRealTimeChanges();
 				}
-				
 			},
+
+
+			
 
 			filterCategory(val) {
 				if (val) {
-				this.$emit('productFilterCategory', this.filterCategory)				}
+				this.$emit('productFilterCategory', this.filterCategory)}
 			}
 		}
 	};

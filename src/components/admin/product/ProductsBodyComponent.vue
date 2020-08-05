@@ -1,20 +1,23 @@
 <template>
 	<tr >
 
-		<td class="text-center" @click="dialog=!dialog">
+		<td class="text-center" @click="open=!open">
 			<img
 				src="https://img.icons8.com/material-rounded/24/000000/barcode.png"
 				
 			/>
-			<p class="text-caption"> KM-- {{product.code}} </p>
+			<p class="text-caption"> {{ product.code  }} </p>
 		
 			<bar-code-component
 			:value='productId' 
-			:dialog='dialog'
+			:open='open'
 			/>
 			<q-tooltip 	content-class="bg-secondary text-white shadow-4 text-caption"  :offset="[10, 10]">
 				clica para ver o codigo de bara
 			</q-tooltip>
+		</td>
+		<td class="text-center ">
+			{{ product.reference  }}
 		</td>
 		<td class="text-left">
 			{{ product.name }}
@@ -34,17 +37,17 @@
 			<span
 				class="text-primary cursor-pointer 	"
 				v-if="product.provider.label != 'Nenhum'"
-				>{{ product.provider.label }}</span
+				>{{ product.provider.label | limitLength(10) }}</span
 			>
-			<span class=" 	" v-else> Nenhum</span>
+			<q-tooltip 	content-class="bg-secondary text-white shadow-4 text-caption"  :offset="[10, 10]">
+				{{ product.provider.label }}
+			</q-tooltip>
 		</td>
 
-		<td class="text-center ">
-			{{ product.createdAt | dateFormat }}
-		</td>
+	
 
 		<td class="text-center ">
-			<div class="row " style="width:100px;">
+			<div class="row q-pr-md" style="width:100px;">
 					<div class="col">
 					<q-btn
 						flat
@@ -91,11 +94,11 @@
 	import barCodeComponent from './barCodeComponent'
 	export default {
 		name: 'productBodyComponent',
-		props: ['product','productId'],
+		props: ['product','productId','posiction'],
 		components: { ProductDetailsDialog,barCodeComponent },
 		data() {
 			return {
-				dialog: false,
+				open: false,
 				
 			};
 		},
@@ -110,6 +113,9 @@
 			...mapActions('product', ['updateproduct'])
 		},
 		filters: {
+				 limitLength (val, length) {
+                return val.length > length ? val.substr(0, length) + '...' : val
+			},
 			dateFormat(val) {
 				var months = [
 					'Janeiro',
