@@ -59,7 +59,7 @@
 </template>
 
 <script>
-	import { mapActions, mapState } from 'vuex';
+	import { mapActions,mapGetters, mapState } from 'vuex';
 
 	export default {
 		name: 'DialogAddEditBlog',
@@ -78,7 +78,9 @@
 			};
 		},
 		computed: {
-						...mapState('auth', ['users', 'userAuth',]),
+						...mapState('auth', ['users',]),
+					...mapGetters('auth', ['getUserName', 'getUserAuth']),
+
 
 			toggleDialog: {
 				get() {
@@ -108,24 +110,20 @@
 				
 					
                 if (this.selectedId) {
-					this.saveObject.updatedBy = this.userAuth.id
-					delete this.saveObject.id //deletando Id
-				
-					console.log(this.selectedId);
+					this.saveObject.updatedBy = this.getUserAuth.id
 					
-
                     this.editCategory ({
                         id: this.selectedId,
                         updates: this.saveObject
 					})
 										this.$emit('closeDialog');
-
+					this.onReset()
 
                 } else {
-					this.saveObject.createdBy = this.userAuth.id
+					this.saveObject.createdBy = this.getUserAuth.id
 			
 				this.$emit('emitData', this.saveObject);
-				
+				this.onReset()
 
 				this.$emit('closeDialog');
 			}},
@@ -138,6 +136,7 @@
 			},
 
 			onReset() {
+				this.saveObject = {}
 			}
 		}
 	};

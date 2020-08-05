@@ -1,11 +1,11 @@
 <template>
 	<tr>
 		<td class="text-left">
-			{{ customer.name }}
+			{{ customer.name | limitLength(25) }}
 		</td>
 		<td class="text-left">{{ customer.type }}</td>
-		<td class="text-left">{{ customer.address || 'Não Informado'}}</td>
-		<td class="text-left">{{ customer.email || 'Não Informado'}}</td>
+		<td class="text-left">{{ customer.address || 'Não Informado' | limitLength(17)}}</td>
+		<td class="text-left">{{ customer.email || 'Não Informado' | limitLength(17)}}</td>
 		<td class="text-left">{{ customer.phone || 'Não Informado' }}</td>
 		<td class="text-center ">
 			{{ customer.createdAt | dateFormat }}
@@ -74,6 +74,9 @@
 			...mapActions('customer', ['updateCustomer'])
 		},
 		filters: {
+			 limitLength (val, length) {
+                return val.length > length ? val.substr(0, length) + '...' : val
+			},
 			dateFormat(val) {
 				var months = [
 					'Janeiro',

@@ -1,5 +1,5 @@
 <template>
-	<q-dialog v-model="dialog">
+	<q-dialog v-model="open">
         <q-card class="my-card">
             <q-card-actions vertical align="center">
                 Clica no botão esquerdo do mouse sobre a figura abaixo, em seguida clica na opção <span class="text-bold text-italic">Salvar como imagem / save image as</span>
@@ -16,7 +16,7 @@
 
 	export default {
 		name: 'productBodyComponent',
-		props: ['value','dialog'],
+		props: ['value','open'],
 		data() {
 			return {
 				role: null,
