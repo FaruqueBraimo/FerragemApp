@@ -5,22 +5,13 @@
 		<div class="row  q-py-md">
 		
 
-				<div class="col-10 justify-left">
-			<q-btn
-				color="teal"
-				icon="person"
-				label="Minha Conta"
-				unelevated
-				@click="account = true"
-			/>
-		</div>
 
 	<div class="justify-right col"> <q-btn
 				color="primary"
 				icon="add"
 				label="Adicionar"
 				unelevated
-				@click="dialog = true"
+				@click="openDialog"
 			/> </div>
 
 		</div> 
@@ -50,17 +41,17 @@
 
 		<add-user-dialog
 			:dialog="dialog"
-			@closeDialog="dialog = false; "
+			@closeDialog="closeDialog"
 			@emitData="saveUser"
 			:updateUserObject='updateUserObject'
 		/>
 
-			<my-account-dialog
+			<!-- <my-account-dialog
 			:account="account"
 			@closeDialog="account = false; "
 			@emitData="saveUser"
 			:updateUserObject='getUserAuth'
-		/>
+		/> -->
 
 
 
@@ -95,8 +86,18 @@
 			...mapActions('auth', ['registerUser', 'updateUser', 'addUser']),
 			
 			saveUser(payload) {
+				payload.status = true
 				this.registerUser(payload)
 				 this.addUser(payload)
+			},
+
+			closeDialog() {
+					this.dialog = false;
+				
+
+			},
+			openDialog() {
+					this.dialog = true;
 			},
 
 

@@ -195,6 +195,9 @@
 
 			}
 			
+		},
+		destroyed(){
+			this.updateUserObject = {}
 		}
 	};
 </script>

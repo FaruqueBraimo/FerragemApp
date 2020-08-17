@@ -5,12 +5,10 @@
 		persistent
 		position="right"
 	>
-	
-	
 		<q-card style="width: 100vw;">
 			<q-card-section class="row items-center">
 				<div class="text-h6 q-px-sm text-center">
-					Saida de Produtos {{ fetchProducts }} {{ fetchProviders }}
+					Saida de Produtos
 				</div>
 				<q-space />
 				<q-btn
@@ -22,26 +20,53 @@
 				/>
 			</q-card-section>
 			<q-card-section>
-				<q-form @submit="onSubmit" >
+				<q-form @submit="onSubmit">
 					<div class="q-px-sm">
 						<q-select
-							label="Produto"
-							square
 							filled
 							:options="Optionalproducts"
 							v-model="saveObject.product"
-							lazy-rules
+							label="Produto"
+							counter
+							maxlength="12"
+							:dense="dense"
+							:options-dense="denseOpts"
 							:rules="[
 								val =>
 									(val !== null && val !== '') ||
-									'Por favor escolha o produto'
+									'Por favor insira o produto'
 							]"
-						/>
+						>
+							<template v-slot:append>
+								<q-btn
+									round
+									dense
+									flat
+									icon="add"
+									@click="reloadData"
+								/>
+							</template>
+						</q-select>
 					</div>
 
-			     <div class="text-red-5 q-pa-sm" v-if="saveObject.product "> Quantidade No Balcao:	{{ saveObject.product ? products[saveObject.product.value].qtdBalcony : 0}} </div>
+					<div class="text-red-5 q-pa-sm" v-if="saveObject.product">
+						Quantidade No Balcao:
+						{{
+							saveObject.product
+								? products[saveObject.product.value].qtdBalcony
+								: 0
+						}}
+					</div>
 
-				 <div class="text-green q-pa-sm" v-if="saveObject.product "> Quantidade No Armazém:	{{ saveObject.product ? products[saveObject.product.value].qtdWarehouse : 0}} </div>
+					<div class="text-green q-pa-sm" v-if="saveObject.product">
+						Quantidade No Armazém:
+						{{
+							saveObject.product
+								? products[saveObject.product.value]
+										.qtdWarehouse
+								: 0
+						}}
+					</div>
 					<div class="q-px-sm">
 						<q-input
 							square
@@ -100,7 +125,7 @@
 					productCode: '',
 					quantity: 0,
 					product: '',
-					oldQuantity : 0,
+					oldQuantity: 0
 				},
 				Optionalproducts: [],
 				Optionalprovider: [],
@@ -111,8 +136,7 @@
 		computed: {
 			...mapState('product', ['products', 'loading']),
 			...mapState('provider', ['providers']),
-							...mapState('product', ['products']),
-
+			...mapState('product', ['products']),
 
 			fetchProducts() {
 				Object.keys(this.products).forEach((element, key) => {
@@ -121,10 +145,11 @@
 						label: this.products[element].name
 					});
 					this.saveObject.productCode = element;
-					this.saveObject.oldQuantity = this.saveObject.product ? this.products[this.saveObject.product.value].qtdWarehouse : 20;
-
+					this.saveObject.oldQuantity = this.saveObject.product
+						? this.products[this.saveObject.product.value]
+								.qtdWarehouse
+						: 20;
 				});
-
 			},
 
 			fetchProviders() {
@@ -143,15 +168,20 @@
 				set(val) {
 					this.$emit('closeDialog');
 				}
-			},
-			
+			}
 		},
-		mounted() {},
+		mounted() {
+			this.fetchProducts();
+		},
 		methods: {
+			...mapActions('stockExit', ['editStockExit']),
+			...mapActions('product', ['updateProduct', 'getData']),
 
-
-			...mapActions('stockExit' , ['editStockExit']),
-			...mapActions('product', ['updateProduct', ]),
+			reloadData() {
+				this.Optionalproducts = [];
+				this.fetchProducts;
+				this.getData();
+			},
 
 			onSubmit() {
 				if (this.updateObject.id) {
@@ -159,22 +189,31 @@
 						id: this.updateObject.id,
 						updates: this.saveObject
 					});
-					let lastQtd = ~~ this.products[this.saveObject.product.value].qtdBalcony
-					let newQtd =  ~~ this.saveObject.quantity
-					this.updateProduct( {
-						id : this.saveObject.product.value,
-						updates : { qtdWarehouse : +lastQtd+newQtd  } })
-					 
+					let lastQtd = ~~this.products[this.saveObject.product.value]
+						.qtdBalcony;
+					let newQtd = ~~this.saveObject.quantity;
+					this.updateProduct({
+						id: this.saveObject.product.value,
+						updates: { qtdWarehouse: +lastQtd + newQtd }
+					});
 				} else {
-
-					if (this.saveObject.quantity > this.products[this.saveObject.product.value].qtdWarehouse ) {
+					if (
+						this.saveObject.quantity >
+						this.products[this.saveObject.product.value]
+							.qtdWarehouse
+					) {
 						this.$q.dialog({
 							title: 'Quantidade Inválida',
-							message: `Não existe quantidade de ${this.products[this.saveObject.product.value].name} suficiente
-							somente tem ${this.products[this.saveObject.product.value].qtdWarehouse } unidades no armazém
+							message: `Não existe quantidade de ${
+								this.products[this.saveObject.product.value]
+									.name
+							} suficiente
+							somente tem ${
+								this.products[this.saveObject.product.value]
+									.qtdWarehouse
+							} unidades no armazém
 							`
 						});
-
 					} else {
 						this.$emit('emitData', this.saveObject);
 					}

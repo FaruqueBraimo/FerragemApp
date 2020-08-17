@@ -131,9 +131,7 @@
 
 
 
-
-
-						<q-item clickable v-ripple>
+                 <q-item clickable v-ripple>
 							<q-item-section avatar top>
 								<q-avatar
 									icon="info"
@@ -143,7 +141,25 @@
 
 							<q-item-section>
 								<q-item-label class="text-subtitle1"
-									>Observação</q-item-label
+									>Nuit</q-item-label
+								>
+								<q-item-label lines="1">{{
+									provider.nuit || 'Não Informado'
+								}}</q-item-label>
+							</q-item-section>
+						</q-item>
+
+						<q-item clickable v-ripple>
+							<q-item-section avatar top>
+								<q-avatar
+									icon="language"
+									text-color="primary"
+								/>
+							</q-item-section>
+
+							<q-item-section>
+								<q-item-label class="text-subtitle1"
+									>Website</q-item-label
 								>
 								<q-item-label lines="1">{{
 									provider.website || 'Não Informado'

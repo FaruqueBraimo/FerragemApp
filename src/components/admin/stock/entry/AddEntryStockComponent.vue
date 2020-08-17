@@ -9,7 +9,7 @@
 		<q-card style="width: 100vw;">
 			<q-card-section class="row items-center">
 				<div class="text-h6 q-px-sm text-center">
-					Entrada de Produtos {{ fetchProducts }} {{ fetchProviders }}
+					Entrada de Produtos   
 				</div>
 				<q-space />
 				<q-btn
@@ -23,20 +23,25 @@
 			<q-card-section>
 				<q-form @submit="onSubmit" >
 					<div class="q-px-sm">
-						<q-select
-							label="Produto"
-							square
-							filled
-							:options="Optionalproducts"
-							v-model="saveObject.product"
-							lazy-rules
-							:rules="[
+					
+	     <q-select filled  :options="Optionalproducts" v-model="saveObject.product" label="Produto" counter maxlength="12" :dense="dense" :options-dense="denseOpts"
+		 
+		 	:rules="[
 								val =>
 									(val !== null && val !== '') ||
-									'Por favor escolha o produto'
+									'Por favor insira o produto'
 							]"
-						/>
+		 >
+     
+
+        <template v-slot:append>
+          <q-btn round dense flat icon="add" @click='reloadData' />
+        </template>
+		
+      </q-select>
+
 					</div>
+
 
 					<div class=" q-px-sm">
 						<q-select
@@ -48,10 +53,13 @@
 							:rules="[
 								val =>
 									(val !== null && val !== '') ||
-									'Por favor insira o fornecedor'
+									'Por favor insira o fornecedkor'
 							]"
-						/>
-
+							>
+		<template v-slot:append>
+          <q-btn round dense flat icon="add" @click='reloadProviders' />
+        </template>
+      </q-select>
 					</div>
 				 <div class="text-green q-pa-sm" v-if="saveObject.product "> Quantidade Actual:	{{ saveObject.product ? products[saveObject.product.value].qtdWarehouse : 0}} </div>
 					<div class="q-px-sm">
@@ -158,12 +166,32 @@
 			},
 			
 		},
-		mounted() {},
+		mounted() {
+			this.fetchProducts()
+			this.fetchProviders
+		},
 		methods: {
 
 
 			...mapActions('stockEntry' , ['editStockEntry']),
-			...mapActions('product', ['updateProduct', ]),
+			...mapActions('product', ['updateProduct', 'getData']),
+						...mapActions('provider', ['getProviderData']),
+
+
+
+			reloadData(){
+				this.Optionalproducts = [];
+				this.fetchProducts;
+				this.getData();
+
+			},
+
+			reloadProviders() {
+				this.Optionalproviders = [];
+				this.fetchProviders;
+				this.getProviderData();
+
+			},
 
 			onSubmit() {
 				if (this.updateObject.id) {

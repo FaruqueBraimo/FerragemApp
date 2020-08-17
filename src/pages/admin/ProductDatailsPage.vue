@@ -19,7 +19,7 @@
 					return id
 				},
 				productData() {
-					let product = this.products[this.productId] 
+					let product = this.products[this.productId  ] 
 					
 					return   product
 				}

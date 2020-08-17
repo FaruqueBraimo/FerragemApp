@@ -96,6 +96,19 @@
 								'Por favor, insira endereco do cliente'
 						]"
 					/>
+					<div class="q-pb-md">
+					<q-input
+						outlined
+						filled
+						square
+						type="number"
+						v-model="saveObject.nuit"
+						label="Nuit "
+						lazy-rules
+						dense
+						
+					/>
+						</div>
 
 					<q-input
 						outlined
@@ -107,18 +120,29 @@
 						dense
 						
 					/>
-					<div class="text-center">
+						<div class=" row text-center">
 						<!--<router-link to="/">LOgin</router-link>-->
 
-						<div class="q-my-md">
+						<div class=" col q-ma-md">
 							<q-btn
-								size="md"
-								type="submit"
-								color="primary"
 								:label="
 									updateObject.id ? ' Actualizar' : 'Registar'
 								"
+								size="md"
+								type="submit"
+								color="primary"
 								unelevated
+								class="full-width "
+							/>
+						</div>
+
+						<div class=" col q-ma-md">
+							<q-btn
+								label="Limpar Campos"
+								size="md"
+								color="deep-orange"
+								unelevated
+								@click="onReset()"
 								class="full-width "
 							/>
 						</div>
@@ -171,9 +195,11 @@
 						id: this.updateObject.id,
 						updates: this.saveObject
 					});
+					this.onReset()
 					}
 					else {
 				this.$emit('emitData', this.saveObject);
+				this.onReset()
 
 					}
 				
@@ -189,7 +215,9 @@
 				}
 			},
 
+			
 			onReset() {
+				this.saveObject = {}
 			}
 		},
 		watch: {

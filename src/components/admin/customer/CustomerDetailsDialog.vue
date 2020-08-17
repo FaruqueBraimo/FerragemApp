@@ -115,7 +115,23 @@
 
 
 
+						 <q-item clickable v-ripple>
+							<q-item-section avatar top>
+								<q-avatar
+									icon="info"
+									text-color="primary"
+								/>
+							</q-item-section>
 
+							<q-item-section>
+								<q-item-label class="text-subtitle1"
+									>Nuit</q-item-label
+								>
+								<q-item-label lines="1">{{
+									customer.nuit || 'Não Informado'
+								}}</q-item-label>
+							</q-item-section>
+						</q-item>
 
 
 						<q-item clickable v-ripple>

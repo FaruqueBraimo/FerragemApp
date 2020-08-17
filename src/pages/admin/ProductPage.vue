@@ -1,22 +1,6 @@
 <template>
 	<q-page padding>
-		<!-- content -->
-
-		<!-- content -->
-		<div class="row justify-left">
-			<!-- <q-btn
-				color="red"
-				label="Testar Codigo de Barra"
-				unelevated
-				@click="$router.push('/barcode')"
-			/> -->
-			<!-- <q-btn
-				color="deep-orange"
-				label="Imprimir"
-				@click="printTable()"
-
-			/> -->
-		</div>
+	
 		<div class="row justify-end q-py-sm">
 			<q-btn
 				color="primary"
@@ -38,15 +22,16 @@
 				class="q-pa-sm"
 				@productFilter="filterproduct"
 				@productFilterCategory="productFilterCategory"
+				@referenceFilter='productFilterByReference'
 			/>
 
-			<tbody v-if="productFiltered || products">
+			<tbody v-if="  products">
 				<products-body-component
-					v-for="(product, index) in Object.keys(productFiltered)
-						.length > 0
-						? productFiltered
-						: products"
+					v-for="(product, index, posiction) in products"
+						
+						
 					:key="index"
+					:posiction='posiction'
 					:product="Object.assign({ id: index }, product)"
 					:productId="index"
 					@deleteProduct="removeProduct"
@@ -75,6 +60,19 @@
 			<q-icon name="sentiment_very_dissatisfied" color="red" size="lg" />
 			<span class="text-red-5"> Sem dados retornados </span>
 		</div>
+				<div class='row justify-end q-mt-md'> 	<q-btn color="teal" icon="check"  label="Carregar mais"  @click='getData' />	 </div>
+
+				<div class='row justify-center q-mt-md'> 
+					
+      <q-inner-loading :showing="loading">
+				      <q-spinner-pie color="orange" size="50px" />
+
+      </q-inner-loading>	
+					
+						 </div>
+
+
+
 	</q-page>
 </template>
 
@@ -98,7 +96,9 @@
 			...mapState('product', [
 				'products',
 				'productFiltered',
-				'productFilteredCategory'
+				'productFilteredCategory',
+				'loading'
+				
 			]),
 			...mapGetters('product', ['searchProduct'])
 		},
@@ -112,7 +112,9 @@
 				'listenProductRealTimeChanges',
 				'filterDatafromDb',
 				'filterCategoryDatafromDb',
-				'setProductSearchKey'
+				'setProductSearchKey',
+				'filterByReference',
+				'getData'
 			]),
 			printTable() {
 				// Pass the element id here
@@ -143,7 +145,13 @@
 			},
 			productFilterCategory(query) {
 				this.filterCategoryDatafromDb(query);
-			}
+			
+				},
+				productFilterByReference(query) {
+					this.filterByReference(query);
+				}
+
+
 		},
 		components: {
 			ProductsHeaderComponent,

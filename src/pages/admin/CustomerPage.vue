@@ -18,13 +18,17 @@
 			class="q-pa-md"
 			:style="$q.platform.is.mobile ? 'width: 100%' : ''"
 		>
-			<customers-header-component class="q-pa-sm" />
+			<customers-header-component class="q-pa-sm"
+			@filterByNuit="filterByNuit"
+			@filterByName='filterByName'
+			
+			 />
 
 			<tbody>
 				<customers-body-component
-					v-for="(customer, index) in customers"
+					v-for="(customer, index, count) in customers"
 					:key="index"
-					:customer="Object.assign({id: index},customer)"
+					:customer="Object.assign({id: index, count : count},customer)"
 					@deleteCustomer="removeCustumer"
 					@updateObject='updateObject=$event'
 				/>
@@ -61,7 +65,7 @@
 		},
 
 		methods: {
-			...mapActions('customer', ['addCustomer', 'deleteCustomer']),
+			...mapActions('customer', ['addCustomer', 'deleteCustomer','filterByNuit','filterByName']),
 
 			removeCustumer(id) {
             let customerName = this.customers[id].name

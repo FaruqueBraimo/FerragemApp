@@ -21,7 +21,7 @@ const mutations = {
 	uploadProgress(state, val) {
 		state.uploadProgress = val;
 	},
-	addcategory(state, payload) {
+	addCategory(state, payload) {
 		Vue.set(state.categories, payload.id, payload.object);
 	},
 
@@ -48,13 +48,12 @@ const actions = {
 		commit('resetcategory');
 
 		dbcategories
-			.orderBy('createdAt', 'desc')
-			.limit(10)
+		
 			.onSnapshot(function(snapshot) {
 				snapshot.docChanges().forEach(function(change) {
 					if (change.type === 'added') {
 
-						commit('addcategory', {
+						commit('addCategory', {
 							id: change.doc.id,
 							object: change.doc.data()
 						});
@@ -72,7 +71,7 @@ const actions = {
 			});
 	},
 
-	addcategory({ commit, dispatch, rootGetters }, payload) {
+	addCategory({ commit, dispatch, rootGetters }, payload) {
 		payload.createdAt = new Date()
 		payload.updatedAt = new Date()
 		commit('loading', true);

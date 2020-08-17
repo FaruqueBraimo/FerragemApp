@@ -12,7 +12,7 @@
                     <q-card-section class="q-pt-none text-center">
                    <div class="text-body1 q-pa-md text-pink-5 ">Codigo</div>
                       <q-separator inset />
-                     KM-- {{product.code}}
+                  {{product.code}}
                     </q-card-section>
                   
                  </q-card>
@@ -93,7 +93,7 @@
                     <q-card-section class="q-pt-none text-center">
                    <div class="text-body1 q-pa-md  text-green">Iva</div>
                       <q-separator inset />
-                     {{product.iva}} ,00 MT
+                     {{product.iva}} 
                     </q-card-section>
                   
                  </q-card>
@@ -156,7 +156,20 @@
                   
                  </q-card>
                
-              </div>      
+              </div>  
+
+               <div class ='col q-pa-xs'>
+                    <q-card flat bordered class="my-card">
+                    
+                    <q-card-section class="q-pt-none text-center">
+                   <div class="text-body1 q-pa-md text-cyan-5">SubCategoria</div>
+                      <q-separator inset />
+                      {{product.subCategory }} 
+                    </q-card-section>
+                  
+                 </q-card>
+               
+              </div>    
 
               <div class ='col q-pa-xs'>
                     <q-card flat bordered class="my-card">

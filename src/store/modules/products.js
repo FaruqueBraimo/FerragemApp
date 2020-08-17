@@ -99,40 +99,48 @@ const getters = {
 };
 
 const actions = {
-	getData({ state, commit, getters, dispatch }, canGetMore) {
-		if (getters.canGetMoreProduct) {
-			let query = dbProducts.orderBy('createdAt', 'desc').limit(10);
 
-			if (state.solicitationSearchKey) {
-				query = dbProducts.orderBy('createdAt', 'desc');
-			} else {
-				if (canGetMore && lastVisible) {
-					query = dbProducts
-						.orderBy('createdAt', 'desc')
-						.startAfter(lastVisible)
-						.limit(10);
-				}
-			}
+	
+	getData({ state, commit, getters, dispatch }) {
+		commit('loading', true);
 
-			dispatch('executeQuery', query);
-		}
+		let query = dbProducts
+		.orderBy('createdAt', 'asc')
+			.startAfter(lastVisible)
+			.limit(5)
+			.get()
+			.then(resp => {
+				lastVisible = resp.docs[resp.docs.length - 1];
+				commit('loading', false);
+
+				resp.docChanges().forEach(function(change) {
+
+					if (change.type === 'added') {
+						commit('addProduct', {
+							id: change.doc.id,
+							object: change.doc.data()
+						});
+
+					}
+					if (change.type === 'modified') {
+						commit('updateProduct', {
+							id: change.doc.id,
+							updates: change.doc.data()
+						});
+					}
+					if (change.type === 'removed') {
+						commit('deleteProduct', change.doc.id);
+					}
+				});
+			});
 	},
 
-	filterCategoryDatafromDb({ state, commit, dispatch },myQuery) {
-	console.log(myQuery)
+	filterByReference({ state, commit, dispatch },myQuery) {
 		let query = null
-		if(myQuery=='Todas') {
-			dispatch('listenProductRealTimeChanges')
-		}
-		else{
-		 query = dbProducts.where("category.value", "==", myQuery.value)
+		 query = dbProducts.where("code", "==", myQuery)
 				
-		let query = dbProducts.where("category.value", "==", myQuery.value)
 		commit('resetProducts');
 		commit('productFiltered');
-		commit('productFilteredCategory');
-
-
 
 		query.onSnapshot(function(snapshot) {
 			snapshot.docChanges().forEach(function(change) {
@@ -140,7 +148,7 @@ const actions = {
 				commit('resetProducts');
 
 				if (change.type === 'added') {
-					commit('addProductByCategory', {
+					commit('addProduct', {
 						id: change.doc.id,
 						object: change.doc.data()
 					});
@@ -156,32 +164,165 @@ const actions = {
 				}
 			});
 		});			
-	}
+	
+
+	},
+
+	filterCategoryDatafromDb({ state, commit, dispatch },myQuery) {
+		let query = null
+		
+		if(myQuery=='Todas') {
+			commit('resetProducts');
+
+			 dbProducts
+			 .orderBy('createdAt','asc')
+			 .onSnapshot(function(snapshot) {
+			snapshot.docChanges().forEach(function(change) {
+				console.log(change.doc.data());
+
+				if (change.type === 'added') {
+					commit('addProduct', {
+						id: change.doc.id,
+						object: change.doc.data()
+					});
+				}
+				if (change.type === 'modified') {
+					commit('updateProduct', {
+						id: change.doc.id,
+						updates: change.doc.data()
+					});
+				}
+				if (change.type === 'removed') {
+					commit('deleteProduct', change.doc.id);
+				}
+			});
+		});	
+		}
+		else{
+		 query = dbProducts.where("category.value", "==", myQuery.value)
+		}
+			
+		commit('resetProducts');
+		commit('productFiltered');
+		commit('productFilteredCategory');
+
+
+
+		query.onSnapshot(function(snapshot) {
+			snapshot.docChanges().forEach(function(change) {
+				console.log(change.doc.data());
+
+				if (change.type === 'added') {
+					commit('addProduct', {
+						id: change.doc.id,
+						object: change.doc.data()
+					});
+				}
+				if (change.type === 'modified') {
+					commit('updateProduct', {
+						id: change.doc.id,
+						updates: change.doc.data()
+					});
+				}
+				if (change.type === 'removed') {
+					commit('deleteProduct', change.doc.id);
+				}
+			});
+		});			
+	
 	},
 
 	filterDatafromDb({ state, commit, getters },myQuery) {
 		
-		let products =	getters.getProductData;
-		Object.keys(products).forEach(key => {
-            let product = products[key]
-            if (product.name.toLowerCase().includes(myQuery.toLowerCase())) {
-				commit('resetProducts');
-				commit('productFilteredCategory');				
-				commit('addProductSearch', {
-					id : key,
-					object : product
-				 } );
+		// let products =	getters.getProductData;
+		// Object.keys(products).forEach(key => {
+        //     let product = products[key]
+        //     if (product.name.toLowerCase().includes(myQuery.toLowerCase())) {
+		// 		commit('resetProducts');
+		// 		commit('productFilteredCategory');				
+		// 		commit('addProductSearch', {
+		// 			id : key,
+		// 			object : product
+		// 		 } );
 
-			}
-			else {
-				console.log('No')
-			}
+		// 	}
+		// 	else {
+		// 		console.log('No')
+		// 	}
 			
 
-		})
+		// })
+
+		let query = null
+		 query = dbProducts.where("name", "==", myQuery)
+				
+		 		
+		commit('resetProducts');
+		commit('productFiltered');
+		
+		query.onSnapshot(function(snapshot) {
+			snapshot.docChanges().forEach(function(change) {
+				
+				if (change.type === 'added') {
+										
+				if (change.type === 'added') {
+					commit('addProduct', {
+						id: change.doc.id,
+						object: change.doc.data()
+					});
+				}
+				}
+				if (change.type === 'modified') {
+					commit('updateProduct', {
+						id: change.doc.id,
+						updates: change.doc.data()
+					});
+				}
+				if (change.type === 'removed') {
+					commit('deleteProduct', change.doc.id);
+				}
+			});
+		});			
+	
 	
 		
 	},
+
+	getAllProducts({ commit }) {
+		commit('resetProducts');
+		commit('productFiltered');
+		commit('productFilteredCategory');
+
+		dbProducts
+			.orderBy('createdAt', 'asc')
+			.onSnapshot(function(snapshot) {
+				lastVisible = snapshot.docs[snapshot.docs.length - 1];
+				snapshot.docChanges().forEach(function(change) {
+					if (change.type === 'added') {
+						commit('addProduct', {
+							id: change.doc.id,
+							object: change.doc.data()
+
+						});
+
+						// commit('addProductSearch', { 	id: change.doc.id,
+						// 	object: change.doc.data()} );
+					}
+					if (change.type === 'modified') {
+						commit('updateProduct', {
+							id: change.doc.id,
+							updates: change.doc.data()
+						});
+					}
+					if (change.type === 'removed') {
+						commit('deleteProduct', change.doc.id);
+					}
+				});
+			});
+	},
+
+
+
 
 
 	
@@ -190,18 +331,19 @@ const actions = {
 		commit('productFiltered');
 		commit('productFilteredCategory');
 
-		
-
 		dbProducts
-			.orderBy('createdAt', 'desc')
-			.limit(10)
+			.orderBy('createdAt', 'asc')
+			.limit(2)
 			.onSnapshot(function(snapshot) {
+				lastVisible = snapshot.docs[snapshot.docs.length - 1];
 				snapshot.docChanges().forEach(function(change) {
 					if (change.type === 'added') {
 						commit('addProduct', {
 							id: change.doc.id,
 							object: change.doc.data()
+
 						});
+
 						// commit('addProductSearch', { 	id: change.doc.id,
 						// 	object: change.doc.data()} );
 					}

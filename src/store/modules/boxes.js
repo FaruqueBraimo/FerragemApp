@@ -42,7 +42,10 @@ const getters = {
 const actions = {	
 
 	listenBoxRealTimeChanges({ commit }) {
-		dbBox.onSnapshot(function(snapshot) {
+
+		dbBox.
+		orderBy('createdAt', 'asc').
+		onSnapshot(function(snapshot) {
 				snapshot.docChanges().forEach(function(change) {
 					if (change.type === 'added') {
 

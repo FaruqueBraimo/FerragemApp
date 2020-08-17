@@ -68,16 +68,17 @@
 				<q-card style="width: 700px; max-width: 80vw;">
 					<q-card-section
 						class="q-pt-none"
-						v-if="Object.keys(productFilteredCategory).length > 0"
+						v-if="Object.keys(products).length > 0"
 					>
 						<q-list padding class="rounded-borders">
 							<q-item-label header class="text-h6"
-								>Productos desta categoria
+								>Esta categoria tem {{Object.keys(products).length }} produtos
 							</q-item-label>
 							<span>
 								<categoryDetails
-									v-for="product in productFilteredCategory"
-									:key="product.id"
+									v-for="(product,index) in products"
+									:key="productId"
+									:productId='index'
 									:product="product"
 								/>
 							</span>
@@ -85,7 +86,7 @@
 					</q-card-section>
 
 					<div
-						v-if="Object.keys(productFilteredCategory).length === 0"
+						v-if="Object.keys(products).length === 0"
 						class="text-center q-py-md text-bold text-red-5 text-h6"
 					>
 						Nenhum producto foi registado com esta categoria
@@ -129,7 +130,7 @@
 					Math.floor(Math.random() * this.colors.length)
 				];
 			},
-			...mapState('product', ['productFilteredCategory'])
+			...mapState('product', ['products'])
 		},
 		methods: {
 			...mapActions('product', ['filterCategoryDatafromDb']),
