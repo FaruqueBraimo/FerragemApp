@@ -1,5 +1,9 @@
 <template>
 	<tr>
+
+		<td class="text-left">
+			{{ provider.count + 1 }}
+		</td>
 		<td class="text-left">
 			{{ provider.name | limitLength(25) }}
 		</td>
@@ -12,7 +16,7 @@
 
 
 		<td class="text-center ">
-			{{ provider.createdAt | dateFormat }}
+			{{ provider.nuit || 'Não informado' }}
 		</td>
 
 		<td class="text-center ">
@@ -43,7 +47,9 @@
 				</div>
 			</div>
 		</td>
+		
 	</tr>
+
 </template>
 
 <script>

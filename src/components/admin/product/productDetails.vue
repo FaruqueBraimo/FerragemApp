@@ -12,7 +12,7 @@
                     <q-card-section class="q-pt-none text-center">
                    <div class="text-body1 q-pa-md text-pink-5 ">Codigo</div>
                       <q-separator inset />
-                     KM- {{product.code}}
+                  {{product.code}}
                     </q-card-section>
                   
                  </q-card>
@@ -93,7 +93,7 @@
                     <q-card-section class="q-pt-none text-center">
                    <div class="text-body1 q-pa-md  text-green">Iva</div>
                       <q-separator inset />
-                     {{product.iva}} ,00 MT
+                     {{product.iva}} 
                     </q-card-section>
                   
                  </q-card>

@@ -28,7 +28,7 @@
 								v-model="search"
 								dense
 								debounce="300"
-								placeholder="Pesquise pelo codigo"
+								placeholder="Pesquise o nome do produto"
 								square
 								filled
 							>
@@ -59,7 +59,7 @@
 								v-model="referenceSearch"
 								dense
 								debounce="300"
-								placeholder="Pesquise pela referência"
+								placeholder="Pesquise pelo codigo"
 								square
 								filled
 							>
