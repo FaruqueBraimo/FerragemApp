@@ -3,7 +3,7 @@
 		<div class="row justify-center ">
 			<p class="text-h6 text-center q-pb-md text-center ">
 				Preencha os campos abaixo para registar um produto
-				{{ calculusMath }}
+				{{ calculusMath }} {{	referenceStatus}}
 			</p>
 
 			<q-card square bordered>
@@ -35,6 +35,7 @@
 									dense
 									v-model="code"
 									disable
+									
 								>
 								</q-input>
 							</div>
@@ -83,7 +84,12 @@
 											(val !== null && val !== '') ||
 											'Por favor insira o fornecedor'
 									]"
-								/>
+								>
+		<template v-slot:append>
+          <q-btn round dense flat icon="add" @click='reloadProviders' />
+        </template>
+      </q-select>
+								</q-select>
 							</div>
 
 							<div class="col-6 q-py-sm">
@@ -91,6 +97,7 @@
 									square
 									filled
 									dense
+									placeholder = 'ST-XYZ...'
 									label="Referência"
 									v-model="reference"
 									lazy-rules
@@ -139,7 +146,7 @@
 									:rules="[
 										val =>
 											(val !== null && val !== '') ||
-											'Por favor insira a referencia'
+											'Por favor insira a categoria'
 									]"
 								/>
 							</div>
@@ -328,6 +335,7 @@
 					</div>
 				</div>
 			</q-card>
+			<div>  </div>
 		</div>
 	</div>
 </template>
@@ -335,6 +343,7 @@
 <script>
 	import { mapGetters, mapState, mapActions } from 'vuex';
 	import { date } from 'quasar';
+import { watch } from '@xkeshi/vue-barcode';
 
 	export default {
 		name: 'ProductFormComponent',
@@ -343,6 +352,7 @@
 			return {
 				date: 'AAAA/MM/DD',
 				tab: 'mails',
+				refCode:"",
 				optionalcategory: [],
 				Optionalprovider: [{ label: 'Nenhum' }],
 				utility: ['Venda', 'Uso Interno'],
@@ -367,12 +377,15 @@
 				description: '',
 				reference: '',
 				subCategory: '',
-				referenceStatus: ''
+				referenceStatus: '',
+				referenceStatusUpdate:''
 			};
 		},
 		mounted() {
 			this.fetchCategories;
 			this.fetchProviders;
+			this.getAllProducts()
+
 			if (this.productData.data) {
 				this.name = this.productData.data.name;
 				this.category = this.productData.data.category;
@@ -436,7 +449,9 @@
 
 			calculusMath() {
 				/// WE also use this computed proprities as any opportunity for realize calculus
-				if (this.qtdBalcony) {
+				
+				let qtdWrhCheck = ~~this.quantity - ~~this.qtdBalcony
+				if (qtdWrhCheck > 0) {
 					this.qtdWarehouse = ~~+this.quantity - ~~this.qtdBalcony;
 				}
 				if (
@@ -462,15 +477,17 @@
 				}
 
 					//Iva validation
-				this.discount_iva = this.price_buy * 0.17;
+					let dscIva = (this.price_payd * 0.17);
+				this.discount_iva = dscIva.toFixed(2)
 
 				if (this.price_buy != 0 && this.price_payd != 0) {
 					this.profit =
-						(this.price_buy - this.price_payd) - this.discount_iva ;
+						(this.price_buy - this.price_payd) - 0.17 ;
 					let profitLocal =
 						(this.price_buy - this.price_payd) / this.price_payd;
+						let pftM = profitLocal.toFixed(3) * 100 
 					this.profitMargin =
-						profitLocal.toFixed(3) * 100 + ' % ' ;
+						pftM.toFixed(2) + ' % ' ;
 				}
 
 				
@@ -482,23 +499,48 @@
 				// Reference validation
 					Object.keys(this.products).forEach((element, key) => {
 							let prod = this.products[element];
-							if (prod.reference === this.reference) {
+							
+							if (prod.reference == this.reference) {
 								this.referenceStatus = true;
 							}
 							else {
-								this.referenceStatus = false
 							}
 						});
+
+					if(this.productData.data) {
+
+					
+					Object.keys(this.products).forEach((element, key) => {
+							let prod2 = this.products[this.productData.id];
+							let prod3 = this.products[element]
+							let prodGeneral = {}	
+
+							if(prod2.code !== prod3.code) {
+								prodGeneral = 	prod3
+
+							if (prodGeneral.reference == this.reference) {
+								this.referenceStatusUpdate = true;
+							}
+							
+							else {
+
+							}
+	
+							}							
+							console.log(prodGeneral)
+
+
+						});
+
+
+
+								}
+
 
 				// Data expires validation
 				const dateNow = new Date();
 				if (this.expires != '' && dateReturn < dateNow) {
 					this.expires = '';
-
-
-
-
-					
 					this.$q.dialog({
 						title: 'Data Inválida',
 						message: `A data Introduzida é inferior a data actual. 
@@ -509,15 +551,25 @@
 			}
 		},
 		methods: {
-			...mapActions('product', ['updateProduct']),
+			...mapActions('product', ['updateProduct','getAllProducts']),
 			...mapActions('notification', [
 				'addNotification',
 				'editNotification'
 			]),
+						...mapActions('provider', ['getProviderData']),
+
+			reloadProviders() {
+				this.Optionalprovider = [];
+				this.fetchProviders;
+				this.getProviderData();
+
+			},
+
 
 			onSubmit() {
 				let product = {};
 				product.category = this.category;
+					 this.refCode = 	this.reference.toLowerCase().substring(0, 2);
 
 				product.name = this.name;
 				product.iva = this.iva;
@@ -543,9 +595,8 @@
 				if (this.productData.data) {
 					delete product.createdBy;
 					product.updatedBy = this.getUserAuth.id;
-
 					
-						if (this.referenceStatus) {
+						if (this.referenceStatusUpdate === true) {
 							this.$q
 								.dialog({
 									title: 'Referência Repetida',
@@ -557,7 +608,19 @@
 								.onOk(() => {
 								
 								});
-						} else {
+						} 
+						
+						else if(this.refCode != 'st') {
+								     this.$q
+					.dialog({
+						title: 'Não Permitido',
+						message: `Por favor, inclua o ST na referencia. `,
+						cancel: false,
+						ok: false,
+					})
+						}
+						
+						else {
 								this.updateProduct({
 						id: this.productData.id,
 						updates: product
@@ -590,7 +653,7 @@
 						product.code = this.code;
 					
 
-						if (this.referenceStatus) {
+						if (this.referenceStatus === true) {
 							this.$q
 								.dialog({
 									title: 'Referência Repetida',
@@ -602,7 +665,20 @@
 								.onOk(() => {
 								
 								});
-						} else {
+						} 
+						
+						else if(this.refCode != 'st') {
+								     this.$q
+					.dialog({
+						title: 'Não Permitido',
+						message: `Por favor, inclua o ST na referencia. `,
+						cancel: false,
+						ok: false,
+					})
+						}
+						
+						
+						else {
 							this.countCode();
 							this.$emit('emitData', product);
 							setTimeout(() => {
@@ -667,6 +743,16 @@
 				this.profitMargin = '';
 				this.reference = '';
 				this.subCategory = '';
+			}
+		},
+
+		watch: {
+			reference(val) {
+				if(val) {
+
+					this.referenceStatus = false;
+
+				}
 			}
 		}
 	};
