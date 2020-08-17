@@ -1,5 +1,8 @@
 <template>
 	<tr>
+			<td class="text-left">
+			{{ customer.count + 1 }}
+		</td>
 		<td class="text-left">
 			{{ customer.name | limitLength(25) }}
 		</td>
@@ -8,7 +11,7 @@
 		<td class="text-left">{{ customer.email || 'Não Informado' | limitLength(17)}}</td>
 		<td class="text-left">{{ customer.phone || 'Não Informado' }}</td>
 		<td class="text-center ">
-			{{ customer.createdAt | dateFormat }}
+			{{ customer.nuit  }}
 		</td>
 		<td class="text-left ">
 			<div class="row " style="width:100px;">
