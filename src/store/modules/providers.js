@@ -59,23 +59,40 @@ const getters = {
 };
 
 const actions = {
-	getData({ state, commit, getters, dispatch }, canGetMore) {
-		if (getters.canGetMoreProvider) {
-			let query = dbProviders.orderBy('createdAt', 'desc').limit(10);
+	getProviderData({ state, commit, getters, dispatch }) {
 
-			if (state.solicitationSearchKey) {
-				query = dbProviders.orderBy('createdAt', 'desc');
-			} else {
-				if (canGetMore && lastVisible) {
-					query = dbProviders
-						.orderBy('createdAt', 'desc')
-						.startAfter(lastVisible)
-						.limit(10);
-				}
-			}
+		let query = dbProviders
+		 .orderBy('createdAt', 'asc')
+			.startAfter(lastVisible)
+			.limit(5)
+			.onSnapshot(function(snapshot) {
+				lastVisible = snapshot.docs[snapshot.docs.length - 1];
+				commit('loading', true);
 
-			dispatch('executeQuery', query);
-		}
+				snapshot.docChanges().forEach(function(change) {
+					commit('resetProvider');
+
+
+					if (change.type === 'added') {
+						commit('addProvider', {
+							id: change.doc.id,
+							object: change.doc.data()
+
+						});
+
+
+					}
+					if (change.type === 'modified') {
+						commit('updateProvider', {
+							id: change.doc.id,
+							updates: change.doc.data()
+						});
+					}
+					if (change.type === 'removed') {
+						commit('deleteProvider', change.doc.id);
+					}
+				});
+			});
 	},
 
 	executeQuery({ state, commit, getters }, query) {
@@ -109,19 +126,81 @@ const actions = {
 			});
 	},
 
+	filterByNuit({ state, commit, dispatch }, myQuery) {
+		let query = null;
+		query = dbProviders.where('nuit', '==', myQuery);
+
+		commit('resetProviders');
+
+		query.onSnapshot(function(snapshot) {
+			snapshot.docChanges().forEach(function(change) {
+				console.log(change.doc.data());
+				commit('resetProvider');
+
+				if (change.type === 'added') {
+					commit('addProvider', {
+						id: change.doc.id,
+						object: change.doc.data()
+					});
+				}
+				if (change.type === 'modified') {
+					commit('updateProvider', {
+						id: change.doc.id,
+						updates: change.doc.data()
+					});
+				}
+				if (change.type === 'removed') {
+					commit('deleteProvider', change.doc.id);
+				}
+			});
+		});
+	},
+
+	filterByName({ state, commit, dispatch }, myQuery) {
+		let query = null;
+		query = dbProviders.where('name', '==', myQuery);
+
+		commit('resetProviders');
+
+		query.onSnapshot(function(snapshot) {
+			snapshot.docChanges().forEach(function(change) {
+				console.log(change.doc.data());
+				commit('resetProvider');
+
+				if (change.type === 'added') {
+					commit('addProvider', {
+						id: change.doc.id,
+						object: change.doc.data()
+					});
+				}
+				if (change.type === 'modified') {
+					commit('updateProvider', {
+						id: change.doc.id,
+						updates: change.doc.data()
+					});
+				}
+				if (change.type === 'removed') {
+					commit('deleteProvider', change.doc.id);
+				}
+			});
+		});
+	},
+
 	listenProviderRealTimeChanges({ commit }) {
 		commit('resetProvider');
 
 		dbProviders
-			.orderBy('createdAt', 'desc')
-			
+			.orderBy('createdAt', 'asc')
+			.limit(5)
 			.onSnapshot(function(snapshot) {
+				lastVisible = snapshot.docs[snapshot.docs.length - 1];
 				snapshot.docChanges().forEach(function(change) {
 					if (change.type === 'added') {
 						commit('addProvider', {
 							id: change.doc.id,
 							object: change.doc.data()
 						});
+
 					}
 					if (change.type === 'modified') {
 						commit('updateProvider', {
@@ -136,10 +215,11 @@ const actions = {
 			});
 	},
 
+	
+
 	addProvider({ commit, dispatch, rootGetters }, payload) {
-		payload.createdAt = new Date()
-		payload.updatedAt = new Date()
-		commit('loading', true);
+		payload.createdAt = new Date();
+		payload.updatedAt = new Date();
 
 		return dbProviders
 			.add(payload)
@@ -165,7 +245,7 @@ const actions = {
 	updateProvider({ commit, rootGetters }, payload) {
 		commit('loading', true);
 
-		payload.updates.updatedAt = new Date()
+		payload.updates.updatedAt = new Date();
 
 		let sucessMessage = payload.successMessage
 			? payload.successMessage

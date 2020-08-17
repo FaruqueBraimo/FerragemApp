@@ -1,7 +1,6 @@
 <template>
 	<q-page padding>
 		<!-- content -->
-
 		<div class="row justify-end q-py-md">
 			<q-btn
 				color="primary"
@@ -18,25 +17,39 @@
 			class="q-pa-md"
 			:style="$q.platform.is.mobile ? 'width: 100%' : ''"
 		>
-			<providers-header-component class="q-pa-sm" />
+			<providers-header-component class="q-pa-sm" 
+			@filterByNuit="filterByNuit"
+			@filterByName='filterByName'
+			
+			/>
 
 			<tbody>
 				<providers-body-component
-					v-for="(provider, index) in providers"
+					v-for="(provider, index, count) in providers"
 					:key="index"
-					:provider="Object.assign({id: index},provider)"
+					:provider="Object.assign({id: index, count: count},provider)"
 					@deleteProvider="removeProvider"
-										@updateObject='updateObject =$event'
+					@updateObject='updateObject =$event'
 
 				/>
 			</tbody>
 		</q-markup-table>
+		<div class='row justify-end q-mt-md'> 	<q-btn color="teal" icon="check"  label="Carregar mais"  @click='getProviderData' />	 </div>
+	
+				<div class='row justify-center q-mt-md'> 
+					
+      <!-- <q-inner-loading :showing="loading">
+				      <q-spinner-pie color="orange" size="50px" />
+
+      </q-inner-loading>	
+					 -->
+						 </div>
 
 		<add-provider-dialog
 			:dialog="dialog"
-			@closeDialog="dialog = false"
+			@closeDialog="closeDialog "
 			@emitData="addProvider"
-							:updateObject='updateObject'
+			:updateObject='updateObject'
 
 		/>
 	</q-page>
@@ -58,11 +71,11 @@
 			};
 		},
 		computed: {
-			...mapState('provider', ['providers'])
+			...mapState('provider', ['providers','loading'])
 		},
 
 		methods: {
-		...mapActions('provider', ['addProvider', 'deleteProvider']),
+		...mapActions('provider', ['addProvider',  'getProviderData', 'deleteProvider','filterByNuit','filterByName']),
 
 		removeProvider(id) {
             let providerName = this.providers[id].name
@@ -79,7 +92,13 @@
 							this.deleteProvider(id);
 					});
 
-          },
+		  },
+		  closeDialog(){
+				this.dialog = true;
+				this.updateObject='';
+								  
+
+		  }
 			
 		},
 		components: {
@@ -88,11 +107,7 @@
 			AddProviderDialog
 		},
 		watch: {
-			updateObject(val) {
-				if(val) {
-					this.dialog = true
-				}
-			},
+			
 		}
 	};
 </script>

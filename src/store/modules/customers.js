@@ -109,8 +109,73 @@ const actions = {
 			});
 	},
 
+	
+	filterByNuit({ state, commit, dispatch },myQuery) {
+		let query = null
+		 query = dbCustomers.where("nuit", "==", myQuery)
+				
+		commit('resetCustomers');
+
+		query.onSnapshot(function(snapshot) {
+			snapshot.docChanges().forEach(function(change) {
+				console.log(change.doc.data());
+				commit('resetCustomer');
+
+				if (change.type === 'added') {
+					commit('addCustomer', {
+						id: change.doc.id,
+						object: change.doc.data()
+					});
+				}
+				if (change.type === 'modified') {
+					commit('updateCustomer', {
+						id: change.doc.id,
+						updates: change.doc.data()
+					});
+				}
+				if (change.type === 'removed') {
+					commit('deleteCustomer', change.doc.id);
+				}
+			});
+		});			
+	
+
+	},
+
+	filterByName({ state, commit, dispatch },myQuery) {
+		let query = null
+		 query = dbCustomers.where("name", "==", myQuery)
+				
+		commit('resetCustomers');
+
+		query.onSnapshot(function(snapshot) {
+			snapshot.docChanges().forEach(function(change) {
+				console.log(change.doc.data());
+				commit('resetCustomers');
+
+				if (change.type === 'added') {
+					commit('addCustomer', {
+						id: change.doc.id,
+						object: change.doc.data()
+					});
+				}
+				if (change.type === 'modified') {
+					commit('updateCustomer', {
+						id: change.doc.id,
+						updates: change.doc.data()
+					});
+				}
+				if (change.type === 'removed') {
+					commit('deleteCustomer', change.doc.id);
+				}
+			});
+		});			
+	
+
+	},
+
 	listenCustomerRealTimeChanges({ commit }) {
-		commit('resetCustomer');
+		commit('resetCustomers');
 
 		dbCustomers
 			
@@ -146,7 +211,7 @@ const actions = {
 				commit('loading', false);
 
 				// 1. Limpar todas solicitações
-				commit('resetCustomer');
+				commit('resetCustomers');
 
 				showSuccessMessage('Cliente Adicionado com sucesso!');
 
@@ -246,7 +311,7 @@ const actions = {
 		commit('setCustomerSearchKey', text);
 
 		commit('loading', true);
-		commit('resetCustomer');
+		commit('resetCustomers');
 
 		if ((text && text.length > 1) || !text) {
 			dispatch('getData', true);
@@ -258,7 +323,7 @@ const actions = {
 			console.log(
 				'Reset data to only20 not implemented yet. All customers where reseted for now...'
 			);
-			commit('resetCustomer');
+			commit('resetCustomers');
 		}
 	}
 };
