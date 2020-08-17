@@ -53,6 +53,8 @@ components: {
         ...mapState('category', [
             'categories'
         ]),
+        			...mapState('product', ['products'])
+
     },
 
   data () {
@@ -64,15 +66,16 @@ components: {
   },
    methods: {
      
-          ...mapActions('category', ['addCategory','deleteCategory']),
-          
-
+          ...mapActions('category', ['addCategory','deleteCategory', 'filterCategoryDatafromDb']),
+          ...mapActions('product', ['filterCategoryDatafromDb']),
 
           registerCategory(data) {
             this.addCategory(data)
           },
           removeCategory(id) {
+            // toLowerCase().includes
             let categoryName = this.categories[id].name
+           this.filterCategoryDatafromDb({value : id})
             this.$q
 					.dialog({
 						title: 'Confirme',
@@ -83,7 +86,22 @@ components: {
 						persistent: true
 					})
 					.onOk(() => {
-							this.deleteCategory(id);
+
+            
+            if(Object.keys(this.products).length == 0) {
+	                  this.deleteCategory(id);
+            }
+            else {
+                this.$q
+					.dialog({
+						title: 'Não Permitido',
+						message: `Não pode apagar a categoria ${categoryName} , por que existem alguns produtos associados a ela.`,
+						cancel: false,
+						ok: false,
+					})
+
+            }
+						
 					});
 
           },
