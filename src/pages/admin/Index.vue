@@ -143,48 +143,41 @@
 		</div>
 
 		<div class="row ">
-			
-		<div class=" col text-bold  text-h5 text-center ">
-			<report-component/>
+			<div class="col-12 q-px-lg  text-primary"> Empresa  :  <span class="text-blue-grey-10">N-FACILIDADES Sociedade Unipessoal Lda</span>  </div>	
+          
+		  <div class="col-12 q-px-lg q-py-md text-primary"> Sede  :  <span class="text-blue-grey-10"> Zambézia Milange</span>  </div>	
+
+			<div class="col-12 q-px-lg text-primary"> Nuit  :  <span class="text-blue-grey-10">401151192</span>  </div>	
+
+			<div class="col-12 q-px-lg q-py-md text-primary"> Contacto  :  <span class="text-blue-grey-10">845488304/864023773</span>  </div>	
+			<div class="col-12 q-px-lg text-primary"> Email  :  <span class="text-blue-grey-10"> noeafonso1@gmail.com</span>  </div>	
+
 		</div>
-			<div class="col"> 
-							<pieChartComponent/>
-							
 
-					</div>
-		 </div>		
-		 		<div class="row q-pt-md">
-					 <div class="col-6   q-pl-xl">
-					Gráfico de actividades dos ultimos 5 anos
-					</div><div class="col-6   q-pl-xl">
-						Diagrama de stock de produtos
-					</div>
+		<div class="row bg-primary text-white  absolute-bottom text-center justify-center q-pa-md ">
+			 
+		Copyright ©2020 FSTOCK - N-FACILIDADES Sociedade Unipessoal Lda. Todos Direitos Reservados. faruquebraimo@gmail.com / 846771216
+					
+		 </div>
 
-				 </div>
-					<div class="container body-content">
-   
-    
-	<div class='text-center text-bold q-pt-xl'> 
-		 <hr  class="q-mb-sm"/>
-		  <p>Desenvolvido pela Gest Midia. Lda &copy; 2020</p>
-	 </div>
-
-</div>			
+		 
+		 
 
 	</q-page>
 	
 </template>
 
-<script>
-	import { mapActions, mapState } from 'vuex';
-		import reportComponent from '../../components/admin/reports/reportComponent';
-		import pieChartComponent from '../../components/admin/reports/pieChartComponent';
+<script >
 
+
+	import { mapActions, mapState } from 'vuex';
+	
 
 	import { date } from 'quasar';
 
+
 	export default {
-		components: {reportComponent, pieChartComponent},
+		components: {},
 		data() {
 			return {
 				chartData: {
@@ -222,8 +215,15 @@ meta: {
 
 
 		},
+		mounted () {
+				
+		},
 		
 		methods: {
+
+			connection() {
+				
+			}
 		}
 	};
 </script>

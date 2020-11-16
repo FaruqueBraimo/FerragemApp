@@ -64,7 +64,8 @@
 		</div>
          <div class='text-center text-bold q-pt-xl text-grey-8 absolute-bottom'> 
 		 <hr  class="q-mb-sm"/>
-		  <p>Desenvolvido pela Gest Midia. Lda &copy; 2020</p>
+		  		Copyright ©2020 FSTOCK - N-FACILIDADES Sociedade Unipessoal Lda. Todos Direitos Reservados. faruquebraimo@gmail.com / 846771216
+
 	 </div>
 
 	</q-page>

@@ -219,16 +219,16 @@ const actions = {
     },
 
     deleteUser ({commit}, id) {
-        dbUsers.doc(id).delete()
-            .then(function(docRef) {
-                commit('loading', false)
-                console.log('user deletado com sucesso!')
-            })
-            .catch(function(error) {
-                console.error("Error removing document: ", error);
-                commit('loading', false)
-                showErrorMessage(error.message)
-            });
+        // dbUsers.doc(id).delete()
+        //     .then(function(docRef) {
+        //         commit('loading', false)
+        //         console.log('user deletado com sucesso!')
+        //     })
+        //     .catch(function(error) {
+        //         console.error("Error removing document: ", error);
+        //         commit('loading', false)
+        //         showErrorMessage(error.message)
+        //     });
 
     },
 

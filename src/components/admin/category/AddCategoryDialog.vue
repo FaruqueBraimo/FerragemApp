@@ -115,6 +115,7 @@
                     this.editCategory ({
                         id: this.selectedId,
                         updates: this.saveObject
+
 					})
 										this.$emit('closeDialog');
 					this.onReset()

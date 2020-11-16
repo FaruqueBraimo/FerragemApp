@@ -3,7 +3,7 @@
 		<div class="row justify-center ">
 			<p class="text-h6 text-center q-pb-md text-center ">
 				Preencha os campos abaixo para registar um produto
-				{{ calculusMath }} {{	referenceStatus}}
+				{{ calculusMath }} 
 			</p>
 
 			<q-card square bordered>
@@ -97,7 +97,7 @@
 									square
 									filled
 									dense
-									placeholder = 'ST-XYZ...'
+								
 									label="Referência"
 									v-model="reference"
 									lazy-rules
@@ -135,21 +135,6 @@
 								</q-input>
 							</div>
 
-							<div class="col-12 ">
-								<q-input
-									square
-									filled
-									dense
-									label="SubCategoria"
-									v-model="subCategory"
-									lazy-rules
-									:rules="[
-										val =>
-											(val !== null && val !== '') ||
-											'Por favor insira a categoria'
-									]"
-								/>
-							</div>
 						</div>
 					</q-tab-panel>
 
@@ -376,7 +361,7 @@ import { watch } from '@xkeshi/vue-barcode';
 				stockBreak: '',
 				description: '',
 				reference: '',
-				subCategory: '',
+			
 				referenceStatus: '',
 				referenceStatusUpdate:''
 			};
@@ -384,8 +369,8 @@ import { watch } from '@xkeshi/vue-barcode';
 		mounted() {
 			this.fetchCategories;
 			this.fetchProviders;
-			this.getAllProducts()
-
+			this.getAllProducts();
+	
 			if (this.productData.data) {
 				this.name = this.productData.data.name;
 				this.category = this.productData.data.category;
@@ -403,16 +388,15 @@ import { watch } from '@xkeshi/vue-barcode';
 				this.code = this.productData.data.code;
 				this.reference = this.productData.data.reference;
 				this.profitMargin = this.productData.data.profitMargin;
-				this.subCategory = this.productData.data.subCategory;
 			} else {
 				Object.keys(this.notifications).length > 0
 					? Object.keys(this.notifications).forEach(
 							(element, key) => {
-								this.code = `KM-${this.notifications[element]
+								this.code = `P-${this.notifications[element]
 									.code + 1}`;
 							}
 					  )
-					: (this.code = 'KM-1');
+					: (this.code = 'P-1');
 			}
 		},
 		computed: {
@@ -470,8 +454,8 @@ import { watch } from '@xkeshi/vue-barcode';
 					this.stockBreak !== '' &&
 					this.profit !== '' &&
 					this.profitMargin !== '' &&
-					this.reference !== '' &&
-					this.subCategory !== ''
+					this.reference !== '' 
+					
 				) {
 					this.disable = false;
 				}
@@ -569,7 +553,6 @@ import { watch } from '@xkeshi/vue-barcode';
 			onSubmit() {
 				let product = {};
 				product.category = this.category;
-					 this.refCode = 	this.reference.toLowerCase().substring(0, 2);
 
 				product.name = this.name;
 				product.iva = this.iva;
@@ -581,8 +564,7 @@ import { watch } from '@xkeshi/vue-barcode';
 				product.expires = this.expires;
 				product.iva = this.iva;
 				product.reference = this.reference;
-				product.subCategory = this.subCategory;
-
+			
 				product.profit = this.profit;
 				product.profitMargin = this.profitMargin;
 				product.createdBy = this.getUserAuth.id;
@@ -610,15 +592,7 @@ import { watch } from '@xkeshi/vue-barcode';
 								});
 						} 
 						
-						else if(this.refCode != 'st') {
-								     this.$q
-					.dialog({
-						title: 'Não Permitido',
-						message: `Por favor, inclua o ST na referencia. `,
-						cancel: false,
-						ok: false,
-					})
-						}
+						
 						
 						else {
 								this.updateProduct({
@@ -646,9 +620,8 @@ import { watch } from '@xkeshi/vue-barcode';
 						this.qtdWarehouse !== '' &&
 						this.stockBreak !== '' &&
 						this.profit !== '' &&
-						this.profitMargin !== '' &&
-						this.reference !== '' &&
-						this.subCategory !== ''
+						this.profitMargin !== '' 
+						
 					) {
 						product.code = this.code;
 					
@@ -667,15 +640,7 @@ import { watch } from '@xkeshi/vue-barcode';
 								});
 						} 
 						
-						else if(this.refCode != 'st') {
-								     this.$q
-					.dialog({
-						title: 'Não Permitido',
-						message: `Por favor, inclua o ST na referencia. `,
-						cancel: false,
-						ok: false,
-					})
-						}
+						
 						
 						
 						else {
@@ -742,7 +707,7 @@ import { watch } from '@xkeshi/vue-barcode';
 				this.profit = '';
 				this.profitMargin = '';
 				this.reference = '';
-				this.subCategory = '';
+				
 			}
 		},
 

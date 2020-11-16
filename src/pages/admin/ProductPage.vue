@@ -68,7 +68,8 @@
 				      <q-spinner-pie color="orange" size="50px" />
 
       </q-inner-loading>	
-					
+
+
 						 </div>
 
 
@@ -161,6 +162,10 @@
 
 		watch: {
 			search(val) {}
-		}
+		},
+
+		
+
+		
 	};
 </script>

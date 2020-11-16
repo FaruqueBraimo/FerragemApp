@@ -13,13 +13,13 @@ const firebaseConfig = {
   // messagingSenderId: "537364637347",
   // appId: "1:537364637347:web:3cf3821e1cc9cdf37c4116",
   // measurementId: "G-TFD8211X43"
-  apiKey: "AIzaSyAYOFgSiXsT_qIsMjsB9jhwKmLizD8YNzM",
-    authDomain: "stock-b02ea.firebaseapp.com",
-    databaseURL: "https://stock-b02ea.firebaseio.com",
-    projectId: "stock-b02ea",
-    storageBucket: "stock-b02ea.appspot.com",
-    messagingSenderId: "316882235384",
-    appId: "1:316882235384:web:f34f81d81e9fc89d30300d"
+  apiKey: "AIzaSyCCkcmwqka8prFsAMuQYxVvgkRXMY3raOY",
+    authDomain: "zambezia.firebaseapp.com",
+    databaseURL: "https://zambezia.firebaseio.com",
+    projectId: "zambezia",
+    storageBucket: "zambezia.appspot.com",
+    messagingSenderId: "177970050682",
+    appId: "1:177970050682:web:8f749e65ca8d8dfafe6dc3"
 };
 
 let firebaseApp = firebase.initializeApp(firebaseConfig)

@@ -64,7 +64,7 @@
                     <q-card-section class="q-pt-none  text-center">
                    <div class="text-body1 q-pa-md text-green">Expira em</div>
                       <q-separator inset />
-                      {{product.expires}} 
+                      {{product.expiresn || 'Nunca expira'}} 
                     </q-card-section>
                   
                  </q-card>
@@ -162,9 +162,9 @@
                     <q-card flat bordered class="my-card">
                     
                     <q-card-section class="q-pt-none text-center">
-                   <div class="text-body1 q-pa-md text-cyan-5">SubCategoria</div>
+                   <div class="text-body1 q-pa-md text-cyan-5">Categoria</div>
                       <q-separator inset />
-                      {{product.subCategory }} 
+                      {{product.category.label }} 
                     </q-card-section>
                   
                  </q-card>
@@ -220,11 +220,7 @@
               </div>
 
 
-            <div class ='col q-pr-xl text-center text-primary '>
-                                    <q-separator vertical  />
-
-              {{product.category.label}}
-               </div>
+           
               
                
              </div>
