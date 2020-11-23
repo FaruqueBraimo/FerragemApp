@@ -112,7 +112,7 @@ const actions = {
 	
 	filterByNuit({ state, commit, dispatch },myQuery) {
 		let query = null
-		 query = dbCustomers.where("nuit", "==", myQuery)
+		 query = dbCustomers.where("phone", "==", myQuery)
 				
 		commit('resetCustomers');
 

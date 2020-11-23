@@ -218,4 +218,8 @@
 	};
 </script>
 
-<style></style>
+<style media="print">
+
+ @page { size: letter;  margin-top: 4mm;margin-bottom: 4mm }
+
+</style>

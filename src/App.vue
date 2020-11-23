@@ -8,7 +8,6 @@
 
 <script>
 	import { mapActions,mapState } from 'vuex';
-	import "reflect-metadata";
 
 	export default {
 		name: 'App',

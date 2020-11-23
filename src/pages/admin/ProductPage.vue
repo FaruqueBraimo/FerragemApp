@@ -1,7 +1,21 @@
 <template>
 	<q-page padding>
-	
 		<div class="row justify-end q-py-sm">
+			<download-excel
+				class="q-px-md "
+				:data="json_data"
+				:fields="json_fields"
+				worksheet="My Worksheet"
+				name="produtos.xls"
+			>
+				<q-btn
+					color="green-7"
+					icon="save_alt"
+					label="Excel"
+					unelevated
+				/>
+			</download-excel>
+			{{ prod }}
 			<q-btn
 				color="primary"
 				icon="add"
@@ -22,22 +36,19 @@
 				class="q-pa-sm"
 				@productFilter="filterproduct"
 				@productFilterCategory="productFilterCategory"
-				@referenceFilter='productFilterByReference'
+				@referenceFilter="productFilterByReference"
 			/>
 
-			<tbody v-if="  products">
+			<tbody v-if="products">
 				<products-body-component
 					v-for="(product, index, posiction) in products"
-						
-						
 					:key="index"
-					:posiction='posiction'
+					:posiction="posiction"
 					:product="Object.assign({ id: index }, product)"
 					:productId="index"
 					@deleteProduct="removeProduct"
 				/>
 			</tbody>
-			
 
 			<tbody>
 				<products-body-component
@@ -60,20 +71,20 @@
 			<q-icon name="sentiment_very_dissatisfied" color="red" size="lg" />
 			<span class="text-red-5"> Sem dados retornados </span>
 		</div>
-				<div class='row justify-end q-mt-md'> 	<q-btn color="teal" icon="check"  label="Carregar mais"  @click='getData' />	 </div>
+		<div class="row justify-end q-mt-md">
+			<q-btn
+				color="teal"
+				icon="check"
+				label="Carregar mais"
+				@click="getData"
+			/>
+		</div>
 
-				<div class='row justify-center q-mt-md'> 
-					
-      <q-inner-loading :showing="loading">
-				      <q-spinner-pie color="orange" size="50px" />
-
-      </q-inner-loading>	
-
-
-						 </div>
-
-
-
+		<div class="row justify-center q-mt-md">
+			<q-inner-loading :showing="loading">
+				<q-spinner-pie color="orange" size="50px" />
+			</q-inner-loading>
+		</div>
 	</q-page>
 </template>
 
@@ -83,6 +94,13 @@
 	import ProductsHeaderComponent from '../../components/admin/product/ProductsHeaderComponent';
 	import AddUserDialog from '../../components/admin/users/AddUserDialog';
 	import VueHtmlToPaper from 'vue-html-to-paper';
+	import Vue from 'vue';
+	import JsonExcel from 'vue-json-excel';
+	import { log } from 'util';
+	import products from 'src/store/modules/products';
+
+	Vue.component('downloadExcel', JsonExcel);
+
 	export default {
 		name: 'ProductPage',
 		data() {
@@ -90,7 +108,21 @@
 				dialog: false,
 				search: '',
 
-				options: []
+				options: [],
+				json_fields: {
+					Produto: 'name',
+					Referência: 'reference',
+					Categoria: 'category'
+				},
+				json_data: [],
+				json_meta: [
+					[
+						{
+							key: 'charset',
+							value: 'utf-8'
+						}
+					]
+				]
 			};
 		},
 		computed: {
@@ -99,9 +131,32 @@
 				'productFiltered',
 				'productFilteredCategory',
 				'loading'
-				
 			]),
-			...mapGetters('product', ['searchProduct'])
+			...mapGetters('product', ['searchProduct']),
+
+			prod() {
+				let product = {};
+				let produtToJson = {};
+				let count = 0;
+				Object.keys(this.products).map((element, index) => {
+					count = index;
+					produtToJson = this.products[element];
+					this.json_data[count] = {
+						name: produtToJson.name,
+						Referência: produtToJson.reference,
+						category: produtToJson.category.label
+					};
+				});
+
+				return '';
+			},
+
+			sendProduts() {
+				let element = [];
+				Object.keys(this.prod).map(key => {});
+
+				return this.json_data;
+			}
 		},
 		mounted() {
 			this.listenProductRealTimeChanges();
@@ -124,7 +179,7 @@
 
 			removeProduct(id) {
 				let productName = this.products[id].name;
-				this.$q
+				this.$qprod
 					.dialog({
 						title: 'Confirme',
 						message: `Tem certeza que deseja apagar o produto ${productName} ?`,
@@ -146,13 +201,10 @@
 			},
 			productFilterCategory(query) {
 				this.filterCategoryDatafromDb(query);
-			
-				},
-				productFilterByReference(query) {
-					this.filterByReference(query);
-				}
-
-
+			},
+			productFilterByReference(query) {
+				this.filterByReference(query);
+			}
 		},
 		components: {
 			ProductsHeaderComponent,
@@ -162,10 +214,6 @@
 
 		watch: {
 			search(val) {}
-		},
-
-		
-
-		
+		}
 	};
 </script>

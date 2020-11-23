@@ -34,36 +34,7 @@
 						]"
 					/>
 
-					<q-select
-						outlined
-							filled
-						square
-						dense
-						type="email"
-						:options="type"
-						v-model="saveObject.type"
-						label="Tipo de Cliente *"
-						lazy-rules
-						:rules="[
-							val =>
-								(val !== null && val !== '') ||
-								'Por favor insira o tipo de cliente'
-						]"
-					/>
-						<q-input
-					filled
-						square
-						v-model="saveObject.email"
-						label="Email *"
-						type="email"
-						lazy-rules
-						dense
-						:rules="[
-							val =>
-								(val && val.length > 0) ||
-								'Por favor introduz o email'
-						]"
-					/>
+				
 
 					<q-input
 						filled
@@ -96,30 +67,9 @@
 								'Por favor, insira endereco do cliente'
 						]"
 					/>
-					<div class="q-pb-md">
-					<q-input
-						outlined
-						filled
-						square
-						type="number"
-						v-model="saveObject.nuit"
-						label="Nuit "
-						lazy-rules
-						dense
-						
-					/>
-						</div>
+				
 
-					<q-input
-						outlined
-						filled
-						square
-						v-model="saveObject.obs"
-						label="Obervação  "
-						type="text"
-						dense
-						
-					/>
+					
 						<div class=" row text-center">
 						<!--<router-link to="/">LOgin</router-link>-->
 

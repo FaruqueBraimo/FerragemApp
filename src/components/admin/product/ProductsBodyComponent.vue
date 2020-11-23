@@ -40,7 +40,7 @@
 				>{{ product.provider.label | limitLength(10) }}</span
 			>
 			<q-tooltip 	content-class="bg-secondary text-white shadow-4 text-caption"  :offset="[10, 10]">
-				{{ product.provider.label }}
+				{{ product.provider.label  || "Nenhum"}}
 			</q-tooltip>
 		</td>
 

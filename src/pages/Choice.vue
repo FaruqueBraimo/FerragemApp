@@ -4,7 +4,7 @@
         <q-toolbar>
 <div class="q-pr-lg" v-if="$q.screen.gt.xs">
 					<q-icon name="rv_hookup" size="xl" />
-					<span class="text-h6" id="logo">SG Ferragem A </span>
+					<span class="text-h6" id="logo"> FSTOCK </span>
 				</div>
           <q-space />
 

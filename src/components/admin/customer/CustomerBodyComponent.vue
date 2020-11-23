@@ -6,13 +6,9 @@
 		<td class="text-left">
 			{{ customer.name | limitLength(25) }}
 		</td>
-		<td class="text-left">{{ customer.type }}</td>
 		<td class="text-left">{{ customer.address || 'Não Informado' | limitLength(17)}}</td>
-		<td class="text-left">{{ customer.email || 'Não Informado' | limitLength(17)}}</td>
 		<td class="text-left">{{ customer.phone || 'Não Informado' }}</td>
-		<td class="text-center ">
-			{{ customer.nuit  }}
-		</td>
+		
 		<td class="text-left ">
 			<div class="row " style="width:100px;">
 				<div class="col text-left">
