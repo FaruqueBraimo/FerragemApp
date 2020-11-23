@@ -83,7 +83,7 @@ const actions = {
 				// 1. Limpar todas solicitações
 				commit('resetStockEntry');
 
-				showSuccessMessage('Produto subtraido !');
+				showSuccessMessage('Produto Expoortado !');
 
 				return true;
 			})

@@ -115,7 +115,7 @@
 							</q-item-section>
 							<q-item-section>
 		
-								<p>Entrada de Produtos</p>
+								<p>Importação de Produtos</p>
 							</q-item-section>
 						</q-item>
 
@@ -127,7 +127,8 @@
 								/>
 							</q-item-section>
 							<q-item-section>
-								<p>Saída Produtos</p>
+							
+								<p>Exportação de Produtos</p>
 							</q-item-section>
 						</q-item>
 					</q-list>

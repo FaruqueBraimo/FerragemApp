@@ -9,7 +9,7 @@
                         
 						class="rounded-borders    "
 <img src="https://img.icons8.com/material-rounded/48/000000/checkout.png"/>
-					<div class="text-h6 q-ml-md text-secondary">Saída  de Produtos </div>
+					<div class="text-h6 q-ml-md text-secondary"> Produtos Exportados </div>
 				</div>
 			</th>
 		</tr>

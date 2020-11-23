@@ -113,7 +113,7 @@
 								class=" col "
 								v-if="Object.keys(users).length > 0"
 							>
-								<div>Utilizadores</div>
+								<div>Funcionários</div>
 								<span class="text-secondary text-h4">
 									{{ Object.keys(users).length }}</span
 								>

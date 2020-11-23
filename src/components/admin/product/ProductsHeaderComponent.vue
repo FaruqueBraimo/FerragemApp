@@ -98,7 +98,7 @@
 				Categoria
 			</th>
 			<th class="text-left text-bold" style="font-weight: bold">
-				Quantidade no Stock
+				Stock no Armazém
 			</th>
 			<th class="text-left text-bold" style="font-weight: bold">
 				Preco de Venda

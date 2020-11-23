@@ -23,7 +23,7 @@
                     <q-card flat bordered class="my-card">
                     
                     <q-card-section class="q-pt-none text-center">
-                   <div class="text-body1 q-pa-md text-green ">Stock Actual</div>
+                   <div class="text-body1 q-pa-md text-green ">Stock no Armazém</div>
                       <q-separator inset />
                      {{product.qtdWarehouse}} Unidades
                     </q-card-section>

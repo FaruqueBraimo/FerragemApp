@@ -94,7 +94,7 @@
 
 		  },
 		  closeDialog(){
-				this.dialog = true;
+				this.dialog = false;
 				this.updateObject='';
 								  
 

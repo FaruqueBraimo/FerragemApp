@@ -39,6 +39,24 @@
 			@emitData="register"
 				:updateObject='updateObject'
 		/>
+
+
+
+		<div >
+
+		</div>
+
+
+
+
+
+
+
+
+
+
+
+
 		
 	</q-page>
 </template>

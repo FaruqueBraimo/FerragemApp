@@ -5,7 +5,7 @@
 				class="q-px-md "
 				:data="json_data"
 				:fields="json_fields"
-				worksheet="My Worksheet"
+				worksheet="Produtos Cadastrados"
 				name="produtos.xls"
 			>
 				<q-btn
@@ -143,7 +143,7 @@
 					produtToJson = this.products[element];
 					this.json_data[count] = {
 						name: produtToJson.name,
-						Referência: produtToJson.reference,
+						reference: produtToJson.reference,
 						category: produtToJson.category.label
 					};
 				});

@@ -10,7 +10,7 @@
 						class="rounded-borders    "
  src="https://img.icons8.com/material-rounded/48/000000/import.png"/>					
 
-					<div class="text-h6 q-ml-md text-secondary">Entrada de Produtos </div>
+					<div class="text-h6 q-ml-md text-secondary">Produtos Importados </div>
 				</div>
 			</th>
 		</tr>

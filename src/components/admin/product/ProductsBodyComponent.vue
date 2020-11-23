@@ -28,7 +28,7 @@
 		<td class="text-left">{{ product.qtdWarehouse }}</td>
 
 		<td class="text-left">
-			<q-chip square size="sm" color="teal" class="text-white">
+			<q-chip square size="sm" color="deep-orange" class="text-white">
 				{{ product.price_buy ? product.price_buy : 0 }} MZN
 			</q-chip>
 		</td>
@@ -37,7 +37,7 @@
 			<span
 				class="text-primary cursor-pointer 	"
 				v-if="product.provider.label != 'Nenhum'"
-				>{{ product.provider.label | limitLength(10) }}</span
+				>{{ product.provider.label  || "Nenhum" | limitLength(10)  }}</span
 			>
 			<q-tooltip 	content-class="bg-secondary text-white shadow-4 text-caption"  :offset="[10, 10]">
 				{{ product.provider.label  || "Nenhum"}}

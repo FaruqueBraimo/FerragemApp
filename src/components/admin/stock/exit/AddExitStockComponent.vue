@@ -8,7 +8,7 @@
 		<q-card style="width: 100vw;">
 			<q-card-section class="row items-center">
 				<div class="text-h6 q-px-sm text-center">
-					Saida de Produtos
+					Exportar  Produtos  
 				</div>
 				<q-space />
 				<q-btn
@@ -30,7 +30,6 @@
 							counter
 							maxlength="12"
 							:dense="dense"
-							:options-dense="denseOpts"
 							:rules="[
 								val =>
 									(val !== null && val !== '') ||
@@ -49,13 +48,26 @@
 						</q-select>
 					</div>
 
+					<div class="q-pa-sm">
+						<q-select v-model="saveObject.destination" :options="destination" label="Finalidade" filled />
+					</div>
+
+
+
+					<div class="q-py-md q-px-sm"  v-if="saveObject.destination == 'Balcão' ">
+				<q-select v-model="saveObject.user" :options="OptionalUsers" label="Funcionário" filled />
+
+			
+					</div>
+
+
 					<div class="text-red-5 q-pa-sm" v-if="saveObject.product">
 						Quantidade No Balcao:
 						{{
 							saveObject.product
 								? products[saveObject.product.value].qtdBalcony
 								: 0
-						}}
+						}} +  {{saveObject.quantity }}
 					</div>
 
 					<div class="text-green q-pa-sm" v-if="saveObject.product">
@@ -87,7 +99,7 @@
 							v-model="saveObject.description"
 							filled
 							type="textarea"
-							label="Observação"
+							:label="saveObject.destination != 'Balcão'? 'Descrição da Finalidade' : 'Observação' "
 						/>
 					</div>
 
@@ -128,15 +140,17 @@
 					oldQuantity: 0
 				},
 				Optionalproducts: [],
-				Optionalprovider: [],
+				OptionalUsers: ['Todos'],
 				model: [],
-				type: ['Singular', 'Empresa']
+				destination: ['Balcão', 'Outra'],
+				dense : false
 			};
 		},
 		computed: {
 			...mapState('product', ['products', 'loading']),
 			...mapState('provider', ['providers']),
 			...mapState('product', ['products']),
+			...mapState('auth', ['users',]),
 
 			fetchProducts() {
 				Object.keys(this.products).forEach((element, key) => {
@@ -152,11 +166,11 @@
 				});
 			},
 
-			fetchProviders() {
-				Object.keys(this.providers).forEach((element, key) => {
-					this.Optionalprovider.push({
+			fetchUsers() {
+				Object.keys(this.users).forEach((element, key) => {
+					this.OptionalUsers.push({
 						value: element,
-						label: this.providers[element].name
+						label: this.users[element].name
 					});
 				});
 			},
@@ -171,7 +185,9 @@
 			}
 		},
 		mounted() {
+			this.fetchUsers();
 			this.fetchProducts();
+			
 		},
 		methods: {
 			...mapActions('stockExit', ['editStockExit']),
@@ -181,6 +197,7 @@
 				this.Optionalproducts = [];
 				this.fetchProducts;
 				this.getData();
+				this.fetchUsers();
 			},
 
 			onSubmit() {
@@ -192,10 +209,14 @@
 					let lastQtd = ~~this.products[this.saveObject.product.value]
 						.qtdBalcony;
 					let newQtd = ~~this.saveObject.quantity;
-					this.updateProduct({
-						id: this.saveObject.product.value,
-						updates: { qtdWarehouse: +lastQtd + newQtd }
-					});
+
+
+				
+					
+
+
+
+
 				} else {
 					if (
 						this.saveObject.quantity >
@@ -216,6 +237,15 @@
 						});
 					} else {
 						this.$emit('emitData', this.saveObject);
+					if( this.saveObject.user == 'Todos' ) {
+						
+					this.updateProduct({
+						id: this.saveObject.product.value,
+						updates: { qtdWarehouse: +lastQtd + newQtd }
+					});
+
+					}
+						
 					}
 				}
 

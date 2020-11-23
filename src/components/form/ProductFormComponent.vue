@@ -257,7 +257,7 @@
 									lazy-rules
 									:rules="[
 										val =>
-											val < ~~quantity ||
+											val <= ~~quantity ||
 											'Por for basea-se na quantidade total do produto'
 									]"
 								>
@@ -435,7 +435,7 @@ import { watch } from '@xkeshi/vue-barcode';
 				/// WE also use this computed proprities as any opportunity for realize calculus
 				
 				let qtdWrhCheck = ~~this.quantity - ~~this.qtdBalcony
-				if (qtdWrhCheck > 0) {
+				if (qtdWrhCheck >= 0) {
 					this.qtdWarehouse = ~~+this.quantity - ~~this.qtdBalcony;
 				}
 				if (

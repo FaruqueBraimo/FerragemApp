@@ -77,6 +77,13 @@
 							]"
 						/>
 					</div>
+
+					
+
+
+
+
+
 					<div class="q-px-sm">
 						<q-input
 							v-model="saveObject.description"
