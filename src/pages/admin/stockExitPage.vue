@@ -90,13 +90,22 @@
 					Object.keys(this.expoProducts).forEach(element => {
 						
 					let expo = this.expoProducts[element];	
+					
 					if(stockData.product.value == expo.product.value && stockData.user.value == expo.user.value  ) {
 
 						this.updateExpoProduct({
 						id: element,
-						updates: {quantity : element.quantity + stockData.quantity }
+						updates: {quantity : ~~expo.quantity + ~~stockData.quantity }
 						})
 					}
+					else {
+					this.addExpoProduct({
+						product: stockData.product,
+						user: stockData.user,
+						quantity: stockData.quantity,
+						createdBy: this.getUserAuth.name
+					});
+				}
 					});
 
 
