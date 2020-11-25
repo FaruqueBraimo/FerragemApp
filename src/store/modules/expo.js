@@ -106,7 +106,6 @@ const actions = {
 	
 	getData({ state, commit, getters, dispatch }) {
 		commit('loading', true);
-		 dispatch('deleteExpoProduct' , 'kTqIqEXCwWAn26Ufm3XG' )
 
 		let query = dbExpoProducts
 		.orderBy('createdAt', 'asc')

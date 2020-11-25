@@ -98,7 +98,8 @@
 						updates: {quantity : ~~expo.quantity + ~~stockData.quantity }
 						})
 					}
-					else {
+					else if(stockData.product.value != expo.product.value && stockData.user.value != expo.user.value  ) {
+
 					this.addExpoProduct({
 						product: stockData.product,
 						user: stockData.user,
