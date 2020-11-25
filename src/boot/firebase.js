@@ -46,6 +46,8 @@ export const dbPrices = db.collection("price");
 export const dbBox = db.collection("box");
 export const dbNotifications = db.collection("notifications");
 export const dbStockExits = db.collection("stockExit");
+//  Exported products for users
+export const dbExpoProducts = db.collection("expoProducts");
 
 
 

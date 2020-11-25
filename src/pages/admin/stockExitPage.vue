@@ -1,15 +1,17 @@
 <template>
 	<q-page padding>
-		
+		{{ expoProducts }}
+
+	 
+
 		<div class="row justify-end q-py-md">
 			<q-btn
 				color="primary"
 				icon="add"
 				label="Saida"
 				unelevated
-				@click="dialog=true"
+				@click="dialog = true"
 			/>
-			
 		</div>
 		<q-markup-table
 			flat
@@ -24,12 +26,11 @@
 				<stock-Exit-body-component
 					v-for="(stock, index) in stockExits"
 					:key="index"
-					:stock="Object.assign({id: index},stock)"
+					:stock="Object.assign({ id: index }, stock)"
 					:stockId="index"
-					@deletestock='removeCategory'
-					@updateObject='updateObject =$event'
-					/>
-				
+					@deletestock="removeCategory"
+					@updateObject="updateObject = $event"
+				/>
 			</tbody>
 		</q-markup-table>
 
@@ -37,32 +38,15 @@
 			:dialog="dialog"
 			@closeDialog="dialog = false"
 			@emitData="register"
-				:updateObject='updateObject'
+			:updateObject="updateObject"
 		/>
 
-
-
-		<div >
-
-		</div>
-
-
-
-
-
-
-
-
-
-
-
-
-		
+		<div></div>
 	</q-page>
 </template>
 
 <script>
-	import { mapActions, mapState } from 'vuex';
+	import { mapActions, mapState, mapGetters } from 'vuex';
 
 	import stockExitBodyComponent from '../../components/admin/stock/Exit/stockExitBodyComponent';
 	import stockExitHeaderComponent from '../../components/admin/stock/Exit/stockExitHeaderComponent';
@@ -73,34 +57,72 @@
 		data() {
 			return {
 				dialog: false,
-				updateObject : {}
+				updateObject: {}
 			};
 		},
 		computed: {
-				...mapState('product', ['products']),
-		     	...mapState('stockExit', ['stockExits'])
-
-
+			...mapState('product', ['products']),
+			...mapState('stockExit', ['stockExits']),
+			...mapState('expo', ['expoProducts']),
+			...mapGetters('auth', ['getUserName', 'getUserAuth'])
 		},
 
 		methods: {
-			...mapActions('stockExit' , ['addStockExit','deleteStockExit']),
-			...mapActions('product', ['updateProduct', ]),
+			...mapActions('stockExit', ['addStockExit', 'deleteStockExit']),
+			...mapActions('product', ['updateProduct']),
+			...mapActions('expo', ['addExpoProduct', 'getData','updateExpoProduct']),
 
-				register(stockData) {
-					this.addStockExit(stockData);
-					let lastQtd = ~~ this.products[stockData.product.value].qtdBalcony
-					let newQtd =  ~~ stockData.quantity
-					let  warehouse = this.products[stockData.product.value].qtdWarehouse;
+			register(stockData) {
+				// Register for report
+
+				this.addStockExit(stockData);
+				let lastQtd = ~~this.products[stockData.product.value]
+					.qtdBalcony;
+				let newQtd = ~~stockData.quantity;
+				let warehouse = this.products[stockData.product.value]
+					.qtdWarehouse;
+
+				// Export data for user
+
+				if (Object.keys(this.expoProducts).length > 0) {
 
 
-					this.updateProduct( {
-						id : stockData.product.value,
-						updates : { qtdBalcony : +lastQtd+newQtd , qtdWarehouse : +lastQtd+newQtd , qtdWarehouse : ~~warehouse - ~~newQtd  } })
+					Object.keys(this.expoProducts).forEach(element => {
+						
+					let expo = this.expoProducts[element];	
+					if(stockData.product.value == expo.product.value && stockData.user.value == expo.user.value  ) {
 
-				},
-				 removeCategory(id) {
-            this.$q
+						this.updateExpoProduct({
+						id: element,
+						updates: {quantity : element.quantity + stockData.quantity }
+						})
+					}
+					});
+
+
+				} else {
+					this.addExpoProduct({
+						product: stockData.product,
+						user: stockData.user,
+						quantity: stockData.quantity,
+						createdBy: this.getUserAuth.name
+					});
+				}
+
+				this.getData();
+				// update product quantity
+				this.updateProduct({
+					id: stockData.product.value,
+					updates: {
+						qtdBalcony: +lastQtd + newQtd,
+						qtdWarehouse: +lastQtd + newQtd,
+						qtdWarehouse: ~~warehouse - ~~newQtd
+					}
+				});
+			},
+
+			removeCategory(id) {
+				this.$q
 					.dialog({
 						title: 'Confirme',
 						message: `Tem certeza que deseja apagar entrada  ?`,
@@ -110,24 +132,28 @@
 						persistent: true
 					})
 					.onOk(() => {
-							this.deleteStockExit(id);
+						this.deleteStockExit(id);
 					});
-
-          },
-
-			
+			}
+		},
+		mounted() {
+			this.getData();
 		},
 		components: {
 			stockExitHeaderComponent,
 			stockExitBodyComponent,
-			AddExitStockComponent,
+			AddExitStockComponent
 		},
 		watch: {
 			updateObject(val) {
-				if(val) {
-					this.dialog = true
+				if (val) {
+					this.dialog = true;
 				}
-			},
+			}
+		},
+
+		updated() {
+			this.getData();
 		}
 	};
 </script>

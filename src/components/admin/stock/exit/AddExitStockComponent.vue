@@ -185,8 +185,8 @@
 			}
 		},
 		mounted() {
-			this.fetchUsers();
-			this.fetchProducts();
+			this.fetchUsers;
+			this.fetchProducts;
 			
 		},
 		methods: {
