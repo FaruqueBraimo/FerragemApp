@@ -5,6 +5,7 @@
 		persistent
 		position="right"
 	>
+	{{checkExpoProducts}}
 		<q-card style="width: 100vw;">
 			<q-card-section class="row items-center">
 				<div class="text-h6 q-px-sm text-center">
@@ -137,7 +138,8 @@
 					productCode: '',
 					quantity: 0,
 					product: '',
-					oldQuantity: 0
+					oldQuantity: 0,
+					user: ''
 				},
 				Optionalproducts: [],
 				OptionalUsers: ['Todos'],
@@ -151,6 +153,18 @@
 			...mapState('provider', ['providers']),
 			...mapState('product', ['products']),
 			...mapState('auth', ['users',]),
+			...mapState('expo', ['expoProducts', 'idExpo']),
+
+
+			checkExpoProducts() {
+					
+					if(this.saveObject.product !== '' &&  this.saveObject.user !== '') {
+					  this.filterExpoProduct( { product : this.saveObject.product, user : this.saveObject.user  })
+					
+					}
+					
+
+			},
 
 			fetchProducts() {
 				Object.keys(this.products).forEach((element, key) => {
@@ -192,6 +206,10 @@
 		methods: {
 			...mapActions('stockExit', ['editStockExit']),
 			...mapActions('product', ['updateProduct', 'getData']),
+			...mapActions('expo', [
+				
+				'filterExpoProduct'
+			]),
 
 			reloadData() {
 				this.Optionalproducts = [];
@@ -201,6 +219,10 @@
 			},
 
 			onSubmit() {
+
+				
+				
+
 				if (this.updateObject.id) {
 					this.editStockExit({
 						id: this.updateObject.id,
@@ -239,10 +261,10 @@
 						this.$emit('emitData', this.saveObject);
 					if( this.saveObject.user == 'Todos' ) {
 						
-					this.updateProduct({
-						id: this.saveObject.product.value,
-						updates: { qtdWarehouse: +lastQtd + newQtd }
-					});
+					// this.updateProduct({
+					// 	id: this.saveObject.product.value,
+					// 	updates: { qtdWarehouse: +lastQtd + newQtd }
+					// });
 
 					}
 						

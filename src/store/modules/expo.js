@@ -16,7 +16,8 @@ const state = {
 	productSearchKey: '',
 	productFiltered : {},
 	productFilteredCategory : {},
-	notifications : {}
+	notifications : {},
+	idExpo : '' 
 	
 	}
 
@@ -26,6 +27,13 @@ const mutations = {
 	loading(state, val) {
 		state.loading = val;
 	},
+
+	setId(state, val) {
+		state.idExpo = val;
+	},
+
+	
+	
 
 	uploadProgress(state, val) {
 		state.uploadProgress = val;
@@ -105,7 +113,6 @@ const actions = {
 
 	
 	getData({ state, commit, getters, dispatch }) {
-		commit('loading', true);
 
 		let query = dbExpoProducts
 		.orderBy('createdAt', 'asc')
@@ -234,58 +241,23 @@ const actions = {
 	
 	},
 
-	filterDatafromDb({ state, commit, getters },myQuery) {
+	filterExpoProduct({ state, commit, getters },myQuery) {
 		
-		// let ExpoProducts =	getters.getProductData;
-		// Object.keys(ExpoProducts).forEach(key => {
-        //     let product = ExpoProducts[key]
-        //     if (product.name.toLowerCase().includes(myQuery.toLowerCase())) {
-		// 		commit('resetExpoProducts');
-		// 		commit('productFilteredCategory');				
-		// 		commit('addExpoProductsearch', {
-		// 			id : key,
-		// 			object : product
-		// 		 } );
-
-		// 	}
-		// 	else {
-		// 		console.log('No')
-		// 	}
-			
-
-		// })
-
 		let query = null
-		 query = dbExpoProducts.where("name", "==", myQuery)
-				
-		 		
-		commit('resetExpoProducts');
-		commit('productFiltered');
-		
+		 query = dbExpoProducts.where("user", "==", myQuery.user).where("product", "==", myQuery.product)
+		let id = ''				
 		query.onSnapshot(function(snapshot) {
 			snapshot.docChanges().forEach(function(change) {
 				
 				if (change.type === 'added') {
-										
-				if (change.type === 'added') {
-					commit('addExpoProduct', {
-						id: change.doc.id,
-						object: change.doc.data()
-					});
+					commit('setId',  change.doc.id);	
+						
+
 				}
-				}
-				if (change.type === 'modified') {
-					commit('updateExpoProduct', {
-						id: change.doc.id,
-						updates: change.doc.data()
-					});
-				}
-				if (change.type === 'removed') {
-					commit('deleteExpoProduct', change.doc.id);
-				}
+					
+				
 			});
 		});			
-	
 	
 		
 	},
@@ -365,7 +337,6 @@ const actions = {
 	addExpoProduct({ commit, dispatch, rootGetters }, payload) {
 		payload.createdAt = new Date()
 		payload.updatedAt = new Date()
-		commit('loading', true);
 
 		return dbExpoProducts
 			.add(payload)
@@ -373,6 +344,7 @@ const actions = {
 				commit('loading', false);
 
 				// 1. Limpar todas solicitações
+
 
 
 				return true;
@@ -384,6 +356,8 @@ const actions = {
 
 				return false;
 			});
+
+
 	},
 
 	updateExpoProduct({ commit, rootGetters }, payload) {

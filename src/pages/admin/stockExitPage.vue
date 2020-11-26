@@ -1,8 +1,7 @@
 <template>
 	<q-page padding>
+		{{ idExpo }}
 		{{ expoProducts }}
-
-	 
 
 		<div class="row justify-end q-py-md">
 			<q-btn
@@ -51,6 +50,7 @@
 	import stockExitBodyComponent from '../../components/admin/stock/Exit/stockExitBodyComponent';
 	import stockExitHeaderComponent from '../../components/admin/stock/Exit/stockExitHeaderComponent';
 	import AddExitStockComponent from '../../components/admin/stock/Exit/AddExitStockComponent';
+import { setTimeout } from 'timers';
 
 	export default {
 		// name: 'PageName',
@@ -63,19 +63,45 @@
 		computed: {
 			...mapState('product', ['products']),
 			...mapState('stockExit', ['stockExits']),
-			...mapState('expo', ['expoProducts']),
+			...mapState('expo', ['expoProducts', 'idExpo']),
 			...mapGetters('auth', ['getUserName', 'getUserAuth'])
 		},
 
 		methods: {
 			...mapActions('stockExit', ['addStockExit', 'deleteStockExit']),
 			...mapActions('product', ['updateProduct']),
-			...mapActions('expo', ['addExpoProduct', 'getData','updateExpoProduct']),
+			...mapActions('expo', [
+				'addExpoProduct',
+				'getData',
+				'updateExpoProduct',
+				'filterExpoProduct'
+			]),
 
 			register(stockData) {
 				// Register for report
+				
+				if( this.idExpo  ==! '') {
+					
+					this.updateExpoProduct({
+								id:  this.idExpo,
+								updates: {
+									newQtd:
+										  ~~stockData.quantity
+								}
+							});
+				}
+				else {
+						this.addExpoProduct({
+						product: stockData.product,
+						user: stockData.user,
+						quantity: stockData.quantity,
+						createdBy: this.getUserAuth.name
+					});
 
-				this.addStockExit(stockData);
+				}
+
+					
+				// this.addStockExit(stockData);
 				let lastQtd = ~~this.products[stockData.product.value]
 					.qtdBalcony;
 				let newQtd = ~~stockData.quantity;
@@ -84,51 +110,19 @@
 
 				// Export data for user
 
-				if (Object.keys(this.expoProducts).length > 0) {
-
-
-					Object.keys(this.expoProducts).forEach(element => {
-						
-					let expo = this.expoProducts[element];	
-					
-					if(stockData.product.value == expo.product.value && stockData.user.value == expo.user.value  ) {
-
-						this.updateExpoProduct({
-						id: element,
-						updates: {quantity : ~~expo.quantity + ~~stockData.quantity }
-						})
-					}
-					else if(stockData.product.value != expo.product.value && stockData.user.value != expo.user.value  ) {
-
-					this.addExpoProduct({
-						product: stockData.product,
-						user: stockData.user,
-						quantity: stockData.quantity,
-						createdBy: this.getUserAuth.name
-					});
-				}
-					});
-
-
-				} else {
-					this.addExpoProduct({
-						product: stockData.product,
-						user: stockData.user,
-						quantity: stockData.quantity,
-						createdBy: this.getUserAuth.name
-					});
-				}
-
+			
 				this.getData();
 				// update product quantity
 				this.updateProduct({
 					id: stockData.product.value,
 					updates: {
 						qtdBalcony: +lastQtd + newQtd,
-						qtdWarehouse: +lastQtd + newQtd,
 						qtdWarehouse: ~~warehouse - ~~newQtd
 					}
 				});
+				setTimeout(() => {
+						this.$router.go();
+				}, 1500);
 			},
 
 			removeCategory(id) {
