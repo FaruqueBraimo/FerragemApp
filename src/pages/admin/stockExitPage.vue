@@ -1,7 +1,7 @@
 <template>
 	<q-page padding>
-		{{ idExpo }}
-		{{ expoProducts }}
+		{{ idExpo }} {{expoProducts}}
+
 
 		<div class="row justify-end q-py-md">
 			<q-btn
@@ -50,7 +50,8 @@
 	import stockExitBodyComponent from '../../components/admin/stock/Exit/stockExitBodyComponent';
 	import stockExitHeaderComponent from '../../components/admin/stock/Exit/stockExitHeaderComponent';
 	import AddExitStockComponent from '../../components/admin/stock/Exit/AddExitStockComponent';
-import { setTimeout } from 'timers';
+	import { setTimeout } from 'timers';
+	import { dbExpoProducts } from '../../boot/firebase';
 
 	export default {
 		// name: 'PageName',
@@ -76,31 +77,53 @@ import { setTimeout } from 'timers';
 				'updateExpoProduct',
 				'filterExpoProduct'
 			]),
+			updateExpo(id) {
+				console.log(id);
+			},
 
 			register(stockData) {
-				// Register for report
-				
-				if( this.idExpo  ==! '') {
+			
+			if (Object.keys(this.expoProducts).length > 0) {
+
+
+					if(stockData.hasOwnProperty('IdExpo') ) {
 					
-					this.updateExpoProduct({
-								id:  this.idExpo,
+							this.updateExpoProduct({
+								id: stockData.IdExpo,
 								updates: {
-									newQtd:
-										  ~~stockData.quantity
+									newQtd: ~~stockData.quantity,
+									updatedBy: this.getUserAuth.name,
+									statusDelivery : false
 								}
 							});
-				}
-				else {
+					}
+					else{
 						this.addExpoProduct({
+						product: stockData.product,
+						user: stockData.user,
+						quantity: stockData.quantity,
+						createdBy: this.getUserAuth.name,
+						statusDelivery : false
+
+
+					});
+					}
+
+					
+	
+
+				} else {
+					this.addExpoProduct({
 						product: stockData.product,
 						user: stockData.user,
 						quantity: stockData.quantity,
 						createdBy: this.getUserAuth.name
 					});
-
 				}
+			
 
-					
+
+
 				// this.addStockExit(stockData);
 				let lastQtd = ~~this.products[stockData.product.value]
 					.qtdBalcony;
@@ -110,7 +133,7 @@ import { setTimeout } from 'timers';
 
 				// Export data for user
 
-			
+
 				this.getData();
 				// update product quantity
 				this.updateProduct({
@@ -120,9 +143,6 @@ import { setTimeout } from 'timers';
 						qtdWarehouse: ~~warehouse - ~~newQtd
 					}
 				});
-				setTimeout(() => {
-						this.$router.go();
-				}, 1500);
 			},
 
 			removeCategory(id) {

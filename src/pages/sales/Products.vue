@@ -1,4 +1,5 @@
 <template>
+
   <q-page  padding>
         <div class="q-pa-md">
          <q-input
@@ -9,6 +10,7 @@
         dense
         placeholder="Pesquisa"
       >
+      {{getUserAuth.id}}
         <template v-slot:append>
           <q-icon name="search" />
         </template>
@@ -23,14 +25,15 @@
       :bar-style="barStyle"
       style="height: 400px; "
     >
-      <div v-for="(product, index) in Object.keys(products).length > 0 ?  products :  productFiltered" 	:key="index" class="q-pa-xs">
-        <product-component
+      <div v-for="(product, index) in Object.keys(myProducts).length > 0 ?  myProducts :  productFiltered" 	:key="index" class="q-pa-xs">
+        <!-- <product-component
 					:product="Object.assign({id: index},product)"
 					:productId="index"
           @addToCard ='addToCard' 
           @removeChecked='removeChecked'
   
-      />
+      /> -->
+      {{myProducts}}
       </div>
     </q-scroll-area>
 
@@ -79,6 +82,12 @@ export default {
       ...mapState('product', ['products','checkedProducts','productFiltered']), 
       ...mapGetters('checkedProduct',['getCheckedProducts']),
        ...mapState('checkedProduct', ['checkedProducts']),
+         ...mapState('checkedProduct', ['checkedProducts']),
+         			...mapGetters('auth', ['getUserName', 'getUserAuth']),
+
+         		...mapState('expo', ['expoProducts', 'myProducts']),
+
+
 		},
     components : {
         ProductComponent
@@ -87,8 +96,9 @@ export default {
             ...mapActions('setting', ['setPageTitle']),
               ...mapActions('checkedProduct', ['addCheckedProducts' , 'removeChecked']),
               ...mapActions('product', ['filterDatafromDb','listenProductRealTimeChanges']),
+              ...mapActions('expo', ['filterMyProducts']),
 
-
+ 
             
             addToCard(product) {
               product.qtdUnit =  1;
@@ -100,6 +110,7 @@ export default {
     },
     mounted() {
       this.setPageTitle('Produtos');
+      this.filterMyProducts(this.getUserAuth.id);
         
 
     }

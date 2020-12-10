@@ -138,8 +138,9 @@
 					productCode: '',
 					quantity: 0,
 					product: '',
-					oldQuantity: 0,
+					description: 0,
 					user: ''
+
 				},
 				Optionalproducts: [],
 				OptionalUsers: ['Todos'],
@@ -160,7 +161,6 @@
 					
 					if(this.saveObject.product !== '' &&  this.saveObject.user !== '') {
 					  this.filterExpoProduct( { product : this.saveObject.product, user : this.saveObject.user  })
-					
 					}
 					
 
@@ -204,12 +204,25 @@
 			
 		},
 		methods: {
+
+
+
 			...mapActions('stockExit', ['editStockExit']),
 			...mapActions('product', ['updateProduct', 'getData']),
 			...mapActions('expo', [
 				
 				'filterExpoProduct'
 			]),
+
+
+			clearData() {
+				this.saveObject.product = '',
+				this.saveObject.quantity = '',
+				this.saveObject.destination = '',
+				this.saveObject.description = ''
+			
+
+			},
 
 			reloadData() {
 				this.Optionalproducts = [];
@@ -258,7 +271,20 @@
 							`
 						});
 					} else {
-						this.$emit('emitData', this.saveObject);
+
+						if(Object.keys(this.idExpo).length > 0 ) {
+							this.saveObject.IdExpo = this.idExpo.keys
+							console.log('submut' , this.idExpo.keys)
+
+						}
+						
+
+
+
+						  this.$emit('emitData', this.saveObject);
+						//  this.clearData()
+					
+					
 					if( this.saveObject.user == 'Todos' ) {
 						
 					// this.updateProduct({

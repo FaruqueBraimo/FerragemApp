@@ -17,19 +17,30 @@ const state = {
 	productFiltered : {},
 	productFilteredCategory : {},
 	notifications : {},
-	idExpo : '' 
+	idExpo : {} ,
+	myProducts : {}
 	
 	}
 
 
 
 const mutations = {
-	loading(state, val) {
-		state.loading = val;
+
+
+	setId(state, payload) {
+		Vue.set(state.idExpo, payload.key, payload.object);
+	
+
 	},
 
-	setId(state, val) {
-		state.idExpo = val;
+	cleanId(state) {
+		state.idExpo = {};
+
+	},	
+
+	addMyProduct(state, payload){
+		Vue.set(state.myProducts, payload.id, payload.object);
+
 	},
 
 	
@@ -40,7 +51,6 @@ const mutations = {
 	},
 	addExpoProduct(state, payload) {
 		Vue.set(state.expoProducts, payload.id, payload.object);
-		Vue.set(state.notifications, payload.id, payload.object);
 
 	},
 
@@ -113,7 +123,7 @@ const actions = {
 
 	
 	getData({ state, commit, getters, dispatch }) {
-
+		commit('deleteExpoProduct', '')
 		let query = dbExpoProducts
 		.orderBy('createdAt', 'asc')
 			
@@ -177,71 +187,32 @@ const actions = {
 
 	},
 
-	filterCategoryDatafromDb({ state, commit, dispatch },myQuery) {
-		let query = null
+	filterMyProducts({ state, commit, dispatch },myQuery) {
 		
-		if(myQuery=='Todas') {
-			commit('resetExpoProducts');
+		let query = null
+		query = dbExpoProducts.where("user.value", "==", myQuery)
+	   let id = ''				
+	   query.onSnapshot(function(snapshot) {
+		   snapshot.docChanges().forEach(function(change) {
+			   
+			   if (change.type === 'added') {
 
-			 dbExpoProducts
-			 .orderBy('createdAt','asc')
-			 .onSnapshot(function(snapshot) {
-			snapshot.docChanges().forEach(function(change) {
-				console.log(change.doc.data());
+				   commit('addMyProduct', {
+					   id: change.doc.id,
+					   object: change.doc.data()
+				   });
 
-				if (change.type === 'added') {
-					commit('addExpoProduct', {
-						id: change.doc.id,
-						object: change.doc.data()
-					});
-				}
-				if (change.type === 'modified') {
-					commit('updateExpoProduct', {
-						id: change.doc.id,
-						updates: change.doc.data()
-					});
-				}
-				if (change.type === 'removed') {
-					commit('deleteExpoProduct', change.doc.id);
-				}
-			});
-		});	
-		}
-		else{
-		 query = dbExpoProducts.where("category.value", "==", myQuery.value)
-		}
-			
-		commit('resetExpoProducts');
-		commit('expoProductFiltered');
-		commit('productFilteredCategory');
-
-
-
-		query.onSnapshot(function(snapshot) {
-			snapshot.docChanges().forEach(function(change) {
-				console.log(change.doc.data());
-
-				if (change.type === 'added') {
-					commit('addExpoProduct', {
-						id: change.doc.id,
-						object: change.doc.data()
-					});
-				}
-				if (change.type === 'modified') {
-					commit('updateExpoProduct', {
-						id: change.doc.id,
-						updates: change.doc.data()
-					});
-				}
-				if (change.type === 'removed') {
-					commit('deleteProduct', change.doc.id);
-				}
-			});
-		});			
+			   }
+				   
+			   
+		   });
+	   });			
 	
 	},
 
 	filterExpoProduct({ state, commit, getters },myQuery) {
+
+		commit('cleanId')
 		
 		let query = null
 		 query = dbExpoProducts.where("user", "==", myQuery.user).where("product", "==", myQuery.product)
@@ -250,8 +221,11 @@ const actions = {
 			snapshot.docChanges().forEach(function(change) {
 				
 				if (change.type === 'added') {
-					commit('setId',  change.doc.id);	
-						
+
+					commit('setId', {
+						key: 'keys',
+						object: change.doc.id
+					});
 
 				}
 					
@@ -344,11 +318,17 @@ const actions = {
 				commit('loading', false);
 
 				// 1. Limpar todas solicitações
+				this.$q.dialog({
+					title: 'Sucesso',
+					message: `Foi exportado ${payload.quantity} unidades do produto ${payload.product.label} para o funcionario ${payload.user}`
+				  }).onOk(() => {
+					this.$router.go();
+				  })
 
-
-
+						
+			 
 				return true;
-			})
+			}).bind(this)
 			.catch(function(error) {
 				console.error('Error adding document: ', error);
 				commit('loading', false);
