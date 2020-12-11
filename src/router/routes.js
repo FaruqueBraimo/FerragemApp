@@ -22,6 +22,7 @@ const routes = [
       { path: '/sales/sale', component: () => import('pages/sales/Sales.vue') },
       { path: '/sales/invoice', component: () => import('pages/sales/Invoice.vue') },
       { path: '/sales/price', component: () => import('pages/sales/Price.vue') },
+      { path: '/sales/editor', component: () => import('pages/sales/SaleEditor.vue') },
 
 
   ]

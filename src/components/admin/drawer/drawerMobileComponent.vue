@@ -15,13 +15,23 @@
 					</q-item-section>
 
 					<q-item-section>
-						Inicio
+						Visão Geral
+					</q-item-section>
+				</q-item>
+
+				<q-item clickable v-ripple to="/sales/editor" exact>
+					<q-item-section avatar>
+						<q-icon name="local_grocery_store" />
+					</q-item-section>
+
+					<q-item-section>
+						Venda
 					</q-item-section>
 				</q-item>
 
 				<q-item clickable v-ripple to="/sales/products" exact 	:disable="disable"> 
 					<q-item-section avatar>
-						<q-icon name="local_grocery_store" />
+						<q-icon name="assignment" />
 					</q-item-section>
 
 					<q-item-section>

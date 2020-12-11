@@ -10,7 +10,6 @@
         dense
         placeholder="Pesquisa"
       >
-      {{getUserAuth.id}}
         <template v-slot:append>
           <q-icon name="search" />
         </template>
@@ -25,15 +24,14 @@
       :bar-style="barStyle"
       style="height: 400px; "
     >
-      <div v-for="(product, index) in Object.keys(myProducts).length > 0 ?  myProducts :  productFiltered" 	:key="index" class="q-pa-xs">
-        <!-- <product-component
+      <div v-for="(product, index) in Object.keys(products).length > 0 ?  products :  productFiltered" 	:key="index" class="q-pa-xs">
+       
+        <product-component
 					:product="Object.assign({id: index},product)"
 					:productId="index"
           @addToCard ='addToCard' 
-          @removeChecked='removeChecked'
   
-      /> -->
-      {{myProducts}}
+      />
       </div>
     </q-scroll-area>
 
@@ -85,7 +83,24 @@ export default {
          ...mapState('checkedProduct', ['checkedProducts']),
          			...mapGetters('auth', ['getUserName', 'getUserAuth']),
 
-         		...mapState('expo', ['expoProducts', 'myProducts']),
+             ...mapState('expo', ['expoProducts', 'myProducts']),
+             
+
+              getProductsForSale() 
+          
+             {
+               const products = {};
+             
+                this.myProducts.forEach(element => {
+                    const prod = this.myProducts[element]
+
+                    this.filterProduc
+                     
+                  
+                });
+
+              },
+
 
 
 		},
@@ -98,6 +113,8 @@ export default {
               ...mapActions('product', ['filterDatafromDb','listenProductRealTimeChanges']),
               ...mapActions('expo', ['filterMyProducts']),
 
+
+         
  
             
             addToCard(product) {

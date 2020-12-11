@@ -1,6 +1,10 @@
 <template>
-	<div class="q-pa-sm" v-if="product.qtdBalcony > 0">
-		<q-item  v-if="product.qtdBalcony > 0"> 
+
+<div>
+	
+		
+	<div class="q-pa-sm" >
+		<q-item > 
 			<q-item-section avatar>
 				<q-avatar size="50px" square>
 					<img
@@ -11,11 +15,11 @@
 			<q-item-section>
 				<q-item-label class='text-capitalize'>{{ product.name }}</q-item-label>
 				<q-item-label caption class="text-jusstify">
-					{{ product.description || 'Não definido' }}</q-item-label
+					{{ product.description|| 'Não definido' }}</q-item-label
 				>
 				<q-item-label
 					class="text-bold text-left text-primary text-overline "
-					> qtd :{{ product.qtdBalcony || 0 }}</q-item-label
+					> qtd :{{ product.quantity || 0 }}</q-item-label
 				>
 			</q-item-section>
 
@@ -25,7 +29,8 @@
 				</small>
 
 				<q-space  />
-				<div v-if="Object.keys(checkedProducts).length === 0">
+				<!-- v-if="Object.keys(checkedProducts).length === 0" -->
+				<div >
 					<q-btn
 						color="deep-purple"
 						size="xs"
@@ -36,7 +41,7 @@
 						round
 					/>
 				</div>
-				<div v-else>
+				<!-- <div v-else>
 					<q-btn
 						color="red-5"
 						size="xs"
@@ -56,10 +61,10 @@
 						@click="addToCard(product)"
 						round
 					/>
-				</div>
+				</div> -->
 			</q-item-section>
 		</q-item>
-		<q-separator spaced inset="item" v-if="product.qtdBalcony > 0" />
+	</div>
 	</div>
 </template>
 
@@ -78,8 +83,13 @@
 				'getCheckedProducts',
 				'checkIncludes'
 			]),
-			...mapState('checkedProduct', ['checkedProducts'])
+			...mapState('checkedProduct', ['checkedProducts']),
+		 ...mapState('product', ['products','checkedProducts','productFiltered']), 
+
 		},
+
+
+		
 
 		methods: {
 			addToCard(product) {
