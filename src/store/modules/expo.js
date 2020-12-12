@@ -154,33 +154,33 @@ const actions = {
 			});
 	},
 
-	filterByReference({ state, commit, dispatch },myQuery) {
+	findProductByName({ state, commit, dispatch },myQuery) {
 		let query = null
-		 query = dbExpoProducts.where("code", "==", myQuery)
-				
-		commit('resetExpoProducts');
-		commit('expoProductFiltered');
+		 query = dbExpoProducts.where("product.label", "==", myQuery)
+	
 
 		query.onSnapshot(function(snapshot) {
 			snapshot.docChanges().forEach(function(change) {
-				console.log(change.doc.data());
-				commit('resetExpoProducts');
 
 				if (change.type === 'added') {
 					commit('addExpoProduct', {
 						id: change.doc.id,
 						object: change.doc.data()
 					});
+
+					dispatch('checkedProduct/addCheckedProducts', 
+					
+					change.doc.data()
+					, { root: true }
+					
+					)
+		
+
+
+
 				}
-				if (change.type === 'modified') {
-					commit('updateExpoProduct', {
-						id: change.doc.id,
-						updates: change.doc.data()
-					});
-				}
-				if (change.type === 'removed') {
-					commit('deleteExpoProduct', change.doc.id);
-				}
+				
+			
 			});
 		});			
 	

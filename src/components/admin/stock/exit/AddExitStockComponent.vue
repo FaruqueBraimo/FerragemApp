@@ -170,8 +170,11 @@
 				Object.keys(this.products).forEach((element, key) => {
 					this.Optionalproducts.push({
 						value: element,
-						label: this.products[element].name
+						label: this.products[element].name,
+						code : this.products[element].code,
+						price : this.products[element].price_buy
 					});
+					
 					this.saveObject.productCode = element;
 					this.saveObject.oldQuantity = this.saveObject.product
 						? this.products[this.saveObject.product.value]

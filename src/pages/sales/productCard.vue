@@ -138,6 +138,6 @@
 			this.setPageTitle('');
 		}
 	};
-</script>q
+</script>
 
 <style></style>
