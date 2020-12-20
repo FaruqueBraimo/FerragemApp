@@ -44,6 +44,11 @@ const mutations = {
 		Vue.set(state.myProducts, payload.id, payload.object);
 
 	},
+	addProductForSale
+	(state, payload){
+		Vue.set(state.saleProduct, payload.id, payload.object);
+
+	},
 
 	
 	
@@ -158,27 +163,18 @@ const actions = {
 
 	findProductByName({ state, commit, dispatch },myQuery) {
 		let query = null
-		 query = dbExpoProducts.where("product.label", "==", myQuery)
+		 query = dbExpoProducts.where("product.label", "==", myQuery.label).where("user.value", "==", myQuery.user).where("statusDelivery", "==", true)
 	
-
+		 
 		query.onSnapshot(function(snapshot) {
 			snapshot.docChanges().forEach(function(change) {
 
 				if (change.type === 'added') {
-					commit('addExpoProduct', {
+					commit('addProductForSale', {
 						id: change.doc.id,
 						object: change.doc.data()
 					});
-
-					dispatch('checkedProduct/addCheckedProducts', 
-					
-					change.doc.data()
-					, { root: true }
-					
-					)
-		
-
-
+				
 
 				}
 				
@@ -320,17 +316,12 @@ const actions = {
 				commit('loading', false);
 
 				// 1. Limpar todas solicitações
-				this.$q.dialog({
-					title: 'Sucesso',
-					message: `Foi exportado ${payload.quantity} unidades do produto ${payload.product.label} para o funcionario ${payload.user}`
-				  }).onOk(() => {
-					this.$router.go();
-				  })
+			
 
-						
+			 showSuccessMessage( `Foi exportado ${payload.quantity} unidades do produto ${payload.product.label} para o funcionario ${payload.user.label}`)
 			 
 				return true;
-			}).bind(this)
+			})
 			.catch(function(error) {
 				console.error('Error adding document: ', error);
 				commit('loading', false);
