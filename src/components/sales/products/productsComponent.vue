@@ -13,10 +13,8 @@
 				</q-avatar>
 			</q-item-section>
 			<q-item-section>
-				<q-item-label class='text-capitalize'>{{ product.name }}</q-item-label>
-				<q-item-label caption class="text-jusstify">
-					{{ product.description|| 'Não definido' }}</q-item-label
-				>
+				<q-item-label class='text-capitalize'>{{ product.product.label }}</q-item-label>
+				
 				<q-item-label
 					class="text-bold text-left text-primary text-overline "
 					> qtd :{{ product.quantity || 0 }}</q-item-label
@@ -25,7 +23,7 @@
 
 			<q-item-section side top>
 				<small class="text-pink text-primary">
-					{{ product.price_buy }} MT
+					{{ product.product.price }} MT
 				</small>
 
 				<q-space  />

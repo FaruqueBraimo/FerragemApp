@@ -7,7 +7,7 @@
 	>
 		<q-card style="width: 100vw;">
 			<q-card-section class="row items-center">
-				<div class="text-h6 text-center" v-if="!updateUserObject.id">  Registo de Utilizador {{fetchRoles}}</div>
+				<div class="text-h6 text-center" v-if="!updateUserObject.id">  Registo de Utilizador {{fetchRoles}} {{updateUserObject}}</div>
 				<div class="text-h6 text-center" v-else> Mudança de privilêgios {{fetchRoles}}</div>
 
 				<q-space />
@@ -161,7 +161,7 @@
 
 			
 			onSubmit() {
-					if(this.updateUserObject.id)  {
+					if(this.updateUserObject.id)   {
 
 
 							this.updateUser({

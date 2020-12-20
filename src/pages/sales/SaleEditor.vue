@@ -1,9 +1,8 @@
 <template>
   <q-page  padding class="q-pa-md">
-
         <table-produc
         @removeChecked="removeChecked"
-        @findProductByName='findProductByName'
+        @findProductByName='addProductForSale'
         
         
         />
@@ -39,7 +38,11 @@ export default {
 		computed: {
 			...mapState('product', ['products', 'checkedProducts']),
 			...mapGetters('checkedProduct', ['getSubTotal']),
-			...mapState('checkedProduct', ['checkedProducts'])
+			...mapState('checkedProduct', ['checkedProducts']),
+			  ...mapState('expo', ['saleProduct']),
+			           			...mapGetters('auth', ['getUserName', 'getUserAuth']),
+
+
 		},
 		components: {
 			TableProduc
@@ -57,6 +60,16 @@ export default {
 
 			]),
 
+
+			addProductForSale(payload) {
+
+					this.findProductByName( {
+						label : payload , user : this.getUserAuth.id
+					})
+
+
+			},
+ 
 			addToCard(product) {
 				this.addCheckedProducts(product);
 			}

@@ -124,7 +124,6 @@
 
 			if (!this.getUserAuth) {
 				this.$router.push('/');
-				this.$router.go();
 				showErrorMessage('Sem permissão, por favor autentique-se');
 			}
 			//Verify if user account has blocked

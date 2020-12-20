@@ -29,7 +29,7 @@
 					</q-item-section>
 				</q-item>
 
-				<q-item clickable v-ripple to="/sales/products" exact 	:disable="disable"> 
+				<q-item clickable v-ripple to="/sales/products" exact 	> 
 					<q-item-section avatar>
 						<q-icon name="assignment" />
 					</q-item-section>

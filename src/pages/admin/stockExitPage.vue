@@ -1,6 +1,5 @@
 <template>
 	<q-page padding>
-		{{ idExpo }} {{expoProducts}}
 
 
 		<div class="row justify-end q-py-md">
@@ -117,14 +116,15 @@
 						product: stockData.product,
 						user: stockData.user,
 						quantity: stockData.quantity,
-						createdBy: this.getUserAuth.name
+						createdBy: this.getUserAuth.name,
+						statusDelivery : false
 					});
 				}
 			
 
 
 
-				// this.addStockExit(stockData);
+				 this.addStockExit(stockData);
 				let lastQtd = ~~this.products[stockData.product.value]
 					.qtdBalcony;
 				let newQtd = ~~stockData.quantity;
@@ -139,7 +139,7 @@
 				this.updateProduct({
 					id: stockData.product.value,
 					updates: {
-						qtdBalcony: +lastQtd + newQtd,
+						
 						qtdWarehouse: ~~warehouse - ~~newQtd
 					}
 				});

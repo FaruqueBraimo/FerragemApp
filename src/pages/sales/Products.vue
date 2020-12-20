@@ -24,7 +24,7 @@
       :bar-style="barStyle"
       style="height: 400px; "
     >
-      <div v-for="(product, index) in Object.keys(products).length > 0 ?  products :  productFiltered" 	:key="index" class="q-pa-xs">
+      <div v-for="(product, index) in Object.keys(products).length > 0 ?  myProducts :  myProducts" 	:key="index" class="q-pa-xs">
        
         <product-component
 					:product="Object.assign({id: index},product)"

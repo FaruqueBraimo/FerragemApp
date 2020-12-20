@@ -51,13 +51,13 @@
            
       <q-item-label header class="text-bold text-blue-grey-9"> Tem Produtos por aceitar, exportados pelo Admistrador </q-item-label>
 
-      <q-item tag="label" v-ripple  v-for="(product, index) in (myProducts) " 	:key="index">
+      <q-item tag="label" v-ripple  v-for="(product, index) in getProductToAccept " 	:key="index">
 		  
-        <q-item-section v-if="product.statusDelivery == false">
+        <q-item-section >
           <q-item-label>   {{product.quantity  }} quantidades de  {{product.product.label  }} </q-item-label>
         </q-item-section>
-        <q-item-section side   v-if="product.statusDelivery == false" >
-			<q-btn color="primary" icon="check" size="sm" label="Aceitar" unelevated />
+        <q-item-section side    >
+			<q-btn color="primary" icon="check" size="sm" label="Aceitar" unelevated @click="accept(index)" />
         </q-item-section>
       </q-item>
 
@@ -65,6 +65,7 @@
      
     </q-list>
   </div>
+  
 			</div>
 		</div>
 
@@ -175,7 +176,22 @@
 			...mapState('box', ['boxs']),
 			...mapGetters('auth', ['getUserName', 'getUserAuth']),
 			...mapGetters('setting', ['getLocalBoxStatus']),
-	        ...mapState('expo', ['expoProducts', 'myProducts']),
+			...mapState('expo', ['expoProducts', 'myProducts']),
+			
+			getProductToAccept() {
+						let myProducts = {};
+						Object.keys(this.myProducts).forEach(element => {
+						let prod = this.myProducts[element];
+
+						if (
+							prod.statusDelivery == false
+						) {
+							myProducts[element] = prod
+						}
+					});
+
+					return myProducts
+			},
 
 
 			getBoxStatus() {
@@ -206,6 +222,29 @@
 				'emptyBoxStatus'
 			]),
 			...mapActions('box', ['addBox', 'editBox']),
+
+			...mapActions('expo', ['updateExpoProduct','filterMyProducts']),
+
+			accept(payload) {
+						let prod = this.myProducts[payload];
+
+
+					this.updateExpoProduct(
+						{
+								id: payload,
+								updates: {
+									statusDelivery : true,
+									quantity : ~~prod.quantity + ~~prod.newQtd,
+									newQtd : 0
+									
+								}
+							}
+						
+					)
+
+			},
+
+
 
 			openBox() {
 				if (this.getLocalBoxStatus != null) {
@@ -260,7 +299,9 @@
 			}
 		},
 		mounted() {
-			this.setPageTitle('Ferragem A');
+			      this.filterMyProducts(this.getUserAuth.id);
+
+			this.setPageTitle('N-Facilidades');
 			const dateCreated = new Date();
 			let date2 =
 				this.getLocalBoxStatus != null

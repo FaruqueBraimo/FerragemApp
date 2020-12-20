@@ -2,6 +2,8 @@
 	<div class="q-pa-md">
 		<div class=" row  q-pa-md ">
 			<div class="row col ">
+
+				{{saleProduct}}
 				<div class="col">
 					<q-input
 								v-model="codeProduct"
@@ -68,7 +70,6 @@
 	
 			</div>
 
-
 		<q-markup-table>
 			<thead>
 				<tr>
@@ -81,24 +82,24 @@
 					<th class="text-left">Remover</th>
 				</tr>
 			</thead>
-			<tbody v-for="(product, index) in checkedProducts" :key="index">
+			<tbody v-for="(product, index) in saleProduct" :key="index">
 				<tr>
-					<td class="text-left">17895</td>
+					<td class="text-left">{{product.product.code}}</td>
 
-					<td class="text-left">{{ product.payload.name }}</td>
-					<td class="text-left">17% * 56</td>
+					<td class="text-left">{{ product.product.label }}</td>
+					<td class="text-left">{{product.product}}</td>
 					<td class="text-left">
 						<addQuantity
-							:quantity="product.payload.qtdUnit"
-							:product="product.payload"
-							:id="product.payload.id"
+							:quantity="product.quatity"
+							:product="product.product"
+							:id="product.product.value"
 						/>
 					</td>
 					<td class="text-left">
-						{{ product.payload.price }} ,00 MT
+						{{ product.product.price }} ,00 MT
 					</td>
 					<td class="text-left">
-						{{ product.payload.subtotal }} ,00 MT
+						{{ product.price*9 }} ,00 MT
 					</td>
 					<td>
 						<q-btn
@@ -106,7 +107,7 @@
 							size="xs"
 							icon="close"
 							unelevated
-							@click="$emit('removeChecked', product.payload.id)"
+							@click="$emit('removeChecked', product.product.value)"
 							round
 						/>
 					</td>
@@ -133,7 +134,11 @@
 				'getCheckedProducts',
 				'checkIncludes'
 			]),
-			...mapState('checkedProduct', ['checkedProducts'])
+		
+		  ...mapState('checkedProduct', ['checkedProducts']),
+
+		   ...mapState('expo', ['saleProduct']),
+
 		},
 		components: {
 			addQuantity
@@ -148,12 +153,12 @@
 			},
 
 			findProductByName() {
-				this.$emit('findProductByName', this.codeProduct);
+				this.$emit('findProductByName', this.nameProduct );
 			},
 
 
 			findProductByCode(){
-						this.$emit('findProductByCode', this.nameProduct)
+						this.$emit('findProductByCode', this.codeProduct)
 
 
 			},

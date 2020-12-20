@@ -24,7 +24,7 @@
             ...mapState('checkedProduct', ['checkedProducts']),
             
             getQuantity(){
-                this.text =this.quantity
+                this.text = this.quantity
             }
 		},
 

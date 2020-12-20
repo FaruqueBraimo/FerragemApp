@@ -18,7 +18,9 @@ const state = {
 	productFilteredCategory : {},
 	notifications : {},
 	idExpo : {} ,
-	myProducts : {}
+	myProducts : {},
+
+	saleProduct : {}
 	
 	}
 

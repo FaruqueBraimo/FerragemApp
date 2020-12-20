@@ -103,7 +103,7 @@ const actions = {
 
                  dbUsers.doc(payload.id).set(payload)
                  .then(function(docRef) {
-                     // showSuccessMessage('Prato adicionado com sucesso!')
+                      showSuccessMessage('Funcionario Registado com sucesso!')
                  })
                  .catch(function(error) {
                      console.error("Error adding document: ", error);
@@ -130,6 +130,11 @@ const actions = {
                     id: resp.user.uid,
                     email: resp.user.email,
                 })
+
+
+
+
+
                 if(Platform.is.desktop) {
                     this.$router.push('/choice')
 
@@ -192,14 +197,7 @@ const actions = {
 
     addUser({commit}, payload) {        
         payload.deletavel = true
-    dbUsers.add(payload).then(function(docRef) {
-                 showSuccessMessage('A  conta foi criada com sucesso!')
-            })
-            .catch(function(error) {
-                console.error("Error adding document: ", error);
-                commit('loading', false)
-                showErrorMessage(error.message)
-            });
+   
     },
 
     updateUser ({commit}, payload) {
