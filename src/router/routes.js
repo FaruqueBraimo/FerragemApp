@@ -51,6 +51,7 @@ const routes = [
     { path: '/entradas', component: () => import('pages/admin/stockEntryPage.vue') },
     { path: '/saidas', component: () => import('pages/admin/stockExitPage.vue') },
     { path: '/reportSale', component: () => import('pages/admin/SalesReport.vue') },
+    { path: '/stockEditor', component: () => import('pages/admin/stockEditor.vue') },
 
     
   ],

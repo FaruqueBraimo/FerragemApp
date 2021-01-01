@@ -1,69 +1,29 @@
 <template>
 	<q-page padding>
 
+		<TableProduc
+		 @findProductByName='addProductForExport'
 
-		<div class="row justify-end q-py-md">
-
-			<div class= "col"> 
-		    <q-btn
-				color="green-5"
-				icon="add"
-				label="Enviar Produtos"
-				unelevated
-				@click="$router.push('stockEditor')"
-			/>
-			
-			</div>	
-
-
-			
-			<div class= "col"> 
-		    <q-btn
-				color="primary"
-				icon="add"
-				label="Saida"
-				unelevated
-				@click="dialog = true"
-			/>
-			
-			</div>	
-			
-		</div>
-		<q-markup-table
-			flat
-			bordered
-			square
-			class="q-pa-md"
-			:style="$q.platform.is.mobile ? 'width: 100%' : ''"
-		>
-			<stock-Exit-header-component class="q-pa-sm" />
-
-			<tbody>
-				<stock-Exit-body-component
-					v-for="(stock, index) in stockExits"
-					:key="index"
-					:stock="Object.assign({ id: index }, stock)"
-					:stockId="index"
-					@deletestock="removeCategory"
-					@updateObject="updateObject = $event"
-				/>
-			</tbody>
-		</q-markup-table>
-
-		<add-exit-stock-component
-			:dialog="dialog"
-			@closeDialog="dialog = false"
-			@emitData="register"
-			:updateObject="updateObject"
 		/>
 
-		<div></div>
+		 <div class="q-pa-md q-mx-xl row justify-center">
+		 <div class = 'col-4 justify-center'>
+		   <q-btn color="primary" class="full-width  q-pa-sm" label="Finalizar" >
+			 <q-tooltip content-class="bg-accent">Exportar para o utlizador</q-tooltip>
+	</q-btn>
+
+		  </div>
+
+
+  </div>
+
+
 	</q-page>
 </template>
 
 <script>
 	import { mapActions, mapState, mapGetters } from 'vuex';
-
+   import TableProduc from '../../components/admin/stock/Exit/editor/TableProduc';
 	import stockExitBodyComponent from '../../components/admin/stock/Exit/stockExitBodyComponent';
 	import stockExitHeaderComponent from '../../components/admin/stock/Exit/stockExitHeaderComponent';
 	import AddExitStockComponent from '../../components/admin/stock/Exit/AddExitStockComponent';
@@ -87,24 +47,28 @@
 
 		methods: {
 			...mapActions('stockExit', ['addStockExit', 'deleteStockExit']),
-			...mapActions('product', ['updateProduct']),
+			...mapActions('product', ['updateProduct','addProductForExport']),
 			...mapActions('expo', [
 				'addExpoProduct',
 				'getData',
 				'updateExpoProduct',
 				'filterExpoProduct'
 			]),
+
+	  ...mapActions('setting', ['setPageTitle']),
+
+
 			updateExpo(id) {
 				console.log(id);
 			},
 
 			register(stockData) {
-			
+
 			if (Object.keys(this.expoProducts).length > 0) {
 
 
 					if(stockData.hasOwnProperty('IdExpo') ) {
-					
+
 							this.updateExpoProduct({
 								id: stockData.IdExpo,
 								updates: {
@@ -126,8 +90,8 @@
 					});
 					}
 
-					
-	
+
+
 
 				} else {
 					this.addExpoProduct({
@@ -138,7 +102,7 @@
 						statusDelivery : false
 					});
 				}
-			
+
 
 
 
@@ -157,7 +121,7 @@
 				this.updateProduct({
 					id: stockData.product.value,
 					updates: {
-						
+
 						qtdWarehouse: ~~warehouse - ~~newQtd
 					}
 				});
@@ -180,11 +144,13 @@
 		},
 		mounted() {
 			this.getData();
+				this.setPageTitle('Editor de Exportação de produtos ');
 		},
 		components: {
 			stockExitHeaderComponent,
 			stockExitBodyComponent,
-			AddExitStockComponent
+			AddExitStockComponent,
+			TableProduc
 		},
 		watch: {
 			updateObject(val) {

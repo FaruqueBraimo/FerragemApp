@@ -13,7 +13,8 @@ const state = {
 	productSearchKey: '',
 	productFiltered : {},
 	productFilteredCategory : {},
-	notifications : {}
+	notifications : {},
+	exportedProducts : {}
 	
 	}
 
@@ -33,11 +34,33 @@ const mutations = {
 
 	},
 
+
+	addProductForExport
+	(state, payload){
+		payload.object.newQtd = 1;
+		payload.object.subtotal = 1*payload.object.price_buy;
+		
+		Vue.set(state.exportedProducts, payload.id, payload.object);
+
+	},
+
+	updateQtdProduct(state, payload) {
+		console.log(this.text)
+		 
+		Object.assign(state.exportedProducts[payload.id], payload.updates);
+
+
+
+	},
+
 	updateProduct(state, payload) {
 		Object.assign(state.products[payload.id], payload.updates);
 	},
 	deleteProduct(state, id) {
 		Vue.delete(state.products, id);
+	},
+	removeChecked(state, id) {
+		Vue.delete(state.exportedProducts, id);
 	},
 	setProductSearchKey(state, val) {
 		state.productSearchKey = val;
@@ -167,6 +190,33 @@ const actions = {
 	
 
 	},
+	
+	addProductForExport({ state, commit, dispatch },myQuery) {
+		let query = null
+		 query = dbProducts.where("name", "==", myQuery.trim() )
+		
+		 
+		query.onSnapshot(function(snapshot) {
+			snapshot.docChanges().forEach(function(change) {
+				console.log(change.doc.data())
+
+				if (change.type === 'added') {
+					commit('addProductForExport', {
+						id: change.doc.id,
+						 object: change.doc.data()
+					});
+				
+				}
+				
+			
+			});
+		});			
+	
+
+	},
+
+
+
 
 	filterCategoryDatafromDb({ state, commit, dispatch },myQuery) {
 		let query = null
@@ -408,6 +458,15 @@ const actions = {
 			});
 	},
 
+	updateQtdProduct({ commit, rootGetters }, payload) {
+		console.log(payload)
+		commit('updateQtdProduct', {
+			id: payload.id,
+			updates: payload.updates
+		});
+		
+	},
+
 	deleteProduct({ commit }, id) {
 		return dbProducts
 			.doc(id)
@@ -467,12 +526,9 @@ const actions = {
 		
 	},
 
-	resetDataToOnly20({ state, commit }) {
-		if (Object.keys(state.products).length > 75) {
-			console.log(
-				'Reset data to only20 not implemented yet. All products where reseted for now...'
-			);
-		}
+	removeChecked({ state, commit }, id) {
+		commit('removeChecked',id );
+
 	}
 };
 

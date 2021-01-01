@@ -133,12 +133,7 @@
 				@emitData="addBox"
 				@closeDialog="open = false"
 			/>
-			<div
-				class="text-center text-bold q-pt-xl text-grey-8 absolute-bottom"
-			>
-				<hr class="q-mb-sm" />
-				<p>Desenvolvido pela Gest Midia. Lda &copy; 2020</p>
-			</div>
+			
 		</tamplate>
 	</q-page>
 </template>

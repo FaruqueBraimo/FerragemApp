@@ -7,7 +7,16 @@
 					<span class="text-h6" id="logo">FStock </span>
 				</div>
 
+				
+
 				<q-space />
+
+				
+				<q-toolbar-title class="text-h6 q-pl-md text-bold text-center  text-white">
+					{{pageTitle}} 
+				</q-toolbar-title>
+				
+                <q-space/>
 
 				<div class="q-pl-md q-gutter-sm row no-wrap items-center">
 					<q-btn-dropdown
@@ -137,7 +146,7 @@
 			...mapState('auth', ['users', 'userAuth']),
 			...mapGetters('auth', ['getUserName', 'getUserAuth']),
 			...mapState('product', ['products','notifications']),
-
+			...mapState('setting', ['pageTitle']),
 
 			
 			outDatedProducts() {
