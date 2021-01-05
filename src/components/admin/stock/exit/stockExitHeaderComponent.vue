@@ -16,8 +16,11 @@
 
 		<tr>
 			<th class="text-left " style="font-weight: bold">Produto</th>
-			<th class="text-center " style="font-weight: bold">Quantidade retirada</th>
+			<th class="text-left " style="font-weight: bold">Total em Dinheiro</th>
+
 			<th class="text-center " style="font-weight: bold">Data de saída</th>
+			<th class="text-center " style="font-weight: bold">Status de Entrega</th>
+
 			<th class="text-left  " style="font-weight: bold">Acção</th>
 		</tr>
 	</thead>

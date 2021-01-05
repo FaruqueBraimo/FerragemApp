@@ -1,7 +1,7 @@
 <template>
 	<q-page padding>
 
-
+		 
 		<div class="row justify-end q-py-md">
 
 			<div class= "col"> 

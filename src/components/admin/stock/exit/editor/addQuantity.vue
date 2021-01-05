@@ -42,14 +42,14 @@
 					this.$q
 					.dialog({
 						title: 'Quantidade Inválida',
-						message: `O Produto ${this.product.name}  somente possui  ${this.product.qtdWarehouse} unidades no balcão. 
-						Por favor, contacte o administrador para aumento de quantidade.
+						message: `O Produto ${this.product.name}  somente possui  ${this.product.qtdWarehouse} unidades no Armazêm. 
+						Por favor, aumente o stock, depois volte a tentar.
 						`,
 						ok: 'Sim',
 					})
 					.onOk(() => {
 					});
-				} else {
+				} else  if (this.text <=  ~~this.product.qtdWarehouse ){
 					
 					this.updateQtdProduct(
                         

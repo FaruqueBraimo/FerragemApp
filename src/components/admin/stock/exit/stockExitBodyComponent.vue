@@ -2,16 +2,61 @@
 	<tr >
 
 		<td class="text-left">
-			{{ stock.product.label }}
+<div class="q-pa-md" >
+
+    <q-expansion-item
+      v-model="expanded"
+      icon="perm_identity"
+      label="Lista de Produtos Exportados"
+      caption="Toque Para ver"
+    >
+	<div class="row q-pa-sm  ">
+				<div class="col text-bold text-green-7">Produto</div>
+
+				<div class="col  text-bold text-green-7  q-pr-md">
+					Quantidade
+				</div>
+
+				<div class="col  text-bold text-green-7  q-pr-md">
+				subtotal
+				</div>
+			</div>
+
+
+
+
+      <q-card v-for="(product , key) in stock.products" :key="key">
+        <q-card-section >  
+
+			  	<div class="row ">
+					<div class="col "> {{product.name}} </div>
+
+					<div class="col  q-pr-md">
+						 {{product.newQtd}}
+					</div>
+
+					<div class="col  q-pr-md">
+					{{product.subtotal}},00 MT
+					</div>
+				</div>
+
+        </q-card-section>
+      </q-card>
+    </q-expansion-item>
+  </div>
 		</td>
+
+		<td> {{sumTotals.sumMoney}}</td>
 		
-		<td class="text-center">{{ stock.quantity }}</td>
+	
 
 
 		
 		<td class="text-center ">
 			{{ stock.createdAt | dateFormat }}
 		</td>
+
+			<td class="text-center">{{ stock.statusDelivery }}</td>
 
 		<td class=" text-center ">
 			<div class="row justify-center items-center" style="width:100px;">
@@ -59,10 +104,32 @@
 		data() {
 			return {
 				dialog: false,
+				  expanded: false
 				
 			};
 		},
 		computed: {
+
+				sumTotals() {
+					let totals = {}
+					let sumMoney = 0
+				
+
+				Object.keys(this.stock.products).forEach((element, key) => {
+
+				
+					let product = this.stock.products[element]
+						sumMoney = sumMoney + product.subtotal;
+
+						totals.sumMoney = sumMoney;
+					
+
+
+					
+				});
+
+				return totals
+			},
 			
 		},
 		mounted() {

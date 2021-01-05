@@ -1,29 +1,27 @@
 <template>
 	<q-page padding>
+		<TableProduc @findProductByName="addProductForExport" />
 
-		<TableProduc
-		 @findProductByName='addProductForExport'
-
-		/>
-
-		 <div class="q-pa-md q-mx-xl row justify-center">
-		 <div class = 'col-4 justify-center'>
-		   <q-btn color="primary" class="full-width  q-pa-sm" label="Finalizar" >
-			 <q-tooltip content-class="bg-accent">Exportar para o utlizador</q-tooltip>
-	</q-btn>
-
-		  </div>
-
-
-  </div>
-
-
+		<div class="q-pa-md q-mx-xl row justify-center">
+			<div class="col-4 justify-center">
+				<q-btn
+					color="primary"
+					class="full-width  q-pa-sm"
+					label="Finalizar"
+					@click="ExportProduct()"
+				>
+					<q-tooltip content-class="bg-accent"
+						>Exportar para o utlizador</q-tooltip
+					>
+				</q-btn>
+			</div>
+		</div>
 	</q-page>
 </template>
 
 <script>
 	import { mapActions, mapState, mapGetters } from 'vuex';
-   import TableProduc from '../../components/admin/stock/Exit/editor/TableProduc';
+	  import TableProduc from '../../components/admin/stock/Exit/editor/TableProduc';
 	import stockExitBodyComponent from '../../components/admin/stock/Exit/stockExitBodyComponent';
 	import stockExitHeaderComponent from '../../components/admin/stock/Exit/stockExitHeaderComponent';
 	import AddExitStockComponent from '../../components/admin/stock/Exit/AddExitStockComponent';
@@ -42,7 +40,9 @@
 			...mapState('product', ['products']),
 			...mapState('stockExit', ['stockExits']),
 			...mapState('expo', ['expoProducts', 'idExpo']),
-			...mapGetters('auth', ['getUserName', 'getUserAuth'])
+			...mapGetters('auth', ['getUserName', 'getUserAuth']),
+			 ...mapState('product', ['exportedProducts']),
+
 		},
 
 		methods: {
@@ -58,73 +58,24 @@
 	  ...mapActions('setting', ['setPageTitle']),
 
 
-			updateExpo(id) {
-				console.log(id);
-			},
 
-			register(stockData) {
+			ExportProduct() {
 
-			if (Object.keys(this.expoProducts).length > 0) {
-
-
-					if(stockData.hasOwnProperty('IdExpo') ) {
-
-							this.updateExpoProduct({
-								id: stockData.IdExpo,
-								updates: {
-									newQtd: ~~stockData.quantity,
-									updatedBy: this.getUserAuth.name,
-									statusDelivery : false
-								}
-							});
-					}
-					else{
-						this.addExpoProduct({
-						product: stockData.product,
-						user: stockData.user,
-						quantity: stockData.quantity,
+         	 let checkOut = Object.assign(
+				
+				
+				{
 						createdBy: this.getUserAuth.name,
 						statusDelivery : false
+				},
+				        { products :  this.exportedProducts}
+				);
 
-
-					});
-					}
-
-
-
-
-				} else {
-					this.addExpoProduct({
-						product: stockData.product,
-						user: stockData.user,
-						quantity: stockData.quantity,
-						createdBy: this.getUserAuth.name,
-						statusDelivery : false
-					});
-				}
+		         this.addStockExit(checkOut);
 
 
 
 
-				 this.addStockExit(stockData);
-				let lastQtd = ~~this.products[stockData.product.value]
-					.qtdBalcony;
-				let newQtd = ~~stockData.quantity;
-				let warehouse = this.products[stockData.product.value]
-					.qtdWarehouse;
-
-				// Export data for user
-
-
-				this.getData();
-				// update product quantity
-				this.updateProduct({
-					id: stockData.product.value,
-					updates: {
-
-						qtdWarehouse: ~~warehouse - ~~newQtd
-					}
-				});
 			},
 
 			removeCategory(id) {
