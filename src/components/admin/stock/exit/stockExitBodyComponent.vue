@@ -177,9 +177,7 @@
 						
 
 
-					body : 	[[	this.body[0] ], [	this.body[1]]  , [	this.body[2] ] , [	this.body[0] ], [	this.body[1]]  , [	this.body[2] ]
-					
-					]
+					body : 	[[	this.body ], [	this.body] , [	this.body]]
 				})
 
 				 doc.save('relatorio.pdf');
