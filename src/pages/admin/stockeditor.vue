@@ -1,7 +1,12 @@
 <template>
 	<q-page padding>
-		<TableProduc @findProductByName="addProductForExport" />
-
+		<TableProduc @findProductByName="addProductForExport" @findProductByCode ="findProductByCode"
+		 @user="user = $event" 
+		 @obs="obs =$event"
+	
+        
+		 
+		 />
 		<div class="q-pa-md q-mx-xl row justify-center">
 			<div class="col-4 justify-center">
 				<q-btn
@@ -9,6 +14,7 @@
 					class="full-width  q-pa-sm"
 					label="Finalizar"
 					@click="ExportProduct()"
+					:loading="loading"
 				>
 					<q-tooltip content-class="bg-accent"
 						>Exportar para o utlizador</q-tooltip
@@ -33,7 +39,9 @@
 		data() {
 			return {
 				dialog: false,
-				updateObject: {}
+				updateObject: {},
+				user: '',
+				obs: ''
 			};
 		},
 		computed: {
@@ -41,13 +49,14 @@
 			...mapState('stockExit', ['stockExits']),
 			...mapState('expo', ['expoProducts', 'idExpo']),
 			...mapGetters('auth', ['getUserName', 'getUserAuth']),
-			 ...mapState('product', ['exportedProducts']),
+			 ...mapState('product', ['exportedProducts','products']),
+			 ...mapState('stockExit', ['loading']),
 
 		},
 
 		methods: {
 			...mapActions('stockExit', ['addStockExit', 'deleteStockExit']),
-			...mapActions('product', ['updateProduct','addProductForExport']),
+			...mapActions('product', ['updateProduct','addProductForExport','findProductByCode']),
 			...mapActions('expo', [
 				'addExpoProduct',
 				'getData',
@@ -61,22 +70,72 @@
 
 			ExportProduct() {
 
-         	 let checkOut = Object.assign(
+			this.user == '' ? this.user = "Outros/Externo" : this.user ;
+			 
+			 let checkOut = Object.assign(
 				
+
 				
 				{
 						createdBy: this.getUserAuth.name,
-						statusDelivery : false
+						statusDelivery : false,
+						user : this.user,
+						obs : this.obs
 				},
 				        { products :  this.exportedProducts}
 				);
 
-		         this.addStockExit(checkOut);
+
+				let quantity = 0;
+				Object.keys(this.products).forEach((element, key) => {
+					Object.keys(this.exportedProducts).forEach(element2 => {
+						if (element == element2) {
+							let product = this.products[element];
+							quantity =
+								product.quantity - ~~this.exportedProducts[element2].newQtd;
+							this.updateProduct({
+								id: element,
+								updates: { quantity: quantity }
+							});
+
+						
+						}
+					});
+				});
+
+			
+
+
+		
+
+
+				
+				this.addExpoProduct({
+						product:  this.exportedProducts,
+						user : this.user,
+						createdBy: this.getUserAuth.name,
+						statusDelivery : false
+				});
+
+				 this.addStockExit(checkOut);
+				 
+				
+			
+
+
+			 this.$router.push('/saidas')
 
 
 
 
 			},
+
+		 printTable() {
+				// Pass the element id here
+			
+			},
+
+
 
 			removeCategory(id) {
 				this.$q

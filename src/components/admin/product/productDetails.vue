@@ -25,7 +25,7 @@
                     <q-card-section class="q-pt-none text-center">
                    <div class="text-body1 q-pa-md text-green ">Stock no Armazém</div>
                       <q-separator inset />
-                     {{product.qtdWarehouse}} Unidades
+                     {{product.quantity}} Unidades
                     </q-card-section>
                   
                  </q-card>
@@ -50,7 +50,7 @@
                     <q-card flat bordered class="my-card">
                     
                     <q-card-section class="q-pt-none  text-center">
-                   <div class="text-body1 q-pa-md text-green">Preço de Compra</div>
+                   <div class="text-body1 q-pa-md text-green">Preço a (Retalho)</div>
                       <q-separator inset />
                       {{product.price_payd}} ,00 MT
                     </q-card-section>
@@ -91,39 +91,17 @@
                     <q-card flat bordered class="my-card">
                     
                     <q-card-section class="q-pt-none text-center">
-                   <div class="text-body1 q-pa-md  text-green">Iva</div>
+                   <div class="text-body1 q-pa-md  text-green">Preco a (Grosso)</div>
                       <q-separator inset />
-                     {{product.iva}} 
+                     {{product.grosso || 'Nao definido'}} 
                     </q-card-section>
                   
                  </q-card>
                
               </div>  
 
-                <div class ='col q-pa-xs'>
-                    <q-card flat bordered class="my-card">
-                    
-                    <q-card-section class="q-pt-none text-center">
-                   <div class="text-body1 q-pa-md text-green">Desconto de Iva</div>
-                      <q-separator inset />
-                      {{product.discount_iva}} ,00 MT
-                    </q-card-section>
-                  
-                 </q-card>
-               
-              </div>  
-               <div class ='col q-pa-xs'>
-                    <q-card flat bordered class="my-card">
-                    
-                    <q-card-section class="q-pt-none text-grey-7 text-center">
-                   <div class="text-body1 q-pa-md text-green">No balcão</div>
-                      <q-separator inset />
-                      {{product.qtdBalcony}} unidades
-                    </q-card-section>
-                  
-                 </q-card>
-               
-              </div>  
+              
+            
                <div class ='col q-pa-xs'>
                     <q-card flat bordered class="my-card">
                     

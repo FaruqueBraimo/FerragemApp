@@ -19,7 +19,7 @@
 		<td class="text-center ">
 			{{ product.reference  }}
 		</td>
-		<td class="text-left">
+		<td class="text-left text-capitalize	">
 			{{ product.name }}
 		</td>
 		<td class="text-left text-primary cursor-pointer">

@@ -2,27 +2,25 @@
 	<div class="q-pa-md">
 		<div class=" row  q-pa-sm ">
 			<div class=" col-3 row justify-left q-pt-xl q-mt-xl">
-				
-			{{fetchUsers}}
+				{{ fetchUsers }}
 				<div class="col ">
 					<q-input
-								v-model="codeProduct"
-								dense
-								debounce="300"
-								placeholder="Pesquise pelo codigo"
-								square
-								filled
-							>
-								<template v-slot:append>
-									<q-icon
-										v-if="codeProduct !== ''"
-										name="close"
-										@click="codeProduct = ''"
-										class="cursor-pointer"
-									/>
-									
-								</template>
-							</q-input>
+						v-model="codeProduct"
+						dense
+						debounce="300"
+						placeholder="Pesquise pelo codigo"
+						square
+						filled
+					>
+						<template v-slot:append>
+							<q-icon
+								v-if="codeProduct !== ''"
+								name="close"
+								@click="codeProduct = ''"
+								class="cursor-pointer"
+							/>
+						</template>
+					</q-input>
 				</div>
 
 				<div class="col-2 justify-left">
@@ -35,9 +33,7 @@
 				</div>
 			</div>
 
-			
-	
-	<div class=" col-3 row q-pt-xl q-mt-xl q-pa-md">
+			<div class=" col-3 row q-pt-xl q-mt-xl q-pa-md">
 				<div class="col">
 					<q-input
 						v-model="nameProduct"
@@ -68,57 +64,49 @@
 				</div>
 			</div>
 
-	
-	<div class=" col  q-pt-xl q-mt-xl q-pl-sm ">
-				
-				
-				<q-select v-model="user" :options="OptionalUsers" dense label="Funcionário" filled />
-			
-					
-				
+			<div class=" col  q-pt-xl q-mt-xl q-pl-sm ">
+				<q-select
+					v-model="user"
+					:options="OptionalUsers"
+					dense
+					label="Funcionário"
+					filled
+				/>
 			</div>
 
-			
+			<div class="col-4 q-pa-md">
+				<q-card class="my-card text-bold" flat>
+					<q-card-section>
+						<q-list bordered>
+							<q-item>
+								<q-item-section
+									>Total em dinheiro :
+								</q-item-section>
+								<q-item-section>
+									{{ sumTotals.sumMoney | 0 }} ,00 MT
+								</q-item-section>
+							</q-item>
 
-			<div class ="col-4 q-pa-md">
-					<q-card class="my-card text-bold" flat>
-						<q-card-section>
-							<q-list bordered>
-      <q-item >
-        <q-item-section>Total em dinheiro   : </q-item-section>
-        <q-item-section >
-		{{sumTotals.sumMoney | 0}} ,00 MT
-        </q-item-section>
-      </q-item>
-
-     
-
-     <q-item >
-        <q-item-section>Total em produtos   : </q-item-section>
-        <q-item-section >
-		{{sumTotals.sumQtd | 0}} UND
-        </q-item-section>
-      </q-item>
-
-	  
-
-      
-    </q-list>
-
-						</q-card-section>
-						
-					</q-card>
-
-			 </div>
-
+							<q-item>
+								<q-item-section
+									>Total em produtos :
+								</q-item-section>
+								<q-item-section>
+									{{ sumTotals.sumQtd | 0 }} UND
+								</q-item-section>
+							</q-item>
+						</q-list>
+					</q-card-section>
+				</q-card>
 			</div>
+		</div>
 
 		<q-markup-table>
 			<thead>
 				<tr>
 					<th class="text-left text-bold">Codigo</th>
 					<th class="text-left">producto</th>
-						<th class="text-left">Quantidade</th>
+					<th class="text-left">Quantidade</th>
 					<th class="text-left">Preco Unitário</th>
 					<th class="text-left">Subtototal</th>
 					<th class="text-left">Remover</th>
@@ -126,24 +114,20 @@
 			</thead>
 			<tbody v-for="(product, index) in exportedProducts" :key="index">
 				<tr>
-					<td class="text-left">{{product.code}}</td>
+					<td class="text-left">{{ product.code }}</td>
 
-					<td class="text-left">{{ product.name }}</td>
+					<td class="text-left text-capitalize">{{ product.name }}</td>
 					<td class="text-left">
-
-				<addQuantity
+						<addQuantity
 							:quantity="product.newQtd"
 							:id="index"
 							:product="product"
 						/>
-       
 					</td>
-					<td class="text-left">{{product.price_buy}} ,00 MT</td>
-					
-					<td class="text-left">
-						{{ product.subtotal }} ,00 MT
-					</td>
-					
+					<td class="text-left">{{ product.price_buy }} ,00 MT</td>
+
+					<td class="text-left">{{ product.subtotal }} ,00 MT</td>
+
 					<td>
 						<q-btn
 							color="red-5"
@@ -157,6 +141,15 @@
 				</tr>
 			</tbody>
 		</q-markup-table>
+
+		<div class="row justify-end q-pt-md">
+			 <q-input
+			 label="Observacão"
+      filled
+	  v-model="obs"
+      autogrow
+    />
+		</div>
 	</div>
 </template>
 
@@ -171,8 +164,9 @@
 				nameProduct: '',
 				codeProduct: '',
 				quantity: 1,
-				user : '',
-				OptionalUsers: [],	
+				user: '',
+				OptionalUsers: [],
+				obs : ""
 			};
 		},
 		computed: {
@@ -180,63 +174,59 @@
 				'getCheckedProducts',
 				'checkIncludes'
 			]),
-			
-			...mapState('auth', ['users',]),
 
-		
-		  ...mapState('checkedProduct', ['checkedProducts']),
+			...mapState('auth', ['users']),
 
-		   ...mapState('expo', ['saleProduct']),
-		    ...mapState('product', ['exportedProducts']),
+			...mapState('checkedProduct', ['checkedProducts']),
 
+			...mapState('expo', ['saleProduct']),
+			...mapState('product', ['exportedProducts']),
 
-
-fetchUsers() {
+			fetchUsers() {
 				Object.keys(this.users).forEach((element, key) => {
 					this.OptionalUsers.push({
 						value: element,
 						label: this.users[element].name
 					});
+					this.OptionalUsers.push('Outros/Externo');
 				});
 			},
-
 
 			sumTotals() {
-					let totals = {}
-					let sumMoney = 0
-					let sumQtd = 0
+				let totals = {};
+				let sumMoney = 0;
+				let sumQtd = 0;
 
 				Object.keys(this.exportedProducts).forEach((element, key) => {
+					let product = this.exportedProducts[element];
+					sumMoney = sumMoney + product.subtotal;
+					sumQtd = sumQtd + ~~product.newQtd;
 
-				
-					let product = this.exportedProducts[element]
-						sumMoney = sumMoney + product.subtotal;
-						sumQtd = sumQtd + ~~product.newQtd;
-
-						totals.sumMoney = sumMoney;
-						totals.sumQtd = sumQtd;
-
-
-
-					
+					totals.sumMoney = sumMoney;
+					totals.sumQtd = sumQtd;
 				});
 
-				return totals
-			},
-
-
-
+				return totals;
+			}
 		},
 		components: {
 			addQuantity
 		},
-mounted() {
+		mounted() {
 			this.fetchUsers;
-		
-			
 		},
-		methods: {
 
+		watch: {
+			user(val) {
+				this.$emit('user', val);
+			},
+
+			obs(val) {
+				this.$emit('obs', val);
+			}
+		},
+
+		methods: {
 			...mapActions('product', ['addCheckedProducts', 'removeChecked']),
 
 			addToCard(product) {
@@ -244,18 +234,12 @@ mounted() {
 			},
 
 			findProductByName() {
-				this.$emit('findProductByName', this.nameProduct );
+				this.$emit('findProductByName', this.nameProduct.toLowerCase());
 			},
 
-
-			findProductByCode(){
-						this.$emit('findProductByCode', this.codeProduct)
-
-
+			findProductByCode() {
+				this.$emit('findProductByCode', this.codeProduct);
 			},
-
-
-
 
 			LocalIncrementQuantity(val) {
 				let product = val;

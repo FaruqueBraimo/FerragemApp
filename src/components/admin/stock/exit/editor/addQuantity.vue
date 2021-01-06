@@ -37,7 +37,7 @@
 
          watch: {
             text(val) {
-				if ( this.text >  ~~this.product.qtdWarehouse) {
+				if ( this.text >  ~~this.product.quantity) {
 
 					this.$q
 					.dialog({
@@ -49,7 +49,7 @@
 					})
 					.onOk(() => {
 					});
-				} else  if (this.text <=  ~~this.product.qtdWarehouse ){
+				} else  if (this.text <=  ~~this.product.quantity ){
 					
 					this.updateQtdProduct(
                         

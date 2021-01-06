@@ -88,7 +88,7 @@
 					let newQtd =  ~~ stockData.quantity
 					this.updateProduct( {
 						id : stockData.product.value,
-						updates : { qtdWarehouse : +lastQtd+newQtd  } })
+						updates : { quantity : +lastQtd+newQtd  } })
 
 				},
 				 removeCategory(id) {

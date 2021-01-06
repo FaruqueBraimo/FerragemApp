@@ -76,6 +76,13 @@ const mutations = {
 	resetProducts(state) {
 		state.products = {};
 	},
+
+	resetProductForExport(state) {
+		state.exportedProducts = {};
+	},
+
+
+	
 	productFiltered(state) {
 		state.productFiltered = {};
 	},
@@ -190,7 +197,40 @@ const actions = {
 	
 
 	},
+
+
+	resetProductForExport({commit}){
+		
+		commit('resetProductForExport');
+
+	},
 	
+	findProductByCode({ state, commit, dispatch },myQuery ) {
+
+		let query = null
+		
+		 query = dbProducts.where("code", "==", myQuery.trim().toUpperCase() )
+		
+		 
+		query.onSnapshot(function(snapshot) {
+			snapshot.docChanges().forEach(function(change) {
+				console.log(change.doc.data())
+
+				if (change.type === 'added') {
+					commit('addProductForExport', {
+						id: change.doc.id,
+						 object: change.doc.data()
+					});
+				
+				}
+				
+			
+			});
+		});		
+
+	},
+
+
 	addProductForExport({ state, commit, dispatch },myQuery) {
 		let query = null
 		 query = dbProducts.where("name", "==", myQuery.trim() )
@@ -414,7 +454,7 @@ const actions = {
 		payload.createdAt = new Date()
 		payload.updatedAt = new Date()
 		commit('loading', true);
-
+		
 		return dbProducts
 			.add(payload)
 			.then(docRef => {

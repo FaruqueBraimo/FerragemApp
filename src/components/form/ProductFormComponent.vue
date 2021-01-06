@@ -157,7 +157,7 @@
 									square
 									filled
 									type="number"
-									label="Preco de Venda"
+									label="Preco de Venda (Retalho)"
 									v-model="price_buy"
 									dense
 								/>
@@ -167,26 +167,16 @@
 								<q-input
 									square
 									filled
-									label="Iva"
+									label="Preco de Venda (Grosso) "
 									dense
-									v-model="iva"
-									disable
+									v-model="grosso"
+									
 								/>
 							</div>
 
-							<div class="col-6 q-pa-sm">
-								<q-input
-									square
-									filled
-									type="number"
-									label="Desconto de Iva"
-									v-model="discount_iva"
-									dense
-									disable
-								/>
-							</div>
+							
 
-							<div class="col-6 q-py-sm">
+							<div class="col-6 q-pa-sm ">
 								<q-input
 									square
 									filled
@@ -197,7 +187,7 @@
 								/>
 							</div>
 
-							<div class="col-6 q-pa-sm">
+							<div class="col-12 q-pa-xs">
 								<q-input
 									square
 									filled
@@ -228,7 +218,7 @@
 									]"
 								/>
 							</div>
-							<div class="col-6 ">
+							<div class="col-12 q-px-sa ">
 								<q-input
 									square
 									filled
@@ -246,41 +236,24 @@
 								</q-input>
 							</div>
 
-							<div class="col-6 q-px-sm">
+							<div class="col-2">
 								<q-input
 									square
 									filled
 									dense
-									label="Quantidade que vai ao balcão"
-									v-model="qtdBalcony"
-									type="number"
-									lazy-rules
-									:rules="[
-										val =>
-											val <= ~~quantity ||
-											'Por for basea-se na quantidade total do produto'
-									]"
+									class="invisible	"
+										disable
 								>
 								</q-input>
 							</div>
 
-							<div class="col-6 q-py-sm">
-								<q-input
-									square
-									filled
-									dense
-									label="Quantidade que fica no armazêm"
-									v-model="qtdWarehouse"
-									disable
-									type="number"
-								>
-								</q-input>
-							</div>
+							
 
-							<div class="col-6 q-pa-sm">
+							<div class="col-12 q-pa-sm">
 								<q-input
 									label="Observacoes gerais sobre o produto"
 									square
+									type="textarea"
 									dense
 									filled
 									v-model="description"
@@ -352,8 +325,7 @@ import { watch } from '@xkeshi/vue-barcode';
 				profitMargin: '',
 				price_buy: 0,
 				price_payd: 0,
-				iva: '17%',
-				discount_iva: 0,
+				grosso: 0,
 				provider: '',
 				profit: '',
 				qtdBalcony: '',
@@ -380,10 +352,7 @@ import { watch } from '@xkeshi/vue-barcode';
 				this.price_buy = this.productData.data.price_buy;
 				this.price_payd = this.productData.data.price_payd;
 				this.description = this.productData.data.description;
-				this.iva = this.productData.data.iva;
-				this.discount_iva = this.productData.data.discount_iva;
-				this.qtdBalcony = this.productData.data.qtdBalcony;
-				this.qtdWarehouse = this.productData.data.qtdWarehouse;
+				this.grosso = this.productData.data.grosso;
 				this.stockBreak = this.productData.data.stockBreak;
 				this.code = this.productData.data.code;
 				this.reference = this.productData.data.reference;
@@ -434,10 +403,7 @@ import { watch } from '@xkeshi/vue-barcode';
 			calculusMath() {
 				/// WE also use this computed proprities as any opportunity for realize calculus
 				
-				let qtdWrhCheck = ~~this.quantity - ~~this.qtdBalcony
-				if (qtdWrhCheck >= 0) {
-					this.qtdWarehouse = ~~+this.quantity - ~~this.qtdBalcony;
-				}
+			
 				if (
 					this.name !== '' &&
 					this.category !== '' &&
@@ -446,11 +412,7 @@ import { watch } from '@xkeshi/vue-barcode';
 					this.price_buy !== '' &&
 					this.price_payd !== '' &&
 					this.stockBreak !== '' &&
-					this.qtdBalcony !== '' &&
 					this.description !== '' &&
-					this.discount_iva !== '' &&
-					this.qtdBalcony !== '' &&
-					this.qtdWarehouse !== '' &&
 					this.stockBreak !== '' &&
 					this.profit !== '' &&
 					this.profitMargin !== '' &&
@@ -460,9 +422,7 @@ import { watch } from '@xkeshi/vue-barcode';
 					this.disable = false;
 				}
 
-					//Iva validation
-					let dscIva = (this.price_payd * 0.17);
-				this.discount_iva = dscIva.toFixed(2)
+					//grosso validation
 
 				if (this.price_buy != 0 && this.price_payd != 0) {
 					this.profit =
@@ -554,24 +514,21 @@ import { watch } from '@xkeshi/vue-barcode';
 				let product = {};
 				product.category = this.category;
 
-				product.name = this.name;
-				product.iva = this.iva;
+				product.name = this.name.toLowerCase();
+				product.grosso = this.grosso;
 				product.price_payd = this.price_payd;
 				product.quantity = this.quantity;
 				product.provider = this.provider;
 				product.price_buy = this.price_buy;
 				product.description = this.description;
 				product.expires = this.expires;
-				product.iva = this.iva;
+				product.grosso = this.grosso;
 				product.reference = this.reference;
 			
 				product.profit = this.profit;
 				product.profitMargin = this.profitMargin;
 				product.createdBy = this.getUserAuth.id;
 
-				product.discount_iva = this.discount_iva;
-				product.qtdBalcony = this.qtdBalcony;
-				product.qtdWarehouse = this.qtdWarehouse;
 				product.stockBreak = this.stockBreak;
 
 				if (this.productData.data) {
@@ -613,11 +570,7 @@ import { watch } from '@xkeshi/vue-barcode';
 						this.price_buy !== '' &&
 						this.price_payd !== '' &&
 						this.stockBreak !== '' &&
-						this.qtdBalcony !== '' &&
 						this.description !== '' &&
-						this.discount_iva !== '' &&
-						this.qtdBalcony !== '' &&
-						this.qtdWarehouse !== '' &&
 						this.stockBreak !== '' &&
 						this.profit !== '' &&
 						this.profitMargin !== '' 
@@ -698,10 +651,7 @@ import { watch } from '@xkeshi/vue-barcode';
 				this.price_buy = '';
 				this.price_payd = '';
 				this.description = '';
-				this.iva = '';
-				this.discount_iva = 0;
-				this.qtdBalcony = ' ';
-				this.qtdWarehouse = '';
+				this.grosso = '';
 				this.stockBreak = '';
 				this.code = '';
 				this.profit = '';

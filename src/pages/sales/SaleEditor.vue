@@ -3,8 +3,7 @@
         <table-produc
         @removeChecked="removeChecked"
         @findProductByName='addProductForSale'
-        
-        
+      
         />
   </q-page>
 </template>

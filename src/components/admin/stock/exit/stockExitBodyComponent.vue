@@ -6,11 +6,11 @@
 
     <q-expansion-item
       v-model="expanded"
-      icon="perm_identity"
+      icon="local_grocery_store"
       label="Lista de Produtos Exportados"
       caption="Toque Para ver"
     >
-	<div class="row q-pa-sm  ">
+	<div class="row q-pa-sm "  >
 				<div class="col text-bold text-green-7">Produto</div>
 
 				<div class="col  text-bold text-green-7  q-pr-md">
@@ -26,10 +26,13 @@
 
 
       <q-card v-for="(product , key) in stock.products" :key="key">
+
+
+
         <q-card-section >  
 
 			  	<div class="row ">
-					<div class="col "> {{product.name}} </div>
+					<div class="col text-capitalize	"> {{product.name}} </div>
 
 					<div class="col  q-pr-md">
 						 {{product.newQtd}}
@@ -47,34 +50,45 @@
 		</td>
 
 		<td> {{sumTotals.sumMoney}}</td>
-		
-	
-
+				
+ 		<td> {{stock.user.label|| stock.user }}</td>
 
 		
 		<td class="text-center ">
 			{{ stock.createdAt | dateFormat }}
 		</td>
 
-			<td class="text-center">{{ stock.statusDelivery }}</td>
+			<td class="text-center text-primary" v-if="stock.statusDelivery">Aceite</td>
+			<td class="text-center text-red-5" else>Pendente</td>
+				<td class="text-center " >{{stock.createdBy}}</td>
 
 		<td class=" text-center ">
 			<div class="row justify-center items-center" style="width:100px;">
 					
-
 				<div class="col">
 					<q-btn
 						flat
-						size="sm"
 						rounded
-						
-						text-color="primary"
-						icon="edit"
-						@click="$emit('updateObject', stock)"
+						size="sm"
+						text-color="grey-7"
+						icon="book"
+						@click="$htmlToPaper('printMe');"
+					/>
+				</div>	
 
-					
+			   <div class="col">
+					<q-btn
+						flat
+						rounded
+						size="sm"
+						text-color="green"
+						icon="info"
+						
+						@click="info(stock.obs)"
 					/>
 				</div>
+
+			
 
 				<div class="col">
 					<q-btn
@@ -91,7 +105,12 @@
 			
 		</td>
 
+	
+
 	</tr>
+
+
+	
 
 </template>
 
@@ -137,7 +156,12 @@
 		},
 		methods: {
 			...mapActions('settings', ['setGlobalConfirm']),
-			...mapActions('stock', ['updatestock'])
+			...mapActions('stock', ['updatestock']),
+
+
+			info(val) {
+				alert( val ||'Sem Observacão')
+			}
 		},
 		filters: {
 			dateFormat(val) {

@@ -14,6 +14,9 @@
 					label="Excel"
 					unelevated
 				/>
+
+
+				
 			</download-excel>
 			{{ prod }}
 			<q-btn
@@ -110,9 +113,19 @@
 
 				options: [],
 				json_fields: {
+					codigo : 'code',
 					Produto: 'name',
 					Referência: 'reference',
-					Categoria: 'category'
+					Categoria: 'category',
+					Quantidade : 'quantity',
+					PrecoRetalho  : 'price_payd', 
+					PrecoGrosso : 'grosso',
+					Fornecedor : 'provider',
+					DataCriacao : 'createdAt',
+					CriadoPor : 'createdBy'
+
+
+
 				},
 				json_data: [],
 				json_meta: [
@@ -132,6 +145,8 @@
 				'productFilteredCategory',
 				'loading'
 			]),
+						...mapState('auth', ['users']),
+
 			...mapGetters('product', ['searchProduct']),
 
 			prod() {
@@ -142,9 +157,16 @@
 					count = index;
 					produtToJson = this.products[element];
 					this.json_data[count] = {
+						code : produtToJson.code,
 						name: produtToJson.name,
 						reference: produtToJson.reference,
-						category: produtToJson.category.label
+						category: produtToJson.category.label,
+						provider : produtToJson.provider.label,
+						quantity : produtToJson.quantity,
+						price_payd : produtToJson.price_payd,
+						grosso : produtToJson.grosso,
+						DataCriacao :  produtToJson.createdAt,
+						createdBy :  this.users[produtToJson.createdBy] ? this.users[produtToJson.createdBy].name  : "Admin"  
 					};
 				});
 

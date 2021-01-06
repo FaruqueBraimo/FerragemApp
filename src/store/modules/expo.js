@@ -318,7 +318,7 @@ const actions = {
 				// 1. Limpar todas solicitações
 			
 
-			 showSuccessMessage( `Foi exportado ${payload.quantity} unidades do produto ${payload.product.label} para o funcionario ${payload.user.label}`)
+			 showSuccessMessage( `Produtos exportados`)
 			 
 				return true;
 			})

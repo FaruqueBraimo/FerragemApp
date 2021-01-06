@@ -4,7 +4,6 @@
 		 
 		<div class="row justify-end q-py-md">
 
-			<div class= "col"> 
 		    <q-btn
 				color="green-5"
 				icon="add"
@@ -13,11 +12,10 @@
 				@click="$router.push('stockEditor')"
 			/>
 			
-			</div>	
 
 
 			
-			<div class= "col"> 
+			<!-- <div class= "col"> 
 		    <q-btn
 				color="primary"
 				icon="add"
@@ -26,7 +24,7 @@
 				@click="dialog = true"
 			/>
 			
-			</div>	
+			</div>	 -->
 			
 		</div>
 		<q-markup-table
@@ -87,7 +85,7 @@
 
 		methods: {
 			...mapActions('stockExit', ['addStockExit', 'deleteStockExit']),
-			...mapActions('product', ['updateProduct']),
+			...mapActions('product', ['updateProduct' , 'resetProductForExport']),
 			...mapActions('expo', [
 				'addExpoProduct',
 				'getData',
@@ -124,6 +122,8 @@
 
 
 					});
+
+
 					}
 
 					
@@ -146,8 +146,7 @@
 				let lastQtd = ~~this.products[stockData.product.value]
 					.qtdBalcony;
 				let newQtd = ~~stockData.quantity;
-				let warehouse = this.products[stockData.product.value]
-					.qtdWarehouse;
+				let warehouse = this.products[stockData.product.value].qtdWarehouse;
 
 				// Export data for user
 
@@ -180,6 +179,7 @@
 		},
 		mounted() {
 			this.getData();
+			this.resetProductForExport()
 		},
 		components: {
 			stockExitHeaderComponent,
