@@ -183,7 +183,7 @@
 				var summary = [
 					{ title: 'Subtotal', dataKey: 'sub' },
 					{ title: 'Data de Exportação', dataKey: 'data' },
-					{ title: 'Admin', dataKey: 'admin' }
+					{ title: 'Exportado Por', dataKey: 'admin' }
 				];
 				var rows = [];
 
