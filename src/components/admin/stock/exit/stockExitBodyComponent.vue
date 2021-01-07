@@ -224,6 +224,7 @@
 					.text(this.moreText, 45, 70);
 
 				doc.autoTable(summary, this.body, {
+					 styles: { fillColor: [16, 18, 33] },
 					margin: { top: 120 },
 					beforePageContent: function(data) {}
 				});
@@ -243,7 +244,11 @@
 					);
 
 				doc.addPage();
-				doc.text(40, 40, 'Assinatura');
+				doc.text(40, 40, 'Assinaturas');
+
+				doc.line(55, 45, 100, 45);
+	            doc.line(105, 45, 100, 45);
+
 
 				const label = `Relatorio ${
 					this.stock.user == 'Outros/Externo'
