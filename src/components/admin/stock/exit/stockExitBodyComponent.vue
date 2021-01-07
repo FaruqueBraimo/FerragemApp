@@ -183,6 +183,7 @@
 				var summary = [
 					{ title: 'Subtotal', dataKey: 'sub' },
 					{ title: 'Data de Exportação', dataKey: 'data' },
+						{ title: 'Exportado Para', dataKey: 'user' },
 					{ title: 'Exportado Por', dataKey: 'admin' }
 				];
 				var rows = [];
@@ -206,7 +207,9 @@
 				this.body.push({
 					sub: new Intl.NumberFormat().format(this.sumTotals.sumMoney) + ' MT',
 					data: this.getDateTime,
-					admin: this.stock.createdBy
+					admin: this.stock.createdBy,
+					user: this.stock.user.label
+
 				});
 				var doc = new jsPDF('p', 'pt');
 
@@ -238,17 +241,20 @@
 					.setFontSize(11)
 
 					.text(
-						'Processado Por Computador - NFacilidades',
+						'Processado Por Computador  N-Facilidades',
 						20,
 						doc.internal.pageSize.height - 10
 					);
 
 				doc.addPage();
 				doc.text(40, 40, 'Assinaturas');
+				doc.setFontSize(15)
+				doc.line(55, 170, 250, 170);
+				doc.text(100, 190, 'Administrador');
+				
 
-				doc.line(55, 45, 100, 45);
-	            doc.line(105, 45, 100, 45);
-
+				doc.line(300, 170, 500, 170);
+					doc.text(360, 190, 'Balconista/Outro');
 
 				const label = `Relatorio ${
 					this.stock.user == 'Outros/Externo'
@@ -256,6 +262,7 @@
 						: `do balconista ${this.stock.user.label}`
 				}`;
 				doc.save(label + '.pdf');
+				this.body = []
 			},
 
 			info(val) {
