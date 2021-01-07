@@ -107,8 +107,7 @@
 			return {
 				dialog: false,
 				expanded: false,
-				body: [],
-
+				body: [{ sub : this.sumTotals.sumMoney, data :  stock.createdAt , admin : this.stock.createdBy}],
 				moreText: [
 					`Este documento representa o relatório de exportação de produtos listados abaixo `,
 					`do armazêm da empresa N-facilidades para ${
@@ -135,33 +134,6 @@
 				});
 
 				return totals;
-			},
-
-
-			getDateTime () {
-				var months = [
-					'Janeiro',
-					'Fevereiro',
-					'Março',
-					'Abril',
-					'Maio',
-					'Junho',
-					'Julho',
-					'Agosto',
-					'Setembro',
-					'Outubro',
-					'Novembro',
-					'Dezembro'
-				];
-				let dateCreated = new Date(this.stock.createdAt.seconds * 1000);
-				return (
-					dateCreated.getDate() +
-					' de ' +
-					months[dateCreated.getMonth()] +
-					' de ' +
-					dateCreated.getFullYear()
-				);
-
 			}
 		},
 		mounted() {
@@ -180,11 +152,13 @@
 					{ title: 'Subtotal', dataKey: 'country' }
 				];
 
-				var summary = [
-					{ title: 'Subtotal', dataKey: 'sub' },
-					{ title: 'Data de Exportação', dataKey: 'data' },
-					{ title: 'Admin', dataKey: 'admin' }
-				];
+				// var summary = [
+				// 	{ title: 'Subtotal', dataKey: 'sub' },
+				// 	{ title: 'Data Criado', dataKey: 'data' },
+				// 	{ title: 'Admin', dataKey: 'admin' }
+				// ];
+
+
 				var rows = [];
 
 				Object.keys(product.products).forEach((element, key) => {
@@ -201,13 +175,6 @@
 					});
 				});
 
-				
-
-				this.body.push({
-					sub: new Intl.NumberFormat().format(this.sumTotals.sumMoney) + ' MT',
-					data: this.getDateTime,
-					admin: this.stock.createdBy
-				});
 				var doc = new jsPDF('p', 'pt');
 
 				doc.setFontSize(15);
@@ -223,15 +190,19 @@
 					.setFontSize(12)
 					.text(this.moreText, 45, 70);
 
-				doc.autoTable(summary, this.body, {
-					margin: { top: 120 },
+				// doc.autoTable(summary, this.body, {
+				// 	margin: { top: 120 },
+				// 	beforePageContent: function(data) {}
+				// });
+
+
+				doc.autoTable(columns, rows, {
+					margin: { top: 135 },
 					beforePageContent: function(data) {}
 				});
 
-				doc.autoTable(columns, rows, {
-					margin: { top: 120 },
-					beforePageContent: function(data) {}
-				});
+
+				
 
 				doc.setFont('times')
 					.setFontSize(11)
