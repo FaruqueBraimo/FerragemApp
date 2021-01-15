@@ -163,7 +163,7 @@ const actions = {
 
 	findProductByName({ state, commit, dispatch },myQuery) {
 		let query = null
-		 query = dbExpoProducts.where("product.label", "==", myQuery.label).where("user.value", "==", myQuery.user).where("statusDelivery", "==", true)
+		 query = dbExpoProducts.where("product.name", "==", myQuery.label).where("user.value", "==", myQuery.user).where("statusDelivery", "==", true)
 	
 		 
 		query.onSnapshot(function(snapshot) {

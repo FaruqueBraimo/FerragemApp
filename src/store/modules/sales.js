@@ -251,6 +251,7 @@ const actions = {
 				return null;
 			});
 	},
+	
 
 	setSalesearchKey({ commit, getters }, text) {
 		let sales = {};

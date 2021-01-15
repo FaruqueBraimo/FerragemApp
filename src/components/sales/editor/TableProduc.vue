@@ -2,7 +2,7 @@
 	<div class="q-px-md">
 		<div class=" row   ">
 			<div class=" col-3 row justify-left q-pt-md q-mt-xl">
-				{{ fetchCustumers }}
+				{{ fetchCustumers }} {{saleProduct}}
 				<div class="col ">
 					<q-input
 						v-model="codeProduct"
@@ -128,7 +128,7 @@
 					<th class="text-left">Remover</th>
 				</tr>
 			</thead>
-			<tbody v-for="(product, index) in exportedProducts" :key="index">
+			<tbody v-for="(product, index) in saleProduct" :key="index">
 				<tr>
 					<td class="text-left">{{ product.code }}</td>
 
@@ -258,6 +258,7 @@
 
 			findProductByName() {
 				this.$emit('findProductByName', this.nameProduct.toLowerCase());
+
 			},
 
 			findProductByCode() {

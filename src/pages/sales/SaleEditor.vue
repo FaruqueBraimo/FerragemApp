@@ -1,6 +1,6 @@
 <template>
   <q-page  padding class="q-pa-md">
-        <TableProduc @findProductByName="addProductForExport" @findProductByCode ="findProductByCode"
+        <TableProduc @findProductByName="addProductForSale" @findProductByCode ="findProductByCode"
 		 @user="user = $event" 
 		 @obs="obs =$event"
 	
@@ -115,6 +115,10 @@ export default {
 
 
 			]),
+
+			findProductByCode() {
+
+			},
 
 
 			addProductForSale(payload) {
