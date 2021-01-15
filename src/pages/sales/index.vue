@@ -1,41 +1,51 @@
 <template>
-	<q-page class="q-pa-md">
-		<div class=" q-pa-md text-primary text-subtitle2 text-center">
-			Bem Vindo(a)
+	<q-page class="q-py-md">
+	
+		<div class="q-pa-md row justify-center  ">
+			<div class="col-6 ">
+				<q-btn
+					class=" q-pa-xs full-width text-body1"
+					v-if="!getBoxStatus"
+					icon="open_in_browser"
+					@click="openBox"
+					label="Abrir Caixa"
+					push
+					dark-percentage
+					unelevated
+					color="orange"
+
+
+				/>
+			</div>
 		</div>
 
-		<div class="row" v-if="$q.platform.is.desktop">
-			<div class="col-6 q-pa-md">
-				<q-card bordered flat class="q-pa-md">
-					<div class=" ">
-						<q-btn
-							color="deep-purple"
-							no-caps
-							class="q-pa-sm   text-body1"
-							unelevated
-							v-if="!getBoxStatus"
-							icon="open_in_browser"
-							@click="openBox"
-							label="Abrir Caixa"
-						/>
+		<div class="row justify-center" v-if="$q.platform.is.desktop">
+			<div class="col-6">
+				<q-card flat class="">
+					
+						
 						<div
 							class="text-deep-purple text-bold text-center"
 							v-if="getBoxStatus"
 						>
 							Dinheiro no Caixa : {{ myBoxCash }} , 00 MT
 						</div>
-					</div>
-
-					<div class="row q-px-xl q-pt-md ">
-						<q-btn
-							color="red-5"
-							no-caps
-							class=" q-pa-xs full-width text-body1"
-							unelevated
-							icon="close"
-							v-if="getBoxStatus"
-							label="Fechar Caixa"
-						/>
+					
+					<div class="  row  q-pt-md ">
+						<div class="col-12">
+							<q-btn
+								color="red-5"
+								no-caps
+								class=" q-pa-xs full-width text-body1"
+								unelevated
+								icon="close"
+								v-if="getBoxStatus"
+								label="Fechar Caixa"
+								@click="closeBox()"
+								push
+								
+							/>
+						</div>
 					</div>
 					<openBoxComponent
 						:open="open"
@@ -45,27 +55,32 @@
 				</q-card>
 			</div>
 
-			<div class="col q-pa-md">
- <div class="" style="">
-    <q-list bordered padding >
-           
-      <q-item-label header class="text-bold text-blue-grey-9"> Tem Produtos por aceitar, exportados pelo Admistrador </q-item-label>
+			<div class="row q-pa-md">
+				<div class="col-12 q-pl-lg text-bold">
+					{{
+						Object.keys(getProductToAccept).length > 0
+							? `Foram enviados produtos para ti, por favor aceite ou recuse!`
+							: ``
+					}}
+				</div>
 
-      <q-item tag="label" v-ripple  v-for="(product, index) in getProductToAccept " 	:key="index">
-		  
-        <q-item-section >
-          <q-item-label>   {{product.quantity  }} quantidades de  {{product.product.label  }} </q-item-label>
-        </q-item-section>
-        <q-item-section side    >
-			<q-btn color="primary" icon="check" size="sm" label="Aceitar" unelevated @click="accept(index)" />
-        </q-item-section>
-      </q-item>
-
-   
-     
-    </q-list>
-  </div>
-  
+				<div class="" style="">
+					<div class="row  justify-left q-pa-md q-ma-sm">
+						<div
+							class=" col-6  "
+							v-for="(exported, index) in getProductToAccept"
+							:key="index"
+						>
+							<productToAccept
+								:exported="
+									Object.assign({ id: index }, exported)
+								"
+								:id="index"
+								@accept="accept"
+							/>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -133,7 +148,6 @@
 				@emitData="addBox"
 				@closeDialog="open = false"
 			/>
-			
 		</tamplate>
 	</q-page>
 </template>
@@ -141,6 +155,7 @@
 <script>
 	import { mapActions, mapState, mapGetters } from 'vuex';
 	import openBoxComponent from '../../components/sales/openBoxComponent';
+	import productToAccept from 'components/sales/productToAccept';
 	import { date } from 'quasar';
 
 	export default {
@@ -149,22 +164,22 @@
 				open: false,
 				updateCategory: false,
 				myBoxCash: 0,
-				      check1: true,
-      check2: false,
-      check3: false,
+				check1: true,
+				check2: false,
+				check3: false,
 
-      notif1: true,
-      notif2: true,
-      notif3: false,
+				notif1: true,
+				notif2: true,
+				notif3: false,
 
-      volume: 6,
-      brightness: 3,
-      mic: 8
-
+				volume: 6,
+				brightness: 3,
+				mic: 8
 			};
 		},
 		components: {
-			openBoxComponent
+			openBoxComponent,
+			productToAccept
 		},
 
 		computed: {
@@ -172,22 +187,19 @@
 			...mapGetters('auth', ['getUserName', 'getUserAuth']),
 			...mapGetters('setting', ['getLocalBoxStatus']),
 			...mapState('expo', ['expoProducts', 'myProducts']),
-			
+
 			getProductToAccept() {
-						let myProducts = {};
-						Object.keys(this.myProducts).forEach(element => {
-						let prod = this.myProducts[element];
+				let myProducts = {};
+				Object.keys(this.myProducts).forEach(element => {
+					let prod = this.myProducts[element];
 
-						if (
-							prod.statusDelivery == false
-						) {
-							myProducts[element] = prod
-						}
-					});
+					if (!prod.statusDelivery) {
+						myProducts[element] = prod;
+					}
+				});
 
-					return myProducts
+				return myProducts;
 			},
-
 
 			getBoxStatus() {
 				let status = false;
@@ -218,28 +230,31 @@
 			]),
 			...mapActions('box', ['addBox', 'editBox']),
 
-			...mapActions('expo', ['updateExpoProduct','filterMyProducts']),
+			...mapActions('expo', ['updateExpoProduct', 'filterMyProducts']),
 
 			accept(payload) {
-						let prod = this.myProducts[payload];
+				let product = {};
+				let prod = {};
 
+				prod = this.myProducts[payload];
 
-					this.updateExpoProduct(
-						{
-								id: payload,
-								updates: {
-									statusDelivery : true,
-									quantity : ~~prod.quantity + ~~prod.newQtd,
-									newQtd : 0
-									
-								}
-							}
-						
-					)
+				Object.keys(prod.product).forEach(element => {
+					product[element] = prod.product[element];
+					product[element].quantitySell =
+						prod.product[element].newQtd;
+					product[element].newQtd = 0;
 
+					this.updateExpoProduct({
+						id: payload,
+						updates: {
+							statusDelivery: true,
+							product: product
+						}
+					});
+				});
+
+				this.filterMyProducts(this.getUserAuth.id);
 			},
-
-
 
 			openBox() {
 				if (this.getLocalBoxStatus != null) {
@@ -293,8 +308,11 @@
 				}
 			}
 		},
+
+		updated() {},
+		updated() {},
 		mounted() {
-			      this.filterMyProducts(this.getUserAuth.id);
+			this.filterMyProducts(this.getUserAuth.id);
 
 			this.setPageTitle('N-Facilidades');
 			const dateCreated = new Date();

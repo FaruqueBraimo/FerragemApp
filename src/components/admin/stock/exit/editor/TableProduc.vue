@@ -188,8 +188,9 @@
 						value: element,
 						label: this.users[element].name
 					});
-					this.OptionalUsers.push('Outros/Externo');
+				
 				});
+					this.OptionalUsers.push('Outros/Externo');
 			},
 
 			sumTotals() {

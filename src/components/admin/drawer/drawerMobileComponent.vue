@@ -2,7 +2,7 @@
 	<q-drawer
 		v-model="drawwerLeft"
 		show-if-above
-		:width="200"
+		:width="300"
 		:breakpoint="600"
 	>
 		<q-scroll-area
@@ -87,15 +87,16 @@
 		</q-scroll-area>
 		<q-img class="absolute-top bg-white" style="height: 150px ">
 			<div class="absolute-center bg-transparent">
-				<q-avatar size="56px" class="">
+				<q-avatar size="80px" class="q-pa-md text-center">
 					<img
+						class=""	
 						src="https://img.icons8.com/color/96/000000/user-male-circle.png"
 					/>
 				</q-avatar>
 				<div
-					class="text-white text-center text-black text-bold text-body1"
+					class="text-white text-center text-black text-bold q-pt-md text-body1"
 				>
-					@<small>{{ userName }}</small>
+					@<small> {{ userName }}</small>
 				</div>
 			</div>
 		</q-img>

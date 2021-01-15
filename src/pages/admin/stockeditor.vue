@@ -114,7 +114,8 @@
 						product:  this.exportedProducts,
 						user : this.user,
 						createdBy: this.getUserAuth.name,
-						statusDelivery : false
+						statusDelivery : false,
+						qtdSell : 0
 				});
 
 				 this.addStockExit(checkOut);

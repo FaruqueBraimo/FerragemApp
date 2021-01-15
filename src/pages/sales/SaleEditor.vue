@@ -1,10 +1,66 @@
 <template>
   <q-page  padding class="q-pa-md">
-        <table-produc
-        @removeChecked="removeChecked"
-        @findProductByName='addProductForSale'
-      
-        />
+        <TableProduc @findProductByName="addProductForExport" @findProductByCode ="findProductByCode"
+		 @user="user = $event" 
+		 @obs="obs =$event"
+	
+        
+		 
+		 />
+		<div class="q-pa-md q-mx-xl row justify-center">
+			<div class="col-4 justify-center">
+				 <q-btn-dropdown color="primary" label="Finalizar operação">
+     <q-list bordered padding class="rounded-borders text-primary q-pa-md">
+      <q-item
+        clickable
+        v-ripple
+        :active="link === 'inbox'"
+        @click="link = 'inbox'"
+        active-class="my-menu-link"
+      >
+        <q-item-section avatar>
+          <q-icon name="attach_money"  color="deep-orange"/>
+        </q-item-section>
+
+        <q-item-section class="text-deep-orange">Efectuar Vender</q-item-section>
+      </q-item>
+
+      <q-separator spaced />
+
+      <q-item
+        clickable
+        v-ripple
+        :active="link === 'outbox'"
+        @click="link = 'outbox'"
+        active-class="my-menu-link"
+      >
+        <q-item-section avatar>
+          <q-icon name="receipt" />
+        </q-item-section>
+
+        <q-item-section>Factura</q-item-section>
+      </q-item>
+
+      <q-item
+        clickable
+        v-ripple
+        :active="link === 'trash'"
+        @click="link = 'trash'"
+        active-class="my-menu-link"
+      >
+        <q-item-section avatar>
+          <q-icon name="book" />
+        </q-item-section>
+
+        <q-item-section>Cotacão</q-item-section>
+      </q-item>
+
+
+     
+    </q-list>
+    </q-btn-dropdown>
+			</div>
+		</div>
   </q-page>
 </template>
 
@@ -16,6 +72,7 @@ export default {
 		data() {
 			return {
 				search: '',
+				  link: 'inbox',
 				productChecked: {},
 				thumbStyle: {
 					right: '4px',

@@ -1,6 +1,6 @@
 <template>
 	<q-layout view="lHh Lpr lFf">
-		<q-header elevated class="bg-white">
+		<q-header elevated class="bg-blue-grey text-white q-pa-md">
 			<q-toolbar>
 				<q-btn
 					flat
@@ -10,11 +10,11 @@
 					@click="clickLeftDrawerOpen"
 					 :icon="icon"
 					aria-label="Menu"
-					color="black"
+					color="white"
 				/>
 				<q-space/>
 
-				<q-toolbar-title class="text-subtitle1 q-pl-md text-bold text-center text-grey-6">
+				<q-toolbar-title class="text-subtitle1 q-pl-md text-bold text-center ">
 					{{pageTitle}} 
 				</q-toolbar-title>
                 <q-space/>
