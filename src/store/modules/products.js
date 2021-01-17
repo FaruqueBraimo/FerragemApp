@@ -45,7 +45,7 @@ const mutations = {
 	},
 
 	updateQtdProduct(state, payload) {
-		console.log(this.text)
+	
 		 
 		Object.assign(state.exportedProducts[payload.id], payload.updates);
 

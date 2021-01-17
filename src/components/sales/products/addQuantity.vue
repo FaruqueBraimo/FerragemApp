@@ -8,7 +8,7 @@
 
 <script>
 	import { mapActions, mapState, mapGetters } from 'vuex';
-
+	
 	export default {
 		props: ['quantity', 'product' , 'id'],
 		data() {
@@ -27,39 +27,33 @@
                 this.text = this.quantity
             }
 		},
-
 		methods: {
 			
-			...mapActions('checkedProduct', [
-				'addCheckedProducts',
-				'removeChecked',
-				'incrementQuantity',
-                'decrementQuantity',
-                'addQuantity',
+			...mapActions('product', [
+				'updateQtdProduct',
+				
 			]),
-
-
-
         },
 
          watch: {
             text(val) {
-				if ( this.text >  ~~this.product.qtdWarehouse) {
+				if ( this.text >  ~~this.product.quantitySell) {
 
 					this.$q
 					.dialog({
 						title: 'Quantidade Inválida',
-						message: `O Produto ${this.product.name}  somente possui  ${this.product.qtdBalcony} unidades no balcão. 
-						Por favor, contacte o administrador para aumento de quantidade.
+						message: `O Produto ${this.product.name}  somente possui  ${this.product.qtdWarehouse} unidades no Armazêm. 
+						Por favor, aumente o stock, depois volte a tentar.
 						`,
 						ok: 'Sim',
 					})
 					.onOk(() => {
 					});
-				} else {
-					this.addQuantity(
+				} else  if (this.text <=  ~~this.product.quantitySell ){
+					
+					this.updateQtdProduct(
                         
-						{newQtd : this.text, id : this.id }
+						{ id : this.id, updates : {newQtd : this.text, subtotal : this.product.price_buy*this.text }  }
 					)
 					
 				}

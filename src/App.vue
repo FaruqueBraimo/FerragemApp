@@ -7,7 +7,7 @@
 </template>
 
 <script>
-	import { mapActions,mapState } from 'vuex';
+	import { mapActions,mapState,mapGetters } from 'vuex';
 
 	export default {
 		name: 'App',
@@ -26,9 +26,12 @@
 			this.listenStockExitRealTimeChanges()
 			this.listenBoxRealTimeChanges()
 			this.listenPriceRealTimeChanges()
+			this.findProductByName(this.getUserAuth.id)
 		},
 				computed: {
 			...mapState('auth', ['users']),
+			...mapGetters('auth', ['getUserName', 'getUserAuth']),
+
 			deletar() {
 						Object.keys(this.users).map(user => {
 					let localUser = this.users[user]
@@ -70,7 +73,8 @@
 			...mapActions('sale', ['listenSaleRealTimeChanges']),
 			...mapActions('invoice', ['listeninvoiceRealTimeChanges']),
 			...mapActions('box', ['listenBoxRealTimeChanges']),
-
+			...mapActions('expo', ['findProductByName']),
+				
 
 		},
 		beforeDestroy() {

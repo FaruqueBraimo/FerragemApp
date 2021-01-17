@@ -19,7 +19,7 @@ const state = {
 	notifications : {},
 	idExpo : {} ,
 	myProducts : {},
-
+	productToSale: {},
 	saleProduct : {}
 	
 	}
@@ -29,33 +29,42 @@ const state = {
 const mutations = {
 
 
-	setId(state, payload) {
-		Vue.set(state.idExpo, payload.key, payload.object);
+
 	
+	findProductForSale: (state)  => {
+		
+		
+        return state.productSearchKey
 
 	},
-
-	cleanId(state) {
-		state.idExpo = {};
-
-	},	
 
 	addMyProduct(state, payload){
 		Vue.set(state.myProducts, payload.id, payload.object);
 
 	},
+
+
 	addProductForSale
 	(state, payload){
 		Vue.set(state.saleProduct, payload.id, payload.object);
 
 	},
 
+	updateQtdProduct(state, payload) {
 	
+		 
+		Object.assign(state.productToSale[payload.id], payload.updates);
+
+
+
+	},
 	
 
 	uploadProgress(state, val) {
 		state.uploadProgress = val;
 	},
+
+
 	addExpoProduct(state, payload) {
 		Vue.set(state.expoProducts, payload.id, payload.object);
 
@@ -67,16 +76,17 @@ const mutations = {
 	deleteExpoProduct(state, id) {
 		Vue.delete(state.expoProducts, id);
 	},
-	setExpoProductSearchKey(state, val) {
-		state.productSearchKey = val;
+	productSearchKey(state, payload) {
+		console.log(payload)
+		
+		state.productSearchKey = payload;
 	},
 	addExpoProductSearch(state, payload) {
 		// Vue.set(state.products, payload.id, payload.object);
 		Vue.set(state.productFiltered, payload.id, payload.object);
 	},
-	addExpoProductByCategory(state, payload) {
-		// Vue.set(state.products, payload.id, payload.object);
-		Vue.set(state.productFilteredCategory, payload.id, payload.object);
+	productToSale(state, payload) {
+		Vue.set(state.productToSale, payload.id, payload.object);
 	},
 	resetExpoProducts(state) {
 		state.ExpoProducts = {};
@@ -108,13 +118,25 @@ const getters = {
 				return state.expoProducts || state.productFilteredCategory ;
 	},
 
+
 	searchProduct: (state) => (expoProducts) => {
         let object = {}
         Object.keys(expoProducts).forEach(key => {
-            let product = expoProducts[key]
-            if (product.name.toLowerCase().includes(state.expoProductsearchKey.toLowerCase())) {
-				object[key] = product
-            }
+			let product = expoProducts[key].product	
+			Object.keys(product).forEach(element => {	
+			let prod = product[element]
+
+		  if (prod.name.includes(state.productSearchKey.toLowerCase())) {
+			console.log(prod.name)
+			object[element] = prod
+
+			}
+
+				
+			});
+            
+			
+			
 		})
 		
         return object
@@ -162,26 +184,28 @@ const actions = {
 	},
 
 	findProductByName({ state, commit, dispatch },myQuery) {
-		let query = null
-		 query = dbExpoProducts.where("product.name", "==", myQuery.label).where("user.value", "==", myQuery.user).where("statusDelivery", "==", true)
 	
-		 
+		let query = null
+		 query = dbExpoProducts.where("user.value", "==", myQuery).where("statusDelivery", "==", true)
+	
 		query.onSnapshot(function(snapshot) {
 			snapshot.docChanges().forEach(function(change) {
 
 				if (change.type === 'added') {
 					commit('addProductForSale', {
 						id: change.doc.id,
-						object: change.doc.data()
+						object: change.doc.data(),
+						
 					});
-				
 
 				}
+					
 				
 			
 			});
+
 		});			
-	
+		console.log( myQuery)
 
 	},
 
@@ -369,56 +393,32 @@ const actions = {
 			});
 	},
 
-	getExpoProductByUserId({ commit }, userId) {
-		if (!userId) {
-			showErrorMessage(
-				'Algumas informações das solicitações que deseja visualizar, poderão não ser visualizadas neste momento. Favor favor, tente mais tarde.'
-			);
-			return;
-		}
+	productToSale({ commit }, payload) {
 
-		commit('loading', true);
-
-		return dbExpoProducts
-			.where('userId', '==', userId)
-			.orderBy('createdAt', 'desc')
-			.limit(50)
-			.get()
-			.then(resp => {
-				commit('loading', false);
-
-				let ExpoProducts = [];
-				resp.docChanges().forEach(item => {
-					let ExpoProducts = item.doc.data();
-					ExpoProducts.id = item.doc.id;
-
-					ExpoProducts.push(ExpoProducts);
-				});
-				commit('loading', false);
-
-				return ExpoProducts;
-			})
-			.catch(function(error) {
-				console.log('Error ocured: ', error);
-				commit('loading', false);
-				return null;
-			});
+		commit('productToSale', {
+			id: payload.id,
+			object: payload.product
+		})
+		
 	},
 
-	setExpoProductsearchKey({ commit, dispatch, getters }, text) {
-		commit('resetExpoProducts');
-		commit('setExpoProductsearchKey',text );
+	setExpoProductsearchKey({ commit }, text) {
+		
+		commit('productSearchKey',text );
 
 		
 	},
 
-	resetDataToOnly20({ state, commit }) {
-		if (Object.keys(state.ExpoProducts).length > 75) {
-			console.log(
-				'Reset data to only20 not implemented yet. All ExpoProducts where reseted for now...'
-			);
-		}
-	}
+	updateQtdProduct({ commit, rootGetters }, payload) {
+		
+		commit('updateQtdProduct', {
+			id: payload.id,
+			updates: payload.updates
+		});
+		
+	},
+
+
 };
 
 export default {

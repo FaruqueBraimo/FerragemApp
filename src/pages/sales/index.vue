@@ -242,7 +242,7 @@
 					product[element] = prod.product[element];
 					product[element].quantitySell =
 						prod.product[element].newQtd;
-					product[element].newQtd = 0;
+					
 
 					this.updateExpoProduct({
 						id: payload,

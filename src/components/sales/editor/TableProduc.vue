@@ -2,7 +2,7 @@
 	<div class="q-px-md">
 		<div class=" row   ">
 			<div class=" col-3 row justify-left q-pt-md q-mt-xl">
-				{{ fetchCustumers }} {{saleProduct}}
+				{{ fetchCustumers }} 
 				<div class="col ">
 					<q-input
 						v-model="codeProduct"
@@ -52,6 +52,12 @@
 							/>
 						</template>
 					</q-input>
+				<div class = 'row'>
+					<autoComplete
+					 :product='searchProduct(saleProduct)'
+				      v-if="nameProduct !== ''"
+					/>
+				</div>
 				</div>
 
 				<div class="col-2">
@@ -62,7 +68,11 @@
 						@click="findProductByName"
 					/>
 				</div>
+
+				
 			</div>
+
+			
 
 			<div class=" col  q-pt-xl q-mt-md q-pl-sm  ">
 				<q-select
@@ -73,6 +83,8 @@
 					filled
 					
 				>
+
+				
 
 		 <template v-slot:append>
           <q-btn round dense flat icon="add" @click.stop  />
@@ -115,6 +127,8 @@
 					</q-card-section>
 				</q-card>
 			</div>
+
+			{{findProductForSale}}
 		</div>
 
 		<q-markup-table>
@@ -128,9 +142,10 @@
 					<th class="text-left">Remover</th>
 				</tr>
 			</thead>
-			<tbody v-for="(product, index) in saleProduct" :key="index">
+			<tbody v-for="(product, index) in productToSale" :key="index">
 				<tr>
-					<td class="text-left">{{ product.code }}</td>
+
+					<td class="text-left">{{product.code }}</td>
 
 					<td class="text-left text-capitalize">{{ product.name }}</td>
 					<td class="text-left">
@@ -173,6 +188,7 @@
 	import { mapActions, mapState, mapGetters } from 'vuex';
 
 	import addQuantity from '../products/addQuantity';
+    import autoComplete from '../products/autoComplete';
 
 
 	export default {
@@ -194,10 +210,10 @@
 			]),
 
 			...mapState('customer', ['customers']),
-
-			...mapState('checkedProduct', ['checkedProducts']),
-
-			...mapState('expo', ['saleProduct']),
+	...mapGetters('expo', ['findProductForSale','searchProduct']),
+			...mapState('checkedProduct', ['checkedProducts']), 
+           ...mapGetters('expo', ['findProductForSale']),
+			...mapState('expo', ['saleProduct', 'productToSale']),
 			...mapState('product', ['exportedProducts']),
 
 			fetchCustumers() {
@@ -233,7 +249,7 @@
 			}
 		},
 		components: {
-			addQuantity
+			addQuantity,autoComplete
 		},
 		mounted() {
 			this.fetchCustumers;
@@ -246,6 +262,9 @@
 
 			value(val) {
 				this.$emit('value', val);
+			},
+			nameProduct(val) {
+				this.$emit('findProductByName', val.toLowerCase());
 			}
 		},
 

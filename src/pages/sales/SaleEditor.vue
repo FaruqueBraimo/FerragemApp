@@ -7,6 +7,8 @@
         
 		 
 		 />
+		  
+
 		<div class="q-pa-md q-mx-xl row justify-center">
 			<div class="col-4 justify-center">
 				 <q-btn-dropdown color="primary" label="Finalizar operação">
@@ -94,8 +96,9 @@ export default {
 		computed: {
 			...mapState('product', ['products', 'checkedProducts']),
 			...mapGetters('checkedProduct', ['getSubTotal']),
+			...mapGetters('expo', ['findProductForSale','searchProduct']),
 			...mapState('checkedProduct', ['checkedProducts']),
-			  ...mapState('expo', ['saleProduct']),
+			  ...mapState('expo', ['saleProduct', 'productSearchKey'] ),
 			           			...mapGetters('auth', ['getUserName', 'getUserAuth']),
 
 
@@ -105,7 +108,7 @@ export default {
 		},
 		methods: {
       ...mapActions('setting', ['setPageTitle']),
-      			...mapActions('expo', ['findProductByName']),
+      			...mapActions('expo', ['setExpoProductsearchKey']),
 
 			...mapActions('checkedProduct', [
 				'addCheckedProducts',
@@ -122,10 +125,7 @@ export default {
 
 
 			addProductForSale(payload) {
-
-					this.findProductByName( {
-						label : payload , user : this.getUserAuth.id
-					})
+					this.setExpoProductsearchKey(payload)
 
 
 			},
