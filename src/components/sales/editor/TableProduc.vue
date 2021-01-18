@@ -199,7 +199,7 @@
 				quantity: 1,
 				user: '',
 				OptionalUsers: [],
-				value : "",
+				value : 0,
 				change : '',
 				
 			};
@@ -275,7 +275,8 @@
 			},
 
 			value(val) {
-				this.$emit('value', val);
+				this.$emit('value', {value : ~~val, subtotal : this.sumTotals.sumMoney});
+
 			},
 			nameProduct(val) {
 				this.$emit('findProductByName', val.toLowerCase());
