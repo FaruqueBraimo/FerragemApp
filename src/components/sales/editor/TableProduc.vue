@@ -150,7 +150,6 @@
 					<td class="text-left text-capitalize">{{ product.name }}</td>
 					<td class="text-left">
 						<addQuantity
-							:quantity="product.newQtd"
 							:id="index"
 							:product="product"
 						/>

@@ -53,8 +53,9 @@ const mutations = {
 	updateQtdProduct(state, payload) {
 	
 		 
-		Object.assign(state.productToSale[payload.id], payload.updates);
-
+	Object.assign(state.productToSale[payload.id], payload.updates);
+	
+	console.log(state.productToSale[payload.id])
 
 
 	},
