@@ -110,7 +110,7 @@
 									>Valor Dado :
 								</q-item-section>
 								<q-item-section>
-									{{ value | 0 }}  ,00 MT
+									{{ value || 0 }}  ,00 MT
 								</q-item-section>
 							</q-item>
 
@@ -120,7 +120,7 @@
 									>Troco :
 								</q-item-section>
 								<q-item-section>
-									{{ value | 0 }}  ,00 MT
+									{{  getChance || 0 }}    ,00 MT
 								</q-item-section>
 							</q-item>
 						</q-list>
@@ -191,7 +191,7 @@
 
 
 	export default {
-		props: ['product', 'productChecked'],
+		props: ['product', 'productChecked','disable'],
 		data() {
 			return {
 				nameProduct: '',
@@ -199,7 +199,9 @@
 				quantity: 1,
 				user: '',
 				OptionalUsers: [],
-				value : ""
+				value : "",
+				change : '',
+				
 			};
 		},
 		computed: {
@@ -215,6 +217,19 @@
 			...mapState('expo', ['saleProduct', 'productToSale']),
 			...mapState('product', ['exportedProducts']),
 
+
+
+			getChance(){
+				let change  =  0
+				
+				if (this.value >= this.sumTotals.sumMoney ) {
+					change =  this.value - this.sumTotals.sumMoney 
+					this.$emit('disable' , !this.disable)
+
+				}else {
+				}
+				return change
+			},
 			fetchCustumers() {
 				Object.keys(this.customers).forEach((element, key) => {
 					this.OptionalUsers.push({
@@ -235,8 +250,8 @@
 				let sumMoney = 0;
 				let sumQtd = 0;
 
-				Object.keys(this.exportedProducts).forEach((element, key) => {
-					let product = this.exportedProducts[element];
+				Object.keys(this.productToSale).forEach((element, key) => {
+					let product = this.productToSale[element];
 					sumMoney = sumMoney + product.subtotal;
 					sumQtd = sumQtd + ~~product.newQtd;
 
@@ -268,7 +283,7 @@
 		},
 
 		methods: {
-			...mapActions('product', ['addCheckedProducts', 'removeChecked']),
+			...mapActions('expo', ['addCheckedProducts', 'removeChecked']),
 
 			addToCard(product) {
 				this.$emit('addToCard', product);

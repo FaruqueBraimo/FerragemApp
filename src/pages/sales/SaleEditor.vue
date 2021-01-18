@@ -3,15 +3,15 @@
         <TableProduc @findProductByName="addProductForSale" @findProductByCode ="findProductByCode"
 		 @user="user = $event" 
 		 @obs="obs =$event"
-	
-        
+		 @disable='disable = $event'
+		:disable='disable'
 		 
 		 />
 		  
 
 		<div class="q-pa-md q-mx-xl row justify-center">
 			<div class="col-4 justify-center">
-				 <q-btn-dropdown color="primary" label="Finalizar operação">
+				 <q-btn-dropdown color="primary" label="Finalizar operação" :disable ='disable'>
      <q-list bordered padding class="rounded-borders text-primary q-pa-md">
       <q-item
         clickable
@@ -83,6 +83,7 @@ export default {
 					width: '5px',
 					opacity: 0.75
 				},
+				disable : true,
 
 				barStyle: {
 					right: '2px',

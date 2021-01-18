@@ -62,6 +62,8 @@ const mutations = {
 	removeChecked(state, id) {
 		Vue.delete(state.exportedProducts, id);
 	},
+
+	
 	setProductSearchKey(state, val) {
 		state.productSearchKey = val;
 	},

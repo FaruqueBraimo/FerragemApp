@@ -55,9 +55,11 @@ const mutations = {
 		 
 	Object.assign(state.productToSale[payload.id], payload.updates);
 	
-	console.log(state.productToSale[payload.id])
 
+	},
 
+	removeChecked(state, id) {
+		Vue.delete(state.productToSale, id);
 	},
 	
 
@@ -418,6 +420,11 @@ const actions = {
 		});
 		
 	},
+
+	removeChecked({ state, commit }, id) {
+		commit('removeChecked',id );
+
+	}
 
 
 };
