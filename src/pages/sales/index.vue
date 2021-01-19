@@ -84,25 +84,6 @@
 			</div>
 		</div>
 
-		<!-- <div >
-			
-
-		
-
-			<div
-				class="text-center text-bold q-pt-xl text-grey-8 absolute-bottom"
-			>
-				<hr class="q-mb-sm" />
-				<div
-					class="row bg-primary text-white  absolute-bottom text-center justify-center q-pa-md "
-				>
-					Copyright ©2020 FSTOCK - N-FACILIDADES Sociedade Unipessoal
-					Lda. Todos Direitos Reservados. faruquebraimo@gmail.com /
-					846771216
-				</div>
-			</div>
-		</div> -->
-
 		<tamplate v-if="$q.platform.is.mobile">
 			<q-card class="my-card text-bold text-center " square flat>
 				<q-img src="/statics/welcome.png" basic> </q-img>
@@ -164,17 +145,7 @@
 				open: false,
 				updateCategory: false,
 				myBoxCash: 0,
-				check1: true,
-				check2: false,
-				check3: false,
 
-				notif1: true,
-				notif2: true,
-				notif3: false,
-
-				volume: 6,
-				brightness: 3,
-				mic: 8
 			};
 		},
 		components: {
@@ -309,8 +280,6 @@
 			}
 		},
 
-		updated() {},
-		updated() {},
 		mounted() {
 			this.filterMyProducts(this.getUserAuth.id);
 
@@ -330,10 +299,10 @@
 			} else {
 			}
 		},
+		
 		destroyed() {
 			this.setPageTitle('');
 		},
-		updated() {}
 	};
 </script>
 

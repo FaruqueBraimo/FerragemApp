@@ -20,7 +20,7 @@ const getters = {
 
     getLocalBoxStatus : state => {
         const boxStatus = localStorage.getItem('boxStatus');
-		let boxStatusParsed =boxStatus ? JSON.parse(boxStatus) : [];
+		let boxStatusParsed = boxStatus ? JSON.parse(boxStatus) : [];
         return boxStatusParsed.length > 0 ? boxStatusParsed[0] : null;
         
     }
