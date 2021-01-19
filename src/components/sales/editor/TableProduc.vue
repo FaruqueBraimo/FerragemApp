@@ -2,7 +2,7 @@
 	<div class="q-px-md">
 		<div class=" row   ">
 			<div class=" col-3 row justify-left q-pt-md q-mt-xl">
-				{{ fetchCustumers }} 
+				{{ fetchCustumers }}
 				<div class="col ">
 					<q-input
 						v-model="codeProduct"
@@ -52,12 +52,12 @@
 							/>
 						</template>
 					</q-input>
-				<div class = 'row'>
-					<autoComplete
-					 :product='searchProduct(saleProduct)'
-				      v-if="nameProduct !== ''"
-					/>
-				</div>
+					<div class="row">
+						<autoComplete
+							:product="searchProduct(saleProduct)"
+							v-if="nameProduct !== ''"
+						/>
+					</div>
 				</div>
 
 				<div class="col-2">
@@ -68,11 +68,7 @@
 						@click="findProductByName"
 					/>
 				</div>
-
-				
 			</div>
-
-			
 
 			<div class=" col  q-pt-xl q-mt-md q-pl-sm  ">
 				<q-select
@@ -81,15 +77,11 @@
 					dense
 					label="Cliente"
 					filled
-					
 				>
-
-				
-
-		 <template v-slot:append>
-          <q-btn round dense flat icon="add" @click.stop  />
-        </template>
-      </q-select>
+					<template v-slot:append>
+						<q-btn round dense flat icon="add" @click.stop />
+					</template>
+				</q-select>
 			</div>
 
 			<div class="col-4 q-pa-md">
@@ -105,22 +97,17 @@
 								</q-item-section>
 							</q-item>
 
-							<q-item >
-								<q-item-section
-									>Valor Dado :
-								</q-item-section>
+							<q-item>
+								<q-item-section>Valor Dado : </q-item-section>
 								<q-item-section>
-									{{ value || 0 }}  ,00 MT
+									{{ value || 0 }} ,00 MT
 								</q-item-section>
 							</q-item>
 
-
 							<q-item class="text-deep-orange">
-								<q-item-section
-									>Troco :
-								</q-item-section>
+								<q-item-section>Troco : </q-item-section>
 								<q-item-section>
-									{{  getChance || 0 }}    ,00 MT
+									{{ getChance || 0 }} ,00 MT
 								</q-item-section>
 							</q-item>
 						</q-list>
@@ -128,7 +115,7 @@
 				</q-card>
 			</div>
 
-			{{findProductForSale}}
+			{{ findProductForSale }}
 		</div>
 
 		<q-markup-table>
@@ -137,22 +124,20 @@
 					<th class="text-left text-bold">Codigo</th>
 					<th class="text-left">producto</th>
 					<th class="text-left">Quantidade</th>
-					<th class="text-left">Preco Unitário</th>
+					<th class="text-left"><q-select  dense :options="['A grosso','A Retalho']" label="Preco" filled /></th>
 					<th class="text-left">Subtototal</th>
 					<th class="text-left">Remover</th>
 				</tr>
 			</thead>
 			<tbody v-for="(product, index) in productToSale" :key="index">
 				<tr>
+					<td class="text-left">{{ product.code }}</td>
 
-					<td class="text-left">{{product.code }}</td>
-
-					<td class="text-left text-capitalize">{{ product.name }}</td>
+					<td class="text-left text-capitalize">
+						{{ product.name }}
+					</td>
 					<td class="text-left">
-						<addQuantity
-							:id="index"
-							:product="product"
-						/>
+						<addQuantity :id="index" :product="product" />
 					</td>
 					<td class="text-left">{{ product.price_buy }} ,00 MT</td>
 
@@ -173,12 +158,27 @@
 		</q-markup-table>
 
 		<div class="row justify-end q-pt-md">
-			 <q-input
-			 label="Valor dado"
-      filled
-	  v-model="value"
-      autogrow
-    />
+			<div class="col-3 q-px-sm">
+				<!-- <q-input label="Valor dado" class="text-center text-bold " filled v-model="value" autogrow /> -->
+
+		<q-toolbar class="bg-blue-grey text-white rounded-borders">
+        <q-avatar class="gt-xs">
+			<q-icon name="attach_money" />
+        </q-avatar>
+
+        <q-space />
+
+        <q-input dark dense standout v-model="value"  label=" Valor Dado" input-class="text-right" class="q-ml-md">
+          
+        </q-input>
+      </q-toolbar>
+
+
+			</div>
+
+				<div class="col-1 q-mt-xs">
+				<q-input label="Desconto" filled v-model="desc" dense input-class="text-right " />
+			</div>
 		</div>
 	</div>
 </template>
@@ -187,11 +187,10 @@
 	import { mapActions, mapState, mapGetters } from 'vuex';
 
 	import addQuantity from '../products/addQuantity';
-    import autoComplete from '../products/autoComplete';
-
+	import autoComplete from '../products/autoComplete';
 
 	export default {
-		props: ['product', 'productChecked','disable'],
+		props: ['product', 'productChecked', 'disable'],
 		data() {
 			return {
 				nameProduct: '',
@@ -199,9 +198,9 @@
 				quantity: 1,
 				user: '',
 				OptionalUsers: [],
-				value : 0,
-				change : '',
-				
+				value: 0,
+				change: '',
+				desc : 0
 			};
 		},
 		computed: {
@@ -211,24 +210,21 @@
 			]),
 
 			...mapState('customer', ['customers']),
-	...mapGetters('expo', ['findProductForSale','searchProduct']),
-			...mapState('checkedProduct', ['checkedProducts']), 
-           ...mapGetters('expo', ['findProductForSale']),
+			...mapGetters('expo', ['findProductForSale', 'searchProduct']),
+			...mapState('checkedProduct', ['checkedProducts']),
+			...mapGetters('expo', ['findProductForSale']),
 			...mapState('expo', ['saleProduct', 'productToSale']),
 			...mapState('product', ['exportedProducts']),
 
+			getChance() {
+				let change = 0;
 
-
-			getChance(){
-				let change  =  0
-				
-				if (this.value >= this.sumTotals.sumMoney ) {
-					change =  this.value - this.sumTotals.sumMoney 
-					this.$emit('disable' , !this.disable)
-
-				}else {
+				if (this.value >= this.sumTotals.sumMoney) {
+					change = this.value - this.sumTotals.sumMoney;
+					this.$emit('disable', !this.disable);
+				} else {
 				}
-				return change
+				return change;
 			},
 			fetchCustumers() {
 				Object.keys(this.customers).forEach((element, key) => {
@@ -236,13 +232,8 @@
 						value: element,
 						label: this.customers[element].name
 					});
-					
 				});
-				this.OptionalUsers.push(
-
-
-
-				);
+				this.OptionalUsers.push();
 			},
 
 			sumTotals() {
@@ -252,10 +243,13 @@
 
 				Object.keys(this.productToSale).forEach((element, key) => {
 					let product = this.productToSale[element];
-					sumMoney = sumMoney + product.subtotal;
+					sumMoney = sumMoney + product.subtotal ;
 					sumQtd = sumQtd + ~~product.newQtd;
 
-					totals.sumMoney = sumMoney;
+					if(this.desc < sumMoney) {
+totals.sumMoney = sumMoney - this.desc   ;
+					}
+					
 					totals.sumQtd = sumQtd;
 				});
 
@@ -263,7 +257,8 @@
 			}
 		},
 		components: {
-			addQuantity,autoComplete
+			addQuantity,
+			autoComplete
 		},
 		mounted() {
 			this.fetchCustumers;
@@ -275,8 +270,10 @@
 			},
 
 			value(val) {
-				this.$emit('value', {value : ~~val, subtotal : this.sumTotals.sumMoney});
-
+				this.$emit('value', {
+					value: ~~val,
+					subtotal: this.sumTotals.sumMoney 
+				});
 			},
 			nameProduct(val) {
 				this.$emit('findProductByName', val.toLowerCase());
@@ -292,7 +289,6 @@
 
 			findProductByName() {
 				this.$emit('findProductByName', this.nameProduct.toLowerCase());
-
 			},
 
 			findProductByCode() {
@@ -314,4 +310,3 @@
 		}
 	};
 </script>
-

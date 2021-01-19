@@ -228,17 +228,19 @@
 			},
 
 			openBox() {
-				if (this.getLocalBoxStatus != null) {
-					this.$q
-						.dialog({
-							title: 'Turno Fechado',
-							message:
-								'Não foi possivel abrir o turno,Volte a tentar amanhã'
-						})
-						.onOk(() => {});
-				} else {
+			// if (this.getLocalBoxStatus != null) {
+			// 		this.$q
+			// 			.dialog({
+			// 				title: 'Turno Fechado',
+			// 				message:
+			// 					'Não foi possivel abrir o turno,Volte a tentar amanhã'
+			// 			})
+			// 			.onOk(() => {});
+			// 	} else {
+				
+			// 	}
+
 					this.open = true;
-				}
 			},
 
 			closeBox() {
@@ -253,9 +255,7 @@
 							this.$q
 								.dialog({
 									title: 'Confirme',
-									message: `Tem certeza que deseja fechar o caixa? 
-										Isto irá  interromper as actividades do dia!
-										`,
+									message: `Tem certeza que deseja fechar o caixa?`,
 									ok: 'Sim',
 									cancel: true,
 									cancel: 'Não',
@@ -282,22 +282,8 @@
 
 		mounted() {
 			this.filterMyProducts(this.getUserAuth.id);
-
 			this.setPageTitle('N-Facilidades');
-			const dateCreated = new Date();
-			let date2 =
-				this.getLocalBoxStatus != null
-					? new Date(this.getLocalBoxStatus.data)
-					: new Date();
-			const unit = 'day';
-			// date2 = date.addToDate(date2, { days: 7, month: 1 })
-			const eguality = date.isSameDate(dateCreated, date2, unit);
-
-			if (eguality == false) {
-				localStorage.setItem('boxStatus', []);
-				this.$router.go();
-			} else {
-			}
+		
 		},
 		
 		destroyed() {
