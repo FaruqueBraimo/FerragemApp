@@ -100,6 +100,8 @@
 			...mapState('checkedProduct', ['checkedProducts']),
 			...mapState('expo', ['saleProduct', 'productSearchKey']),
 			...mapGetters('auth', ['getUserName', 'getUserAuth']),
+						...mapState('box', ['boxs']),
+
 
 			getStatus() {
 			
@@ -131,6 +133,8 @@
 				'removeChecked',
 				'updateCheckedProducts'
 			]),
+						...mapActions('box', ['addBox', 'editBox']),
+
 
 			makeSale() {
 				let saleObject = {};
@@ -146,7 +150,7 @@
 					
 				this.addSale(saleDone);
 				
-				// this.updateCash(this.value.subtotal);
+				 this.updateCash(this.value.subtotal);
 
 				this.$q
 					.dialog({
@@ -159,6 +163,25 @@
 						this.$router.go()
 					});
 			},
+
+			updateCash(newChas) {
+				Object.keys(this.boxs).forEach(element => {
+					let box = this.boxs[element];
+					const oldChash = box.value;
+
+					if (
+						box.createdBy.id === this.getUserAuth.id &&
+						box.status
+					) {
+						this.editBox({
+							id: element,
+							updates: { value: ~~oldChash + ~~newChas }
+						});
+					}
+				});
+			},
+
+
 
 			findProductByCode() {},
 

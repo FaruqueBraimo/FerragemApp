@@ -19,34 +19,88 @@
 			</div>
 		</div>
 
+
+
+<q-card class="my-card q-mx-xl " square 	v-if="getBoxStatus">
+	<q-card-section >
+		<div id="printMe" >
+			
+			<div class="row q-pa-sm text-bold ">
+				<div class="col text-h6 text-bold text-center">
+					Caixa 
+				</div>
+				
+
+			</div>
+
+			<div class="row q-pa-sm text-indigo ">
+				<div class="col">Dinheiro :</div>
+				<div class="col text-right text-bold q-pr-md">
+					{{
+						MyBox.value
+					}}, 00MT
+				</div>
+			</div>
+
+			<div class="row q-pa-sm ">
+				<div class="col">Hora de abertura:</div>
+				<div class="col text-right q-pr-md">
+					{{ MyBox.createdAt  | dateFormat  }}
+				</div>
+			</div>
+
+			<div class="row q-pa-sm ">
+				<div class="col">Vendedor:</div>
+				<div class="col text-right q-pr-md">
+					{{ MyBox.createdBy.name || ''   }}
+				</div>
+			</div>
+
+			<hr class="text-center q-ma-sm" />
+
+			<div class="row q-pa-sm ">
+				<div class="col text-bold">Estado :</div>
+				<div v-if="MyBox.status" class="col text-right text-green q-pr-md">
+					Aberto
+				</div>
+				<div v-else class="col text-right text-red q-pr-md">
+					Fechado
+				</div>
+			</div>
+		</div>
+		</div>
+		<div class="q-pt-md row  col-6" >
+			<q-btn
+				
+				class=" full-width"
+				unelevated
+					v-if="MyBox.status"
+				label="Fechar"
+	@click="closeBox()"
+	push
+				
+						color="red-5"
+						icon="close"
+			
+			/>
+		</div>
+		</div>
+	</q-card-section>
+	
+	
+</q-card>	
+
+
+
+
+
+
+
 		<div class="row justify-center" v-if="$q.platform.is.desktop">
 			<div class="col-6">
+
 				<q-card flat class="">
-					
-						
-						<div
-							class="text-deep-purple text-bold text-center"
-							v-if="getBoxStatus"
-						>
-							Dinheiro no Caixa : {{ myBoxCash }} , 00 MT
-						</div>
-					
-					<div class="  row  q-pt-md ">
-						<div class="col-12">
-							<q-btn
-								color="red-5"
-								no-caps
-								class=" q-pa-xs full-width text-body1"
-								unelevated
-								icon="close"
-								v-if="getBoxStatus"
-								label="Fechar Caixa"
-								@click="closeBox()"
-								push
-								
-							/>
-						</div>
-					</div>
+				
 					<openBoxComponent
 						:open="open"
 						@emitData="addBox"
@@ -84,52 +138,7 @@
 			</div>
 		</div>
 
-		<tamplate v-if="$q.platform.is.mobile">
-			<q-card class="my-card text-bold text-center " square flat>
-				<q-img src="/statics/welcome.png" basic> </q-img>
-			</q-card>
-			<div class=" text-subtitle2 text-center">
-				Bem Vindo
-			</div>
-
-			<div class="q-pa-md">
-				<q-btn
-					color="deep-purple"
-					no-caps
-					class=" full-width"
-					unelevated
-					v-if="!getBoxStatus"
-					icon="open_in_browser"
-					label="Abrir Caixa"
-					@click="openBox()"
-				/>
-				<div
-					class="text-deep-purple text-bold text-center"
-					v-if="getBoxStatus"
-				>
-					Dinheiro no Caixa : {{ myBoxCash }} , 00 MT
-				</div>
-			</div>
-
-			<div class="q-px-md">
-				<q-btn
-					color="red-5"
-					no-caps
-					class=" full-width"
-					unelevated
-					v-if="getBoxStatus"
-					icon="close"
-					label="Fechar Caixa"
-					@click="closeBox()"
-				/>
-			</div>
-
-			<openBoxComponent
-				:open="open"
-				@emitData="addBox"
-				@closeDialog="open = false"
-			/>
-		</tamplate>
+	
 	</q-page>
 </template>
 
@@ -144,7 +153,8 @@
 			return {
 				open: false,
 				updateCategory: false,
-				myBoxCash: 0,
+				MyBox: {},
+				count: 0
 
 			};
 		},
@@ -176,7 +186,7 @@
 				let status = false;
 
 				if (this.boxs) {
-					Object.keys(this.boxs).forEach(element => {
+					Object.keys(this.boxs).forEach((element, index) => {
 						let box = this.boxs[element];
 
 						if (
@@ -184,7 +194,9 @@
 							box.status
 						) {
 							status = true;
-							this.myBoxCash = box.value;
+
+							this.MyBox = box;
+							this.count = index
 						}
 					});
 				}
@@ -285,6 +297,34 @@
 			this.setPageTitle('N-Facilidades');
 		
 		},
+		filters: {
+			dateFormat(val) {
+				if (val ) {
+
+				
+				var months = [
+					'Janeiro',
+					'Fevereiro',
+					'Março',
+					'Abril',
+					'Maio',
+					'Junho',
+					'Julho',
+					'Agosto',
+					'Setembro',
+					'Outubro',
+					'Novembro',
+					'Dezembro'
+				];
+				let dateCreated = new Date(val.seconds * 1000);
+				return (
+					dateCreated.getHours() +
+					'h' + ':' +
+					dateCreated.getMinutes()
+					
+				);
+			}
+		}},
 		
 		destroyed() {
 			this.setPageTitle('');

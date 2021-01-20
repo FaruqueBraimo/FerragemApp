@@ -7,4 +7,5 @@ export function showMobileSuccessMessage(successMessage) {
         actions: [{ icon: 'close', color: 'white' }]
     })
 
+    
 }

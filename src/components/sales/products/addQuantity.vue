@@ -1,19 +1,32 @@
 <template>
-	<div class="">
-        {{getQuantity}} 
-		<q-input v-model="qtd" type="number"   dense filled outlined   />
-       
+	<div class="row">
+		{{ getQuantity }}
+
+		<div class="col-6 ">
+			<q-select
+				v-model="price"
+				dense
+				:options="['Grosso', 'Retalho']"
+				label="Venda A"
+				filled
+			/>
+		</div>
+
+		<div class="col-6 q-px-md">
+			<q-input v-model="qtd" type="number" dense filled outlined />
+		</div>
 	</div>
 </template>
 
 <script>
 	import { mapActions, mapState, mapGetters } from 'vuex';
-	
+
 	export default {
-		props: ['quantity', 'product' , 'id'],
+		props: ['quantity', 'product', 'id'],
 		data() {
 			return {
-				qtd: 1
+				qtd: 1,
+				price: 'Retalho'
 			};
 		},
 		computed: {
@@ -21,52 +34,69 @@
 				'getCheckedProducts',
 				'checkIncludes'
 			]),
-            ...mapState('checkedProduct', ['checkedProducts']),
-            
-            getQuantity(){
-            }
+			...mapState('checkedProduct', ['checkedProducts']),
+
+			getQuantity() {}
 		},
 		methods: {
-			
-			...mapActions('expo', [
-				'updateQtdProduct',
-				
-			]),
-        },
+			...mapActions('expo', ['updateQtdProduct'])
+		},
 
-         watch: {
-            qtd(val) {
+		watch: {
+			price(val) {
+				if (val) {
+					this.$emit('price', val);
 
-				if (val.length > 0 )  {
-
-			
-
-		if ( val >  ~~this.product.quantitySell) {
-
-					this.$q
-					.dialog({
-						title: 'Quantidade Inválida',
-						message: `O Produto ${this.product.name}  somente possui  ${this.product.quantitySell} unidades no Armazêm. 
+					if (this.qtd > ~~this.product.quantitySell) {
+						this.$q
+							.dialog({
+								title: 'Quantidade Inválida',
+								message: `O Produto ${this.product.name}  somente possui  ${this.product.quantitySell} unidades no Armazêm. 
 						Por favor, aumente o stock, depois volte a tentar.
 						`,
-						ok: 'Sim',
-					})
-					.onOk(() => {
-					});
-				} else  if (val <=  ~~this.product.quantitySell ){
-					
-					this.updateQtdProduct(
-                        
-						{ id : this.id, updates : {newQtd : val , subtotal : this.product.price_buy*val }  }
-					)
-
-					
+								ok: 'Sim'
+							})
+							.onOk(() => {});
+					} else if (this.qtd <= ~~this.product.quantitySell) {
+						this.updateQtdProduct({
+							id: this.id,
+							updates: {
+								newQtd: this.qtd,
+								subtotal:
+									this.price == 'Retalho'
+										? this.product.price_buy * this.qtd
+										: this.product.grosso * this.qtd
+							}
+						});
+					}
 				}
-				
-                	 
-
-            }		
-        }
-       	}	
+			},
+			qtd(val) {
+				if (val.length > 0) {
+					if (val > ~~this.product.quantitySell) {
+						this.$q
+							.dialog({
+								title: 'Quantidade Inválida',
+								message: `O Produto ${this.product.name}  somente possui  ${this.product.quantitySell} unidades no Armazêm. 
+						Por favor, aumente o stock, depois volte a tentar.
+						`,
+								ok: 'Sim'
+							})
+							.onOk(() => {});
+					} else if (val <= ~~this.product.quantitySell) {
+						this.updateQtdProduct({
+							id: this.id,
+							updates: {
+								newQtd: val,
+								subtotal:
+									this.price == 'Retalho'
+										? this.product.price_buy * val
+										: this.product.grosso * val
+							}
+						});
+					}
+				}
+			}
+		}
 	};
 </script>

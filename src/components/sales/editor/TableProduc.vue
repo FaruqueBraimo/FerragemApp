@@ -123,8 +123,8 @@
 				<tr>
 					<th class="text-left text-bold">Codigo</th>
 					<th class="text-left">producto</th>
-					<th class="text-left">Quantidade</th>
-					<th class="text-left"><q-select  dense :options="['A grosso','A Retalho']" label="Preco" filled /></th>
+					<th class="text-center text-bold">  Tipo de Venda || Quantidade</th>
+					<th class="text-left">Preco</th>
 					<th class="text-left">Subtototal</th>
 					<th class="text-left">Remover</th>
 				</tr>
@@ -137,11 +137,11 @@
 						{{ product.name }}
 					</td>
 					<td class="text-left">
-						<addQuantity :id="index" :product="product" />
+						<addQuantity :id="index" :product="product" @price='price = $event' />
 					</td>
-					<td class="text-left">{{ product.price_buy }} ,00 MT</td>
+					<td class="text-left">{{ price == 'Retalho' ? product.price_buy : product.grosso  }} ,00 MT</td>
 
-					<td class="text-left">{{ product.subtotal }} ,00 MT</td>
+					<td class="text-left">{{  product.subtotal }} ,00 MT</td>
 
 					<td>
 						<q-btn
@@ -200,7 +200,8 @@
 				OptionalUsers: [],
 				value: 0,
 				change: '',
-				desc : 0
+				desc : 0,
+				price: ''
 			};
 		},
 		computed: {
