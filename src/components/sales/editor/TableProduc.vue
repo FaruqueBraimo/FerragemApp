@@ -5,6 +5,7 @@
 				{{ fetchCustumers }}
 				<div class="col ">
 					<q-input
+					disable
 						v-model="codeProduct"
 						dense
 						debounce="300"
@@ -27,6 +28,7 @@
 					<q-btn
 						color="primary"
 						outline
+						disable
 						label="OK"
 						@click="findProductByCode"
 					/>

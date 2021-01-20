@@ -19,7 +19,7 @@
 					</q-item-section>
 				</q-item>
 
-				<q-item clickable v-ripple to="/sales/editor" exact>
+				<q-item clickable v-ripple to="/sales/editor" exact :disable='!getBoxStatus'>
 					<q-item-section avatar>
 						<q-icon name="local_grocery_store" />
 					</q-item-section>
@@ -29,14 +29,23 @@
 					</q-item-section>
 				</q-item>
 
-				<q-item clickable v-ripple to="/sales/products" exact 	> 
+				<q-item clickable v-ripple to="/sales/accept" exact :disable='Object.keys(getProductToAccept).length == 0'	> 
 					<q-item-section avatar>
 						<q-icon name="assignment" />
 					</q-item-section>
 
-					<q-item-section>
-						Produtos {{getBoxStatus}}
-					</q-item-section>
+					
+					<div class="row"> 
+						<span class="q-pt-sm q-pr-md">Novos Produtos</span>  	
+						  <q-spinner-rings
+						  v-if="Object.keys(getProductToAccept).length > 0"
+							color="deep-orange"
+							size="2.9em"
+							
+							/>
+
+						</div>
+
 				</q-item>
 
 				<q-item clickable v-ripple to="/sales/invoices">
@@ -120,12 +129,30 @@
 		computed: {
 		...mapState('box', ['boxs']),
 			...mapGetters('auth', ['getUserName', 'getUserAuth']),
+			...mapState('expo', ['expoProducts', 'myProducts']),
+
+			getProductToAccept() {
+					let myProducts = {};
+				Object.keys(this.myProducts).forEach(element => {
+					let prod = this.myProducts[element];
+
+					if (!prod.statusDelivery) {
+						myProducts[element] = prod;
+					}
+				});
+
+				return myProducts;
+
+			
+			},
+
+
 
 			getBoxStatus() {
 				let status = false;
 
 				if (this.boxs) {
-					Object.keys(this.boxs).forEach(element => {
+					Object.keys(this.boxs).forEach((element, index) => {
 						let box = this.boxs[element];
 
 						if (
@@ -133,12 +160,12 @@
 							box.status
 						) {
 							status = true;
-							this.disable = false
+
 						}
 					});
 				}
 
-			
+				return status;
 			}
 		},
 

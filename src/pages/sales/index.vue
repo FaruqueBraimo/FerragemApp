@@ -109,33 +109,7 @@
 				</q-card>
 			</div>
 
-			<div class="row q-pa-md">
-				<div class="col-12 q-pl-lg text-bold">
-					{{
-						Object.keys(getProductToAccept).length > 0
-							? `Foram enviados produtos para ti, por favor aceite ou recuse!`
-							: ``
-					}}
-				</div>
-
-				<div class="" style="">
-					<div class="row  justify-left q-pa-md q-ma-sm">
-						<div
-							class=" col-6  "
-							v-for="(exported, index) in getProductToAccept"
-							:key="index"
-						>
-							<productToAccept
-								:exported="
-									Object.assign({ id: index }, exported)
-								"
-								:id="index"
-								@accept="accept"
-							/>
-						</div>
-					</div>
-				</div>
-			</div>
+			
 		</div>
 
 	
@@ -196,7 +170,6 @@
 							status = true;
 
 							this.MyBox = box;
-							this.count = index
 						}
 					});
 				}
