@@ -146,18 +146,7 @@
 				>
 					<q-card>
 						<q-list class="text-body1">
-						<q-item clickable v-ripple disable>
-							<q-item-section avatar>
-								<q-icon
-									color="primary"
-									name="assignment_turned_in"
-								/>
-							</q-item-section>
-							<q-item-section>
-		
-								<p>De Stock</p>
-							</q-item-section>
-						</q-item>
+						
 
 						<q-item to="reportSale" v-ripple>
 							<q-item-section avatar>
