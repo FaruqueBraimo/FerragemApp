@@ -87,7 +87,7 @@
 						this.updateQtdProduct({
 							id: this.id,
 							updates: {
-								newQtd: val,
+								newQtd2: val,
 								subtotal:
 									this.price == 'Retalho'
 										? this.product.price_buy * val

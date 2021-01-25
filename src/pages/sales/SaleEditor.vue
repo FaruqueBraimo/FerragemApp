@@ -81,6 +81,9 @@
 	import { mapActions, mapState, mapGetters } from 'vuex';
 
 	import TableProduc from '../../components/sales/editor/TableProduc';
+	import jsPDF from 'jspdf';
+	import autoTable from 'jspdf-autotable';
+
 	export default {
 		data() {
 			return {
@@ -89,7 +92,9 @@
 				productChecked: {},
 				disable: true,
 				value: {},
+				product: [],
 				change: ''
+				
 			};
 		},
 		computed: {
@@ -145,8 +150,9 @@
 					{ products: this.productToSale }
 				);
 
-				this.addSale(saleDone);
-				this.updateQuantity();
+				// this.addSale(saleDone);
+				// this.updateQuantity();
+				this.printSale();
 
 				this.updateCash(this.value.subtotal);
 
@@ -158,7 +164,7 @@
 						ok: 'Ok'
 					})
 					.onOk(() => {
-						this.$router.go();
+						// this.$router.go();
 					});
 			},
 
@@ -219,18 +225,18 @@
 						Object.keys(this.productToSale).forEach(element3 => {
 
 							
-							prodSale[element3] = this.productToSale[element3];
+							prodSale = this.productToSale[element3];
+
 
 							if (element == element3) {
-							 	product[element].quantitySell -= this.productToSale[element3].newQtd
+							 	product[element].quantitySell -= this.productToSale[element3].newQtd2
 							
-								// this.updateExpoProduct({
-								// 	id: element2,
-								// 	updates: {
-								// 		product: product
-								// 	}
-								// });
-								console.log(this.productToSale.newQtd)
+								this.updateExpoProduct({
+									id: element2,
+									updates: {
+										product: product
+									}
+								});
 							}
 						});
 
@@ -240,6 +246,80 @@
 			},
 
 			findProductByCode() {},
+
+
+			printSale() {
+
+								var doc = new jsPDF ('p', 'mm', [80,100]);
+	var columns = [
+					{ title: 'Nome', dataKey: 'id' },
+					{ title: 'Quantidade', dataKey: 'name' },
+					{ title: 'Subtotal', dataKey: 'country' }
+				];
+
+		let		 body = [
+
+  ]
+
+  Object.keys(this.productToSale).forEach(element3 => {
+let prod = {} 
+prod = this.productToSale[element3];
+
+  	body.push({
+					id: prod.name.replace(/\w\S*/g, w =>
+							w.replace(/^\w/, c => c.toUpperCase())
+						),
+						name: prod.newQtd,
+						country:
+							new Intl.NumberFormat().format(prod.subtotal) +
+							' MT'
+
+				});
+
+				});					
+
+this.user ? this.user : 'Não Informado';
+									const label = `Recibo do cliente ${
+					this.user ? this.user.label : 'Não Informado'
+				}`;
+
+
+				var width = doc.internal.pageSize.getWidth()
+doc.text('N-Facilidades', width/2, 20, { align: 'center' })
+
+        doc.setFont('courier')
+					.setFontSize(11)
+
+
+doc.text(3, 25,'--------------------------------',  )
+
+doc.autoTable(columns, body, {
+					margin: { top: 27 , left : 1 , right : 1 },
+					showHead: 'firstPage',
+					theme: 'plain',
+					styles: { halign: 'center' ,font : 'courier' },
+					
+
+					
+				});
+
+
+
+// doc.autoTable({html: '#table'});
+let finalY = doc.lastAutoTable.finalY; // The y position on the page
+doc.text(20, finalY, "!")
+
+doc.text(3, finalY+5,'--------------------------------',  )
+
+
+
+
+				
+				doc.save(label + '.pdf');
+
+
+			},
+
 
 			addProductForSale(payload) {
 				this.setExpoProductsearchKey(payload);
