@@ -23,7 +23,7 @@
 			<th class="text-center " style="font-weight: bold">Balconista</th>
 
 			<th class="text-center " style="font-weight: bold">Data de saída</th>
-			<th class="text-center " style="font-weight: bold">Status de Entrega</th>
+			<!-- <th class="text-center " style="font-weight: bold">Status de Entrega</th> -->
 			<th class="text-center " style="font-weight: bold">Admin</th>
 
 			<th class="text-left  " style="font-weight: bold">Acção</th>

@@ -130,8 +130,10 @@ const getters = {
 			let prod = product[element]
 
 		  if (prod.name.includes(state.productSearchKey.toLowerCase())) {
-			console.log(prod.name)
-			object[element] = prod
+				if(prod.quantitySell > 1) {
+					object[element] = prod
+
+				} 
 
 			}
 

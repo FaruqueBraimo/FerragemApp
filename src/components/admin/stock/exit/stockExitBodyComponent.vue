@@ -1,7 +1,7 @@
 <template>
 	<tr>
 		<td class="text-left">
-			<div class="q-pa-md">
+			<div class="q-pa-sm">
 				<q-expansion-item
 					v-model="expanded"
 					icon="local_grocery_store"
@@ -49,10 +49,10 @@
 			{{ stock.createdAt | dateFormat }}
 		</td>
 
-		<td class="text-center text-primary" v-if="stock.statusDelivery">
+		<!-- <td class="text-center text-primary" v-if="stock.statusDelivery">
 			Aceite
 		</td>
-		<td class="text-center text-red-5" else>Pendente</td>
+		<td class="text-center text-red-5" else>Pendente</td> -->
 		<td class="text-center ">{{ stock.createdBy }}</td>
 
 		<td class=" text-center ">
