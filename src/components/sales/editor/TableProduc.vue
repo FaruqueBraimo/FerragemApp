@@ -215,7 +215,7 @@
 			...mapState('customer', ['customers']),
 			...mapGetters('expo', ['findProductForSale', 'searchProduct']),
 			...mapState('checkedProduct', ['checkedProducts']),
-			...mapGetters('expo', ['findProductForSale']),
+			
 			...mapState('expo', ['saleProduct', 'productToSale']),
 			...mapState('product', ['exportedProducts']),
 

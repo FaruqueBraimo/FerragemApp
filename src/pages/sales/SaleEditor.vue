@@ -121,6 +121,32 @@
 				} else {
 					this.disable = true;
 				}
+			},
+
+					getDateTime () {
+				var months = [
+					'Jan',
+					'Fev',
+					'Mar',
+					'Abr',
+					'Mai',
+					'Jun',
+					'Jul',
+					'Agost',
+					'Set',
+					'Out',
+					'Nov',
+					'Dez'
+				];
+				let dateCreated = new Date();
+				return (
+					dateCreated.getDate() +
+					' ' +
+					months[dateCreated.getMonth()] +
+					' ' +
+					dateCreated.getFullYear()
+				);
+
 			}
 		},
 		components: {
@@ -150,8 +176,8 @@
 					{ products: this.productToSale }
 				);
 
-				// this.addSale(saleDone);
-				// this.updateQuantity();
+				this.addSale(saleDone);
+				this.updateQuantity();
 				this.printSale();
 
 				this.updateCash(this.value.subtotal);
@@ -164,7 +190,7 @@
 						ok: 'Ok'
 					})
 					.onOk(() => {
-						// this.$router.go();
+						this.$router.go();
 					});
 			},
 
@@ -181,7 +207,7 @@
 
 				this.updateQuantity();
 
-				// this.addInvoice(invoiceDone);
+				 this.addInvoice(invoiceDone);
 				this.$q
 					.dialog({
 						title: 'Fatura Emitida ',
@@ -285,16 +311,25 @@ this.user ? this.user : 'Não Informado';
 
 
 				var width = doc.internal.pageSize.getWidth()
-doc.text('N-Facilidades', width/2, 20, { align: 'center' })
+doc.text('N-Facilidades', width/2, 8, { align: 'center' })
 
         doc.setFont('courier')
 					.setFontSize(11)
 
 
+
+doc.text(8, 15,'Data : '  )
+doc.text(25, 15,this.getDateTime  )
+
+
+
+doc.text(8, 20,'Vendedor: '  )
+doc.text(30, 20,this.getUserAuth.name  )
+
 doc.text(3, 25,'--------------------------------',  )
 
 doc.autoTable(columns, body, {
-					margin: { top: 27 , left : 1 , right : 1 },
+					margin: { top: 28 , left : 1 , right : 1 },
 					showHead: 'firstPage',
 					theme: 'plain',
 					styles: { halign: 'center' ,font : 'courier' },
@@ -307,12 +342,37 @@ doc.autoTable(columns, body, {
 
 // doc.autoTable({html: '#table'});
 let finalY = doc.lastAutoTable.finalY; // The y position on the page
-doc.text(20, finalY, "!")
-
-doc.text(3, finalY+5,'--------------------------------',  )
 
 
+doc.text(3, finalY+5,'--------------------------------' )
 
+
+doc.text(8, finalY+10,'Total : '  )
+const total = new Intl.NumberFormat().format(this.value.subtotal) +
+							' MT'
+doc.text(60, finalY+10, total.toString()  )
+
+
+doc.text(8, finalY+15,'Valor Dado : ' )
+const value = new Intl.NumberFormat().format(this.value.value) +
+							' MT'
+doc.text(60, finalY+15, value.toString()  )
+
+
+doc.text(8, finalY+20,'Troco : '  )
+const operator = this.value.value-this.value.subtotal 
+const change = new Intl.NumberFormat().format(operator) +
+							' MT'
+doc.text(60, finalY+20, change.toString()  )
+
+
+
+
+doc.text(3,  finalY+30,'--------------------------------',  )
+
+ doc.setFont('Helvetica')
+					.setFontSize(15)
+doc.text(30,  finalY+38,'Obrigado!',  )
 
 				
 				doc.save(label + '.pdf');
