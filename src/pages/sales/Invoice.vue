@@ -140,6 +140,7 @@
 		methods: {
 			...mapActions('setting', ['setPageTitle']),
 			...mapActions('invoice', ['addInvoice', 'removeChecked']),
+			
 			...mapActions('checkedProduct', ['emptyChecked']),
 			...mapActions('product', ['updateProduct']),
 

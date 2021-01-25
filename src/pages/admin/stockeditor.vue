@@ -89,6 +89,7 @@
 				let quantity = 0;
 				Object.keys(this.products).forEach((element, key) => {
 					Object.keys(this.exportedProducts).forEach(element2 => {
+						
 						if (element == element2) {
 							let product = this.products[element];
 							quantity =

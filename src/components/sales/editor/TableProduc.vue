@@ -2,7 +2,7 @@
 	<div class="q-px-md">
 		<div class=" row   ">
 			<div class=" col-3 row justify-left q-pt-md q-mt-xl">
-				{{ fetchCustumers }}
+				{{ fetchCustumers }} 
 				<div class="col ">
 					<q-input
 					disable
