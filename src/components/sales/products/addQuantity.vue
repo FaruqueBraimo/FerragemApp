@@ -88,6 +88,9 @@
 							id: this.id,
 							updates: {
 								newQtd2: val,
+								priceType : this.price == 'Retalho'
+										? this.product.price_buy 
+										: this.product.grosso ,
 								subtotal:
 									this.price == 'Retalho'
 										? this.product.price_buy * val

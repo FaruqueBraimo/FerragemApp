@@ -15,7 +15,7 @@
 				<q-btn-dropdown
 					color="primary"
 					label="Finalizar operação"
-					:disable="disable"
+					
 				>
 					<q-list
 						bordered
@@ -24,6 +24,7 @@
 					>
 						<q-item
 							clickable
+							:disable="disable"
 							v-ripple
 							:active="link === 'inbox'"
 							active-class="my-menu-link"
@@ -60,8 +61,8 @@
 						<q-item
 							clickable
 							v-ripple
+								@click="printInvoice('Cotação')"
 							:active="link === 'trash'"
-							@click="link = 'trash'"
 							active-class="my-menu-link"
 						>
 							<q-item-section avatar>
@@ -94,7 +95,14 @@
 				value: {},
 				product: [],
 				change: '',
-				body: []
+				body: [],
+					moreText: [
+					`Loja      : N-facilidades - Vendas & Serviços`,
+					`Local     : Milange - Zambezia`,
+					`Nuit      : 401151192 `,
+					`Contacto  : 864023773`,
+					`Prazo Pagamento : `
+				]
 			};
 		},
 		computed: {
@@ -215,7 +223,7 @@
 						ok: 'Ok'
 					})
 					.onOk(() => {
-						this.printInvoice();
+						this.printInvoice('Factura');
 					});
 			},
 
@@ -269,6 +277,7 @@
 				var doc = new jsPDF('p', 'mm', [80, 100]);
 				var columns = [
 					{ title: 'Nome', dataKey: 'id' },
+					{ title: 'Preço ', dataKey: 'price' },
 					{ title: 'Quantidade', dataKey: 'name' },
 					{ title: 'Subtotal', dataKey: 'country' }
 				];
@@ -283,10 +292,12 @@
 						id: prod.name.replace(/\w\S*/g, w =>
 							w.replace(/^\w/, c => c.toUpperCase())
 						),
+
 						name: prod.newQtd,
+						price : new Intl.NumberFormat().format( prod.priceType || 0) ,	
 						country:
-							new Intl.NumberFormat().format(prod.subtotal) +
-							' MT'
+							new Intl.NumberFormat().format(prod.subtotal) 
+							
 					});
 				});
 
@@ -347,23 +358,24 @@
 				doc.text(3, finalY + 30, '--------------------------------');
 
 				doc.setFont('Helvetica').setFontSize(11);
-				doc.text(20, finalY + 38, 'Obrigado - 845488304    ');
+				doc.text(20, finalY + 38, 'Obrigado - 864023773    ');
 
 				doc.save(label + '.pdf');
 			},
 
-			printInvoice() {
+			printInvoice(type) {
 				var columns = [
 					{ title: 'Nome', dataKey: 'id' },
+						{ title: 'Preço ', dataKey: 'price' },
 					{ title: 'Quantidade', dataKey: 'name' },
 					{ title: 'Subtotal', dataKey: 'country' }
 				];
 
 				var summary = [
 					{ title: 'Subtotal', dataKey: 'sub' },
-					{ title: 'Data de Exportação', dataKey: 'data' },
-					{ title: 'Exportado Para', dataKey: 'user' },
-					{ title: 'Exportado Por', dataKey: 'admin' }
+					{ title: 'Data ', dataKey: 'data' },
+					{ title: 'Cliente', dataKey: 'user' },
+					{ title: 'Balconista', dataKey: 'admin' }
 				];
 				var rows = [];
 
@@ -375,7 +387,10 @@
 						id: prod.name.replace(/\w\S*/g, w =>
 							w.replace(/^\w/, c => c.toUpperCase())
 						),
+						price : new Intl.NumberFormat().format( prod.priceType || 0) ,	
+
 						name: prod.newQtd,
+
 						country:
 							new Intl.NumberFormat().format(prod.subtotal) +
 							' MT'
@@ -387,7 +402,7 @@
 						new Intl.NumberFormat().format(this.value.subtotal) +
 						' MT',
 					data: this.getDateTime,
-					admin: this.this.getUserAuth.name,
+					admin: this.getUserAuth.name,
 					user: this.user ? this.user.label : 'Não Informado'
 				});
 				var doc = new jsPDF('p', 'pt');
@@ -396,7 +411,7 @@
 				doc.text(
 					20,
 					40,
-					`                             Relatório de Entrega de Produtos                      `
+					`                                ${type} de Entrega de Produtos                      `
 				);
 
 				doc.line(35, 45, 550, 45);
@@ -407,12 +422,12 @@
 
 				doc.autoTable(summary, this.body, {
 					styles: { fillColor: [16, 18, 33] },
-					margin: { top: 120 },
+					margin: { top: 135 },
 					beforePageContent: function(data) {}
 				});
 
 				doc.autoTable(columns, rows, {
-					margin: { top: 120 },
+					margin: { top: 135 },
 					beforePageContent: function(data) {}
 				});
 
@@ -426,7 +441,7 @@
 					);
 
 				this.user ? this.user : 'Não Informado';
-				const label = `Fatura do cliente ${
+				const label = `${type} do cliente ${
 					this.user ? this.user.label : 'Não Informado'
 				}`;
 
