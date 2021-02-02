@@ -93,8 +93,8 @@
 				disable: true,
 				value: {},
 				product: [],
-				change: ''
-				
+				change: '',
+				body: []
 			};
 		},
 		computed: {
@@ -123,7 +123,7 @@
 				}
 			},
 
-					getDateTime () {
+			getDateTime() {
 				var months = [
 					'Jan',
 					'Fev',
@@ -146,7 +146,6 @@
 					' ' +
 					dateCreated.getFullYear()
 				);
-
 			}
 		},
 		components: {
@@ -196,6 +195,7 @@
 			},
 
 			makeInvoice() {
+				this.updateQuantity();
 				let invoiceObject = {};
 				invoiceObject.invoicesMan = this.getUserAuth.id;
 				invoiceObject.client = this.user ? this.user : 'Não Informado';
@@ -206,9 +206,7 @@
 					{ products: this.productToSale }
 				);
 
-				this.updateQuantity();
-
-				 this.addInvoice(invoiceDone);
+				this.addInvoice(invoiceDone);
 				this.$q
 					.dialog({
 						title: 'Fatura Emitida ',
@@ -217,8 +215,7 @@
 						ok: 'Ok'
 					})
 					.onOk(() => {
-						 this.$router.go()
-						
+						this.printInvoice();
 					});
 			},
 
@@ -252,7 +249,8 @@
 						Object.keys(this.productToSale).forEach(element3 => {
 							prodSale = this.productToSale[element3];
 							if (element == element3) {
-							 	product[element].quantitySell -= this.productToSale[element3].newQtd2 || 1						
+								product[element].quantitySell -=
+									this.productToSale[element3].newQtd2 || 1;
 								this.updateExpoProduct({
 									id: element2,
 									updates: {
@@ -261,126 +259,180 @@
 								});
 							}
 						});
-
-						
 					});
 				});
 			},
 
 			findProductByCode() {},
 
-
 			printSale() {
-
-								var doc = new jsPDF ('p', 'mm', [80,100]);
-	var columns = [
+				var doc = new jsPDF('p', 'mm', [80, 100]);
+				var columns = [
 					{ title: 'Nome', dataKey: 'id' },
 					{ title: 'Quantidade', dataKey: 'name' },
 					{ title: 'Subtotal', dataKey: 'country' }
 				];
 
-		let		 body = [
+				let body = [];
 
-  ]
+				Object.keys(this.productToSale).forEach(element3 => {
+					let prod = {};
+					prod = this.productToSale[element3];
 
-  Object.keys(this.productToSale).forEach(element3 => {
-let prod = {} 
-prod = this.productToSale[element3];
-
-  	body.push({
-					id: prod.name.replace(/\w\S*/g, w =>
+					body.push({
+						id: prod.name.replace(/\w\S*/g, w =>
 							w.replace(/^\w/, c => c.toUpperCase())
 						),
 						name: prod.newQtd,
 						country:
 							new Intl.NumberFormat().format(prod.subtotal) +
 							' MT'
-
+					});
 				});
 
-				});					
-
-this.user ? this.user : 'Não Informado';
-									const label = `Recibo do cliente ${
+				this.user ? this.user : 'Não Informado';
+				const label = `Recibo do cliente ${
 					this.user ? this.user.label : 'Não Informado'
 				}`;
 
-
-
-var width = doc.internal.pageSize.getWidth()
-doc.text('N-Facilidades', width/2, 8, { align: 'center' })
-doc.setFontSize(11)
-doc.text('Vendas e Serviços', width/2, 12, { align: 'center' })
-
-
-
-
-        doc.setFont('courier')
-					.setFontSize(11)
-
-
-
-doc.text(8, 18,'Data : '  )
-doc.text(25, 18,this.getDateTime  )
-
-
-doc.text(8, 23,'Vendedor: '  )
-doc.text(30, 23,this.getUserAuth.name  )
-
-doc.text(3, 28,'--------------------------------',  )
-
-doc.autoTable(columns, body, {
-					margin: { top: 30 , left : 1 , right : 1 },
-					showHead: 'firstPage',
-					theme: 'plain',
-					styles: { halign: 'center' ,font : 'courier' },
-					
-
-					
+				var width = doc.internal.pageSize.getWidth();
+				doc.text('N-Facilidades', width / 2, 8, { align: 'center' });
+				doc.setFontSize(11);
+				doc.text('Vendas & Serviços', width / 2, 12, {
+					align: 'center'
 				});
 
+				doc.setFont('courier').setFontSize(11);
 
+				doc.text(8, 18, 'Nuit :   401151192 ');
 
-// doc.autoTable({html: '#table'});
-let finalY = doc.lastAutoTable.finalY; // The y position on the page
+				doc.text(8, 22, 'Data : ');
+				doc.text(30, 22, this.getDateTime);
 
+				doc.text(8, 26, 'Vendedor: ');
+				doc.text(30, 26, this.getUserAuth.name);
 
-doc.text(3, finalY+5,'--------------------------------' )
+				doc.text(8, 30, 'Cliente: ');
+				doc.text(30, 30, this.user ? this.user.label : 'Não Informado');
 
+				doc.text(3, 34, '--------------------------------');
 
-doc.text(8, finalY+10,'Total : '  )
-const total = new Intl.NumberFormat().format(this.value.subtotal) +
-							' MT'
-doc.text(45, finalY+10, total.toString()  )
+				doc.autoTable(columns, body, {
+					margin: { top: 34, left: 1, right: 1 },
+					showHead: 'firstPage',
+					theme: 'plain',
+					styles: { halign: 'center', font: 'courier' }
+				});
 
+				// doc.autoTable({html: '#table'});
+				let finalY = doc.lastAutoTable.finalY; // The y position on the page
 
-doc.text(8, finalY+15,'Valor Dado : ' )
-const value = new Intl.NumberFormat().format(this.value.value) +
-							' MT'
-doc.text(45, finalY+15, value.toString()  )
+				doc.text(3, finalY + 5, '--------------------------------');
 
+				doc.text(8, finalY + 10, 'Total : ');
+				const total =
+					new Intl.NumberFormat().format(this.value.subtotal) + ' MT';
+				doc.text(45, finalY + 10, total.toString());
 
-doc.text(8, finalY+20,'Troco : '  )
-const operator = this.value.value-this.value.subtotal 
-const change = new Intl.NumberFormat().format(operator) +
-							' MT'
-doc.text(45, finalY+20, change.toString()  )
+				doc.text(8, finalY + 15, 'Valor Dado : ');
+				const value =
+					new Intl.NumberFormat().format(this.value.value) + ' MT';
+				doc.text(45, finalY + 15, value.toString());
 
+				doc.text(8, finalY + 20, 'Troco : ');
+				const operator = this.value.value - this.value.subtotal;
+				const change = new Intl.NumberFormat().format(operator) + ' MT';
+				doc.text(45, finalY + 20, change.toString());
 
+				doc.text(3, finalY + 30, '--------------------------------');
 
+				doc.setFont('Helvetica').setFontSize(11);
+				doc.text(20, finalY + 38, 'Obrigado - 845488304    ');
 
-doc.text(3,  finalY+30,'--------------------------------',  )
-
- doc.setFont('Helvetica')
-					.setFontSize(15)
-doc.text(30,  finalY+38,'Obrigado!',  )
-
-				
 				doc.save(label + '.pdf');
-
-
 			},
 
+			printInvoice() {
+				var columns = [
+					{ title: 'Nome', dataKey: 'id' },
+					{ title: 'Quantidade', dataKey: 'name' },
+					{ title: 'Subtotal', dataKey: 'country' }
+				];
+
+				var summary = [
+					{ title: 'Subtotal', dataKey: 'sub' },
+					{ title: 'Data de Exportação', dataKey: 'data' },
+					{ title: 'Exportado Para', dataKey: 'user' },
+					{ title: 'Exportado Por', dataKey: 'admin' }
+				];
+				var rows = [];
+
+				Object.keys(this.productToSale).forEach(element3 => {
+					let prod = {};
+					prod = this.productToSale[element3];
+
+					rows.push({
+						id: prod.name.replace(/\w\S*/g, w =>
+							w.replace(/^\w/, c => c.toUpperCase())
+						),
+						name: prod.newQtd,
+						country:
+							new Intl.NumberFormat().format(prod.subtotal) +
+							' MT'
+					});
+				});
+
+				this.body.push({
+					sub:
+						new Intl.NumberFormat().format(this.value.subtotal) +
+						' MT',
+					data: this.getDateTime,
+					admin: this.this.getUserAuth.name,
+					user: this.user ? this.user.label : 'Não Informado'
+				});
+				var doc = new jsPDF('p', 'pt');
+
+				doc.setFontSize(15);
+				doc.text(
+					20,
+					40,
+					`                             Relatório de Entrega de Produtos                      `
+				);
+
+				doc.line(35, 45, 550, 45);
+
+				doc.setFont('helvetica')
+					.setFontSize(12)
+					.text(this.moreText, 45, 70);
+
+				doc.autoTable(summary, this.body, {
+					styles: { fillColor: [16, 18, 33] },
+					margin: { top: 120 },
+					beforePageContent: function(data) {}
+				});
+
+				doc.autoTable(columns, rows, {
+					margin: { top: 120 },
+					beforePageContent: function(data) {}
+				});
+
+				doc.setFont('times')
+					.setFontSize(11)
+
+					.text(
+						'Processado Por Computador  N-Facilidades',
+						20,
+						doc.internal.pageSize.height - 10
+					);
+
+				this.user ? this.user : 'Não Informado';
+				const label = `Fatura do cliente ${
+					this.user ? this.user.label : 'Não Informado'
+				}`;
+
+				doc.save(label + '.pdf');
+				this.body = [];
+			},
 
 			addProductForSale(payload) {
 				this.setExpoProductsearchKey(payload);

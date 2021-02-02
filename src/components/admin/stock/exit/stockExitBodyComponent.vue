@@ -204,7 +204,7 @@
 
 				
 
-				this.body.push({
+				body.push({
 					sub: new Intl.NumberFormat().format(this.sumTotals.sumMoney) + ' MT',
 					data: this.getDateTime,
 					admin: this.stock.createdBy,

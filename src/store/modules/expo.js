@@ -134,6 +134,7 @@ const getters = {
 					object[element] = prod
 
 				} 
+				
 
 			}
 
@@ -372,6 +373,7 @@ const actions = {
 			.then(function(docRef) {
 				commit('loading', false);
 			
+	
 				return true;
 			})
 			.catch(function(error) {
