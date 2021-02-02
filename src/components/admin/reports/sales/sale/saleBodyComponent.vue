@@ -104,7 +104,7 @@
 				'sales',
 			]),
 			
-				...mapState('user', [
+				...mapState('auth', [
 				'users',
             ]),
 		},
