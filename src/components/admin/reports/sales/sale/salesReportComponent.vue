@@ -10,7 +10,7 @@
     <q-card >
 			<q-card-section class="row items-center">
 				<div class="text-h6 text-left col " > Relatorios de Vendas </div>
-				<div class="text-h6 text-cyan-10 col text-center" > Dinheiro Arrecadado  : {{  getTotalFilteredMoney|| getTotalMoney }}, 00 MT </div>
+				<!-- <div class="text-h6 text-cyan-10 col text-center" > Dinheiro Arrecadado  : {{  getTotalFilteredMoney|| getTotalMoney }}, 00 MT </div> -->
 
 				<q-space />
 				<q-btn

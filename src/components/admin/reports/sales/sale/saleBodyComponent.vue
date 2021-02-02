@@ -17,7 +17,7 @@
 				</div>
 			</div>
 
-				<div class="row q-pa-sm" v-for="i in sale.products" :key="i" >
+				<!-- <div class="row q-pa-sm" v-for="i in sale.products" :key="i" >
 					<div class="col">{{ i.payload.name }}</div>
 
 					<div class="col text-right q-pr-md">
@@ -28,25 +28,16 @@
 						{{ i.payload.price }},00 MT
 					</div>
 			
-			</div>
+			</div> -->
 			<hr class="text-center q-ma-sm" />
 
-			<div class="row q-pa-sm  ">
-				<div class="col-6 text-left">
-					Desconto de Iva :
-				</div>
-				<div class="col text-right q-pr-md">
-					{{ sale.details.iva || 0 }}
-				</div>
-			</div>
 
 			<div class="row q-pa-sm ">
 				<div class="col">Cliente :</div>
 				<div class="col text-right q-pr-md">
 					{{
 						sale.details.client
-							? sale.details.client.label
-							: 'Nao informado'
+							
 					}}
 				</div>
 			</div>
@@ -61,7 +52,7 @@
 			<div class="row q-pa-sm ">
 				<div class="col">Vendedor:</div>
 				<div class="col text-right q-pr-md">
-					{{ sale.details.salesMan.name || ''   }}
+					{{  users[sale.details.salesMan].name || ''   }}
 				</div>
 			</div>
 
@@ -111,6 +102,10 @@
 		computed: {
 				...mapState('sale', [
 				'sales',
+			]),
+			
+				...mapState('user', [
+				'users',
             ]),
 		},
 		mounted() {
