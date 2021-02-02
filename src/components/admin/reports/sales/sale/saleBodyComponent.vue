@@ -17,18 +17,18 @@
 				</div>
 			</div>
 
-				<!-- <div class="row q-pa-sm" v-for="i in sale.products" :key="i" >
-					<div class="col">{{ i.payload.name }}</div>
+				<div class="row q-pa-sm" v-for="i in sale.products" :key="i" >
+					<div class="col">{{ i.name }}</div>
 
 					<div class="col text-right q-pr-md">
-						{{ i.payload.qtdUnit }}
+						{{ i.newQtd }}
 					</div>
 
 					<div class="col text-right q-pr-md">
-						{{ i.payload.price }},00 MT
+						{{ i.price_buy }},00 MT
 					</div>
 			
-			</div> -->
+			</div>
 			<hr class="text-center q-ma-sm" />
 
 
