@@ -170,7 +170,7 @@
 
         <q-space />
 
-        <q-input dark dense standout v-model="value"  type="number" label=" Valor Dado" input-class="text-right" class="q-ml-md q-pa-sm">
+        <q-input dark dense standout v-model="value"   type="number" label=" Valor Dado" input-class="text-right" class="q-ml-md q-pa-sm">
           
         </q-input>
       </q-toolbar>

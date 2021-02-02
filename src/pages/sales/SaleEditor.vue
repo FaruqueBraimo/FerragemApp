@@ -166,6 +166,8 @@
 			...mapActions('box', ['addBox', 'editBox']),
 
 			makeSale() {
+				this.updateQuantity();
+
 				let saleObject = {};
 				saleObject.salesMan = this.getUserAuth.id;
 				saleObject.client = this.user ? this.user : 'Não Informado';
@@ -177,7 +179,6 @@
 				);
 
 				this.addSale(saleDone);
-				this.updateQuantity();
 				this.printSale();
 
 				this.updateCash(this.value.subtotal);
@@ -190,7 +191,7 @@
 						ok: 'Ok'
 					})
 					.onOk(() => {
-						this.$router.go();
+						// this.$router.go();
 					});
 			},
 
@@ -249,14 +250,9 @@
 					Object.keys(prod.product).forEach(element => {
 						product[element] = prod.product[element];
 						Object.keys(this.productToSale).forEach(element3 => {
-
-							
 							prodSale = this.productToSale[element3];
-
-
 							if (element == element3) {
-							 	product[element].quantitySell -= this.productToSale[element3].newQtd2
-							
+							 	product[element].quantitySell -= this.productToSale[element3].newQtd2 || 1						
 								this.updateExpoProduct({
 									id: element2,
 									updates: {
@@ -310,26 +306,31 @@ this.user ? this.user : 'Não Informado';
 				}`;
 
 
-				var width = doc.internal.pageSize.getWidth()
+
+var width = doc.internal.pageSize.getWidth()
 doc.text('N-Facilidades', width/2, 8, { align: 'center' })
+doc.setFontSize(11)
+doc.text('Vendas e Serviços', width/2, 12, { align: 'center' })
+
+
+
 
         doc.setFont('courier')
 					.setFontSize(11)
 
 
 
-doc.text(8, 15,'Data : '  )
-doc.text(25, 15,this.getDateTime  )
+doc.text(8, 18,'Data : '  )
+doc.text(25, 18,this.getDateTime  )
 
 
+doc.text(8, 23,'Vendedor: '  )
+doc.text(30, 23,this.getUserAuth.name  )
 
-doc.text(8, 20,'Vendedor: '  )
-doc.text(30, 20,this.getUserAuth.name  )
-
-doc.text(3, 25,'--------------------------------',  )
+doc.text(3, 28,'--------------------------------',  )
 
 doc.autoTable(columns, body, {
-					margin: { top: 28 , left : 1 , right : 1 },
+					margin: { top: 30 , left : 1 , right : 1 },
 					showHead: 'firstPage',
 					theme: 'plain',
 					styles: { halign: 'center' ,font : 'courier' },
@@ -350,20 +351,20 @@ doc.text(3, finalY+5,'--------------------------------' )
 doc.text(8, finalY+10,'Total : '  )
 const total = new Intl.NumberFormat().format(this.value.subtotal) +
 							' MT'
-doc.text(60, finalY+10, total.toString()  )
+doc.text(45, finalY+10, total.toString()  )
 
 
 doc.text(8, finalY+15,'Valor Dado : ' )
 const value = new Intl.NumberFormat().format(this.value.value) +
 							' MT'
-doc.text(60, finalY+15, value.toString()  )
+doc.text(45, finalY+15, value.toString()  )
 
 
 doc.text(8, finalY+20,'Troco : '  )
 const operator = this.value.value-this.value.subtotal 
 const change = new Intl.NumberFormat().format(operator) +
 							' MT'
-doc.text(60, finalY+20, change.toString()  )
+doc.text(45, finalY+20, change.toString()  )
 
 
 
