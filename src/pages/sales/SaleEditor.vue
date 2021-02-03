@@ -179,7 +179,7 @@
 				saleObject.salesMan = this.getUserAuth.id;
 				saleObject.client = this.user ? this.user : 'Não Informado';
 				saleObject.value = this.value.value;
-
+				saleObject.total = 	 this.value.subtotal;
 				let saleDone = Object.assign(
 					{ details: saleObject },
 					{ products: this.productToSale }

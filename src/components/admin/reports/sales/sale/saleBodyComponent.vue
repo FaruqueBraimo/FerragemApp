@@ -61,7 +61,7 @@
 			<div class="row q-pa-sm ">
 				<div class="col text-bold">Total :</div>
 				<div class="col text-right q-pr-md">
-					{{ sale.details.subtotal || 0 }} ,00 MT
+					{{ sale.details.total || 0 }} ,00 MT
 				</div>
 			</div>
 		</div>

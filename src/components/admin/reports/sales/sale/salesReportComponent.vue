@@ -32,6 +32,7 @@
 			<sale-header-component
 				class="q-pa-sm"
 				@filterCategory="setSalesearchKey"
+			     @filterCategory="userSelected"
 			/>
                 </q-markup-table>		
 		

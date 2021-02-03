@@ -38,26 +38,24 @@
                     <div class=" col  q-ml-md justify-right text-right">
 						<q-select
 							dense
-							label="Por Funcionário "
+							label="Por Balconista "
 							square
-							disable
 							filled
+							v-model="userSelected"
 							:options="optionalUsers"
 						/>
 						
 					</div>
 
                     <div class=" col q-ml-md justify-right text-right">
-					<q-input  disable filled v-model="date" placeholder='Data aleatoria' dense>
-                        <template v-slot:append>
-                            <q-icon name="event" class="cursor-pointer">
-                            <q-popup-proxy transition-show="scale" transition-hide="scale">
-                                <q-date v-model="date" mask="DD-MM-YYYY "  />
-                            </q-popup-proxy>
-                            </q-icon>
-                        </template>
-                        
-	  </q-input>
+				<q-select
+							dense
+							label="Por Produto	 "
+							square
+							
+							filled
+							:options="optionalUsers"
+						/>
 						
 					</div>
 					
@@ -80,7 +78,8 @@
                 filterCategory :'',
                 date: '',
                 optionalTrade: ['Mais Vendidos'],
-                optionalUsers: [],
+				optionalUsers: [],
+				userSelected: ''
 
 
 			};
@@ -92,7 +91,8 @@
 		},
 		methods: {
 			...mapActions('product', ['listenProductRealTimeChanges']),
-        	fetchUsers() {
+			
+			fetchUsers() {
 				Object.keys(this.users).forEach((element, key) => {
 					this.optionalUsers.push({
 						value: element,
@@ -122,6 +122,13 @@
 			filterCategory(val) {
 				if (val) {
 				this.$emit('filterCategory', val)	
+				}
+			},
+
+
+			userSelected(val) {
+				if (val) {
+				this.$emit('userSelected', val)	
 				}
 			}
 		}
