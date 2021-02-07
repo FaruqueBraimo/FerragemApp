@@ -16,51 +16,39 @@
 				</div>
 			</div>
 
-				<div class="row q-pa-sm" v-for="i in invoice.produts" :key="i" >
-					<div class="col">{{ i.payload.name }}</div>
+				<div class="row q-pa-sm" v-for="i in invoice.products" :key="i" >
+						<div class="col">{{ i.name }}</div>
 
 					<div class="col text-right q-pr-md">
-						{{ i.payload.qtdUnit }}
+						{{ i.newQtd }}
 					</div>
 
 					<div class="col text-right q-pr-md">
-						{{ i.payload.price }},00 MT
+						{{ i.price_buy }},00 MT
 					</div>
+			
 			
 			</div>
 			<hr class="text-center q-ma-sm" />
 
-			<div class="row q-pa-sm  ">
-				<div class="col-6 text-left">
-					Desconto de Iva :
-				</div>
-				<div class="col text-right q-pr-md">
-					{{ invoice.details.iva || 0 }}
-				</div>
-			</div>
-
+		
 			<div class="row q-pa-sm ">
 				<div class="col">Cliente :</div>
 				<div class="col text-right q-pr-md">
 					{{
 						invoice.details.client
-							? invoice.details.client.label
-							: 'Nao informado'
+							
 					}}
 				</div>
 			</div>
 
-			<div class="row q-pa-sm ">
-				<div class="col">Prazo de pagamento:</div>
-				<div class="col text-right q-pr-md">
-					{{ invoice.details.deadline  || 'Nenhum' }}
-				</div>
-			</div>
+		
 
 			<div class="row q-pa-sm ">
-				<div class="col text-teal" v-if ='invoice.details.status'>Situação:</div>
+				<div class="col text-teal" v-if ='!invoice.details.status'>Situação:</div>
 				<div class="col text-red-5" v-else>Situação:</div>
-				<div class="col text-right text-teal q-pr-md" v-if ='invoice.details.status'>
+
+				<div class="col text-right text-teal q-pr-md" v-if ='!invoice.details.status'>
 				    Paga
 				</div>
 
@@ -74,22 +62,12 @@
 			<div class="row q-pa-sm ">
 				<div class="col text-bold">Total :</div>
 				<div class="col text-right q-pr-md">
-					{{ invoice.details.subtotal || 0 }} ,00 MT
+					{{ invoice.details.total || 0 }} ,00 MT
 				</div>
 			</div>
 		</div>
 		<div class="row">
-		<div class="q-pt-md col " >
-			<q-btn
-				color="teal"
-				no-caps
-				class=" "
-				unelevated
-				icon="receipt"
-				label="Imprimir"
-				@click="printTable"
-			/>
-		</div>
+		
 		<div class="q-pt-md col " >
 			<q-btn
 			
@@ -98,7 +76,9 @@
 				unelevated
 				icon="done"
 				label=" Paga ?  "
-				disable
+				v-if="invoice.details.status"
+		
+				@click="pagar(invoice)"
 			/>
 		</div>
 
@@ -142,10 +122,18 @@
 		},
 		methods: {
 			...mapActions('settings', ['setGlobalConfirm']),
-			...mapActions('invoice', ['updateinvoice']),
+			...mapActions('invoice', ['editInvoice']),
 				
-			printTable() {
-				this.$htmlToPaper('printMe');
+			pagar(val) {
+
+			
+			val.details.status = false	
+
+
+			this.editInvoice({
+				id : val.id,
+				updates : {details : val.details }
+			})
 			},
 		},
 		filters: {

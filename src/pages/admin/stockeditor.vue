@@ -7,6 +7,7 @@
         
 		 
 		 />
+		 {{expoProducts}}
 		<div class="q-pa-md q-mx-xl row justify-center">
 			<div class="col-4 justify-center">
 				<q-btn
@@ -47,7 +48,7 @@
 		computed: {
 			...mapState('product', ['products']),
 			...mapState('stockExit', ['stockExits']),
-			...mapState('expo', ['expoProducts', 'idExpo']),
+			...mapState('expo', ['expoProducts', 'expoProducts']),
 			...mapGetters('auth', ['getUserName', 'getUserAuth']),
 			 ...mapState('product', ['exportedProducts','products']),
 			 ...mapState('stockExit', ['loading']),
@@ -94,30 +95,56 @@
 							let product = this.products[element];
 							quantity =
 								product.quantity - ~~this.exportedProducts[element2].newQtd;
-							this.updateProduct({
-								id: element,
-								updates: { quantity: quantity }
-							});
+							// this.updateProduct({
+							// 	id: element,
+							// 	updates: { quantity: quantity }
+							// });
 
 						
 						}
 					});
 				});
 
-			
+
+				Object.keys(this.expoProducts).forEach(element => {
+				Object.keys(this.exportedProducts).forEach(element2 => {
+						
+				if (element == element2) {
+
+					let prod = this.products[element];
+
+					Object.keys(prod.product).forEach(element => {
+
+						product[element] = prod.product[element];
+						Object.keys(this.productToSale).forEach(element3 => {
+							prodSale = this.productToSale[element3];
+							if (element == element3) {
+								product[element].quantitySell -=
+									this.productToSale[element3].newQtd2 || 1;
+								this.updateExpoProduct({
+									id: element2,
+									updates: {
+										product: product
+									}
+								});
+							}
+						});
+					});
+						
+						}
+					});
 
 
-		
-
+				});
 
 				
-				this.addExpoProduct({
-						product:  this.exportedProducts,
-						user : this.user,
-						createdBy: this.getUserAuth.name,
-						statusDelivery : false,
-						qtdSell : 0
-				});
+				// this.addExpoProduct({
+				// 		product:  this.exportedProducts,
+				// 		user : this.user,
+				// 		createdBy: this.getUserAuth.name,
+				// 		statusDelivery : false,
+				// 		qtdSell : 0
+				// });
 
 				 this.addStockExit(checkOut);
 				 

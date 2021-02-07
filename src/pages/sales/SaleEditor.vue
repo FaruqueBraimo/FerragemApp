@@ -208,6 +208,8 @@
 				invoiceObject.invoicesMan = this.getUserAuth.id;
 				invoiceObject.client = this.user ? this.user : 'Não Informado';
 				invoiceObject.value = this.value.value;
+				invoiceObject.status = true;
+				invoiceObject.total = 	 this.value.subtotal;
 
 				let invoiceDone = Object.assign(
 					{ details: invoiceObject },

@@ -83,10 +83,13 @@
         getTotalMoney() {
 
 				let money = 0;
-				Object.keys(this.invoices).forEach((element, key) => {
-					let prod = this.invoices[element] ? this.invoices[element].details.subtotal : 0
+				Object.keys(this.invoices).forEach((element) => {
+				
+					if( this.invoices[element].details.status) {
+							money +=   this.invoices[element].details.total
+					      console.log( this.invoices[element].details.total)
+					} 
 					
-					money =  money + prod
 
 				});
 				return money

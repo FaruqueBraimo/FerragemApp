@@ -11,6 +11,7 @@ const state = {
 	sales: {},
 	uploadProgress: 0,
 	saleFiltered: {},
+	saleFilteredDate: {},
 	loading: false,
 	SalesearchKey: ''
 };
@@ -30,11 +31,21 @@ const mutations = {
 		state.saleFiltered = {};
 	},
 
+	resetSaleFiltered2(state) {
+		state.saleFilteredDate = {};
+	},
+	
+
 	addSale(state, payload) {
 		Vue.set(state.sales, payload.id, payload.object);
 	},
 	addSaleFiltered(state, payload) {
 		Vue.set(state.saleFiltered, payload.id, payload.object);
+	},
+
+	addSaleFiltered2(state, payload) {
+		Vue.set(state.saleFilteredDate, payload.id, payload.object);
+	
 	},
 
 	editSale(state, payload) {
@@ -46,6 +57,24 @@ const mutations = {
 };
 
 const getters = {
+	filterSaleByUser: (state) => (user) => {
+		let saleReturn = {};
+		
+		Object.keys(state.sales).forEach(element => {
+			const sale = state.sales[element];
+			 if(sale.details.salesMan == user ) {
+				saleReturn[element] = sale;
+			 	console.log('bateu')
+			// }else {
+				console.log(saleReturn)
+			}
+
+			
+			}
+		);
+
+		return saleReturn;
+	},
 	filterSaleByTime: (state) => (time) => {
 		let saleReturn = {};
 		Object.keys(state.sales).forEach(element => {
@@ -59,8 +88,15 @@ const getters = {
 			const thisYear = today.getFullYear();
 			const thisWeak = date.getWeekOfYear(today);
 			const dateCreated = new Date(sale.createdAt.seconds * 1000);
-
+			console.log(time)
 			switch (time) {
+
+				case 'Todas':
+					saleReturn[element] = sale;
+					
+
+					break;
+			
 				case 'De Hoje':
 					let equality = date.isSameDate(dateCreated, today, 'day');
 
@@ -73,6 +109,8 @@ const getters = {
 					}
 
 					break;
+
+
 				case 'De Ontém':
 					equality = date.isSameDate(dateCreated, yesterday, 'day');
 
@@ -111,9 +149,7 @@ const getters = {
 
 					break;
 
-				default:
-					saleReturn[element] = sale;
-					console.log(saleReturn);
+					
 			}
 		});
 
@@ -251,20 +287,55 @@ const actions = {
 				return null;
 			});
 	},
-	
+
+	setSalesearchDate({ commit, getters }, text) {
+		let sales = {};
+
+		if (text.type = 'date' ) {
+			commit('resetSaleFiltered2');
+			commit('resetSaleFiltered');
+			sales = getters.filterSaleByTime(text.value);
+			Object.keys(sales).forEach(key => {
+				const sale = sales[key];
+				commit('addSaleFiltered2', {
+					id: key,
+					object: sale
+				});
+			});
+			
+		}
+	},	
 
 	setSalesearchKey({ commit, getters }, text) {
 		let sales = {};
-		commit('resetSaleFiltered');
 
-		if (text) {
-			sales = getters.filterSaleByTime(text);
+		if (text.type = 'date' ) {
+			commit('resetSaleFiltered2');
+			commit('resetSaleFiltered');
+			sales = getters.filterSaleByTime(text.value);
+			Object.keys(sales).forEach(key => {
+				const sale = sales[key];
+				commit('addSaleFiltered2', {
+					id: key,
+					object: sale
+				});
+			});
+			
+		}
+
+		if (text.type = 'user' ) {
+			
+			commit('resetSaleFiltered');
+			sales = getters.filterSaleByUser(text.value);
 			Object.keys(sales).forEach(key => {
 				let sale = sales[key];
+				commit('resetSaleFiltered2');
 				commit('addSaleFiltered', {
 					id: key,
 					object: sale
 				});
+
+				
 			});
 			
 		}

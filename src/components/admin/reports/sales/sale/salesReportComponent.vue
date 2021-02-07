@@ -32,14 +32,30 @@
 			<sale-header-component
 				class="q-pa-sm"
 				@filterCategory="setSalesearchKey"
-			     @filterCategory="userSelected"
+			     @filterByUser="setSalesearchKey"
 			/>
-                </q-markup-table>		
+
+
+			
+                </q-markup-table>	
+				
 		
-		  <div class="row justify-left	">
-          <div class=" col-4 q-pa-md  "	v-for="(sale, index) in  Object.keys(saleFiltered).length > 0
-						?  saleFiltered
-						: sales"
+		  <div class="row justify-left	" v-if=" Object.keys(saleFiltered).length > 0">
+          <div class=" col-4 q-pa-md  "	v-for="(sale, index) in saleFiltered "
+		  
+		   :key="index">
+				<sale-body-component
+					:sale="Object.assign({ id: index }, sale)"
+					:saleId="index"
+					@deletesale="removeSale"
+
+				/>
+			</div>
+			</div>
+
+
+			 <div class="row justify-left	" v-if=" Object.keys(saleFilteredDate).length > 0">
+          <div class=" col-4 q-pa-md  "	v-for="(sale, index) in saleFilteredDate "
 		  
 		   :key="index">
 				<sale-body-component
@@ -78,7 +94,7 @@
 		},
 		computed: {
 			...mapState('sale', [
-				'sales', 'saleFiltered'
+				'sales', 'saleFiltered', 'saleFilteredDate'
 			]),
 			...mapGetters('sale', [
 				'filterSaleByTime',
@@ -133,7 +149,7 @@
 
 		methods: {
 			...mapActions('sale', [
-				'deleteSale', 'setSalesearchKey'
+				'deleteSale', 'setSalesearchKey','setSalesearchDate'
 			
 			]),
 			printTable() {
@@ -166,6 +182,7 @@
 			saleFilterCategory(query) {
 				this.filterCategoryDatafromDb(query);
 			}
+			
 		},
 		components: {
 			saleHeaderComponent,

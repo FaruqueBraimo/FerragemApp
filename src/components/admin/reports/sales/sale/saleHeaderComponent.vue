@@ -87,6 +87,7 @@
 		computed: {
 			...mapState('auth', ['users']),
 
+
 		
 		},
 		methods: {
@@ -121,14 +122,14 @@
 
 			filterCategory(val) {
 				if (val) {
-				this.$emit('filterCategory', val)	
+				this.$emit('filterCategory',  {value:val, type : 'date'})	
 				}
 			},
 
 
 			userSelected(val) {
 				if (val) {
-				this.$emit('userSelected', val)	
+				this.$emit('filterByUser', {value:val.value, type : 'user'})	
 				}
 			}
 		}

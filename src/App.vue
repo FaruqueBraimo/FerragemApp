@@ -26,6 +26,7 @@
 			this.listenStockExitRealTimeChanges()
 			this.listenBoxRealTimeChanges()
 			this.listenPriceRealTimeChanges()
+			this.getAllExpoProducts()
 			this.findProductByName(this.getUserAuth.id)
 		},
 				computed: {
@@ -73,7 +74,7 @@
 			...mapActions('sale', ['listenSaleRealTimeChanges']),
 			...mapActions('invoice', ['listeninvoiceRealTimeChanges']),
 			...mapActions('box', ['listenBoxRealTimeChanges']),
-			...mapActions('expo', ['findProductByName']),
+			...mapActions('expo', ['findProductByName','getAllExpoProducts']),
 				
 
 		},

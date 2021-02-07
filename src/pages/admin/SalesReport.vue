@@ -43,7 +43,7 @@
 				</q-card>
 			</div>
 
-<div class="col-4 q-pa-md">
+<!-- <div class="col-4 q-pa-md">
 				<q-card class="my-card" clickable  @click='showPrice =true'	v-ripple square>
 					<q-card-section>
 						<div class="text-center">
@@ -53,7 +53,7 @@
 						<div class="text-subtitle1 text-center q-pt-sm">Cotações </div>
 					</q-card-section>
 				</q-card>
-			</div>
+			</div> -->
 
             <div class="col-4 q-pa-md">
 				<q-card class="my-card" clickable  @click='showBox =true'	v-ripple square>

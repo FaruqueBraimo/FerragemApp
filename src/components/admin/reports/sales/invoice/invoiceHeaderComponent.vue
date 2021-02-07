@@ -1,23 +1,21 @@
 <template>
 	<thead>
 		<tr>
-			<th colspan="8">
+			<th >
 				<div class="row no-wrap items-center">
 					<q-img
 						style="width: 70px"
 						:ratio="1"
 						class="rounded-borders"
-						src="https://img.icons8.com/color/96/000000/receipt.png"
+						src="https://img.icons8.com/plasticine/100/000000/yard-sale.png"
 					/>
-                                                       
+                    
 
-
-					<div class="text-h6 col-1 text-secondary">Faturas</div>
+					<div class="text-h6 col-1 text-secondary">Facturas</div>
 					<div class=" col  q-ml-md justify-right text-right">
 						<q-select
 							dense
-							disable
-							label="Filtrar por data de emissão"
+							label="Filtrar venda por data "
 							square
 							v-model="filterCategory"
 							filled
@@ -40,26 +38,25 @@
                     <div class=" col  q-ml-md justify-right text-right">
 						<q-select
 							dense
-							label="Por Funcionário "
+							label="Por Cliente "
 							square
-							disable
 							filled
+							v-model="userSelected"
 							:options="optionalUsers"
 						/>
 						
 					</div>
 
                     <div class=" col q-ml-md justify-right text-right">
-					<q-input disable filled v-model="date" placeholder='Data aleatoria' dense>
-                        <template v-slot:append>
-                            <q-icon name="event" class="cursor-pointer">
-                            <q-popup-proxy transition-show="scale" transition-hide="scale">
-                                <q-date v-model="date" mask="DD-MM-YYYY "  />
-                            </q-popup-proxy>
-                            </q-icon>
-                        </template>
-                        
-	  </q-input>
+				<q-select
+							dense
+							label="Por Produto	 "
+							square
+							v-model="productSelected"
+							
+							filled
+							:options="optionalProducts"
+						/>
 						
 					</div>
 					
@@ -67,7 +64,6 @@
 			</th>
 		</tr>
 
-		
 	</thead>
 </template>
 
@@ -79,27 +75,42 @@
 
 		data() {
 			return {
-				optionalcategory: ['Todas','De Hoje' , 'De Ontém' , 'Deste Mês' ,' Deste Ano'],
+				optionalcategory: ['Todas','De Hoje' , 'De Ontém' ,'Esta Semana', 'Deste Mês' ,'Deste Ano'],
                 filterCategory :'',
                 date: '',
-                optionalTrade: ['Mais Vendidos'],
-                optionalUsers: [],
+                optionalProducts: [],
+				optionalUsers: [],
+				userSelected: '',
+				productSelected: ''
 
 
 			};
 		},
 		computed: {
 			...mapState('auth', ['users']),
+...mapState('product', ['products']),
+...mapState('customer', ['customers']),
 
 		
 		},
 		methods: {
 			...mapActions('product', ['listenProductRealTimeChanges']),
-        	fetchUsers() {
-				Object.keys(this.users).forEach((element, key) => {
+			
+			fetchUsers() {
+				Object.keys(this.customers).forEach((element, key) => {
 					this.optionalUsers.push({
 						value: element,
-						label: this.users[element].name
+						label: this.customers[element].name
+					});
+				});
+
+			},
+
+				fetchProducts() {
+				Object.keys(this.products).forEach((element, key) => {
+					this.optionalProducts.push({
+						value: element,
+						label:this.products[element].name
 					});
 				});
 
@@ -107,7 +118,8 @@
 			
 		},
 		mounted() {
-            this.fetchUsers()
+			this.fetchUsers()
+			this.fetchProducts()
 		},
 
 		watch: {
@@ -124,7 +136,15 @@
 
 			filterCategory(val) {
 				if (val) {
-				this.$emit('productFilterCategory', this.filterCategory)				}
+				this.$emit('filterCategory',  {value:val, type : 'date'})	
+				}
+			},
+
+
+			userSelected(val) {
+				if (val) {
+				this.$emit('filterByUser', {value:val.value, type : 'user'})	
+				}
 			}
 		}
 	};
