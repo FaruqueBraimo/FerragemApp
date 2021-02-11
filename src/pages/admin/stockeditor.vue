@@ -108,7 +108,7 @@
 
 				Object.keys(this.expoProducts).forEach(element => {
 				Object.keys(this.exportedProducts).forEach(element2 => {
-						
+							console.log(element, element2)
 				if (element == element2) {
 
 					let prod = this.products[element];
@@ -120,13 +120,19 @@
 							prodSale = this.productToSale[element3];
 							if (element == element3) {
 								product[element].quantitySell -=
-									this.productToSale[element3].newQtd2 || 1;
-								this.updateExpoProduct({
-									id: element2,
-									updates: {
-										product: product
-									}
-								});
+									this.productToSale[element3].newQtd || 1;
+								// this.updateExpoProduct({
+								// 	id: element2,
+								// 	updates: {
+								// 		product: product
+								// 	}
+								// });
+
+								console.log(	product[element])
+							}
+
+							else {
+								console.log('nop')
 							}
 						});
 					});
@@ -146,13 +152,13 @@
 				// 		qtdSell : 0
 				// });
 
-				 this.addStockExit(checkOut);
+				//  this.addStockExit(checkOut);
 				 
 				
 			
 
 
-			 this.$router.push('/saidas')
+			//  this.$router.push('/saidas')
 
 
 

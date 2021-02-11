@@ -165,8 +165,7 @@ const actions = {
 			.get()
 			.then(resp => {
 				lastVisible = resp.docs[resp.docs.length - 1];
-				commit('loading', false);
-
+				
 				resp.docChanges().forEach(function(change) {
 
 					if (change.type === 'added') {
@@ -343,10 +342,7 @@ const actions = {
 		return dbExpoProducts
 			.add(payload)
 			.then(docRef => {
-				commit('loading', false);
-
-				// 1. Limpar todas solicitações
-			
+				
 
 			 showSuccessMessage( `Produtos exportados`)
 			 
@@ -354,7 +350,6 @@ const actions = {
 			})
 			.catch(function(error) {
 				console.error('Error adding document: ', error);
-				commit('loading', false);
 				showErrorMessage(error.message);
 
 				return false;
@@ -364,22 +359,20 @@ const actions = {
 	},
 
 	updateExpoProduct({ commit, rootGetters }, payload) {
-		commit('loading', true);
+		
 		payload.updates.updatedAt = new Date()
 
 		return dbExpoProducts
 			.doc(payload.id)
 			.update(payload.updates)
 			.then(function(docRef) {
-				commit('loading', false);
 			
 	
 				return true;
 			})
 			.catch(function(error) {
 				console.error('Error adding document: ', error);
-				commit('loading', false);
-
+			
 				showErrorMessage('Erro');
 
 				return false;
@@ -395,7 +388,6 @@ const actions = {
 			})
 			.catch(function(error) {
 				console.error('Error removing document: ', error);
-				commit('loading', false);
 				return false;
 			});
 	},
