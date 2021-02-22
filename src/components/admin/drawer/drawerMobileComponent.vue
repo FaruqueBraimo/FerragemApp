@@ -48,7 +48,7 @@
 
 				</q-item>
 
-				<q-item clickable v-ripple to="/sales/invoices">
+				<!-- <q-item clickable v-ripple to="/sales/invoices">
 					<q-item-section avatar>
 						<q-icon name="payment" />
 					</q-item-section>
@@ -56,12 +56,12 @@
 					<q-item-section>
 						Cotação-Factura
 					</q-item-section>
-				</q-item>
+				</q-item> -->
 				<q-item
 					clickable
 					v-ripple
-					disable
-					to="diario"
+					
+					to="/sales/mysale"
 					active-color="light-green-6"
 				>
 					<q-item-section avatar>
@@ -73,7 +73,7 @@
 					</q-item-section>
 				</q-item>
 
-				<q-item clickable v-ripple disable>
+				<!-- <q-item clickable v-ripple disable>
 					<q-item-section avatar>
 						<q-icon name="account_circle" />
 					</q-item-section>
@@ -81,7 +81,7 @@
 					<q-item-section>
 						Minha Conta
 					</q-item-section>
-				</q-item>
+				</q-item> -->
 
 				<q-item clickable v-ripple @click="$emit('exit')">
 					<q-item-section avatar>

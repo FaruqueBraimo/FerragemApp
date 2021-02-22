@@ -24,6 +24,7 @@ const routes = [
       { path: '/sales/invoice', component: () => import('pages/sales/Invoice.vue') },
       { path: '/sales/price', component: () => import('pages/sales/Price.vue') },
       { path: '/sales/editor', component: () => import('pages/sales/SaleEditor.vue') },
+      { path: '/sales/mysale', component: () => import('pages/sales/MySale.vue') },
 
 
   ]

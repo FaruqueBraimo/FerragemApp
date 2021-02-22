@@ -13,6 +13,7 @@ const state = {
 	saleFiltered: {},
 	saleFilteredDate: {},
 	loading: false,
+	mySale: {},
 	SalesearchKey: ''
 };
 
@@ -39,6 +40,9 @@ const mutations = {
 	addSale(state, payload) {
 		Vue.set(state.sales, payload.id, payload.object);
 	},
+	addMySale(state, payload) {
+		Vue.set(state.mySale, payload.id, payload.object);
+	}, 
 	addSaleFiltered(state, payload) {
 		Vue.set(state.saleFiltered, payload.id, payload.object);
 	},
@@ -252,13 +256,9 @@ const actions = {
 			});
 	},
 
-	getSaleByUserId({ commit }, userId) {
-		if (!userId) {
-			showErrorMessage(
-				'Algumas informações das solicitações que deseja visualizar, poderão não ser visualizadas neste momento. Favor favor, tente mais tarde.'
-			);
-			return;
-		}
+	getSaleByUserId({ commit } , x) {
+		
+       const userId = "xQDY27dlmaX0dColy0k7DpkzLNd2"
 
 		commit('loading', true);
 
@@ -274,6 +274,11 @@ const actions = {
 				resp.docChanges().forEach(item => {
 					let Sales = item.doc.data();
 					Sales.id = item.doc.id;
+
+					commit('addMySale', {
+						id: item.doc.id,
+						object: item.doc.data()
+					});
 
 					Sales.push(Sales);
 				});
