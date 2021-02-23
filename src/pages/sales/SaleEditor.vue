@@ -198,7 +198,7 @@
 						ok: 'Ok'
 					})
 					.onOk(() => {
-						// this.$router.go();
+						 this.$router.go();
 					});
 			},
 
@@ -217,6 +217,7 @@
 				);
 
 				this.addInvoice(invoiceDone);
+				this.printInvoice('Factura');
 				this.$q
 					.dialog({
 						title: 'Fatura Emitida ',
@@ -225,7 +226,7 @@
 						ok: 'Ok'
 					})
 					.onOk(() => {
-						this.printInvoice('Factura');
+						 this.$router.go();
 					});
 			},
 

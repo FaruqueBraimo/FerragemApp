@@ -7,7 +7,6 @@
         
 		 
 		 />
-		 {{expoProducts}}
 		<div class="q-pa-md q-mx-xl row justify-center">
 			<div class="col-4 justify-center">
 				<q-btn
@@ -109,32 +108,34 @@
 				Object.keys(this.expoProducts).forEach(element => {
 				Object.keys(this.exportedProducts).forEach(element2 => {
 						
-				if (element == element2) {
+				// if (element == element2) {
 
-					let prod = this.products[element];
+				 	 let prod1 = this.expoProducts[element];
+					 let prod2 = this.exportedProducts[element2];
 
-						console.log(element, element2)
-						
-						}
 
-						else {
-							console.log(` ${element}`  )
-						}
+							console.log( "In :",   prod1.name)
+							console.log( "out :",     this.exportedProducts)
+				// 		}
+
+				// 		else {
+				// 			console.log(` ${element}`  )
+				// 		}
 					});
 
 
 				});
 
 				
-				this.addExpoProduct({
-						product:  this.exportedProducts,
-						user : this.user,
-						createdBy: this.getUserAuth.name,
-						statusDelivery : false,
-						qtdSell : 0
-				});
+				// this.addExpoProduct({
+				// 		product:  this.exportedProducts,
+				// 		user : this.user,
+				// 		createdBy: this.getUserAuth.name,
+				// 		statusDelivery : false,
+				// 		qtdSell : 0
+				// });
 
-				 this.addStockExit(checkOut);
+				//  this.addStockExit(checkOut);
 				 
 				
 			
