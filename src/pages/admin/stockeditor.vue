@@ -110,13 +110,26 @@
 						
 				// if (element == element2) {
 
-				 	 let prod1 = this.expoProducts[element];
+				 	 let prod1 = this.expoProducts[element].product;
 					 let prod2 = this.exportedProducts[element2];
 
+							Object.keys(prod1).forEach(element3 => {
+									
 
-							console.log( "In :",   prod1.name)
-							console.log( "out :",     this.exportedProducts)
-				// 		}
+							const productObject = prod1[element3]
+							
+							if(productObject.code == prod2.code) {
+										console.log( "In :", productObject.name  )
+							console.log( "out :",     prod2.name)	
+							}
+						
+
+							});
+
+
+
+							
+				// 		}createdBy
 
 				// 		else {
 				// 			console.log(` ${element}`  )
