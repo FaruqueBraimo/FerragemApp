@@ -115,19 +115,37 @@
 
 							Object.keys(prod1).forEach(element3 => {
 									
-
 							const productObject = prod1[element3]
-							
-							if(productObject.code == prod2.code) {
+							console.log(productObject)
+
+							// productObject.quantitySell +=5
+
+							  if(productObject.code == prod2.code) {
 										console.log( "In :", productObject.name  )
-							console.log( "out :",     prod2.name)	
-							}
+						            	console.log( "out :",     prod2.name)	
+
+							// this.updateExpoProduct({
+							// 		id: element,
+							// 		updates: {
+							// 			product: productObject
+							// 		}
+							// 	});
+						    	}
+								else {
+				// 						this.addExpoProduct({
+				// 		product:  this.exportedProducts,
+				// 		user : this.user,
+				// 		createdBy: this.getUserAuth.name,
+				// 		statusDelivery : false,
+				// 		qtdSell : 0
+				// });
+
+								}
 						
 
 							});
 
-
-
+					
 							
 				// 		}createdBy
 
@@ -140,13 +158,15 @@
 				});
 
 				
-				// this.addExpoProduct({
-				// 		product:  this.exportedProducts,
-				// 		user : this.user,
-				// 		createdBy: this.getUserAuth.name,
-				// 		statusDelivery : false,
-				// 		qtdSell : 0
-				// });
+						this.addExpoProduct({
+						product:  this.exportedProducts,
+						user : this.user,
+						createdBy: this.getUserAuth.name,
+						statusDelivery : false,
+						qtdSell : 0
+				});
+
+			
 
 				//  this.addStockExit(checkOut);
 				 
