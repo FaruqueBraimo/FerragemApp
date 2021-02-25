@@ -116,20 +116,20 @@
 							Object.keys(prod1).forEach(element3 => {
 									
 							const productObject = prod1[element3]
-							console.log(productObject)
+							console.log( "In :",  this.expoProducts[element].user.value  )
+							console.log( "out :",      this.user.value)	
+						
+// (productObject.user.value == prod2.user.value)
+							  if((productObject.code == prod2.code) && ( this.expoProducts[element].user.value == this.user.value)  ) {
+										console.log( "In :",  this.expoProducts[element].user.value  )
+						            	console.log( "out :",      this.user.value)	
 
-							// productObject.quantitySell +=5
-
-							  if(productObject.code == prod2.code) {
-										console.log( "In :", productObject.name  )
-						            	console.log( "out :",     prod2.name)	
-
-							// this.updateExpoProduct({
-							// 		id: element,
-							// 		updates: {
-							// 			product: productObject
-							// 		}
-							// 	});
+							this.updateExpoProduct({
+									id: element,
+									updates: {
+										product: productObject
+									}
+								});
 						    	}
 								else {
 				// 						this.addExpoProduct({
@@ -158,13 +158,13 @@
 				});
 
 				
-						this.addExpoProduct({
-						product:  this.exportedProducts,
-						user : this.user,
-						createdBy: this.getUserAuth.name,
-						statusDelivery : false,
-						qtdSell : 0
-				});
+				// 		this.addExpoProduct({
+				// 		product:  this.exportedProducts,
+				// 		user : this.user,
+				// 		createdBy: this.getUserAuth.name,
+				// 		statusDelivery : false,
+				// 		qtdSell : 0
+				// });
 
 			
 
