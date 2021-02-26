@@ -116,8 +116,7 @@
 							Object.keys(prod1).forEach(element3 => {
 									
 							const productObject = prod1[element3]
-							console.log( "In :",  this.expoProducts[element].user.value  )
-							console.log( "out :",      this.user.value)	
+							
 						
 // (productObject.user.value == prod2.user.value)
 							  if((productObject.code == prod2.code) && ( this.expoProducts[element].user.value == this.user.value)  ) {
@@ -158,13 +157,13 @@
 				});
 
 				
-				// 		this.addExpoProduct({
-				// 		product:  this.exportedProducts,
-				// 		user : this.user,
-				// 		createdBy: this.getUserAuth.name,
-				// 		statusDelivery : false,
-				// 		qtdSell : 0
-				// });
+						this.addExpoProduct({
+						product:  this.exportedProducts,
+						user : this.user,
+						createdBy: this.getUserAuth.name,
+						statusDelivery : false,
+						qtdSell : 0
+				});
 
 			
 
