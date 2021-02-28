@@ -71,7 +71,7 @@
 			ExportProduct() {
 
 			this.user == '' ? this.user = "Outros/Externo" : this.user ;
-			 
+			 let statusSave = false
 			 let checkOut = Object.assign(
 				
 
@@ -114,32 +114,41 @@
 					 let prod2 = this.exportedProducts[element2];
 
 							Object.keys(prod1).forEach(element3 => {
-									
-							const productObject = prod1[element3]
-							
+							const productObject = {}	
+							 productObject[element3]  = prod1[element3]
+							let productToUpdate = Object.assign({}, productObject)
+
 						
 // (productObject.user.value == prod2.user.value)
-							  if((productObject.code == prod2.code) && ( this.expoProducts[element].user.value == this.user.value)  ) {
+console.log(productObject[element3].code , prod2.code)	
+							  if((productObject[element3].code == prod2.code) && ( this.expoProducts[element].user.value == this.user.value)  ) {
 										console.log( "In :",  this.expoProducts[element].user.value  )
-						            	console.log( "out :",      this.user.value)	
+										
+									productObject[element3].quantitySell  += ~~ prod2.newQtd
+									
 
-							this.updateExpoProduct({
+										this.updateExpoProduct({
 									id: element,
 									updates: {
-										product: productObject
+										product: productObject 
 									}
 								});
-						    	}
-								else {
-				// 						this.addExpoProduct({
-				// 		product:  this.exportedProducts,
-				// 		user : this.user,
-				// 		createdBy: this.getUserAuth.name,
-				// 		statusDelivery : false,
-				// 		qtdSell : 0
-				// });
+									
 
-								}
+
+										console.log( "updated :",      productToUpdate)	
+
+							
+						    	}
+				 if((productObject[element3].code != prod2.code  )  && ( this.expoProducts[element].user.value != this.user.value)   ) {
+				 
+
+								 
+
+										console.log( " salvo :",      productToUpdate)	
+
+							
+						    	}
 						
 
 							});
@@ -156,15 +165,15 @@
 
 				});
 
-				
-						this.addExpoProduct({
+				if(statusSave) {
+					this.addExpoProduct({
 						product:  this.exportedProducts,
 						user : this.user,
 						createdBy: this.getUserAuth.name,
 						statusDelivery : false,
-						qtdSell : 0
-				});
-
+						qtdSell : 0})
+				}
+				
 			
 
 				//  this.addStockExit(checkOut);
@@ -173,7 +182,7 @@
 			
 
 
-			 this.$router.push('/saidas')
+			//  this.$router.push('/saidas')
 
 
 
@@ -223,5 +232,5 @@
 		updated() {
 			this.getData();
 		}
-	};
+	}   
 </script>

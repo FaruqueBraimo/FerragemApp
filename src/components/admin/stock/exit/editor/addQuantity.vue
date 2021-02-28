@@ -1,7 +1,7 @@
 <template>
 	<div class="">
         {{getQuantity}}
-		<q-input v-model="text" type="text"   dense filled outlined   />
+		<q-input v-model="text" type="number"   dense filled outlined   />
        
 	</div>
 </template>
@@ -42,7 +42,7 @@
 					this.$q
 					.dialog({
 						title: 'Quantidade Inválida',
-						message: `O Produto ${this.product.name}  somente possui  ${this.product.qtdWarehouse} unidades no Armazêm. 
+						message: `O Produto ${this.product.name}  somente possui  ${this.product.quantity} unidades no Armazêm. 
 						Por favor, aumente o stock, depois volte a tentar.
 						`,
 						ok: 'Sim',
