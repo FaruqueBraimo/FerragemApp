@@ -120,11 +120,9 @@
 
 						
 // (productObject.user.value == prod2.user.value)
-console.log(productObject[element3].code , prod2.code)	
-							  if((productObject[element3].code == prod2.code) && ( this.expoProducts[element].user.value == this.user.value)  ) {
-										console.log( "In :",  this.expoProducts[element].user.value  )
+							  if((productObject[element3].code == this.exportedProducts[element2].code) && ( this.expoProducts[element].user.value == this.user.value)  ) {
 										
-									productObject[element3].quantitySell  += ~~ prod2.newQtd
+									productObject[element3].quantitySell  += ~~  productCard[element2].newQtd
 									
 
 										this.updateExpoProduct({
@@ -136,16 +134,22 @@ console.log(productObject[element3].code , prod2.code)
 									
 
 
-										console.log( "updated :",      productToUpdate)	
+										console.log( "updated :",    productObject[element3].code)	
 
 							
 						    	}
-				 if((productObject[element3].code != prod2.code  )  && ( this.expoProducts[element].user.value != this.user.value)   ) {
+				 if( (productObject[element3].code !=  this.exportedProducts[element2].code  )  && ( this.expoProducts[element].user.value == this.user.value)   ) {
 				 
 
-								 
+						// this.addExpoProduct({
+						// product:  this.exportedProducts[element2],
+						// user : this.user,
+						// createdBy: this.getUserAuth.name,
+						// statusDelivery : false,
+						// qtdSell : 0})
 
-										console.log( " salvo :",      productToUpdate)	
+											 		console.log(this.exportedProducts)
+
 
 							
 						    	}
