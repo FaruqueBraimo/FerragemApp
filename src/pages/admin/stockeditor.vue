@@ -7,6 +7,7 @@
         
 		 
 		 />
+		
 		<div class="q-pa-md q-mx-xl row justify-center">
 			<div class="col-4 justify-center">
 				<q-btn
@@ -33,6 +34,8 @@
 	import AddExitStockComponent from '../../components/admin/stock/Exit/AddExitStockComponent';
 	import { setTimeout } from 'timers';
 	import { dbExpoProducts } from '../../boot/firebase';
+import { truncate } from 'fs';
+import Vue from 'vue';
 
 	export default {
 		// name: 'PageName',
@@ -72,6 +75,7 @@
 
 			this.user == '' ? this.user = "Outros/Externo" : this.user ;
 			 let statusSave = false
+			 const productToSave = {}
 			 let checkOut = Object.assign(
 				
 
@@ -138,20 +142,20 @@
 
 							
 						    	}
-				 if( (productObject[element3].code !=  this.exportedProducts[element2].code  )  && ( this.expoProducts[element].user.value == this.user.value)   ) {
+				 if( (productObject[element3].code !=  this.exportedProducts[element2].code  )  && ( this.expoProducts[element].user.value != this.user.value)   ) {
 				 
 
 						
-								const productToSave = {}
+								
 								productToSave[element2] = this.exportedProducts[element2]
-											 		console.log('Saved',productToSave)
 
-													 this.addExpoProduct({
-						product:  productToSave,
-						user : this.user,
-						createdBy: this.getUserAuth.name,
-						statusDelivery : false,
-						qtdSell : 0})
+                                Vue.set(productToSave, element2, this.exportedProducts[element2]);
+
+
+								
+											 		console.log('Saved',this.exportedProducts[element2])
+													 statusSave = true
+
 
 
 							
@@ -160,6 +164,8 @@
 
 							});
 
+
+							
 					
 							
 				// 		}createdBy
@@ -173,17 +179,32 @@
 				});
 
 				if(statusSave) {
-					this.addExpoProduct({
-						product:  this.exportedProducts,
+
+					
+				
+													 this.addExpoProduct({
+						product:  productToSave,
 						user : this.user,
 						createdBy: this.getUserAuth.name,
 						statusDelivery : false,
 						qtdSell : 0})
+
+
+						statusSave = false
 				}
 				
 			
 
 				//  this.addStockExit(checkOut);
+
+					if(Object.keys(this.expoProducts).length == 0 ) {
+										this.addExpoProduct({
+						product:  this.exportedProducts,
+						user : this.user,
+						createdBy: this.getUserAuth.name,
+						statusDelivery : false,
+						qtdSell : 0})
+								}  
 				 
 				
 			

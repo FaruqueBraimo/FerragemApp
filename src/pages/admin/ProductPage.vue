@@ -163,7 +163,7 @@
 						category: produtToJson.category.label,
 						provider : produtToJson.provider.label,
 						quantity : produtToJson.quantity,
-						price_payd : produtToJson.price_payd,
+						price_payd : produtToJson.price_buy,
 						grosso : produtToJson.grosso,
 						DataCriacao :  produtToJson.createdAt,
 						createdBy :  this.users[produtToJson.createdBy] ? this.users[produtToJson.createdBy].name  : "Admin"  
@@ -201,7 +201,7 @@
 
 			removeProduct(id) {
 				let productName = this.products[id].name;
-				this.$qprod
+				this.$q
 					.dialog({
 						title: 'Confirme',
 						message: `Tem certeza que deseja apagar o produto ${productName} ?`,
@@ -212,6 +212,7 @@
 					})
 					.onOk(() => {
 						this.deleteProduct(id);
+						this.$router.go()
 					});
 			},
 			closeDialog() {
