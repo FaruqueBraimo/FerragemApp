@@ -82,17 +82,7 @@
 			/>
 		</div>
 
-		<div class="q-pt-md col " >
-			<q-btn
-				color="red-5"
-				no-caps
-				class=" full-width"
-				unelevated
-				icon="delete"
-				label="Remover"
-					@click="$emit('deleteinvoice',invoiceId)"
-			/>
-		</div>
+		
 		</div>
 	</q-card-section>
 	
@@ -134,6 +124,10 @@
 				id : val.id,
 				updates : {details : val.details }
 			})
+
+				
+
+
 			},
 		},
 		filters: {

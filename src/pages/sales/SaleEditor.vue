@@ -48,8 +48,7 @@
 							clickable
 							@click="makeInvoice()"
 							v-ripple
-							:active="link === 'outbox'"
-							active-class="my-menu-link"
+							
 						>
 							<q-item-section avatar>
 								<q-icon name="receipt" />
@@ -62,8 +61,7 @@
 							clickable
 							v-ripple
 								@click="printInvoice('Cotação')"
-							:active="link === 'trash'"
-							active-class="my-menu-link"
+							
 						>
 							<q-item-section avatar>
 								<q-icon name="book" />
@@ -296,7 +294,7 @@
 							w.replace(/^\w/, c => c.toUpperCase())
 						),
 
-						name: prod.newQtd,
+						name: prod.newQtd2,
 						price : new Intl.NumberFormat().format( prod.priceType || 0) ,	
 						country:
 							new Intl.NumberFormat().format(prod.subtotal) 
@@ -392,7 +390,7 @@
 						),
 						price : new Intl.NumberFormat().format( prod.priceType || 0) ,	
 
-						name: prod.newQtd,
+						name: prod.newQtd2,
 
 						country:
 							new Intl.NumberFormat().format(prod.subtotal) +
