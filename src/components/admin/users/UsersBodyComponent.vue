@@ -1,5 +1,5 @@
 <template>
-	<tr v-if="!user.secret">
+	<tr  >
 		<td class="text-left">
 			<q-avatar  text-color="white">
 				<q-img
@@ -14,9 +14,9 @@
     </div>
 		</td>
 
-		<td class="text-center ">
+		<!-- <td class="text-center ">
 			{{ user.createdAt | dateFormat }}
-		</td>
+		</td> -->
 		
 								
 

@@ -19,7 +19,7 @@
           <th class="text-left">Usuario</th>
           <th class="text-left">Email</th>
           <th class="text-left">Privilegios</th>
-          <th class="text-center">Data de Registo</th>
+          <!-- <th class="text-center">Data de Registo</th> -->
           <th class="text-center">Acção</th>
         </tr>
       </thead>

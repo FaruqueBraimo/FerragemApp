@@ -60,11 +60,9 @@ const mutations = {
 }
 
 const getters = {
-    getUserImage : (state) => (user) => {
-        if (!user) {
-            return 'statics/icons/icon-128x128.png'
-        }
-        return user && user.image ? user.image : state.defaultUser
+    getUser  : (state) =>  {
+        
+        return  state.userAuth 
     },
     getUserName : (state) => (user) => {
         if (!user) {
@@ -101,8 +99,7 @@ const actions = {
  
                 commit('setUserAuth', user);
 
-                dispatch('addUser', user);
- 
+                
                 showSuccessMessage('A sua conta foi criada com sucesso!');
                 Loading.hide();
 
@@ -199,9 +196,9 @@ const actions = {
 
     addUser({commit, getters}, payload) {
        
-            console.log(payload)
+            
         dbUsers
-            .doc(payload.id)
+            .doc(getters.getUser.id)
             .set(payload)
             .then(function (docRef) {
                 // gravado com sucesso...
