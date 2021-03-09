@@ -88,37 +88,30 @@ const getters = {
 const actions = {
 
     registerUser ({ commit, state, dispatch }, payload) {
-        Loading.show()
-        let user = {}
-         firebaseAuth.createUserWithEmailAndPassword(payload.email, payload.password)
-            .then(resp => {
+        Loading.show();
+        return firebaseAuth
+            .createUserWithEmailAndPassword(payload.email, payload.password)
+            .then((resp) => {
+                // delete payload.password
 
-                console.log(resp)
+                let user = payload;
+                user.id = resp.user.uid;
+                user.email = resp.user.email;
+                user.name = payload.name;
+ 
+                commit('setUserAuth', user);
 
-              
-                user.id = resp.user.uid
-                user.email = resp.email
-                // user.status = true
-                user.createdAt = new Date()
-                user.updatedAt = new Date()
-                   dbUsers.doc( resp.user.uid).set( {email : resp.user.email}  )
-            .then(function(docRef) {
-                 showSuccessMessage('Funcionario Registado com sucesso!')
-            }) 
+                dispatch('addUser', user);
+ 
+                showSuccessMessage('A sua conta foi criada com sucesso!');
+                Loading.hide();
 
-                 commit('setUserAuth', user)      
-
-                Loading.hide()
-                return user
+                return user;
             })
-            .catch(error => {
-                showErrorMessage(error.message)
-                return null
-            })
-
-         
-
-
+            .catch((error) => {
+                showErrorMessage(error.message);
+                return null;
+            });
 
     },
 
@@ -204,10 +197,21 @@ const actions = {
       
     },
 
-    // addUser({commit}, payload) {        
-    //     payload.deletavel = true
-   
-    // },
+    addUser({commit, getters}, payload) {
+       
+            console.log(payload)
+        dbUsers
+            .doc(payload.id)
+            .set(payload)
+            .then(function (docRef) {
+                // gravado com sucesso...
+            })
+            .catch(function (error) {
+                console.error('Error adding document: ', error);
+                commit('loading', false);
+                showErrorMessage(error.message);
+            });
+    },
 
     updateUser ({commit}, payload) {
         payload.updatedAt = new Date()
