@@ -88,7 +88,7 @@
 			saveUser(payload) {
 				payload.status = true
 				this.registerUser(payload)
-				 this.addUser(payload)
+				//  this.addUser(payload)
 			},
 
 			closeDialog() {

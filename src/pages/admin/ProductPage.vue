@@ -212,7 +212,7 @@
 					})
 					.onOk(() => {
 						this.deleteProduct(id);
-						this.$router.go()
+						
 					});
 			},
 			closeDialog() {

@@ -1,13 +1,12 @@
 <template>
 	<q-page padding>
-		<TableProduc @findProductByName="addProductForExport" @findProductByCode ="findProductByCode"
-		 @user="user = $event" 
-		 @obs="obs =$event"
-	
-        
-		 
-		 />
-		
+		<TableProduc
+			@findProductByName="addProductForExport"
+			@findProductByCode="findProductByCode"
+			@user="user = $event"
+			@obs="obs = $event"
+		/>
+
 		<div class="q-pa-md q-mx-xl row justify-center">
 			<div class="col-4 justify-center">
 				<q-btn
@@ -28,14 +27,14 @@
 
 <script>
 	import { mapActions, mapState, mapGetters } from 'vuex';
-	  import TableProduc from '../../components/admin/stock/Exit/editor/TableProduc';
+	import TableProduc from '../../components/admin/stock/Exit/editor/TableProduc';
 	import stockExitBodyComponent from '../../components/admin/stock/Exit/stockExitBodyComponent';
 	import stockExitHeaderComponent from '../../components/admin/stock/Exit/stockExitHeaderComponent';
 	import AddExitStockComponent from '../../components/admin/stock/Exit/AddExitStockComponent';
 	import { setTimeout } from 'timers';
 	import { dbExpoProducts } from '../../boot/firebase';
-import { truncate } from 'fs';
-import Vue from 'vue';
+	import { truncate } from 'fs';
+	import Vue from 'vue';
 
 	export default {
 		// name: 'PageName',
@@ -52,14 +51,17 @@ import Vue from 'vue';
 			...mapState('stockExit', ['stockExits']),
 			...mapState('expo', ['expoProducts', 'expoProducts']),
 			...mapGetters('auth', ['getUserName', 'getUserAuth']),
-			 ...mapState('product', ['exportedProducts','products']),
-			 ...mapState('stockExit', ['loading']),
-
+			...mapState('product', ['exportedProducts', 'products']),
+			...mapState('stockExit', ['loading'])
 		},
 
 		methods: {
 			...mapActions('stockExit', ['addStockExit', 'deleteStockExit']),
-			...mapActions('product', ['updateProduct','addProductForExport','findProductByCode']),
+			...mapActions('product', [
+				'updateProduct',
+				'addProductForExport',
+				'findProductByCode'
+			]),
 			...mapActions('expo', [
 				'addExpoProduct',
 				'getData',
@@ -67,162 +69,137 @@ import Vue from 'vue';
 				'filterExpoProduct'
 			]),
 
-	  ...mapActions('setting', ['setPageTitle']),
-
-
+			...mapActions('setting', ['setPageTitle']),
 
 			ExportProduct() {
-
-			this.user == '' ? this.user = "Outros/Externo" : this.user ;
-			 let statusSave = false
-			 const productToSave = {}
-			 let checkOut = Object.assign(
-				
-
-				
-				{
+				this.user == '' ? (this.user = 'Outros/Externo') : this.user;
+				let statusSave = false;
+				const productToSave = {};
+				let checkOut = Object.assign(
+					{
 						createdBy: this.getUserAuth.name,
-						statusDelivery : false,
-						user : this.user,
-						obs : this.obs
-				},
-				        { products :  this.exportedProducts}
+						statusDelivery: false,
+						user: this.user,
+						obs: this.obs
+					},
+					{ products: this.exportedProducts }
 				);
-
 
 				let quantity = 0;
 				Object.keys(this.products).forEach((element, key) => {
 					Object.keys(this.exportedProducts).forEach(element2 => {
-						
 						if (element == element2) {
 							let product = this.products[element];
 							quantity =
-								product.quantity - ~~this.exportedProducts[element2].newQtd;
+								product.quantity -
+								~~this.exportedProducts[element2].newQtd;
 							this.updateProduct({
 								id: element,
 								updates: { quantity: quantity }
 							});
-
-						
 						}
 					});
 				});
 
-
 				Object.keys(this.expoProducts).forEach(element => {
-				Object.keys(this.exportedProducts).forEach(element2 => {
-						
-				// if (element == element2) {
+					Object.keys(this.exportedProducts).forEach(element2 => {
+						// if (element == element2) {
 
-				 	 let prod1 = this.expoProducts[element].product;
-					 let prod2 = this.exportedProducts[element2];
+						let prod1 = this.expoProducts[element].product;
+						let prod2 = this.exportedProducts[element2];
 
-							Object.keys(prod1).forEach(element3 => {
-							const productObject = {}	
-							 productObject[element3]  = prod1[element3]
-							let productToUpdate = Object.assign({}, productObject)
+						Object.keys(prod1).forEach(element3 => {
+							const productObject = {};
+							productObject[element3] = prod1[element3];
+							let productToUpdate = Object.assign(
+								{},
+								productObject
+							);
 
-						
-// (productObject.user.value == prod2.user.value)
-							  if((productObject[element3].code == this.exportedProducts[element2].code) && ( this.expoProducts[element].user.value == this.user.value)  ) {
-										
-									productObject[element3].quantitySell  += ~~  this.exportedProducts[element2].newQtd
-									
+							// (productObject.user.value == prod2.user.value)
+							if (
+								productObject[element3].code ==
+									this.exportedProducts[element2].code &&
+								this.expoProducts[element].user.value ==
+									this.user.value
+							) {
+								productObject[element3].quantitySell += ~~this
+									.exportedProducts[element2].newQtd;
 
-										this.updateExpoProduct({
+								this.updateExpoProduct({
 									id: element,
 									updates: {
-										product: productObject 
+										product: productObject
 									}
 								});
-									
 
+								console.log(
+									'updated :',
+									productObject[element3].code
+								);
+							}
+							if (
+								productObject[element3].code !=
+									this.exportedProducts[element2].code &&
+								this.expoProducts[element].user.value !=
+									this.user.value
+							) {
+								productToSave[element2] = this.exportedProducts[
+									element2
+								];
 
-										console.log( "updated :",    productObject[element3].code)	
+								Vue.set(
+									productToSave,
+									element2,
+									this.exportedProducts[element2]
+								);
 
-							
-						    	}
-				 if( (productObject[element3].code !=  this.exportedProducts[element2].code  )  && ( this.expoProducts[element].user.value != this.user.value)   ) {
-				 
+								console.log(
+									'Saved',
+									this.exportedProducts[element2]
+								);
+								statusSave = true;
+							}
+						});
 
-						
-								
-								productToSave[element2] = this.exportedProducts[element2]
+						// 		}createdBy
 
-                                Vue.set(productToSave, element2, this.exportedProducts[element2]);
-
-
-								
-											 		console.log('Saved',this.exportedProducts[element2])
-													 statusSave = true
-
-
-
-							
-						    	}
-						
-
-							});
-
-
-							
-					
-							
-				// 		}createdBy
-
-				// 		else {
-				// 			console.log(` ${element}`  )
-				// 		}
+						// 		else {
+						// 			console.log(` ${element}`  )
+						// 		}
 					});
-
-
 				});
 
-				if(statusSave) {
-
-					
-				
-													 this.addExpoProduct({
-						product:  productToSave,
-						user : this.user,
+				if (statusSave) {
+					this.addExpoProduct({
+						product: productToSave,
+						user: this.user,
 						createdBy: this.getUserAuth.name,
-						statusDelivery : false,
-						qtdSell : 0})
+						statusDelivery: false,
+						qtdSell: 0
+					});
 
-
-						statusSave = false
+					statusSave = false;
 				}
-				
-			
 
-				//  this.addStockExit(checkOut);
+				this.addStockExit(checkOut);
 
-					if(Object.keys(this.expoProducts).length == 0 ) {
-										this.addExpoProduct({
-						product:  this.exportedProducts,
-						user : this.user,
+				if (Object.keys(this.expoProducts).length == 0) {
+					this.addExpoProduct({
+						product: this.exportedProducts,
+						user: this.user,
 						createdBy: this.getUserAuth.name,
-						statusDelivery : false,
-						qtdSell : 0})
-								}  
-				 
-				
-			
+						statusDelivery: false,
+						qtdSell: 0
+					});
+				}
 
-
-			//  this.$router.push('/saidas')
-
-
-
-
+				this.$router.push('/saidas');
 			},
 
-		 printTable() {
+			printTable() {
 				// Pass the element id here
-			
 			},
-
-
 
 			removeCategory(id) {
 				this.$q
@@ -241,7 +218,7 @@ import Vue from 'vue';
 		},
 		mounted() {
 			this.getData();
-				this.setPageTitle('Editor de Exportação de produtos ');
+			this.setPageTitle('Editor de Exportação de produtos ');
 		},
 		components: {
 			stockExitHeaderComponent,
@@ -260,5 +237,5 @@ import Vue from 'vue';
 		updated() {
 			this.getData();
 		}
-	}   
+	};
 </script>

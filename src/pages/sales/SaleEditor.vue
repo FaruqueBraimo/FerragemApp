@@ -22,9 +22,10 @@
 						padding
 						class="rounded-borders text-primary q-pa-md"
 					>
+
+										
 						<q-item
-							clickable
-							:disable="disable"
+							clickable						
 							v-ripple
 							:active="link === 'inbox'"
 							active-class="my-menu-link"
@@ -294,10 +295,10 @@
 							w.replace(/^\w/, c => c.toUpperCase())
 						),
 
-						name: prod.newQtd2,
-						price : new Intl.NumberFormat().format( prod.priceType || 0) ,	
+						name: this.productToSale[element3].newQtd2,
+						price : new Intl.NumberFormat().format( this.productToSale[element3].priceType || 0) ,	
 						country:
-							new Intl.NumberFormat().format(prod.subtotal) 
+							new Intl.NumberFormat().format(this.productToSale[element3].subtotal) 
 							
 					});
 				});
@@ -388,12 +389,12 @@
 						id: prod.name.replace(/\w\S*/g, w =>
 							w.replace(/^\w/, c => c.toUpperCase())
 						),
-						price : new Intl.NumberFormat().format( prod.priceType || 0) ,	
+						price : new Intl.NumberFormat().format( this.productToSale[element3].priceType || 0) ,	
 
-						name: prod.newQtd2,
+						name: this.productToSale[element3].newQtd2,
 
 						country:
-							new Intl.NumberFormat().format(prod.subtotal) +
+							new Intl.NumberFormat().format(this.productToSale[element3].subtotal) +
 							' MT'
 					});
 				});
