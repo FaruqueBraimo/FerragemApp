@@ -97,102 +97,38 @@
 								id: element,
 								updates: { quantity: quantity }
 							});
+
+							this.addExpoProduct({
+
+						productId : element2,
+						name : 	this.exportedProducts[element2].name,	
+						quantity : ~~this.exportedProducts[element2].newQtd,
+						user: this.user,
+						createdBy: this.getUserAuth.name,
+						statusDelivery: false,
+						 
+
+
+					});
+
+
 						}
 					});
 				});
 
-				Object.keys(this.expoProducts).forEach(element => {
-					Object.keys(this.exportedProducts).forEach(element2 => {
-						// if (element == element2) {
-
-						let prod1 = this.expoProducts[element].product;
-						let prod2 = this.exportedProducts[element2];
-
-						Object.keys(prod1).forEach(element3 => {
-							const productObject = {};
-							productObject[element3] = prod1[element3];
-							let productToUpdate = Object.assign(
-								{},
-								productObject
-							);
-
-							// (productObject.user.value == prod2.user.value)
-							if (
-								productObject[element3].code ==
-									this.exportedProducts[element2].code &&
-								this.expoProducts[element].user.value ==
-									this.user.value
-							) {
-								productObject[element3].quantitySell += ~~this
-									.exportedProducts[element2].newQtd;
-
-								this.updateExpoProduct({
-									id: element,
-									updates: {
-										product: productObject
-									}
-								});
-
-								console.log(
-									'updated :',
-									productObject[element3].code
-								);
-							}
-							if (
-								productObject[element3].code !=
-									this.exportedProducts[element2].code &&
-								this.expoProducts[element].user.value !=
-									this.user.value
-							) {
-								productToSave[element2] = this.exportedProducts[
-									element2
-								];
-
-								Vue.set(
-									productToSave,
-									element2,
-									this.exportedProducts[element2]
-								);
-
-								console.log(
-									'Saved',
-									this.exportedProducts[element2]
-								);
-								statusSave = true;
-							}
-						});
-
-						// 		}createdBy
-
-						// 		else {
-						// 			console.log(` ${element}`  )
-						// 		}
-					});
-				});
-
-				if (statusSave) {
-					this.addExpoProduct({
-						product: productToSave,
-						user: this.user,
-						createdBy: this.getUserAuth.name,
-						statusDelivery: false,
-						qtdSell: 0
-					});
-
-					statusSave = false;
-				}
+			
 
 				this.addStockExit(checkOut);
 
-				if (Object.keys(this.expoProducts).length == 0) {
-					this.addExpoProduct({
-						product: this.exportedProducts,
-						user: this.user,
-						createdBy: this.getUserAuth.name,
-						statusDelivery: false,
-						qtdSell: 0
-					});
-				}
+				// if (Object.keys(this.expoProducts).length == 0) {
+				// 	this.addExpoProduct({
+				// 		product: this.exportedProducts,
+				// 		user: this.user,
+				// 		createdBy: this.getUserAuth.name,
+				// 		statusDelivery: false,
+				// 		qtdSell: 0
+				// 	});
+				// }
 
 				this.$router.push('/saidas');
 			},

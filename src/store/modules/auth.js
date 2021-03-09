@@ -93,12 +93,18 @@ const actions = {
          firebaseAuth.createUserWithEmailAndPassword(payload.email, payload.password)
             .then(resp => {
 
+                console.log(resp)
+
               
-                user.id = resp.uid
+                user.id = resp.user.uid
                 user.email = resp.email
                 // user.status = true
                 user.createdAt = new Date()
                 user.updatedAt = new Date()
+                   dbUsers.doc( resp.user.uid).set( {email : resp.user.email}  )
+            .then(function(docRef) {
+                 showSuccessMessage('Funcionario Registado com sucesso!')
+            }) 
 
                  commit('setUserAuth', user)      
 
@@ -110,10 +116,7 @@ const actions = {
                 return null
             })
 
-            dbUsers.doc(user.id).set(user)
-            .then(function(docRef) {
-                 showSuccessMessage('Funcionario Registado com sucesso!')
-            }) 
+         
 
 
 
