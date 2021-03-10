@@ -247,7 +247,7 @@
 				Object.keys(this.productToSale).forEach((element, key) => {
 					let product = this.productToSale[element];
 					sumMoney = sumMoney + product.subtotal ;
-					sumQtd = sumQtd + ~~product.newQtd;
+					sumQtd = sumQtd + ~~product.quantity;
 
 					if(this.desc < sumMoney) {
 totals.sumMoney = sumMoney - this.desc   ;

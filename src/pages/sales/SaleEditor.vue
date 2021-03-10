@@ -185,7 +185,7 @@
 					{ products: this.productToSale }
 				);
 
-				// this.addSale(saleDone);
+				this.addSale(saleDone);
 				// this.printSale();
 
 				this.updateCash(this.value.subtotal);
@@ -198,7 +198,7 @@
 						ok: 'Ok'
 					})
 					.onOk(() => {
-						 this.$router.go();
+						//  this.$router.go();
 					});
 			},
 
@@ -257,16 +257,15 @@
 					let prod = this.myProducts[element2];
  		Object.keys(this.productToSale).forEach(element3 => {
 							prodSale = this.productToSale[element3];
-							if (element2 == element3) {
-								quantity -=
+							if (this.productToSale[element3].productId  == this.myProducts[element2].productId) {
+								
 							      
-									this.productToSale[element3].newQtd  || 1;
-								this.updateExpoProduct({
-									id: element2,
-									updates: {
-										 updates: { quantity: quantity }
-									}
-								});
+								quantity  -=   this.productToSale[element3].newQtd   
+								// this.updateExpoProduct({
+								// 	id: element2,
+								// 	 updates: { quantity: quantity }
+								// });
+								
 							}
 						});
 					});
