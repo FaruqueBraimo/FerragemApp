@@ -87,17 +87,21 @@ const actions = {
 
     registerUser ({ commit, state, dispatch }, payload) {
         Loading.show();
-        return firebaseAuth
+        let userId = ''
+        let user = payload;
+         firebaseAuth
             .createUserWithEmailAndPassword(payload.email, payload.password)
             .then((resp) => {
                 // delete payload.password
 
-                let user = payload;
+              
                 user.id = resp.user.uid;
                 user.email = resp.user.email;
                 user.name = payload.name;
+                
  
                 commit('setUserAuth', user);
+                dispatch('addUser', user)
 
                 
                 showSuccessMessage('A sua conta foi criada com sucesso!');
@@ -109,6 +113,8 @@ const actions = {
                 showErrorMessage(error.message);
                 return null;
             });
+
+           
 
     },
 
@@ -195,19 +201,12 @@ const actions = {
     },
 
     addUser({commit, getters}, payload) {
-       
-            
-        dbUsers
-            .doc(getters.getUser.id)
-            .set(payload)
+
+         return   dbUsers.doc(payload.id || 'xyz' ).set(payload)
             .then(function (docRef) {
-                // gravado com sucesso...
+                console.log("salvo")
             })
-            .catch(function (error) {
-                console.error('Error adding document: ', error);
-                commit('loading', false);
-                showErrorMessage(error.message);
-            });
+       
     },
 
     updateUser ({commit}, payload) {
