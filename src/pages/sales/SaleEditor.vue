@@ -173,7 +173,7 @@
 			...mapActions('box', ['addBox', 'editBox']),
 
 			makeSale() {
-				this.updateQuantity();
+			  this.updateQuantity();
 
 				let saleObject = {};
 				saleObject.salesMan = this.getUserAuth.id;
@@ -185,8 +185,8 @@
 					{ products: this.productToSale }
 				);
 
-				this.addSale(saleDone);
-				this.printSale();
+				// this.addSale(saleDone);
+				// this.printSale();
 
 				this.updateCash(this.value.subtotal);
 
@@ -252,6 +252,7 @@
 				// 	let quantity = 0;
 				let prodSale = {};
 				let product = {};
+				let quantity = 0;
 				Object.keys(this.myProducts).forEach(element2 => {
 					let prod = this.myProducts[element2];
  		Object.keys(this.productToSale).forEach(element3 => {

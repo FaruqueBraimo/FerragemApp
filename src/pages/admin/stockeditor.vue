@@ -105,7 +105,10 @@
 						user: this.user,
 						createdBy: this.getUserAuth.name,
 						statusDelivery: false,
-						code : this.exportedProducts[element2].code
+						code : this.exportedProducts[element2].code,
+						grosso : this.exportedProducts[element2].grosso,
+						price_buy : this.exportedProducts[element2].grosso.price_buy
+
 		 
 					});
   
