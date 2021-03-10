@@ -10,17 +10,15 @@
 			<q-separator />
 
 			<div
-				v-for="(prod, index) in exported.product"
-				:key="index"
-				class="q-pa-xs"
+			 
 			>
 				<q-list dense bordered padding class="borders">
 					<q-item clickable v-ripple>
 						<div>
 							{{
-								prod.newQtd > 1
-									? `${prod.newQtd} unidades de  ${prod.name}`
-									: `${prod.newQtd} unidade de  ${prod.name}`
+								exported.newQtd > 1
+									? `${exported.quantity} unidades de  ${exported.name}`
+									: `${exported.quantity} unidade de  ${exported.name}`
 							}}
 						</div>
 					</q-item>

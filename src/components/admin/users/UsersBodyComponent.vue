@@ -1,6 +1,6 @@
 <template>
-	<tr  >
-		<td class="text-left">
+	<tr v-if="user.id" >
+		<td class="text-left" >
 			<q-avatar  text-color="white">
 				<q-img
          src="https://img.icons8.com/dotty/80/000000/businessman.png"				/>

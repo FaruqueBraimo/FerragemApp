@@ -47,17 +47,17 @@
 				if (val) {
 					this.$emit('price', val);
 
-					if (this.qtd > ~~this.product.quantitySell) {
+					if (this.qtd > ~~this.product.quantity) {
 						this.$q
 							.dialog({
 								title: 'Quantidade Inválida',
-								message: `O Produto ${this.product.name}  somente possui  ${this.product.quantitySell} unidades no Armazêm. 
+								message: `O Produto ${this.product.name}  somente possui  ${this.product.quantity} unidades no Armazêm. 
 						Por favor, aumente o stock, depois volte a tentar.
 						`,
 								ok: 'Sim'
 							})
 							.onOk(() => {});
-					} else if (this.qtd <= ~~this.product.quantitySell) {
+					} else if (this.qtd <= ~~this.product.quantity) {
 						this.updateQtdProduct({
 							id: this.id,
 							updates: {
@@ -73,17 +73,17 @@
 			},
 			qtd(val) {
 				if (val.length > 0) {
-					if (val > ~~this.product.quantitySell) {
+					if (val > ~~this.product.quantity) {
 						this.$q
 							.dialog({
 								title: 'Quantidade Inválida',
-								message: `O Produto ${this.product.name}  somente possui  ${this.product.quantitySell} unidades no Armazêm. 
+								message: `O Produto ${this.product.name}  somente possui  ${this.product.quantity} unidades no Armazêm. 
 						Por favor, aumente o stock, depois volte a tentar.
 						`,
 								ok: 'Sim'
 							})
 							.onOk(() => {});
-					} else if (val <= ~~this.product.quantitySell) {
+					} else if (val <= ~~this.product.quantity) {
 						this.updateQtdProduct({
 							id: this.id,
 							updates: {

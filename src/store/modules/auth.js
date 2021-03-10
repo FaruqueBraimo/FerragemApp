@@ -100,11 +100,11 @@ const actions = {
                 user.name = payload.name;
                 
  
-                commit('setUserAuth', user);
+                // commit('setUserAuth', user);
                 dispatch('addUser', user)
 
                 
-                showSuccessMessage('A sua conta foi criada com sucesso!');
+                
                 Loading.hide();
 
                 return user;

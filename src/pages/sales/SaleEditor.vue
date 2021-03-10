@@ -8,7 +8,7 @@
 			@subtotals="chance = $event"
 		/>
 
-		{{ getStatus }}
+		{{ getStatus }} 
 
 		<div class="q-pa-md q-mx-xl row justify-center">
 			<div class="col-4 justify-center">
@@ -30,6 +30,7 @@
 							:active="link === 'inbox'"
 							active-class="my-menu-link"
 							@click="makeSale()"
+							:disable='disable'
 						>
 							<q-item-section avatar>
 								<q-icon
@@ -253,24 +254,22 @@
 				let product = {};
 				Object.keys(this.myProducts).forEach(element2 => {
 					let prod = this.myProducts[element2];
-
-					Object.keys(prod.product).forEach(element => {
-						product[element] = prod.product[element];
-						Object.keys(this.productToSale).forEach(element3 => {
+ 		Object.keys(this.productToSale).forEach(element3 => {
 							prodSale = this.productToSale[element3];
-							if (element == element3) {
-								product[element].quantitySell -=
-									this.productToSale[element3].newQtd2 || 1;
+							if (element2 == element3) {
+								quantity -=
+							      
+									this.productToSale[element3].newQtd  || 1;
 								this.updateExpoProduct({
 									id: element2,
 									updates: {
-										product: product
+										 updates: { quantity: quantity }
 									}
 								});
 							}
 						});
 					});
-				});
+			 
 			},
 
 			findProductByCode() {},
@@ -295,7 +294,7 @@
 							w.replace(/^\w/, c => c.toUpperCase())
 						),
 
-						name: this.productToSale[element3].newQtd2,
+						name: this.productToSale[element3].newQtd ,
 						price : new Intl.NumberFormat().format( this.productToSale[element3].priceType || 0) ,	
 						country:
 							new Intl.NumberFormat().format(this.productToSale[element3].subtotal) 
@@ -391,7 +390,7 @@
 						),
 						price : new Intl.NumberFormat().format( this.productToSale[element3].priceType || 0) ,	
 
-						name: this.productToSale[element3].newQtd2,
+						name: this.productToSale[element3].newQtd ,
 
 						country:
 							new Intl.NumberFormat().format(this.productToSale[element3].subtotal) +

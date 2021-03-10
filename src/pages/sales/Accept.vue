@@ -86,18 +86,13 @@
 
 				prod = this.myProducts[payload];
 
-				Object.keys(prod.product).forEach(element => {
-					product[element] = prod.product[element];
-					product[element].quantitySell =
-						prod.product[element].newQtd;
-					
-
-					this.updateExpoProduct({
+				Object.keys(prod  ).forEach(element => {
+				 
+ 					this.updateExpoProduct({
 						id: payload,
 						updates: {
 							statusDelivery: true,
-							product: product
-						}
+ 						}
 					});
 				});
 

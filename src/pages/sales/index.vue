@@ -194,10 +194,10 @@
 
 				prod = this.myProducts[payload];
 
-				Object.keys(prod.product).forEach(element => {
-					product[element] = prod.product[element];
+				Object.keys(prod  ).forEach(element => {
+					product[element] = prod [element];
 					product[element].quantitySell =
-						prod.product[element].newQtd;
+					 prod[element].newQtd;
 					
 
 					this.updateExpoProduct({

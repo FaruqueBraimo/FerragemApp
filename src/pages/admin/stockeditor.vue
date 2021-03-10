@@ -98,20 +98,17 @@
 								updates: { quantity: quantity }
 							});
 
-							this.addExpoProduct({
-
-						productId : element2,
+			        this.addExpoProduct({
+ 						productId : element2,
 						name : 	this.exportedProducts[element2].name,	
 						quantity : ~~this.exportedProducts[element2].newQtd,
 						user: this.user,
 						createdBy: this.getUserAuth.name,
 						statusDelivery: false,
-						 
-
-
+						code : this.exportedProducts[element2].code
+		 
 					});
-
-
+  
 						}
 					});
 				});

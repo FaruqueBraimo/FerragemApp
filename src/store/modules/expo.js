@@ -125,13 +125,12 @@ const getters = {
 	searchProduct: (state) => (expoProducts) => {
         let object = {}
         Object.keys(expoProducts).forEach(key => {
-			let product = expoProducts[key].product	
-			Object.keys(product).forEach(element => {	
-			let prod = product[element]
+			let product = expoProducts[key]  	
+		 
 
-		  if (prod.name.includes(state.productSearchKey.toLowerCase())) {
-				if(prod.quantitySell >= 1) {
-					object[element] = prod
+		  if (product.name.includes(state.productSearchKey.toLowerCase())) {
+				if(product.quantity >= 1) {
+					object[key] = product
 
 				} 
 				
@@ -143,7 +142,7 @@ const getters = {
             
 			
 			
-		})
+	 
 		
         return object
 },
