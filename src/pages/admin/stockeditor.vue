@@ -133,20 +133,43 @@
 							Object.keys(this.expoProducts).forEach(chave => {
 								if (
 									(this.expoProducts[chave].productId ==
-									this.exportedProducts[element2].productId) && () 
+									element2) 
 								) {
 									const quantity2 =
-										this.exportedProducts[element2]
-											.quantity +
-										this.expoProducts[chave].newQtd;
+										~~this.exportedProducts[element2]
+											.newQtd +
+										this.expoProducts[chave].quantity;
 									
 									this.updateExpoProduct({
 										id: chave,
-										updates: { quantity: 3 }
+										updates: { quantity: quantity2 }
 									});
+									console.log('quan' )
 
-								} else {
-									this.addExpoProduct({
+								}
+
+									
+							});
+						}
+
+						if(element != element2) {
+							statusSave = true
+									
+							
+						}
+
+
+					});
+				});
+
+
+				}
+
+				if(statusSave) {
+
+					Object.keys(this.exportedProducts).forEach(element2 => {
+
+							this.addExpoProduct({
 										productId: element2,
 										name: this.exportedProducts[element2]
 											.name,
@@ -163,17 +186,17 @@
 										price_buy: this.exportedProducts[
 											element2
 										].price_buy
-									});
-								}
+									})
+
+						
 							});
-						}
-					});
-				});
 
 
+
+					
 				}
 
-				this.$router.push('/saidas');
+				// this.$router.push('/saidas');
 			},
 
 			printTable() {
