@@ -86,7 +86,39 @@
 				);
 
 				let quantity = 0;
-				Object.keys(this.products).forEach((element, key) => {
+				
+			
+				this.addStockExit(checkOut);
+
+				if (Object.keys(this.expoProducts).length == 0) {
+						
+						Object.keys(this.exportedProducts).forEach(element2 => {
+
+								this.addExpoProduct({
+										productId: element2,
+										name: this.exportedProducts[element2]
+											.name,
+										quantity: ~~this.exportedProducts[
+											element2
+										].newQtd,
+										user: this.user,
+										createdBy: this.getUserAuth.name,
+										statusDelivery: false,
+										code: this.exportedProducts[element2]
+											.code,
+										grosso: this.exportedProducts[element2]
+											.grosso,
+										price_buy: this.exportedProducts[
+											element2
+										].price_buy
+									})
+					
+							});
+
+
+				
+				} else {
+						Object.keys(this.products).forEach((element, key) => {
 					Object.keys(this.exportedProducts).forEach(element2 => {
 						if (element == element2) {
 							let product = this.products[element];
@@ -98,37 +130,48 @@
 								updates: { quantity: quantity }
 							});
 
-			        this.addExpoProduct({
- 						productId : element2,
-						name : 	this.exportedProducts[element2].name,	
-						quantity : ~~this.exportedProducts[element2].newQtd,
-						user: this.user,
-						createdBy: this.getUserAuth.name,
-						statusDelivery: false,
-						code : this.exportedProducts[element2].code,
-						grosso : this.exportedProducts[element2].grosso,
-						price_buy : this.exportedProducts[element2].grosso.price_buy
+							Object.keys(this.expoProducts).forEach(chave => {
+								if (
+									(this.expoProducts[chave].productId ==
+									this.exportedProducts[element2].productId) && () 
+								) {
+									const quantity2 =
+										this.exportedProducts[element2]
+											.quantity +
+										this.expoProducts[chave].newQtd;
+									
+									this.updateExpoProduct({
+										id: chave,
+										updates: { quantity: 3 }
+									});
 
-		 
-					});
-  
+								} else {
+									this.addExpoProduct({
+										productId: element2,
+										name: this.exportedProducts[element2]
+											.name,
+										quantity: ~~this.exportedProducts[
+											element2
+										].newQtd,
+										user: this.user,
+										createdBy: this.getUserAuth.name,
+										statusDelivery: false,
+										code: this.exportedProducts[element2]
+											.code,
+										grosso: this.exportedProducts[element2]
+											.grosso,
+										price_buy: this.exportedProducts[
+											element2
+										].price_buy
+									});
+								}
+							});
 						}
 					});
 				});
 
-			
 
-				this.addStockExit(checkOut);
-
-				// if (Object.keys(this.expoProducts).length == 0) {
-				// 	this.addExpoProduct({
-				// 		product: this.exportedProducts,
-				// 		user: this.user,
-				// 		createdBy: this.getUserAuth.name,
-				// 		statusDelivery: false,
-				// 		qtdSell: 0
-				// 	});
-				// }
+				}
 
 				this.$router.push('/saidas');
 			},

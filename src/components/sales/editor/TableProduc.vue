@@ -2,10 +2,10 @@
 	<div class="q-px-md">
 		<div class=" row   ">
 			<div class=" col-3 row justify-left q-pt-md q-mt-xl">
-				{{ fetchCustumers }} 
+				{{ fetchCustumers }}
 				<div class="col ">
 					<q-input
-					disable
+						disable
 						v-model="codeProduct"
 						dense
 						debounce="300"
@@ -125,7 +125,9 @@
 				<tr>
 					<th class="text-left text-bold">Codigo</th>
 					<th class="text-left">producto</th>
-					<th class="text-center text-bold">  Tipo de Venda || Quantidade</th>
+					<th class="text-center text-bold">
+						Tipo de Venda || Quantidade
+					</th>
 					<th class="text-left">Preco</th>
 					<th class="text-left">Subtototal</th>
 					<th class="text-left">Remover</th>
@@ -139,11 +141,22 @@
 						{{ product.name }}
 					</td>
 					<td class="text-left">
-						<addQuantity :id="index" :product="product" @price='price = $event' />
+						<addQuantity
+							:id="index"
+							:product="product"
+							@price="price = $event"
+						/>
 					</td>
-					<td class="text-left">{{ price == 'Retalho' ? product.price_buy : product.grosso  }} ,00 MT</td>
+					<td class="text-left">
+						{{
+							price == 'Retalho'
+								? product.price_buy
+								: product.grosso
+						}}
+						,00 MT
+					</td>
 
-					<td class="text-left">{{  product.subtotal }} ,00 MT</td>
+					<td class="text-left">{{ product.subtotal }} ,00 MT</td>
 
 					<td>
 						<q-btn
@@ -163,23 +176,36 @@
 			<div class="col-3 q-px-sm">
 				<!-- <q-input label="Valor dado" class="text-center text-bold " filled v-model="value" autogrow /> -->
 
-		<q-toolbar class="bg-blue-grey text-white rounded-borders">
-        <q-avatar class="gt-xs">
-			<q-icon name="attach_money" />
-        </q-avatar>
+				<q-toolbar class="bg-blue-grey text-white rounded-borders">
+					<q-avatar class="gt-xs">
+						<q-icon name="attach_money" />
+					</q-avatar>
 
-        <q-space />
+					<q-space />
 
-        <q-input dark dense standout v-model="value"   type="number" label=" Valor Dado" input-class="text-right" class="q-ml-md q-pa-sm">
-          
-        </q-input>
-      </q-toolbar>
-
-
+					<q-input
+						dark
+						dense
+						standout
+						v-model="value"
+						type="number"
+						label=" Valor Dado"
+						input-class="text-right"
+						class="q-ml-md q-pa-sm"
+					>
+					</q-input>
+				</q-toolbar>
 			</div>
 
-				<div class="col-1 q-mt-xs">
-				<q-input label="Desconto"  type="number" filled v-model="desc" dense input-class="text-right " />
+			<div class="col-1 q-mt-xs">
+				<q-input
+					label="Desconto"
+					type="number"
+					filled
+					v-model="desc"
+					dense
+					input-class="text-right "
+				/>
 			</div>
 		</div>
 	</div>
@@ -202,7 +228,7 @@
 				OptionalUsers: [],
 				value: 0,
 				change: '',
-				desc : 0,
+				desc: 0,
 				price: ''
 			};
 		},
@@ -215,7 +241,7 @@
 			...mapState('customer', ['customers']),
 			...mapGetters('expo', ['findProductForSale', 'searchProduct']),
 			...mapState('checkedProduct', ['checkedProducts']),
-			
+
 			...mapState('expo', ['saleProduct', 'productToSale']),
 			...mapState('product', ['exportedProducts']),
 
@@ -246,13 +272,13 @@
 
 				Object.keys(this.productToSale).forEach((element, key) => {
 					let product = this.productToSale[element];
-					sumMoney = sumMoney + product.subtotal ;
+					sumMoney = sumMoney + product.subtotal;
 					sumQtd = sumQtd + ~~product.quantity;
 
-					if(this.desc < sumMoney) {
-totals.sumMoney = sumMoney - this.desc   ;
+					if (this.desc < sumMoney) {
+						totals.sumMoney = sumMoney - this.desc;
 					}
-					
+
 					totals.sumQtd = sumQtd;
 				});
 
@@ -275,7 +301,7 @@ totals.sumMoney = sumMoney - this.desc   ;
 			value(val) {
 				this.$emit('value', {
 					value: ~~val,
-					subtotal: this.sumTotals.sumMoney 
+					subtotal: this.sumTotals.sumMoney
 				});
 			},
 			nameProduct(val) {

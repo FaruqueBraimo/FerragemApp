@@ -80,19 +80,19 @@
 			...mapActions('auth', ['logoutUser']),
 
 			info() {
-			
+			this.$router.push('/sales')
 
-				this.$q
-					.dialog({
-						title: 'Em Manutenção',
-						message: 'Poderá encontrar  algumas coisas desorganizadas, Pretende continuar mesmo assim?',
-						ok: 'Sim,Pretendo',
-						cancel: 'Não, Obrigado',
+				// this.$q
+				// 	.dialog({
+				// 		title: 'Em Manutenção',
+				// 		message: 'Poderá encontrar  algumas coisas desorganizadas, Pretende continuar mesmo assim?',
+				// 		ok: 'Sim,Pretendo',
+				// 		cancel: 'Não, Obrigado',
 
-					})
-					.onOk(() => {
-							this.$router.push('/sales')
-					});
+				// 	})
+				// 	.onOk(() => {
+							
+				// 	});
 			}
 		}
 	};

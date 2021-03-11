@@ -260,12 +260,12 @@
 							if (this.productToSale[element3].productId  == this.myProducts[element2].productId) {
 								
 							      
-								quantity  -=   this.productToSale[element3].newQtd   
-								// this.updateExpoProduct({
-								// 	id: element2,
-								// 	 updates: { quantity: quantity }
-								// });
-								
+								quantity  =  this.myProducts[element2].quantity -  this.productToSale[element3].newQtd   
+								this.updateExpoProduct({
+									id: element2,
+									 updates: { quantity: quantity }
+								});
+								console.log('remanescente', quantity)
 							}
 						});
 					});
@@ -295,7 +295,7 @@
 						),
 
 						name: this.productToSale[element3].newQtd ,
-						price : new Intl.NumberFormat().format( this.productToSale[element3].priceType || 0) ,	
+						 price : new Intl.NumberFormat().format( this.productToSale[element3].priceType || 0) ,	
 						country:
 							new Intl.NumberFormat().format(this.productToSale[element3].subtotal) 
 							
