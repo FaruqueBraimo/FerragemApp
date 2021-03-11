@@ -152,11 +152,20 @@
 							});
 						}
 
-						if(element != element2) {
-							statusSave = true
+						Object.keys(this.expoProducts).forEach(chave => {
+								if (
+									(this.expoProducts[chave].productId !==
+									element2) 
+								) {
+									
+]
+								}
+
+									
+							});
 									
 							
-						}
+					
 
 
 					});
