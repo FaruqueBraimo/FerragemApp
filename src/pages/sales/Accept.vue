@@ -7,7 +7,7 @@
 							: ``
 					}}
 				</div>
-
+ 
 				<div class="" style="">
 					<div class="row  justify-left q-pa-md q-ma-sm">
 						<div
@@ -52,7 +52,8 @@
 		computed: {
 			...mapGetters('auth', ['getUserName', 'getUserAuth']),
 			...mapGetters('setting', ['getLocalBoxStatus']),
-			...mapState('expo', ['expoProducts', 'myProducts']),
+			...mapState('auxliarExpo', ['expoProducts', 'myProducts']),
+				...mapState('expo', ['expoProducts', 'expoProducts']),
 
 			getProductToAccept() {
 				let myProducts = {};
@@ -78,23 +79,46 @@
 			]),
 			...mapActions('box', ['addBox', 'editBox']),
 
-			...mapActions('expo', ['updateExpoProduct', 'filterMyProducts']),
+			...mapActions('auxliarExpo', [ 'filterMyProducts']),
+			 ...mapActions('expo', ['updateExpoProduct', 'addExpoProduct' ]),
+
 
 			accept(payload) {
 				let product = {};
 				let prod = {};
 
 				prod = this.myProducts[payload];
+				let externProduct = {}
+				let internProduct = {}
 
-				Object.keys(prod  ).forEach(element => {
-				 
- 					this.updateExpoProduct({
-						id: payload,
-						updates: {
-							statusDelivery: true,
- 						}
-					});
-				});
+	if (Object.keys(this.expoProducts).length > 0) {
+					Object.keys(this.expoProducts).forEach(chave => {
+
+
+							externProduct =  this.expoProducts[chave]
+							
+								if (
+									( externProduct.productId !==
+									prod.productId) 
+								) {
+
+					// 	  this.updateExpoProduct({
+					// 	id: payload,
+					// 	updates: {
+					// 		statusDelivery: true,
+ 					// 	}
+					// });
+					console.log(externProduct)
+									
+ 
+								}
+
+									
+							});
+
+	}
+
+			 
 
 				this.filterMyProducts(this.getUserAuth.id);
 			},

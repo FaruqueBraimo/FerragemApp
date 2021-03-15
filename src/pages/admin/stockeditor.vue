@@ -66,7 +66,12 @@
 				'addExpoProduct',
 				'getData',
 				'updateExpoProduct',
-				'filterExpoProduct'
+				'filterExpoProduct', 'addOrUpdateExportedProducts'
+			]),
+
+			...mapActions('auxliarExpo', [
+				'addAuxiliarExpoProduct',
+			 
 			]),
 
 			...mapActions('setting', ['setPageTitle']),
@@ -94,7 +99,7 @@
 						
 						Object.keys(this.exportedProducts).forEach(element2 => {
 
-								this.addExpoProduct({
+								this.addAuxiliarExpoProduct({
 										productId: element2,
 										name: this.exportedProducts[element2]
 											.name,
@@ -118,7 +123,9 @@
 
 				
 				} else {
-						Object.keys(this.products).forEach((element, key) => {
+
+					//update a fucking product stock quantity
+					 Object.keys(this.products).forEach((element, key) => {
 					Object.keys(this.exportedProducts).forEach(element2 => {
 						if (element == element2) {
 							let product = this.products[element];
@@ -130,55 +137,19 @@
 								updates: { quantity: quantity }
 							});
 
-							Object.keys(this.expoProducts).forEach(chave => {
-								if (
-									(this.expoProducts[chave].productId ==
-									element2) 
-								) {
-									const quantity2 =
-										~~this.exportedProducts[element2]
-											.newQtd +
-										this.expoProducts[chave].quantity;
-									
-									this.updateExpoProduct({
-										id: chave,
-										updates: { quantity: quantity2 }
-									});
-									console.log('quan' )
-
-								}
-
-									
-							});
+						 
 						}
-
-						Object.keys(this.expoProducts).forEach(chave => {
-								if (
-									(this.expoProducts[chave].productId !==
-									element2) 
-								) {
-									
-]
-								}
-
-									
-							});
-									
-							
-					
-
-
+ 
 					});
 				});
 
 
 				}
 
-				if(statusSave) {
-
+			 
 					Object.keys(this.exportedProducts).forEach(element2 => {
 
-							this.addExpoProduct({
+							this.addAuxiliarExpoProduct({
 										productId: element2,
 										name: this.exportedProducts[element2]
 											.name,
@@ -200,12 +171,11 @@
 						
 							});
 
+ 
+				// this.$router.push('/saidas');.bundleRenderer.renderToStream
+ 
 
 
-					
-				}
-
-				// this.$router.push('/saidas');
 			},
 
 			printTable() {

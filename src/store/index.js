@@ -15,8 +15,8 @@ import invoice from './modules/invoices';
 import price from './modules/prices';
 import box from './modules/Boxes';
 import stockExit from './modules/stockExits';
-import expo from './modules/expo';
-
+import expo from './modules/expo'; 
+import auxliarExpo from './modules/auxliarExpo';
 Vue.use(Vuex);
 
 /*
@@ -46,7 +46,9 @@ export default function(/* { ssrContext } */) {
 			stockExit,
 			checkedProduct,
 			box,
-			expo
+			expo,
+			auxliarExpo
+			
 		},
 
 		// enable strict mode (adds overhead!)

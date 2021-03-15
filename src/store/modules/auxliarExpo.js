@@ -2,7 +2,7 @@
 
 
 import Vue from 'vue';
-import { dbExpoProducts } from '../../boot/firebase';
+import { dbAuxliarExpoProducts } from '../../boot/firebase';
 import { Loading, date } from 'quasar';
 import { showErrorMessage } from '../../functions/handle-error-messages';
 import { showSuccessMessage } from '../../functions/show-success-messages';
@@ -10,7 +10,7 @@ import { showSuccessMessage } from '../../functions/show-success-messages';
 let lastVisible = null;
 
 const state = {
-	expoProducts: {},
+	auxliarExpoProducts: {},
 	uploadProgress: 0,
 	loading: false,
 	productSearchKey: '',
@@ -68,16 +68,16 @@ const mutations = {
 	},
 
 
-	addExpoProduct(state, payload) {
-		Vue.set(state.expoProducts, payload.id, payload.object);
+	addAuxiliarExpoProduct(state, payload) {
+		Vue.set(state.auxliarExpoProducts, payload.id, payload.object);
 
 	},
 
 	updateExpoProduct(state, payload) {
-		Object.assign(state.expoProducts[payload.id], payload.updates);
+		Object.assign(state.auxliarExpoProducts[payload.id], payload.updates);
 	},
 	deleteExpoProduct(state, id) {
-		Vue.delete(state.expoProducts, id);
+		Vue.delete(state.auxliarExpoProducts, id);
 	},
 	productSearchKey(state, payload) {
 		console.log(payload)
@@ -158,7 +158,7 @@ const actions = {
 	
 	getData({ state, commit, getters, dispatch }) {
 		commit('deleteExpoProduct', '')
-		let query = dbExpoProducts
+		let query = dbAuxliarExpoProducts
 		.orderBy('createdAt', 'asc')
 			
 			.get()
@@ -190,7 +190,7 @@ const actions = {
 	findProductByName({ state, commit, dispatch },myQuery) {
 	
 		let query = null
-		 query = dbExpoProducts.where("user.value", "==", myQuery).where("statusDelivery", "==", true)
+		 query = dbAuxliarExpoProducts.where("user.value", "==", myQuery).where("statusDelivery", "==", true)
 	
 		query.onSnapshot(function(snapshot) {
 			snapshot.docChanges().forEach(function(change) {
@@ -216,7 +216,7 @@ const actions = {
 	filterMyProducts({ state, commit, dispatch },myQuery) {
 		
 		let query = null
-		query = dbExpoProducts.where("user.value", "==", myQuery)
+		query = dbAuxliarExpoProducts.where("user.value", "==", myQuery)
 	   let id = ''				
 	   query.onSnapshot(function(snapshot) {
 		   snapshot.docChanges().forEach(function(change) {
@@ -237,7 +237,7 @@ const actions = {
 	},
 
 	addOrUpdateExportedProducts ({ state, commit, getters },payload) {
-		return   dbExpoProducts.doc(payload.id || 'xyz' ).set(payload)
+		return   dbAuxliarExpoProducts.doc(payload.id || 'xyz' ).set(payload)
 		.then(function (docRef) {
 			console.log("salvo")
 		})	
@@ -248,7 +248,7 @@ const actions = {
 		commit('cleanId')
 		
 		let query = null
-		 query = dbExpoProducts.where("user", "==", myQuery.user).where("product", "==", myQuery.product)
+		 query = dbAuxliarExpoProducts.where("user", "==", myQuery.user).where("product", "==", myQuery.product)
 		let id = ''				
 		query.onSnapshot(function(snapshot) {
 			snapshot.docChanges().forEach(function(change) {
@@ -274,7 +274,7 @@ const actions = {
 		commit('expoProductFiltered');
 		commit('expoProductFilteredCategory');
 
-		dbExpoProducts
+		dbAuxliarExpoProducts
 			.orderBy('createdAt', 'asc')
 			.onSnapshot(function(snapshot) {
 				lastVisible = snapshot.docs[snapshot.docs.length - 1];
@@ -312,7 +312,7 @@ const actions = {
 		commit('expoProductFiltered');
 		commit('expoProductFilteredCategory');
 
-		dbExpoProducts
+		dbAuxliarExpoProducts
 			.orderBy('createdAt', 'asc')
 			.limit(2)
 			.onSnapshot(function(snapshot) {
@@ -341,16 +341,16 @@ const actions = {
 			});
 	},
 
-	addExpoProduct({ commit, dispatch, rootGetters }, payload) {
+	addAuxiliarExpoProduct({ commit, dispatch, rootGetters }, payload) {
 		payload.createdAt = new Date()
 		payload.updatedAt = new Date()
 
-		return dbExpoProducts
+		return dbAuxliarExpoProducts
 			.add(payload)
 			.then(docRef => {
 				
 
-			 showSuccessMessage( `Produtos exportados`)
+		 
 			 
 				return true;
 			})
@@ -364,11 +364,11 @@ const actions = {
 
 	},
 
-	updateExpoProduct({ commit, rootGetters }, payload) {
+	updateAuxiliarExpoProduct({ commit, rootGetters }, payload) {
 		
 		payload.updates.updatedAt = new Date()
 
-		return dbExpoProducts
+		return dbAuxliarExpoProducts
 			.doc(payload.id)
 			.update(payload.updates)
 			.then(function(docRef) {
@@ -385,8 +385,8 @@ const actions = {
 			});
 	},
 
-	deleteExpoProduct({ commit }, id) {
-		return dbExpoProducts
+	deleteAuxiliarExpoProduct({ commit }, id) {
+		return dbAuxliarExpoProducts
 			.doc(id)
 			.delete()
 			.then(function(docRef) {
