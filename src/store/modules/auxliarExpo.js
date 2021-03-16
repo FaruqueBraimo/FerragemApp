@@ -1,6 +1,5 @@
 //  Exported products for users
 
-
 import Vue from 'vue';
 import { dbAuxliarExpoProducts } from '../../boot/firebase';
 import { Loading, date } from 'quasar';
@@ -24,15 +23,9 @@ const state = {
 	
 	}
 
-
-
 const mutations = {
 
-
-
-	
 	findProductForSale: (state)  => {
-		
 		
         return state.productSearchKey
 
@@ -43,6 +36,10 @@ const mutations = {
 
 	},
 
+	removeMyProduct(state, id) {
+		Vue.delete(state.myProducts, id);
+
+	},
 
 	addProductForSale
 	(state, payload){
@@ -52,21 +49,17 @@ const mutations = {
 
 	updateQtdProduct(state, payload) {
 	
-		 
 	Object.assign(state.productToSale[payload.id], payload.updates);
 	
-
 	},
 
 	removeChecked(state, id) {
 		Vue.delete(state.productToSale, id);
 	},
 	
-
 	uploadProgress(state, val) {
 		state.uploadProgress = val;
 	},
-
 
 	addAuxiliarExpoProduct(state, payload) {
 		Vue.set(state.auxliarExpoProducts, payload.id, payload.object);
@@ -114,40 +107,30 @@ const getters = {
 				.includes(state.solicitationSearchKey.toLowerCase())
 		);
 
-
 	},
 	
 	getProductData:(state) => {
 				return state.expoProducts || state.productFilteredCategory ;
 	},
 
-
 	searchProduct: (state) => (expoProducts) => {
         let object = {}
         Object.keys(expoProducts).forEach(key => {
 			let product = expoProducts[key]  	
 		 
-
 		  if (product.name.includes(state.productSearchKey.toLowerCase())) {
 				if(product.quantity >= 1) {
 					object[key] = product
 
 				} 
 				
-
 			}
 
-				
 			});
             
-			
-			
-	 
-		
         return object
 },
 	
-
 	canGetMoreExpoProducts: state => {
 		return Object.keys(state.ExpoProducts).length % 10 === 0;
 	}
@@ -155,7 +138,6 @@ const getters = {
 
 const actions = {
 
-	
 	getData({ state, commit, getters, dispatch }) {
 		commit('deleteExpoProduct', '')
 		let query = dbAuxliarExpoProducts
@@ -204,8 +186,6 @@ const actions = {
 
 				}
 					
-				
-			
 			});
 
 		});			
@@ -229,8 +209,11 @@ const actions = {
 				   });
 
 			   }
+			   if (change.type === 'removed') {
+					commit('removeMyProduct', change.doc.id);
+
+			}
 				   
-			   
 		   });
 	   });			
 	
@@ -262,11 +245,9 @@ const actions = {
 
 				}
 					
-				
 			});
 		});			
 	
-		
 	},
 
 	getAllExpoProducts({ commit }) {
@@ -302,11 +283,6 @@ const actions = {
 			});
 	},
 
-
-
-
-
-	
 	listenProductRealTimeChanges({ commit }) {
 		commit('resetExpoProducts');
 		commit('expoProductFiltered');
@@ -349,9 +325,6 @@ const actions = {
 			.add(payload)
 			.then(docRef => {
 				
-
-		 
-			 
 				return true;
 			})
 			.catch(function(error) {
@@ -360,7 +333,6 @@ const actions = {
 
 				return false;
 			});
-
 
 	},
 
@@ -373,7 +345,6 @@ const actions = {
 			.update(payload.updates)
 			.then(function(docRef) {
 			
-	
 				return true;
 			})
 			.catch(function(error) {
@@ -411,7 +382,6 @@ const actions = {
 		
 		commit('productSearchKey',text );
 
-		
 	},
 
 	updateQtdProduct({ commit, rootGetters }, payload) {
@@ -427,7 +397,6 @@ const actions = {
 		commit('removeChecked',id );
 
 	}
-
 
 };
 

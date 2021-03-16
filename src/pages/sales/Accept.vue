@@ -79,18 +79,20 @@
 			]),
 			...mapActions('box', ['addBox', 'editBox']),
 
-			...mapActions('auxliarExpo', [ 'filterMyProducts']),
+			...mapActions('auxliarExpo', [ 'filterMyProducts', 'deleteAuxiliarExpoProduct']),
 			 ...mapActions('expo', ['updateExpoProduct', 'addExpoProduct' ]),
 
 
 			accept(payload) {
 				let product = {};
 				let prod = {};
+				let statusSave = false
 
 				prod = this.myProducts[payload];
 				let externProduct = {}
 				let internProduct = {}
 
+						let quantity = 0;
 	if (Object.keys(this.expoProducts).length > 0) {
 					Object.keys(this.expoProducts).forEach(chave => {
 
@@ -98,19 +100,29 @@
 							externProduct =  this.expoProducts[chave]
 							
 								if (
-									( externProduct.productId !==
-									prod.productId) 
+									 externProduct.productId ===
+									 prod.productId
 								) {
+						quantity =
+								externProduct.quantity +
+								prod.quantity;
 
-					// 	  this.updateExpoProduct({
-					// 	id: payload,
-					// 	updates: {
-					// 		statusDelivery: true,
- 					// 	}
-					// });
-					console.log(externProduct)
+
+
+					this.updateExpoProduct({
+						id: chave,
+						updates: {
+							quantity: quantity,
+ 						}
+					});
+				
+								} else {
+									// statusSave =true
+
 									
- 
+									
+									
+								 
 								}
 
 									
@@ -118,9 +130,22 @@
 
 	}
 
-			 
+	if(statusSave) {
+			this.addExpoProduct(prod)
 
-				this.filterMyProducts(this.getUserAuth.id);
+         this.deleteAuxiliarExpoProduct(payload)
+		 				this.filterMyProducts(this.getUserAuth.id);
+						 this.getProductToAccept
+				statusSave = false
+
+	}
+
+			 
+// if(!statusSave) {
+// 	this.$router.go()
+// }
+
+						
 			},
 
 			
@@ -130,6 +155,12 @@
 			this.filterMyProducts(this.getUserAuth.id);
 			this.setPageTitle('Produtos Enviados');
 		
+		},
+
+		updated() {
+			this.getProductToAccept
+					 				this.filterMyProducts(this.getUserAuth.id);
+
 		},
 		filters: {
 			dateFormat(val) {

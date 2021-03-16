@@ -28,6 +28,8 @@
 			this.listenPriceRealTimeChanges()
 			this.getAllExpoProducts()
 			this.findProductByName(this.getUserAuth.id)
+			this.filterMyProducts(this.getUserAuth.id);
+
 		},
 				computed: {
 			...mapState('auth', ['users']),
@@ -75,6 +77,10 @@
 			...mapActions('invoice', ['listeninvoiceRealTimeChanges']),
 			...mapActions('box', ['listenBoxRealTimeChanges']),
 			...mapActions('expo', ['findProductByName','getAllExpoProducts']),
+			...mapActions('auxliarExpo', ['filterMyProducts']),
+
+
+			
 				
 
 		},
