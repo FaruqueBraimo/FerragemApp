@@ -29,7 +29,7 @@
 					</q-item-section>
 				</q-item>
 
-				<q-item clickable v-ripple to="/sales/accept" exact :disable='Object.keys(getProductToAccept).length == 0'	> 
+				<q-item clickable v-ripple to="/sales/accept" exact 	> 
 					<q-item-section avatar>
 						<q-icon name="assignment" />
 					</q-item-section>
@@ -38,7 +38,6 @@
 					<div class="row"> 
 						<span class="q-pt-sm q-pr-md">Novos Produtos</span>  	
 						  <q-spinner-rings
-						  v-if="Object.keys(getProductToAccept).length > 0"
 							color="deep-orange"
 							size="2.9em"
 							

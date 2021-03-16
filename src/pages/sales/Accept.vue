@@ -7,6 +7,7 @@
 							: ``
 					}}
 				</div>
+				{{objectToSave}}
  
 				<div class="" style="">
 					<div class="row  justify-left q-pa-md q-ma-sm">
@@ -39,7 +40,7 @@
 			return {
 				open: false,
 				updateCategory: false,
-				MyBox: {},
+				objectToSave: {},
 				count: 0
 
 			};
@@ -60,9 +61,8 @@
 				Object.keys(this.myProducts).forEach(element => {
 					let prod = this.myProducts[element];
 
-					if (!prod.statusDelivery) {
 						myProducts[element] = prod;
-					}
+					
 				});
 
 				return myProducts;
@@ -92,8 +92,11 @@
 				let externProduct = {}
 				let internProduct = {}
 
+			
+
 						let quantity = 0;
 	if (Object.keys(this.expoProducts).length > 0) {
+			this.verify(payload)
 					Object.keys(this.expoProducts).forEach(chave => {
 
 
@@ -115,28 +118,30 @@
 							quantity: quantity,
  						}
 					});
-				
-								} else {
-									// statusSave =true
+					         this.deleteAuxiliarExpoProduct(payload)
 
-									
-									
-									
-								 
-								}
+				
+								} 
 
 									
 							});
 
 	}
-
-	if(statusSave) {
-			this.addExpoProduct(prod)
+	else {
+		this.addExpoProduct(prod)
 
          this.deleteAuxiliarExpoProduct(payload)
-		 				this.filterMyProducts(this.getUserAuth.id);
-						 this.getProductToAccept
-				statusSave = false
+		this.filterMyProducts(this.getUserAuth.id);
+		
+	}
+
+	if(statusSave) {
+			
+										this.addExpoProduct(prod)
+ 										this.deleteAuxiliarExpoProduct(payload)
+		 								this.filterMyProducts(this.getUserAuth.id);
+						 				this.getProductToAccept
+										 statusSave = false
 
 	}
 
@@ -148,8 +153,46 @@
 						
 			},
 
+			verify(object) {
+				let product = {};
+				let prod = {};
 			
-		},
+
+				prod = this.myProducts[object];
+				let externProduct = {}
+				let internProduct = {}
+
+						let quantity = 0;
+					Object.keys(this.expoProducts).forEach(chave => {
+
+
+							externProduct =  this.expoProducts[chave]
+							
+								if (
+									 externProduct.productId ===
+									 prod.productId
+								) {
+									this.objectToSave.save = false								
+
+								} else{
+										this.objectToSave.save = true	
+							    	}
+								
+								
+							});
+
+
+
+							if(this.objectToSave.save === true) {
+								this.addExpoProduct(prod)
+ 										this.deleteAuxiliarExpoProduct(object)
+		 								this.filterMyProducts(this.getUserAuth.id);
+						 				this.getProductToAccept
+							}
+			
+
+			
+		}},
 
 		mounted() {
 			this.filterMyProducts(this.getUserAuth.id);

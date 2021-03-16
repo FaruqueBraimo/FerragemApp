@@ -1,6 +1,5 @@
 //  Exported products for users
 
-
 import Vue from 'vue';
 import { dbExpoProducts } from '../../boot/firebase';
 import { Loading, date } from 'quasar';
@@ -24,15 +23,9 @@ const state = {
 	
 	}
 
-
-
 const mutations = {
 
-
-
-	
 	findProductForSale: (state)  => {
-		
 		
         return state.productSearchKey
 
@@ -43,7 +36,6 @@ const mutations = {
 
 	},
 
-
 	addProductForSale
 	(state, payload){
 		Vue.set(state.saleProduct, payload.id, payload.object);
@@ -52,21 +44,17 @@ const mutations = {
 
 	updateQtdProduct(state, payload) {
 	
-		 
 	Object.assign(state.productToSale[payload.id], payload.updates);
 	
-
 	},
 
 	removeChecked(state, id) {
 		Vue.delete(state.productToSale, id);
 	},
 	
-
 	uploadProgress(state, val) {
 		state.uploadProgress = val;
 	},
-
 
 	addExpoProduct(state, payload) {
 		Vue.set(state.expoProducts, payload.id, payload.object);
@@ -114,40 +102,30 @@ const getters = {
 				.includes(state.solicitationSearchKey.toLowerCase())
 		);
 
-
 	},
 	
 	getProductData:(state) => {
 				return state.expoProducts || state.productFilteredCategory ;
 	},
 
-
 	searchProduct: (state) => (expoProducts) => {
         let object = {}
         Object.keys(expoProducts).forEach(key => {
 			let product = expoProducts[key]  	
 		 
-
 		  if (product.name.includes(state.productSearchKey.toLowerCase())) {
-				if(product.quantity >= 1) {
+				if(product.quantity > 0) {
 					object[key] = product
 
 				} 
 				
-
 			}
 
-				
 			});
             
-			
-			
-	 
-		
         return object
 },
 	
-
 	canGetMoreExpoProducts: state => {
 		return Object.keys(state.ExpoProducts).length % 10 === 0;
 	}
@@ -155,7 +133,6 @@ const getters = {
 
 const actions = {
 
-	
 	getData({ state, commit, getters, dispatch }) {
 		commit('deleteExpoProduct', '')
 		let query = dbExpoProducts
@@ -190,7 +167,7 @@ const actions = {
 	findProductByName({ state, commit, dispatch },myQuery) {
 	
 		let query = null
-		 query = dbExpoProducts.where("user.value", "==", myQuery).where("statusDelivery", "==", true)
+		 query = dbExpoProducts.where("user.value", "==", myQuery)
 	
 		query.onSnapshot(function(snapshot) {
 			snapshot.docChanges().forEach(function(change) {
@@ -204,8 +181,6 @@ const actions = {
 
 				}
 					
-				
-			
 			});
 
 		});			
@@ -230,7 +205,6 @@ const actions = {
 
 			   }
 				   
-			   
 		   });
 	   });			
 	
@@ -262,11 +236,9 @@ const actions = {
 
 				}
 					
-				
 			});
 		});			
 	
-		
 	},
 
 	getAllExpoProducts({ commit }) {
@@ -302,11 +274,6 @@ const actions = {
 			});
 	},
 
-
-
-
-
-	
 	listenProductRealTimeChanges({ commit }) {
 		commit('resetExpoProducts');
 		commit('expoProductFiltered');
@@ -349,7 +316,6 @@ const actions = {
 			.add(payload)
 			.then(docRef => {
 				
-
 			 showSuccessMessage( `Produtos exportados`)
 			 
 				return true;
@@ -360,7 +326,6 @@ const actions = {
 
 				return false;
 			});
-
 
 	},
 
@@ -373,7 +338,6 @@ const actions = {
 			.update(payload.updates)
 			.then(function(docRef) {
 			
-	
 				return true;
 			})
 			.catch(function(error) {
@@ -411,7 +375,6 @@ const actions = {
 		
 		commit('productSearchKey',text );
 
-		
 	},
 
 	updateQtdProduct({ commit, rootGetters }, payload) {
@@ -427,7 +390,6 @@ const actions = {
 		commit('removeChecked',id );
 
 	}
-
 
 };
 
