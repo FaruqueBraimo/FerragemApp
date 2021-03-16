@@ -1,6 +1,6 @@
 <template>
     <div class="row q-pa-md">
-				<div class="col-12 q-pl-lg text-bold">
+				<div class="col-12 q-pl-lg text-bold text-center  text-red-5">
 					{{
 						Object.keys(getProductToAccept).length > 0
 							? `Foram enviados produtos para ti, por favor aceite ou recuse!`

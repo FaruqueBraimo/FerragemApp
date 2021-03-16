@@ -2,7 +2,7 @@
 	<div class="q-px-md">
 		<div class=" row   ">
 			<div class=" col-3 row justify-left q-pt-md q-mt-xl">
-				{{ fetchCustumers }}
+				{{ fetchCustumers }}  {{sumTotals}} {{totals}}
 				<div class="col ">
 					<q-input
 						disable
@@ -229,7 +229,8 @@
 				value: 0,
 				change: '',
 				desc: 0,
-				price: ''
+				price: '',
+				totals: {}
 			};
 		},
 		computed: {
@@ -266,20 +267,23 @@
 			},
 
 			sumTotals() {
-				let totals = {};
+				let totals = {
+					sumMoney : 0
+				};
 				let sumMoney = 0;
 				let sumQtd = 0;
+				let product = {}
+				Object.keys(this.productToSale).forEach(element => {
+					product = this.productToSale[element];
 
-				Object.keys(this.productToSale).forEach((element, key) => {
-					let product = this.productToSale[element];
+					console.log(product)
 					sumMoney = sumMoney + product.subtotal;
-					sumQtd = sumQtd + ~~product.quantity;
+					sumQtd = sumQtd + product.quantity;
 
 					if (this.desc < sumMoney) {
 						totals.sumMoney = sumMoney - this.desc;
 					}
 
-					totals.sumQtd = sumQtd;
 				});
 
 				return totals;
@@ -298,6 +302,8 @@
 				this.$emit('user', val);
 			},
 
+		
+
 			value(val) {
 				this.$emit('value', {
 					value: ~~val,
@@ -313,6 +319,12 @@
 		},
 
 		updated() {
+			
+			if(Object.keys(this.productToSale).length > 0) {
+					this.sumTotals
+					console.log(	this.sumTotals)
+			}
+		
 			
 			if( Object.keys(this.sumTotals).length > 0) {
 						this.$emit('subtotal',  this.sumTotals.sumMoney);

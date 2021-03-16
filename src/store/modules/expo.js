@@ -37,6 +37,7 @@ const mutations = {
 	},
 
 	addProductForSale
+			
 	(state, payload){
 		Vue.set(state.saleProduct, payload.id, payload.object);
 
@@ -76,9 +77,13 @@ const mutations = {
 		// Vue.set(state.products, payload.id, payload.object);
 		Vue.set(state.productFiltered, payload.id, payload.object);
 	},
+	
 	productToSale(state, payload) {
+		payload.object.subtotal = 1*payload.object.price_buy;
+
 		Vue.set(state.productToSale, payload.id, payload.object);
 	},
+
 	resetExpoProducts(state) {
 		state.ExpoProducts = {};
 	},
@@ -88,7 +93,7 @@ const mutations = {
 	expoProductFilteredCategory(state) {
 		state.productFilteredCategory = {};
 	}
-
+	
 };
 
 const getters = {

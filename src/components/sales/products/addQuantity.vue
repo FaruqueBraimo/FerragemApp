@@ -1,12 +1,12 @@
 <template>
 	<div class="row">
-		{{ getQuantity }}
+		{{ getPriceType }} 
 
 		<div class="col-6 ">
 			<q-select
 				v-model="price"
 				dense
-				:options="['Grosso', 'Retalho']"
+				:options="OptionalPrices"
 				label="Venda A"
 				filled
 			/>
@@ -26,7 +26,8 @@
 		data() {
 			return {
 				qtd: 1,
-				price: 'Retalho'
+				price: '',
+				OptionalPrices: []
 			};
 		},
 		computed: {
@@ -36,7 +37,23 @@
 			]),
 			...mapState('checkedProduct', ['checkedProducts']),
 
-			getQuantity() {}
+			getPriceType() {
+					
+					this.OptionalPrices.push({
+						value: this.product.price_buy,
+						label: "Retalho"
+					});
+
+					
+					this.OptionalPrices.push({
+						value: this.product.grosso,
+						label: "Grosso"
+					});
+
+			}
+
+
+
 		},
 		methods: {
 			...mapActions('expo', ['updateQtdProduct'])
@@ -47,7 +64,7 @@
 				if (val) {
 					this.$emit('price', val);
 
-					if (this.qtd > ~~this.product.quantity) {
+					if (this.qtd > this.product.quantity) {
 						this.$q
 							.dialog({
 								title: 'Quantidade Inválida',
@@ -57,15 +74,15 @@
 								ok: 'Sim'
 							})
 							.onOk(() => {});
-					} else if (this.qtd <= ~~this.product.quantity) {
+					} else if (this.qtd <= this.product.quantity) {
 						this.updateQtdProduct({
 							id: this.id,
 							updates: {
 								newQtd: this.qtd,
 								subtotal:
-									this.price == 'Retalho'
-										? this.product.price_buy * this.qtd
-										: this.product.grosso * this.qtd
+									this.price.label == 'Retalho'
+										? this.price.value * this.qtd
+										: this.price.value * this.qtd
 							}
 						});
 					}
@@ -73,7 +90,7 @@
 			},
 			qtd(val) {
 				if (val.length > 0) {
-					if (val > ~~this.product.quantity) {
+					if (val > this.product.quantity) {
 						this.$q
 							.dialog({
 								title: 'Quantidade Inválida',
@@ -83,18 +100,18 @@
 								ok: 'Sim'
 							})
 							.onOk(() => {});
-					} else if (val <= ~~this.product.quantity) {
+					} else if (val <= this.product.quantity) {
 						this.updateQtdProduct({
 							id: this.id,
 							updates: {
 								newQtd: val,
-								// priceType : this.price == 'Retalho'
-								// 		? this.product.price_buy 
-								// 		: this.product.grosso ,
+								priceType :	this.price.label == 'Retalho'
+										? this.price.value
+										: this.price.value  ,
 								subtotal:
-									this.price == 'Retalho'
-										? this.product.price_buy * val
-										: this.product.grosso * val
+									this.price.label == 'Retalho'
+										? this.price.value * val
+										: this.price.value * val
 							}
 						});
 					}

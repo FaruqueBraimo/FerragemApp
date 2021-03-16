@@ -52,11 +52,11 @@ const actions = {
 		let checked = [];
 		var data = localStorage.getItem('checkedProducts');
 		data = data ? JSON.parse(data) : [];
-
+		
 		data.push({
 			payload
 		});
-
+		
 		localStorage.setItem('checkedProducts', JSON.stringify(data));
 		dispatch('listenCheckedProductRealTime');
 		showSuccessMessage(' Adicionado na lista');
@@ -83,7 +83,6 @@ const actions = {
 		dispatch('listenCheckedProductRealTime');
 	},
 	
-
 	decrementQuantity({ dispatch }, payload) {
 		let checked = [];
 		var data = localStorage.getItem('checkedProducts');

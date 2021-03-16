@@ -189,7 +189,7 @@
 				);
 
 				this.addSale(saleDone);
-				// this.printSale();
+				this.printSale();
 
 				this.updateCash(this.total);
 
@@ -220,7 +220,7 @@
 				);
 
 				this.addInvoice(invoiceDone);
-				// this.printInvoice('Factura');
+				 this.printInvoice('Factura');
 				this.$q
 					.dialog({
 						title: 'Fatura Emitida ',
@@ -381,7 +381,7 @@
 				];
 
 				var summary = [
-					{ title: 'Subtotal', dataKey: 'sub' },
+					{ title: 'Total', dataKey: 'sub' },
 					{ title: 'Data ', dataKey: 'data' },
 					{ title: 'Cliente', dataKey: 'user' },
 					{ title: 'Balconista', dataKey: 'admin' }
@@ -463,6 +463,7 @@
 			},
 
 			addToCard(product) {
+				
 				this.addCheckedProducts(product);
 			}
 		},
