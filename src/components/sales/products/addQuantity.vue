@@ -7,13 +7,13 @@
 				v-model="price"
 				dense
 				:options="OptionalPrices"
-				label="Venda A"
+				label="Venda a"
 				filled
 			/>
 		</div>
 
 		<div class="col-6 q-px-md">
-			<q-input v-model="qtd" type="number" dense filled outlined />
+			<q-input v-model="qtd" type="number" min='1' dense filled outlined />
 		</div>
 	</div>
 </template>
@@ -79,6 +79,9 @@
 							id: this.id,
 							updates: {
 								newQtd: this.qtd,
+								priceType :	this.price.label == 'Retalho'
+										? this.price.value
+										: this.price.value  ,
 								subtotal:
 									this.price.label == 'Retalho'
 										? this.price.value * this.qtd
@@ -89,8 +92,8 @@
 				}
 			},
 			qtd(val) {
-				if (val.length > 0) {
-					if (val > this.product.quantity) {
+				if (val) {
+					if (this.qtd > this.product.quantity) {
 						this.$q
 							.dialog({
 								title: 'Quantidade Inválida',
@@ -100,23 +103,24 @@
 								ok: 'Sim'
 							})
 							.onOk(() => {});
-					} else if (val <= this.product.quantity) {
+					} else if (this.qtd <= this.product.quantity) {
 						this.updateQtdProduct({
 							id: this.id,
 							updates: {
-								newQtd: val,
+								newQtd: this.qtd,
 								priceType :	this.price.label == 'Retalho'
 										? this.price.value
 										: this.price.value  ,
 								subtotal:
 									this.price.label == 'Retalho'
-										? this.price.value * val
-										: this.price.value * val
+										? this.price.value * this.qtd
+										: this.price.value * this.qtd
 							}
 						});
+
 					}
 				}
-			}
-		}
+			
+		}}
 	};
 </script>

@@ -48,6 +48,19 @@
 
 				</q-item>
 
+					<q-item clickable v-ripple to="/sales/products" exact 	> 
+					<q-item-section avatar>
+						<q-icon name="book" />
+					</q-item-section>
+
+					
+					<div class="row"> 
+						<span class="q-pt-sm q-pr-md">Meus Produtos</span>  	
+						 
+						</div>
+
+				</q-item>
+
 				<!-- <q-item clickable v-ripple to="/sales/invoices">
 					<q-item-section avatar>
 						<q-icon name="payment" />

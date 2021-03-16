@@ -1,7 +1,7 @@
 <template>
 
   <q-page  padding>
-        <div class="q-pa-md">
+        <!-- <div class="q-pa-md">
          <q-input
         v-model="search"
         filled
@@ -15,7 +15,7 @@
         </template>
       </q-input>
 
-        </div>
+        </div> -->
 
     <q-list  	 >
 
@@ -24,12 +24,11 @@
       :bar-style="barStyle"
       style="height: 400px; "
     >
-      <div v-for="(product, index) in Object.keys(products).length > 0 ?  myProducts :  myProducts" 	:key="index" class="q-pa-xs">
+      <div v-for="(product, index) in  myProducts" 	:key="index"  >
        
         <product-component
 					:product="Object.assign({id: index},product)"
 					:productId="index"
-          @addToCard ='addToCard' 
   
       />
       </div>
@@ -40,9 +39,7 @@
 
 
           </q-list>
-          <div class="q-pa-md 			" v-if="Object.keys(checkedProducts).length > 0" > 
-              <q-btn color="deep-purple" no-caps class=" full-width" @click="$router.push('/sales/card')" unelevated  icon="add_shopping_cart" label="Ver Carinha" />
-        </div>
+         
 
 
 

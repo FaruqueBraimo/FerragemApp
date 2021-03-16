@@ -1,7 +1,7 @@
 <template>
 	<div class="">
         {{getQuantity}}
-		<q-input v-model="text" type="number"   dense filled outlined   />
+		<q-input v-model="text" type="number" min='1'   dense filled outlined   />
        
 	</div>
 </template>

@@ -1,9 +1,8 @@
 <template>
-
-<div>
+ 
 	
 		
-	<div class="q-pa-sm" >
+	<div   >
 		<q-item > 
 			<q-item-section avatar>
 				<q-avatar size="50px" square>
@@ -13,58 +12,31 @@
 				</q-avatar>
 			</q-item-section>
 			<q-item-section>
-				<q-item-label class='text-capitalize'>{{ product.product.label }}</q-item-label>
+				<q-item-label class='text-body1'>{{ product.name }}</q-item-label>
 				
 				<q-item-label
-					class="text-bold text-left text-primary text-overline "
-					> qtd :{{ product.quantity || 0 }}</q-item-label
+					class="text-bold text-left  text-overline text-primary "
+					> quantidade Actual :{{ product.quantity || 0 }}</q-item-label
 				>
 			</q-item-section>
 
 			<q-item-section side top>
-				<small class="text-pink text-primary">
-					{{ product.product.price }} MT
+				<small class="text-green-5 ">
+				 Preço a Retalho : 	{{ product.price_buy }} MT
 				</small>
 
 				<q-space  />
 				<!-- v-if="Object.keys(checkedProducts).length === 0" -->
 				<div >
-					<q-btn
-						color="deep-purple"
-						size="xs"
-						outline
-						icon="add"
-						unelevated
-						@click="addToCard(product)"
-						round
-					/>
+					<small class="text-pink-5 ">
+				 Preço a Grosso : 	{{ product.grosso }} MT
+				</small>
 				</div>
-				<!-- <div v-else>
-					<q-btn
-						color="red-5"
-						size="xs"
-						icon="remove"
-						v-if="checkIncludes(product.id )"
-						unelevated
-						@click="$emit('removeChecked', product.id)"
-						round
-					/>
-					<q-btn
-						color="deep-purple"
-						size="xs"
-						outline
-						icon="add"
-						v-else
-						unelevated
-						@click="addToCard(product)"
-						round
-					/>
-				</div> -->
+				
 			</q-item-section>
 		</q-item>
 	</div>
-	</div>
-</template>
+ </template>
 
 <script>
 	import { mapActions, mapState, mapGetters } from 'vuex';

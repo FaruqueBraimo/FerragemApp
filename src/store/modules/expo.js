@@ -108,6 +108,26 @@ const getters = {
 		);
 
 	},
+	sumTotals: (state, getters) => productToSale => {
+		let totals = {
+			sumMoney : 0
+		};
+		let sumMoney = 0;
+		let sumQtd = 0;
+		let product = {}
+		Object.keys(productToSale).forEach(element => {
+			product = productToSale[element];
+
+			console.log(product)
+			sumMoney = sumMoney + product.subtotal;
+			sumQtd = sumQtd + product.quantity;
+
+				totals.sumMoney = sumMoney 
+			
+		});
+
+		return totals.sumMoney;
+	},
 	
 	getProductData:(state) => {
 				return state.expoProducts || state.productFilteredCategory ;

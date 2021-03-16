@@ -3,7 +3,7 @@
 
        <div class="row justify-left	">
 
-      <div class=" col-5 q-pa-md  "	v-for="(sale, index) in filterSaleByUser(getUserAuth.id) "
+      <div class=" col-4 q-pa-md  "	v-for="(sale, index) in filterSaleByUser(getUserAuth.id) "
 		  
 		   :key="index">
 				<mysale

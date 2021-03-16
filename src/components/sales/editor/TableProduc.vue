@@ -2,7 +2,7 @@
 	<div class="q-px-md">
 		<div class=" row   ">
 			<div class=" col-3 row justify-left q-pt-md q-mt-xl">
-				{{ fetchCustumers }}  {{sumTotals}} {{totals}}
+				{{ fetchCustumers }}   
 				<div class="col ">
 					<q-input
 						disable
@@ -95,7 +95,7 @@
 									>Total em dinheiro :
 								</q-item-section>
 								<q-item-section>
-									{{ sumTotals.sumMoney || 0 }} ,00 MT
+									{{ sumTotals(productToSale)  - this.desc|| 0 }} ,00 MT
 								</q-item-section>
 							</q-item>
 
@@ -149,7 +149,7 @@
 					</td>
 					<td class="text-left">
 						{{
-							price == 'Retalho'
+							price.label == 'Retalho'
 								? product.price_buy
 								: product.grosso
 						}}
@@ -240,7 +240,8 @@
 			]),
 
 			...mapState('customer', ['customers']),
-			...mapGetters('expo', ['findProductForSale', 'searchProduct']),
+			...mapGetters('expo', ['findProductForSale', 'searchProduct', 'sumTotals']),
+
 			...mapState('checkedProduct', ['checkedProducts']),
 
 			...mapState('expo', ['saleProduct', 'productToSale']),
@@ -248,9 +249,10 @@
 
 			getChance() {
 				let change = 0;
+				const total = this.sumTotals(this.productToSale) - this.desc
 
-				if (this.value >= this.sumTotals.sumMoney) {
-					change = this.value - this.sumTotals.sumMoney;
+				if (this.value >= total ) {
+					change = this.value - total;
 					this.$emit('disable', !this.disable);
 				} else {
 				}
@@ -266,28 +268,7 @@
 				this.OptionalUsers.push();
 			},
 
-			sumTotals() {
-				let totals = {
-					sumMoney : 0
-				};
-				let sumMoney = 0;
-				let sumQtd = 0;
-				let product = {}
-				Object.keys(this.productToSale).forEach(element => {
-					product = this.productToSale[element];
-
-					console.log(product)
-					sumMoney = sumMoney + product.subtotal;
-					sumQtd = sumQtd + product.quantity;
-
-					if (this.desc < sumMoney) {
-						totals.sumMoney = sumMoney - this.desc;
-					}
-
-				});
-
-				return totals;
-			}
+		
 		},
 		components: {
 			addQuantity,
@@ -320,14 +301,11 @@
 
 		updated() {
 			
-			if(Object.keys(this.productToSale).length > 0) {
-					this.sumTotals
-					console.log(	this.sumTotals)
-			}
+		const total = this.sumTotals(this.productToSale) - this.desc
 		
-			
-			if( Object.keys(this.sumTotals).length > 0) {
-						this.$emit('subtotal',  this.sumTotals.sumMoney);
+			if( total > 0) {
+				this.$emit('total',  total);
+
 			}	
 
 		},

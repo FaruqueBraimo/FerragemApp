@@ -36,7 +36,7 @@
 				<div class="col">Cliente :</div>
 				<div class="col text-right q-pr-md">
 					{{
-						invoice.details.client
+						invoice.details.client.label
 							
 					}}
 				</div>
@@ -70,12 +70,12 @@
 		
 		<div class="q-pt-md col " >
 			<q-btn
-			
-				color="primary"
+				class="full-width"
+				color="secondary"
 				no-caps
 				unelevated
 				icon="done"
-				label=" Paga ?  "
+				label=" Liquidar Fatura  "
 				v-if="invoice.details.status"
 		
 				@click="pagar(invoice)"

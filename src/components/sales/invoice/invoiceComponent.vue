@@ -12,7 +12,7 @@
       </template>
 	  
 	  </q-input>
-  </div>
+  </div> 
 
 		<div class="" style="">
 			{{ fetchClients }}

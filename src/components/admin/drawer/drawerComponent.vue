@@ -163,6 +163,10 @@
 					</q-card>
 				</q-expansion-item>
 
+
+
+
+
 				
 				<q-expansion-item
 					icon="person"
@@ -200,7 +204,22 @@
 							</q-item-section>
 						</q-item>
 					</q-list>
+
 				</q-expansion-item>
+
+							<q-separator />
+
+								<q-item clickable v-ripple exact to="/providers" v-if="roles[getUserAuth.role.value].reports  === 'true'">
+					<q-item-section avatar>
+						<q-icon name="euro" class="text-red-5"/>
+					</q-item-section>
+
+					<q-item-section>
+						<p class="text-red-5">Pagamentos e Recebimentos</p>
+					</q-item-section>
+				</q-item>
+
+
 
 			
 			</q-list>

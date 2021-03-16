@@ -5,13 +5,12 @@
 			@findProductByCode="findProductByCode"
 			@user="user = $event"
 			@value="value = $event"
-			@sumTotals="total = $event"
+			@total="total = $event"
 			
 			@subtotals="chance = $event"
 		/>
 
-		{{ getStatus }} 
-
+		{{ getStatus }}  
 		<div class="q-pa-md q-mx-xl row justify-center">
 			<div class="col-4 justify-center">
 				<q-btn-dropdown
@@ -201,7 +200,7 @@
 						ok: 'Ok'
 					})
 					.onOk(() => {
-						//  this.$router.go();
+						  this.$router.go();
 					});
 			},
 
@@ -408,7 +407,7 @@
 
 				this.body.push({
 					sub:
-						new Intl.NumberFormat().format(this.value.subtotal) +
+						new Intl.NumberFormat().format(this.total) +
 						' MT',
 					data: this.getDateTime,
 					admin: this.getUserAuth.name,
