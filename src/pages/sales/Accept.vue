@@ -4,10 +4,10 @@
 					{{
 						Object.keys(getProductToAccept).length > 0
 							? `Foram enviados produtos para ti, por favor aceite ou recuse!`
-							: ``
+							: ` Sem Productos novos`
 					}}
 				</div>
-				{{objectToSave}}
+		
  
 				<div class="" style="">
 					<div class="row  justify-left q-pa-md q-ma-sm">

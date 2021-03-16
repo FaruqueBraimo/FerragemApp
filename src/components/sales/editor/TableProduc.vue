@@ -95,7 +95,7 @@
 									>Total em dinheiro :
 								</q-item-section>
 								<q-item-section>
-									{{ sumTotals.sumMoney | 0 }} ,00 MT
+									{{ sumTotals.sumMoney || 0 }} ,00 MT
 								</q-item-section>
 							</q-item>
 
@@ -301,12 +301,23 @@
 			value(val) {
 				this.$emit('value', {
 					value: ~~val,
-					subtotal: this.sumTotals.sumMoney
 				});
 			},
 			nameProduct(val) {
 				this.$emit('findProductByName', val.toLowerCase());
 			}
+
+
+			
+
+		},
+
+		updated() {
+			
+			if( Object.keys(this.sumTotals).length > 0) {
+						this.$emit('subtotal',  this.sumTotals.sumMoney);
+			}	
+
 		},
 
 		methods: {
@@ -314,6 +325,7 @@
 
 			addToCard(product) {
 				this.$emit('addToCard', product);
+				
 			},
 
 			findProductByName() {

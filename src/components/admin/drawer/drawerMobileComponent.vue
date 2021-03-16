@@ -38,6 +38,7 @@
 					<div class="row"> 
 						<span class="q-pt-sm q-pr-md">Novos Produtos</span>  	
 						  <q-spinner-rings
+						  v-if="Object.keys(getProductToAccept).length > 0"
 							color="deep-orange"
 							size="2.9em"
 							
@@ -128,7 +129,7 @@
 		computed: {
 		...mapState('box', ['boxs']),
 			...mapGetters('auth', ['getUserName', 'getUserAuth']),
-			...mapState('expo', ['expoProducts', 'myProducts']),
+			...mapState('auxliarExpo', ['expoProducts', 'myProducts']),
 
 			getProductToAccept() {
 					let myProducts = {};

@@ -5,6 +5,8 @@
 			@findProductByCode="findProductByCode"
 			@user="user = $event"
 			@value="value = $event"
+			@sumTotals="total = $event"
+			
 			@subtotals="chance = $event"
 		/>
 
@@ -94,6 +96,7 @@
 				disable: true,
 				value: {},
 				product: [],
+				total : '',
 				change: '',
 				body: [],
 					moreText: [
@@ -120,7 +123,7 @@
 			...mapState('expo', ['myProducts']),
 
 			getStatus() {
-				if (this.value.value >= this.value.subtotal) {
+				if (this.value.value >= this.total) {
 					if (Object.keys(this.saleProduct).length > 0) {
 						this.disable = false;
 					} else {
@@ -178,8 +181,8 @@
 				let saleObject = {};
 				saleObject.salesMan = this.getUserAuth.id;
 				saleObject.client = this.user ? this.user : 'Não Informado';
-				saleObject.value = this.value.value;
-				saleObject.total = 	 this.value.subtotal;
+				saleObject.value = this.value.value ;
+				saleObject.total = 	 this.total;
 				let saleDone = Object.assign(
 					{ details: saleObject },
 					{ products: this.productToSale }
@@ -188,7 +191,7 @@
 				this.addSale(saleDone);
 				// this.printSale();
 
-				this.updateCash(this.value.subtotal);
+				this.updateCash(this.total);
 
 				this.$q
 					.dialog({
@@ -207,9 +210,9 @@
 				let invoiceObject = {};
 				invoiceObject.invoicesMan = this.getUserAuth.id;
 				invoiceObject.client = this.user ? this.user : 'Não Informado';
-				invoiceObject.value = this.value.value;
+				
 				invoiceObject.status = true;
-				invoiceObject.total = 	 this.value.subtotal;
+				invoiceObject.total = 	 this.total; 
 
 				let invoiceDone = Object.assign(
 					{ details: invoiceObject },
@@ -217,7 +220,7 @@
 				);
 
 				this.addInvoice(invoiceDone);
-				this.printInvoice('Factura');
+				// this.printInvoice('Factura');
 				this.$q
 					.dialog({
 						title: 'Fatura Emitida ',
@@ -257,15 +260,20 @@
 					let prod = this.myProducts[element2];
  		Object.keys(this.productToSale).forEach(element3 => {
 							prodSale = this.productToSale[element3];
-							if (this.productToSale[element3].productId  == this.myProducts[element2].productId) {
+							if (prodSale.productId  == prod.productId) {
 								
 							      
-								quantity  =  this.myProducts[element2].quantity -  this.productToSale[element3].newQtd   
-								this.updateExpoProduct({
+								quantity  =  prod.quantity -  prodSale.newQtd 
+								
+								if(quantity > 0) {
+								    this.updateExpoProduct({
 									id: element2,
-									 updates: { quantity: quantity }
+									updates: { quantity: quantity }
 								});
-								console.log('remanescente', quantity)
+								}
+								
+								
+								console.log('remanescente',  quantity  )
 							}
 						});
 					});
@@ -343,7 +351,7 @@
 
 				doc.text(8, finalY + 10, 'Total : ');
 				const total =
-					new Intl.NumberFormat().format(this.value.subtotal) + ' MT';
+					new Intl.NumberFormat().format(this.total) + ' MT';
 				doc.text(45, finalY + 10, total.toString());
 
 				doc.text(8, finalY + 15, 'Valor Dado : ');
@@ -352,7 +360,7 @@
 				doc.text(45, finalY + 15, value.toString());
 
 				doc.text(8, finalY + 20, 'Troco : ');
-				const operator = this.value.value - this.value.subtotal;
+				const operator = this.value.value - this.total;
 				const change = new Intl.NumberFormat().format(operator) + ' MT';
 				doc.text(45, finalY + 20, change.toString());
 
