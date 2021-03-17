@@ -47,18 +47,7 @@
 						
 					</div>
 
-                    <div class=" col q-ml-md justify-right text-right">
-				<q-select
-							dense
-							label="Por Produto	 "
-							square
-							v-model="productSelected"
-							
-							filled
-							:options="optionalProducts"
-						/>
-						
-					</div>
+                   
 					
 				</div>
 			</th>

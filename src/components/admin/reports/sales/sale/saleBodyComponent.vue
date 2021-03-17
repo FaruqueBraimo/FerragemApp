@@ -36,7 +36,7 @@
 				<div class="col">Cliente :</div>
 				<div class="col text-right q-pr-md">
 					{{
-						sale.details.client
+						sale.details.client.label
 							
 					}}
 				</div>

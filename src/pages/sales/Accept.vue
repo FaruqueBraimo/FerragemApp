@@ -103,8 +103,8 @@
 							externProduct =  this.expoProducts[chave]
 							
 								if (
-									 externProduct.productId ===
-									 prod.productId
+									( externProduct.productId ===
+									 prod.productId) && (externProduct.user.value == this.getUserAuth.id)
 								) {
 						quantity =
 								externProduct.quantity +

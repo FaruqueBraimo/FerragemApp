@@ -36,7 +36,6 @@ const mutations = {
 		state.saleFilteredDate = {};
 	},
 	
-
 	addSale(state, payload) {
 		Vue.set(state.sales, payload.id, payload.object);
 	},
@@ -73,7 +72,6 @@ const getters = {
 				console.log(saleReturn)
 			}
 
-			
 			}
 		);
 
@@ -98,7 +96,6 @@ const getters = {
 				case 'Todas':
 					saleReturn[element] = sale;
 					
-
 					break;
 			
 				case 'De Hoje':
@@ -108,12 +105,11 @@ const getters = {
 						saleReturn[element] = sale;
 					}
 					else {
-						showErrorMessage('Não houve vendas hoje.');
+						// showErrorMessage('Não houve vendas hoje.');
 
 					}
 
 					break;
-
 
 				case 'De Ontém':
 					equality = date.isSameDate(dateCreated, yesterday, 'day');
@@ -123,7 +119,7 @@ const getters = {
 						console.log(saleReturn);
 					}
 					else {
-						showErrorMessage('Não houve vendas Ontém.');
+						// showErrorMessage('Não houve vendas Ontém.');
 
 					}
 					break;
@@ -153,7 +149,6 @@ const getters = {
 
 					break;
 
-					
 			}
 		});
 
@@ -340,7 +335,6 @@ const actions = {
 					object: sale
 				});
 
-				
 			});
 			
 		}

@@ -47,19 +47,7 @@
 						
 					</div>
 
-                    <div class=" col q-ml-md justify-right text-right">
-				<q-select
-							dense
-							label="Por Produto	 "
-							square
-							
-							filled
-							:options="optionalUsers"
-						/>
-						
-					</div>
-					
-				</div>
+                
 			</th>
 		</tr>
 
