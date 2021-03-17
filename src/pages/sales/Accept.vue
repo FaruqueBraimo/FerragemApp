@@ -135,15 +135,7 @@
 		
 	}
 
-	if(statusSave) {
-			
-										this.addExpoProduct(prod)
- 										this.deleteAuxiliarExpoProduct(payload)
-		 								this.filterMyProducts(this.getUserAuth.id);
-						 				this.getProductToAccept
-										 statusSave = false
-
-	}
+	
 
 			 
 // if(!statusSave) {
@@ -169,9 +161,9 @@
 							externProduct =  this.expoProducts[chave]
 							
 								if (
-									 externProduct.productId ===
-									 prod.productId
-								) {
+									 (externProduct.productId ===
+									 prod.productId) && (externProduct.user.value == this.getUserAuth.id)
+ 								) {
 									this.objectToSave.save = false								
 
 								} else{
