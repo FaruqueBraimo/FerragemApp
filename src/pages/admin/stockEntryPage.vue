@@ -84,8 +84,9 @@
 
 				register(stockData) {
 					this.addStockEntry(stockData);
-					let lastQtd = ~~ this.products[stockData.product.value].qtdWarehouse
+					let lastQtd = ~~ this.products[stockData.product.value].quantity
 					let newQtd =  ~~ stockData.quantity
+
 					this.updateProduct( {
 						id : stockData.product.value,
 						updates : { quantity : +lastQtd+newQtd  } })
