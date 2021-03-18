@@ -286,8 +286,8 @@
 				var columns = [
 					{ title: 'Nome', dataKey: 'id' },
 					{ title: 'Preço ', dataKey: 'price' },
-					{ title: 'Quantidade', dataKey: 'name' },
-					{ title: 'Subtotal', dataKey: 'country' }
+					{ title: 'Qnt', dataKey: 'name' },
+					{ title: 'Valor', dataKey: 'country' }
 				];
 
 				let body = [];
@@ -338,6 +338,10 @@
 
 				doc.autoTable(columns, body, {
 					margin: { top: 34, left: 1, right: 1 },
+					 didDrawPage: function (data) {
+                    // Reseting top margin. The change will be reflected only after print the first page.
+                    data.settings.margin.top = 5; 
+					 },
 					showHead: 'firstPage',
 					theme: 'plain',
 					styles: { halign: 'center', font: 'courier' }
