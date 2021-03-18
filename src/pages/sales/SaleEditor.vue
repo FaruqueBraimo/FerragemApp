@@ -10,7 +10,7 @@
 			@subtotals="chance = $event"
 		/>
 
-		{{ getStatus }}  
+		{{ getStatus }}   <q-btn color="primary" icon="check" label="OK" @click="printSaleImproved" />
 		<div class="q-pa-md q-mx-xl row justify-center">
 			<div class="col-4 justify-center">
 				<q-btn-dropdown
@@ -85,6 +85,9 @@
 	import TableProduc from '../../components/sales/editor/TableProduc';
 	import jsPDF from 'jspdf';
 	import autoTable from 'jspdf-autotable';
+	import pdfMake from "pdfmake/build/pdfmake";
+		import pdfFonts from "pdfmake/build/vfs_fonts";
+		pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 	export default {
 		data() {
@@ -282,6 +285,8 @@
 			findProductByCode() {},
 
 			printSale() {
+
+				
 				var doc = new jsPDF('p', 'mm', [80, 100]);
 				var columns = [
 					{ title: 'Nome', dataKey: 'id' },
@@ -468,7 +473,84 @@
 			addToCard(product) {
 				
 				this.addCheckedProducts(product);
+			},
+
+
+			printSaleImproved(){
+			var dd = {
+  pageSize: {
+    width: 200,
+    height: 'auto'
+  },
+  defaultStyle: {
+    font: 'Courier'
+  },
+   pageMargins: [ 10, 10, 10, 10 ],
+   
+ content: [
+		{
+			table: {
+				
+				headerRows: 1,
+					widths: [250, '*', '*', '*'],
+				body: [
+					[{ text: 'Nome', style: 'tableHeader', }, { text: 'Preço', style: 'tableHeader' },{ text: 'Qnt', style: 'tableHeader' }, { text: 'Valor', style: 'tableHeader' }],
+					['Sample value 1', '55', '555', '555'],
+					['Sample value 1', 'Sample value 2', 'Sample value 3', 'Sample value 3'],
+					['Sample value 1', 'Sample value 2', 'Sample value 3', 'Sample value 3'],
+					['Sample value 1', 'Sample value 2', 'Sample value 3', 'Sample value 3'],
+					['Sample value 1', 'Sample value 2', 'Sample value 3', 'Sample value 3'],
+				]
+			},
+			layout: 'noBorders'
+		},
+  ]
+}
+pdfMake.fonts = {
+   Courier: {
+     normal: 'gs://stock-zambezia.appspot.com/',
+ 
+   },
+   Roboto: {
+     normal: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf',
+     bold: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf',
+     italics: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf',
+     bolditalics: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf'
+   },
+
+}
+				pdfMake.createPdf(dd).download();
+
+
 			}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		},
 		mounted() {
 			this.setPageTitle('Editor de Vendas ');
