@@ -483,7 +483,7 @@
     height: 'auto'
   },
   defaultStyle: {
-    font: 'Courier'
+    font: 'courier'
   },
    pageMargins: [ 10, 10, 10, 10 ],
    
@@ -492,7 +492,7 @@
 			table: {
 				
 				headerRows: 1,
-					widths: [250, '*', '*', '*'],
+					widths: [500, '*', '*', '*'],
 				body: [
 					[{ text: 'Nome', style: 'tableHeader', }, { text: 'Preço', style: 'tableHeader' },{ text: 'Qnt', style: 'tableHeader' }, { text: 'Valor', style: 'tableHeader' }],
 					['Sample value 1', '55', '555', '555'],
@@ -507,17 +507,11 @@
   ]
 }
 pdfMake.fonts = {
-   Courier: {
-     normal: 'gs://stock-zambezia.appspot.com/',
- 
+   courier: {
+     normal: 'Courier Regular.ttf',
+    
    },
-   Roboto: {
-     normal: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf',
-     bold: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf',
-     italics: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf',
-     bolditalics: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf'
-   },
-
+   
 }
 				pdfMake.createPdf(dd).download();
 
