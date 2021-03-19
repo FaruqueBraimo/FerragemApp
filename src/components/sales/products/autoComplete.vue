@@ -5,7 +5,7 @@
     <q-list dense  class="text-capitalize	"v-for="(prod, index) in product" :key ='index' >
       <q-item clickable v-ripple @click ='selectProduct({id: index, product : prod })'>
         <q-item-section >
-         {{prod.name}}
+         {{prod.name}} |   <span class="text-red-5"  v-if="prod.quantity < 5 ">       {{prod.quantity}}  </span> <span  v-else>    {{prod.quantity}}  </span>      
         </q-item-section>
       </q-item>
 
