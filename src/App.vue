@@ -29,6 +29,8 @@
 			this.getAllExpoProducts()
 			this.findProductByName(this.getUserAuth.id)
 			this.filterMyProducts(this.getUserAuth.id);
+			this.listenProductCopyRealTimeChanges();
+			this.getProductCopyData()
 
 		},
 				computed: {
@@ -62,7 +64,9 @@
 	
 
 			...mapActions('product' , ['listenProductRealTimeChanges']),
-						...mapActions('price' , ['listenPriceRealTimeChanges']),
+			...mapActions('productCopy' , ['listenProductCopyRealTimeChanges', 'getProductCopyData']),
+
+			...mapActions('price' , ['listenPriceRealTimeChanges']),
 
 			
 			...mapActions('category' , ['listencategoryRealTimeChanges']),

@@ -10,7 +10,7 @@
 			@subtotals="chance = $event"
 		/>
 
-		{{ getStatus }}   <q-btn color="primary" icon="check" label="OK" @click="printSaleImproved" />
+		{{ getStatus }}  
 		<div class="q-pa-md q-mx-xl row justify-center">
 			<div class="col-4 justify-center">
 				<q-btn-dropdown
@@ -191,7 +191,7 @@
 				);
 
 				this.addSale(saleDone);
-				this.printSale();
+				this.printSaleImproved();
 
 				this.updateCash(this.total);
 
@@ -231,7 +231,7 @@
 						ok: 'Ok'
 					})
 					.onOk(() => {
-						 this.$router.go();
+						//  this.$router.go();
 					});
 			},
 
@@ -267,15 +267,13 @@
 							      
 								quantity  =  prod.quantity -  prodSale.newQtd 
 								
-								if(quantity > 0) {
 								    this.updateExpoProduct({
 									id: element2,
 									updates: { quantity: quantity }
 								});
-								}
 								
 								
-								console.log('remanescente',  quantity  )
+								
 							}
 						});
 					});
@@ -479,68 +477,137 @@
 			printSaleImproved(){
 			var dd = {
   pageSize: {
-    width: 200,
+    width: 230,
     height: 'auto'
   },
-  defaultStyle: {
-    font: 'courier'
-  },
+ 
    pageMargins: [ 10, 10, 10, 10 ],
+    defaultStyle: {
+    fontSize: 10
+  
+  },
    
  content: [
-		{
+
+
+	   { text: 'N-Facilidades', fontSize: 13, alignment :  'center' , bold : true },
+	    { text: 'Vendas & Serviços', fontSize: 12, alignment :  'center' , margin: [ 0, 0, 0, 5 ] },
+
+			{
+					margin: [ 15, 0, 15, 0 ],
 			table: {
 				
 				headerRows: 1,
-					widths: [500, '*', '*', '*'],
+ 
+				styles : {
+
+				},
+				alignment : 'center',
+
+ 		
+
 				body: [
-					[{ text: 'Nome', style: 'tableHeader', }, { text: 'Preço', style: 'tableHeader' },{ text: 'Qnt', style: 'tableHeader' }, { text: 'Valor', style: 'tableHeader' }],
-					['Sample value 1', '55', '555', '555'],
-					['Sample value 1', 'Sample value 2', 'Sample value 3', 'Sample value 3'],
-					['Sample value 1', 'Sample value 2', 'Sample value 3', 'Sample value 3'],
-					['Sample value 1', 'Sample value 2', 'Sample value 3', 'Sample value 3'],
-					['Sample value 1', 'Sample value 2', 'Sample value 3', 'Sample value 3'],
+					[{ text: 'Nuit :', style: 'tableHeader'  }, { text: '401151192'   }],
+					[{ text: 'Data :', style: 'tableHeader'  }, { text:  this.getDateTime   }],
+					[{ text: 'Vendedor :', style: 'tableHeader'  }, { text:  this.getUserAuth.name   }],
+					[{ text: 'Cliente :', style: 'tableHeader'  }, { text: this.user ? this.user.label : 'Não Informado'   }]
+				 
+					
 				]
 			},
 			layout: 'noBorders'
 		},
+
+
+
+
+
+
+		{text : '----------------------------------------------------------------------------', alignment :  'center' ,margin: [ 0, 0, 0, 10 ] },
+		{
+				alignment : 'center',
+			table: {
+				
+				headerRows: 1,
+ 
+				styles : {
+						alignment : 'center',
+
+				},
+				alignment : 'center',
+				
+				style : {
+						alignment : 'center',
+
+				},
+
+						
+
+				body: [
+					[{ text: 'Nome', style: 'tableHeader'  ,   bold: true   }, { text: 'Preço', style: 'tableHeader' , bold: true },{ text: 'Qnt', style: 'tableHeader' ,  bold: true }, { text: 'Valor', style: 'tableHeader',  bold: true  }],
+				 
+					
+				]
+			},
+			layout: 'noBorders'
+		},
+				{text : '----------------------------------------------------------------------------', alignment :  'center' ,margin: [ 0, 10, 0, 10 ] },
+
+					{
+	margin: [ 15, 0, 15, 0 ],		
+		table: {
+				
+				headerRows: 1,
+ 
+				styles : {
+
+				},
+				alignment : 'center',
+
+ 			margin: [ 15, 0, 15, 0 ],
+			 
+
+				body: [
+					[{ text: 'Total :', style: 'tableHeader'  }, { text:  new Intl.NumberFormat().format(this.total) + ' MT'   }],
+					[{ text: 'Valor Dado :', style: 'tableHeader'  }, { text: new Intl.NumberFormat().format( this.value.value) + ' MT'    }],
+					[{ text: 'Troco :', style: 'tableHeader'  }, { text:   new Intl.NumberFormat().format( this.value.value - this.total ) + ' MT'  }],
+				 
+					
+				]
+			},
+			layout: 'noBorders'
+		},
+						{text : '----------------------------------------------------------------------------', alignment :  'center' ,margin: [ 0, 10, 0, 10 ] },
+						{text : 'Obrigado - 864023773 ' ,alignment :  'center' ,margin: [ 0, 5, 0, 5 ] },
+
+
   ]
 }
-pdfMake.fonts = {
-   courier: {
-     normal: 'Courier Regular.ttf',
-    
-   },
-   
-}
-				pdfMake.createPdf(dd).download();
+
+
+
+		Object.keys(this.productToSale).forEach(element3 => {
+					let prod = {};
+					prod = this.productToSale[element3];
+
+					dd.content[4].table.body.push(
+						[ prod.name.replace(/\w\S*/g, w =>
+							w.replace(/^\w/, c => c.toUpperCase())), 
+
+							new Intl.NumberFormat().format( this.productToSale[element3].priceType || 0) , this.productToSale[element3].newQtd ,
+							new Intl.NumberFormat().format(this.productToSale[element3].subtotal) 
+							  ]
+							
+					);
+				});
+
+			pdfMake.createPdf(dd).download();
+
+			
 
 
 			}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		
 
 
 

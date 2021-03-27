@@ -47,11 +47,12 @@
 			};
 		},
 		computed: {
-			...mapState('product', ['products']),
+			...mapState('productCopy', ['products']),
 			...mapState('stockExit', ['stockExits']),
 			...mapState('expo', ['expoProducts', 'expoProducts']),
 			...mapGetters('auth', ['getUserName', 'getUserAuth']),
-			...mapState('product', ['exportedProducts', 'products']),
+			...mapState('product', ['exportedProducts']),
+			
 			...mapState('stockExit', ['loading'])
 		},
 

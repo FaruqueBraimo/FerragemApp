@@ -2,7 +2,7 @@
 	<q-page padding>
 
 		 
-		<div class="row justify-end q-py-md">
+		<div class="row justify-end q-py-md q-pr-xl">
 
 		    <q-btn
 				color="green-5"
@@ -15,6 +15,17 @@
 
 
 			
+			<div class= "col q-pl-xl "> 
+		    <q-btn
+				color="primary"
+				icon="settings"
+				label="Gestão de produtos exportados"
+				unelevated
+				@click="$router.push('exported')"
+			/>
+			
+			</div>	
+
 			<!-- <div class= "col"> 
 		    <q-btn
 				color="primary"

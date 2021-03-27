@@ -22,6 +22,7 @@
 								"
 								:id="index"
 								@accept="accept"
+									@deny="deny"
 							/>
 						</div>
 					</div>
@@ -54,6 +55,8 @@
 			...mapGetters('auth', ['getUserName', 'getUserAuth']),
 			...mapGetters('setting', ['getLocalBoxStatus']),
 			...mapState('auxliarExpo', ['expoProducts', 'myProducts']),
+						...mapState('productCopy', ['products']),
+
 				...mapState('expo', ['expoProducts', 'expoProducts']),
 
 			getProductToAccept() {
@@ -78,6 +81,11 @@
 				'emptyBoxStatus'
 			]),
 			...mapActions('box', ['addBox', 'editBox']),
+			...mapActions('product', [
+				'updateProduct',
+				'addProductForExport',
+				'findProductByCode'
+			]),
 
 			...mapActions('auxliarExpo', [ 'filterMyProducts', 'deleteAuxiliarExpoProduct']),
 			 ...mapActions('expo', ['updateExpoProduct', 'addExpoProduct' ]),
@@ -168,6 +176,7 @@
 
 								} else{
 										this.objectToSave.save = true	
+										product = this.myProducts[object];
 							    	}
 								
 								
@@ -175,16 +184,50 @@
 
 
 
-							if(this.objectToSave.save === true) {
+							if(product) {
 								this.addExpoProduct(prod)
  										this.deleteAuxiliarExpoProduct(object)
 		 								this.filterMyProducts(this.getUserAuth.id);
 						 				this.getProductToAccept
+
 							}
 			
 
 			
-		}},
+		},
+		
+		
+		
+		deny(payload){
+			let prod = {}
+			let quantity = 0
+					prod = this.myProducts[payload];
+						//update a fucking product stock quantity
+					 Object.keys(this.products).forEach((element, key) => {
+						if (element == prod.productId ) {
+							let product = this.products[element];
+							quantity = (~~product.quantity + prod.quantity);
+							this.updateProduct({
+								id: element,
+								updates: { quantity: quantity }
+							});
+												         this.deleteAuxiliarExpoProduct(payload)
+
+
+
+						 
+						}
+ 
+				});
+
+
+
+		}
+		
+		
+		
+		
+		},
 
 		mounted() {
 			this.filterMyProducts(this.getUserAuth.id);

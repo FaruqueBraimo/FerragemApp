@@ -26,7 +26,6 @@ const routes = [
       { path: '/sales/editor', component: () => import('pages/sales/SaleEditor.vue') },
       { path: '/sales/mysale', component: () => import('pages/sales/MySale.vue') },
 
-
   ]
 },
 
@@ -54,8 +53,9 @@ const routes = [
     { path: '/saidas', component: () => import('pages/admin/stockExitPage.vue') },
     { path: '/reportSale', component: () => import('pages/admin/SalesReport.vue') },
     { path: '/stockEditor', component: () => import('pages/admin/stockEditor.vue') },
+    { path: '/payments', component: () => import('pages/admin/Payments.vue') },
+    { path: '/exported', component: () => import('pages/admin/DeleteExported.vue') },
 
-    
   ],
 
 },

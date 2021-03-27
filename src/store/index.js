@@ -17,6 +17,8 @@ import box from './modules/Boxes';
 import stockExit from './modules/stockExits';
 import expo from './modules/expo'; 
 import auxliarExpo from './modules/auxliarExpo';
+import productCopy from './modules/productCopy';
+
 Vue.use(Vuex);
 
 /*
@@ -47,7 +49,8 @@ export default function(/* { ssrContext } */) {
 			checkedProduct,
 			box,
 			expo,
-			auxliarExpo
+			auxliarExpo,
+			productCopy
 			
 		},
 

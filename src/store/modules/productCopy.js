@@ -121,16 +121,14 @@ const getters = {
 
 const actions = {
 
-	getData({ state, commit, getters, dispatch }) {
+	getProductCopyData({ state, commit, getters, dispatch }) {
 		commit('loading', true);
 
 		let query = dbProducts
 		.orderBy('createdAt', 'asc')
-			.startAfter(lastVisible)
-			.limit(5)
 			.get()
 			.then(resp => {
-				lastVisible = resp.docs[resp.docs.length - 1];
+			 
 				commit('loading', false);
 
 				resp.docChanges().forEach(function(change) {
@@ -384,16 +382,14 @@ const actions = {
 			});
 	},
 
-	listenProductRealTimeChanges({ commit }) {
+	listenProductCopyRealTimeChanges({ commit }) {
 		commit('resetProducts');
 		commit('productFiltered');
 		commit('productFilteredCategory');
 
 		dbProducts
 			.orderBy('createdAt', 'asc')
-			.limit(2)
 			.onSnapshot(function(snapshot) {
-				lastVisible = snapshot.docs[snapshot.docs.length - 1];
 				snapshot.docChanges().forEach(function(change) {
 					if (change.type === 'added') {
 						commit('addProduct', {

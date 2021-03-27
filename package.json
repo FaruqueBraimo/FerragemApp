@@ -2,7 +2,7 @@
   "name": "new",
   "version": "0.0.1",
   "description": "A Quasar Framework app",
-  "productName": "Ferragem App",
+  "productName": "Recibo",
   "cordovaId": "org.cordova.quasar.app",
   "capacitorId": "",
   "author": "FaruqueBraimo <faruquebraimo@gmail.com>",

@@ -388,7 +388,6 @@ const actions = {
 	},
 
 	productToSale({ commit }, payload) {
-
 		commit('productToSale', {
 			id: payload.id,
 			object: payload.product

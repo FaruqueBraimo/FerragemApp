@@ -30,7 +30,7 @@
 					Aceitar
 				</q-btn>
 
-				<q-btn unelevated color="deep-orange" disable class="q-px-md">
+				<q-btn unelevated color="deep-orange"  class="q-px-md "  @click="deny(id)">
 					Recusar
 				</q-btn>
 			</q-card-actions>
@@ -44,7 +44,33 @@
         
         methods: {
                 accept(id) {
+							this.$q
+					.dialog({
+						title: 'Aceitar Produto ',
+						message: `Tem certeza que deseja aceitar este produto?`,
+
+						ok: 'Sim',
+						cancel : 'Não'
+					})
+					.onOk(() => {
                         this.$emit('accept', id)
+				});
+
+						
+                },
+				 deny(id) {
+					 		this.$q
+					.dialog({
+						title: 'Recusar Produto ',
+						message: `Tem certeza que deseja recusar este produto?`,
+
+						ok: 'Sim',
+						cancel : 'Não'
+					})
+					.onOk(() => {
+
+                        this.$emit('deny', id)					});
+
                 }
 
         }

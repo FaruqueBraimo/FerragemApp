@@ -36,7 +36,7 @@
 				<div class="col">Cliente :</div>
 				<div class="col text-right q-pr-md">
 					{{
-						sale.details.client.label
+						sale.details.client.label || 'Não Informado'
 							
 					}}
 				</div>
@@ -65,21 +65,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="q-pt-md col-12" >
-			<q-btn
-				no-caps
-				class=" full-width"
-				unelevated
-			
-				label="Apagar"
-
-				
-						color="red-5"
-						icon="delete"
-						
-						@click="$emit('deletesale',saleId)"
-			/>
-		</div>
+		
 	</q-card-section>
 	
 </q-card>	

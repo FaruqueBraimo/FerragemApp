@@ -5,20 +5,20 @@ import "firebase/firestore";
 import "firebase/storage";
 
 const firebaseConfig = {
-  // apiKey: "AIzaSyC-wqUyzCx26DheDhedC1NMzVxMPnzP9ec",
-  // authDomain: "ferragemapp.firebaseapp.com",
-  // databaseURL: "https://ferragemapp.firebaseio.com",
-  // projectId: "ferragemapp",
-  // storageBucket: "ferragemapp.appspot.com",
-  // messagingSenderId: "537364637347",
-  // appId: "1:537364637347:web:3cf3821e1cc9cdf37c4116",
-  // measurementId: "G-TFD8211X43"
+ 
   apiKey: "AIzaSyDmjNdwF81ferBOginc_K7RxJ2giVaF4D0",
     authDomain: "stock-zambezia.firebaseapp.com",
     projectId: "stock-zambezia",
     storageBucket: "stock-zambezia.appspot.com",
     messagingSenderId: "624280449735",
     appId: "1:624280449735:web:8ed019eb0c609b932b04e2"
+  // apiKey: "AIzaSyD7yQ_W_njoapdMTKymmLuZ7L6ywjLn3qc",
+  // authDomain: "noe-producao.firebaseapp.com",
+  // projectId: "noe-producao",
+  // storageBucket: "noe-producao.appspot.com",
+  // messagingSenderId: "863188363544",
+  // appId: "1:863188363544:web:acf22e49612d951a09566d"
+  
 };
 
 let firebaseApp = firebase.initializeApp(firebaseConfig)
@@ -26,10 +26,8 @@ let firebaseApp = firebase.initializeApp(firebaseConfig)
 // ==== Firebase auth
 export const firebaseAuth = firebaseApp.auth();
 
-
 // ==== Firebase firestore db
 export const db = firebaseApp.firestore();
-
 
 export const dbUsers = db.collection("users");
 export const dbProducts = db.collection("products");
@@ -50,9 +48,6 @@ export const dbExpoProducts = db.collection("expoProducts");
 export const dbAuxliarExpoProducts = db.collection("auxliarExpoProducts");
 
 export const dbCurrentAccount = db.collection("currentAccount");
-
-
-
 
 // ==== Firebase file storage
 
