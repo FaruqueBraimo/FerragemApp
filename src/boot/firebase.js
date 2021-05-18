@@ -6,18 +6,18 @@ import "firebase/storage";
 
 const firebaseConfig = {
  
-  apiKey: "AIzaSyDmjNdwF81ferBOginc_K7RxJ2giVaF4D0",
-    authDomain: "stock-zambezia.firebaseapp.com",
-    projectId: "stock-zambezia",
-    storageBucket: "stock-zambezia.appspot.com",
-    messagingSenderId: "624280449735",
-    appId: "1:624280449735:web:8ed019eb0c609b932b04e2"
-  // apiKey: "AIzaSyD7yQ_W_njoapdMTKymmLuZ7L6ywjLn3qc",
-  // authDomain: "noe-producao.firebaseapp.com",
-  // projectId: "noe-producao",
-  // storageBucket: "noe-producao.appspot.com",
-  // messagingSenderId: "863188363544",
-  // appId: "1:863188363544:web:acf22e49612d951a09566d"
+  // apiKey: "AIzaSyDmjNdwF81ferBOginc_K7RxJ2giVaF4D0",
+  //   authDomain: "stock-zambezia.firebaseapp.com",
+  //   projectId: "stock-zambezia",
+  //   storageBucket: "stock-zambezia.appspot.com",
+  //   messagingSenderId: "624280449735",
+  //   appId: "1:624280449735:web:8ed019eb0c609b932b04e2"
+  apiKey: "AIzaSyD7yQ_W_njoapdMTKymmLuZ7L6ywjLn3qc",
+  authDomain: "noe-producao.firebaseapp.com",
+  projectId: "noe-producao",
+  storageBucket: "noe-producao.appspot.com",
+  messagingSenderId: "863188363544",
+  appId: "1:863188363544:web:acf22e49612d951a09566d"
   
 };
 
@@ -48,6 +48,7 @@ export const dbExpoProducts = db.collection("expoProducts");
 export const dbAuxliarExpoProducts = db.collection("auxliarExpoProducts");
 
 export const dbCurrentAccount = db.collection("currentAccount");
+export const dbRetiradas = db.collection("retida");
 
 // ==== Firebase file storage
 

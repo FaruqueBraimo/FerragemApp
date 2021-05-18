@@ -31,6 +31,7 @@
 			this.filterMyProducts(this.getUserAuth.id);
 			this.listenProductCopyRealTimeChanges();
 			this.getProductCopyData()
+			this.listenRetidaRealTimeChanges()
 
 		},
 				computed: {
@@ -75,12 +76,14 @@
 			...mapActions('stockEntry' , ['listenStockEntryRealTimeChanges']),
 			...mapActions('stockExit' , ['listenStockExitRealTimeChanges']),
 			...mapActions('role' , ['listenRoleRealTimeChanges']),
+			...mapActions('retirada' , ['listenRetidaRealTimeChanges']),
 			...mapActions('notification' , ['listenNotificationRealTimeChanges']),
 			...mapActions('checkedProduct', ['listenCheckedProductRealTime']),
 			...mapActions('sale', ['listenSaleRealTimeChanges']),
 			...mapActions('invoice', ['listeninvoiceRealTimeChanges']),
 			...mapActions('box', ['listenBoxRealTimeChanges']),
 			...mapActions('expo', ['findProductByName','getAllExpoProducts']),
+			
 			...mapActions('auxliarExpo', ['filterMyProducts']),
 
 

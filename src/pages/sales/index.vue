@@ -83,6 +83,19 @@
 						icon="close"
 			
 			/>
+
+			<!-- <q-btn
+				
+				class=" full-width q-my-sm"
+				unelevated
+					v-if="MyBox.status"
+				label="Retirar dinheiro"
+				@click="retire()"
+				
+							
+						color="primary"
+			
+			/> -->
 		</div>
 		</div>
 	</q-card-section>
@@ -226,6 +239,10 @@
 			// 	}
 
 					this.open = true;
+			},
+
+			retire() {
+
 			},
 
 			closeBox() {

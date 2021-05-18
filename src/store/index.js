@@ -18,6 +18,7 @@ import stockExit from './modules/stockExits';
 import expo from './modules/expo'; 
 import auxliarExpo from './modules/auxliarExpo';
 import productCopy from './modules/productCopy';
+import retirada from './modules/retiradas';
 
 Vue.use(Vuex);
 
@@ -50,7 +51,8 @@ export default function(/* { ssrContext } */) {
 			box,
 			expo,
 			auxliarExpo,
-			productCopy
+			productCopy,
+			retirada
 			
 		},
 

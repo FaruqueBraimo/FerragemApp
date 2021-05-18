@@ -44,26 +44,27 @@
           <div class=" col-4 q-pa-md  "	v-for="(sale, index) in saleFiltered "
 		  
 		   :key="index">
-				<sale-body-component
+				<!-- <sale-body-component
 					:sale="Object.assign({ id: index }, sale)"
 					:saleId="index"
 					@deletesale="removeSale"
 
-				/>
+				/> -->
+
+			
 			</div>
 			</div>
 
 
-			 <div class="row justify-left	" v-if=" Object.keys(saleFilteredDate).length > 0">
-          <div class=" col-4 q-pa-md  "	v-for="(sale, index) in saleFilteredDate "
+			 <div class="row justify-center	" v-if=" Object.keys(saleFilteredDate).length > 0">
+          <div class="    "
 		  
-		   :key="index">
+		  >
 				<sale-body-component
-					:sale="Object.assign({ id: index }, sale)"
-					:saleId="index"
-					@deletesale="removeSale"
-
+					:sale="saleFilteredDate"
+				
 				/>
+				
 			</div>
 			</div>
 			
