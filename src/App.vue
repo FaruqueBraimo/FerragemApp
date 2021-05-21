@@ -76,6 +76,7 @@
 			...mapActions('stockEntry' , ['listenStockEntryRealTimeChanges']),
 			...mapActions('stockExit' , ['listenStockExitRealTimeChanges']),
 			...mapActions('role' , ['listenRoleRealTimeChanges']),
+			// retirada de dinheiro no caixa
 			...mapActions('retirada' , ['listenRetidaRealTimeChanges']),
 			...mapActions('notification' , ['listenNotificationRealTimeChanges']),
 			...mapActions('checkedProduct', ['listenCheckedProductRealTime']),

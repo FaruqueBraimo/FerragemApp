@@ -211,13 +211,24 @@
 
 								<q-item clickable v-ripple exact to="/payments" v-if="roles[getUserAuth.role.value].reports  === 'true'">
 					<q-item-section avatar>
+						<q-icon name="euro" class="text-green-5"/>
+					</q-item-section>
+
+					<q-item-section>
+						<p class="text-green-5">Pagamentos e Recebimentos</p>
+					</q-item-section>
+				</q-item>
+
+				<q-item clickable v-ripple exact to="/retirada" v-if="roles[getUserAuth.role.value].reports  === 'true'">
+					<q-item-section avatar>
 						<q-icon name="euro" class="text-red-5"/>
 					</q-item-section>
 
 					<q-item-section>
-						<p class="text-red-5">Pagamentos e Recebimentos</p>
+						<p class="text-red-5">Retiradas no Caixa</p>
 					</q-item-section>
 				</q-item>
+
 
 
 

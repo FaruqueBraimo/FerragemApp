@@ -78,8 +78,6 @@ const actions = {
 
 				// 1. Limpar todas solicitações
 
-				showSuccessMessage('Caixa aberta !');
-
 				return true;
 			})
 			.catch(function(error) {

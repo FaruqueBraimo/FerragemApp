@@ -1,6 +1,5 @@
 <template>
 	<q-page class="q-py-md">
-	
 		<div class="q-pa-md row justify-center  ">
 			<div class="col-6 ">
 				<q-btn
@@ -18,7 +17,31 @@
 				/>
 			</div>
 		</div>
+<q-dialog v-model="prompt" persistent>
+      <q-card style="min-width: 350px">
+        <q-card-section>
+          <div class="text-h6">Montante a tirar</div>
+        </q-card-section>
 
+        <q-card-section class="q-pt-none">
+          <q-input dense v-model="amount" type="number" autofocus @keyup.enter="prompt = false" />
+        </q-card-section>
+
+		  <q-card-section>
+          <div class="text-h6">Descreva o porquê da retira</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-input dense v-model="description"  type="textarea" autofocus @keyup.enter="prompt = false" />
+        </q-card-section>
+
+
+        <q-card-actions align="right" class="text-primary">
+          <q-btn flat label="Cancelar" v-close-popup />
+          <q-btn flat label="Finalizar" v-close-popup @click="subtraiValue()" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
 
 
 <q-card class="my-card q-mx-xl " square 	v-if="getBoxStatus">
@@ -37,7 +60,7 @@
 				<div class="col">Dinheiro :</div>
 				<div class="col text-right text-bold q-pr-md">
 					{{
-						MyBox.value
+						MyBox.box.value
 					}}, 00MT
 				</div>
 			</div>
@@ -45,14 +68,14 @@
 			<div class="row q-pa-sm ">
 				<div class="col">Hora de abertura:</div>
 				<div class="col text-right q-pr-md">
-					{{ MyBox.createdAt  | dateFormat  }}
+					{{ MyBox.box.createdAt  | dateFormat  }}
 				</div>
 			</div>
 
 			<div class="row q-pa-sm ">
 				<div class="col">Vendedor:</div>
 				<div class="col text-right q-pr-md">
-					{{ MyBox.createdBy.name || ''   }}
+					{{ MyBox.box.createdBy.name || ''   }}
 				</div>
 			</div>
 
@@ -60,7 +83,7 @@
 
 			<div class="row q-pa-sm ">
 				<div class="col text-bold">Estado :</div>
-				<div v-if="MyBox.status" class="col text-right text-green q-pr-md">
+				<div v-if="MyBox.box.status" class="col text-right text-green q-pr-md">
 					Aberto
 				</div>
 				<div v-else class="col text-right text-red q-pr-md">
@@ -74,7 +97,7 @@
 				
 				class=" full-width"
 				unelevated
-					v-if="MyBox.status"
+					v-if="MyBox.box.status"
 				label="Fechar"
 	@click="closeBox()"
 	push
@@ -84,18 +107,18 @@
 			
 			/>
 
-			<!-- <q-btn
+			<q-btn
 				
 				class=" full-width q-my-sm"
 				unelevated
-					v-if="MyBox.status"
+					v-if="MyBox.box.status"
 				label="Retirar dinheiro"
-				@click="retire()"
+			@click="prompt = true" 
 				
 							
 						color="primary"
 			
-			/> -->
+			/>
 		</div>
 		</div>
 	</q-card-section>
@@ -141,7 +164,11 @@
 				open: false,
 				updateCategory: false,
 				MyBox: {},
-				count: 0
+				count: 0,
+				  prompt: false,
+				  amount : '',
+				  description : ""
+
 
 			};
 		},
@@ -182,7 +209,7 @@
 						) {
 							status = true;
 
-							this.MyBox = box;
+							this.MyBox = Object.assign({id : element, box :box });
 						}
 					});
 				}
@@ -192,6 +219,8 @@
 		},
 
 		methods: {
+						...mapActions('retirada' , ['addRetirada']),
+
 			...mapActions('setting', [
 				'setPageTitle',
 				'addBoxStatus',
@@ -241,7 +270,31 @@
 					this.open = true;
 			},
 
-			retire() {
+			subtraiValue() {
+				const box = this.MyBox
+
+				if( box.box.value >= this.amount ) {
+this.editBox({
+										id: box.id,
+										message: 'Montante Retirado',
+										updates: {
+										
+											value : box.box.value - this.amount,
+											closedAt: new Date()
+										}
+									});
+
+						this.addRetirada({ amount : this.amount, justification : this.description, by : this.getUserAuth.id  })
+
+				}
+				else{
+					this.$q.dialog({
+					title: 'Sem dinheiro suficiente',
+					message: 'O montante intoduzido é superior ao dinheiro da caixa'
+				})
+				}
+				
+
 
 			},
 

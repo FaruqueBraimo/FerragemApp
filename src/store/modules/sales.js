@@ -60,16 +60,80 @@ const mutations = {
 };
 
 const getters = {
-	filterSaleByUser: (state) => (user) => {
+	filterSaleByUser: (state) => (payload) => {
 		let saleReturn = {};
-		
+
 		Object.keys(state.sales).forEach(element => {
 			const sale = state.sales[element];
-			 if(sale.details.salesMan == user ) {
-				saleReturn[element] = sale;
-			 	console.log('bateu')
-			// }else {
-				console.log(saleReturn)
+			 if(sale.details.salesMan == payload.user ) {
+				const today = new Date();
+			const yesterday = date.subtractFromDate(today, {
+				hours: 24,
+				milliseconds: 10000
+			});
+			const thisMonth = today.getMonth();
+			const thisYear = today.getFullYear();
+			const thisWeak = date.getWeekOfYear(today);
+			const dateCreated = new Date(sale.createdAt.seconds * 1000);
+			switch (payload.time) {
+
+				case 'Todas':
+					saleReturn[element] = sale;
+					
+					break;
+			
+				case 'De Hoje':
+					let equality = date.isSameDate(dateCreated, today, 'day');
+
+					if (equality) {
+						saleReturn[element] = sale;
+					}
+					else {
+						// showErrorMessage('Não houve vendas hoje.');
+
+					}
+
+					break;
+
+				case 'De Ontém':
+					equality = date.isSameDate(dateCreated, yesterday, 'day');
+
+					if (equality) {
+						saleReturn[element] = sale;
+						console.log(saleReturn);
+					}
+					else {
+						// showErrorMessage('Não houve vendas Ontém.');
+
+					}
+					break;
+				case 'Esta Semana':
+					const weekCompare = date.getWeekOfYear(dateCreated);
+					if (weekCompare === thisWeak) {
+						saleReturn[element] = sale;
+
+						console.log(saleReturn);
+					}
+					break;
+				case 'Deste Mês':
+					const monthCompare = dateCreated.getMonth();
+					if (monthCompare === thisMonth) {
+						saleReturn[element] = sale;
+						console.log(saleReturn);
+					}
+
+					break;
+
+				case 'Deste Ano':
+					const yearCompare = dateCreated.getFullYear();
+					if (yearCompare === thisYear) {
+						saleReturn[element] = sale;
+						console.log(saleReturn);
+					}
+
+					break;
+
+			}	
 			}
 
 			}

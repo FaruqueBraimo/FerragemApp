@@ -1,18 +1,15 @@
 <template>
   <q-page  padding>
 
-       <div class="row justify-left	">
+       <div class=" justify-center	">
 
-      <div class=" col-4 q-pa-md  "	v-for="(sale, index) in filterSaleByUser(getUserAuth.id) "
 		  
-		   :key="index">
 				<mysale
                 		:sale="Object.assign({ id: index }, sale)"
 					:saleId="index"
 				
 
 				/>
-			</div>
             </div>
   </q-page>
 </template>

@@ -55,6 +55,7 @@ const routes = [
     { path: '/stockEditor', component: () => import('pages/admin/stockEditor.vue') },
     { path: '/payments', component: () => import('pages/admin/Payments.vue') },
     { path: '/exported', component: () => import('pages/admin/DeleteExported.vue') },
+    { path: '/retirada', component: () => import('pages/admin/Retiradas.vue') },
 
   ],
 
