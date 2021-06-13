@@ -110,7 +110,7 @@
 		},
 
 		methods: {
-			...mapActions('invoice', [
+  			...mapActions('invoice', [
 				'deleteInvoice',
 			]),
 		

@@ -18,7 +18,8 @@ const state = {
 	notifications : {},
 	idExpo : {} ,
 	myProducts : {},
-	productToSale: {},
+	productToSale: {
+	},
 	saleProduct : {}
 	
 	}

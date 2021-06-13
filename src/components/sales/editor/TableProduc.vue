@@ -117,7 +117,8 @@
 				</q-card>
 			</div>
 
-			{{ findProductForSale }}
+			{{ findProductForSale }} 		<span class="text-white">{{UpdateView}}</span>
+
 		</div>
 
 		<q-markup-table>
@@ -140,18 +141,18 @@
 					<td class="text-left text-capitalize">
 						{{ product.name }}
 					</td>
-					<td class="text-left">
+					<td class="  text-left">
 						<addQuantity
 							:id="index"
 							:product="product"
-							@price="price = $event"
+							@updateQuantity="updateQuantity" 
 						/>
+						<q-btn color="primary" flat label="OK" @click="ok(index)" />
+
 					</td>
 					<td class="text-left">
 						{{
-							price.label == 'Retalho'
-								? product.price_buy
-								: product.grosso
+							 product.price_buy
 						}}
 						,00 MT
 					</td>
@@ -230,7 +231,9 @@
 				change: '',
 				desc: 0,
 				price: '',
-				totals: {}
+				totals: {},
+				UpdateView   : 0
+
 			};
 		},
 		computed: {
@@ -311,12 +314,33 @@
 		},
 
 		methods: {
-			...mapActions('expo', ['addCheckedProducts', 'removeChecked']),
+			...mapActions('expo', ['addCheckedProducts', 'removeChecked' , 'updateQtdProduct']),
 
 			addToCard(product) {
 				this.$emit('addToCard', product);
-				
+
 			},
+
+			ok(val) {
+
+					const total = this.sumTotals(this.productToSale) - 5
+					this.UpdateView = total
+			},
+
+			updateQuantity(val){
+					this.updateQtdProduct({
+							id: val.id,
+							updates: {
+								newQtd:val.qtd,
+								priceType : val.price ,
+								subtotal:val.price * val.qtd
+							}
+						});
+						
+							
+			},
+
+
 
 			findProductByName() {
 				this.$emit('findProductByName', this.nameProduct.toLowerCase());

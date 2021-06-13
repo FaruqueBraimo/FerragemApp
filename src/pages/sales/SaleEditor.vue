@@ -6,7 +6,7 @@
 			@user="user = $event"
 			@value="value = $event"
 			@total="total = $event"
-			
+			@updateView 
 			@subtotals="chance = $event"
 		/>
 
