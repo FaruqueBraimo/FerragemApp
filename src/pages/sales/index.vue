@@ -332,7 +332,7 @@ this.editBox({
 										}
 									});
 
-						this.addRetirada({ amount : this.amount, justification : this.description, by : this.getUserAuth.id  })
+						this.addRetirada({ amount : this.amount, justification : this.description, by : this.getUserAuth.id,  status  : "Subtracao"  })
 						this.amount = ""
 						this.description = 	""
 

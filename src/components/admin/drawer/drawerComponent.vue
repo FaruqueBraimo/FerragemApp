@@ -221,11 +221,11 @@
 
 				<q-item clickable v-ripple exact to="/retirada" v-if="roles[getUserAuth.role.value].reports  === 'true'">
 					<q-item-section avatar>
-						<q-icon name="euro" class="text-red-5"/>
+						<q-icon name="euro" class="text-primary"/>
 					</q-item-section>
 
 					<q-item-section>
-						<p class="text-red-5">Retiradas no Caixa</p>
+						<p class="text-primary">Entradas/Saidas no Caixa</p>
 					</q-item-section>
 				</q-item>
 

@@ -3,11 +3,19 @@
 
         <div class="row justify-center"> 
                 <div class=" col-4"  v-for="box in boxs" :key="box.by">
-            <q-card class="my-card q-pa-md q-ma-md"  >
+            <q-card class="my-card q-pa-md q-ma-md"   >
+
+				 <q-badge color="blue" v-if="box.status == 'Adicao'"> 
+				Adicionado	 
+			    </q-badge>
+
+				 <q-badge color="red-5" v-if="box.status !== 'Adicao'"> 
+					Retirado	 
+			    </q-badge>
                 
                     <q-card-section>
                         <div class="text-h6">Valor :  {{box.amount}}</div>
-                        <div class="text-subtitle2">Retirado por {{users[box.by].name}}</div>
+                        <div class="text-subtitle2"> {{box.status == "Adicao" ? 'Adicionado Por ' : 'Retirado por'}}   {{users[box.by].name}}</div>
                     </q-card-section>
                     <q-card-section>
                     <div class="text-subtitle2">Justificativa</div>
