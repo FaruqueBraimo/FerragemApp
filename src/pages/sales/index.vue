@@ -44,6 +44,33 @@
     </q-dialog>
 
 
+	<q-dialog v-model="prompt2" persistent>
+      <q-card style="min-width: 350px">
+        <q-card-section>
+          <div class="text-h6">Montante a adicionar</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-input dense v-model="amount" type="number" autofocus @keyup.enter="prompt = false" />
+        </q-card-section>
+
+		  <q-card-section>
+          <div class="text-h6">Descreva o porquê da Adição</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-input dense v-model="description"  type="textarea" autofocus @keyup.enter="prompt = false" />
+        </q-card-section>
+
+
+        <q-card-actions align="right" class="text-primary">
+          <q-btn flat label="Cancelar" v-close-popup />
+          <q-btn flat label="Finalizar" v-close-popup @click="addValue()" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+
 <q-card class="my-card q-mx-xl " square 	v-if="getBoxStatus">
 	<q-card-section >
 		<div id="printMe" >
@@ -92,7 +119,7 @@
 			</div>
 		</div>
 		</div>
-		<div class="q-pt-md row  col-6" >
+		<div class="q-pt-md   " >
 			<q-btn
 				
 				class=" full-width"
@@ -102,23 +129,43 @@
 	@click="closeBox()"
 	push
 				
-						color="red-5"
+						color="dark"
 						icon="close"
 			
 			/>
 
-			<q-btn
+			<div class="row"> 
+					<div class="col q-px-md">
+							<q-btn
 				
 				class=" full-width q-my-sm"
 				unelevated
 					v-if="MyBox.box.status"
-				label="Retirar dinheiro"
-			@click="prompt = true" 
+				label="Adicionar dinheiro"
+			@click="prompt2 = true" 
 				
 							
 						color="primary"
 			
 			/>
+					</div>
+					<div class="col q-px-md">
+							<q-btn
+				
+				class=" full-width q-my-sm"
+				unelevated
+					v-if="MyBox.box.status"
+				label="Retirar dinheiro"
+		    	@click="prompt = true" 
+				
+							
+						color="red-5"
+			
+			/>
+					</div>
+			</div>
+
+		
 		</div>
 		</div>
 	</q-card-section>
@@ -166,6 +213,7 @@
 				MyBox: {},
 				count: 0,
 				  prompt: false,
+				  prompt2: false,
 				  amount : '',
 				  description : ""
 
@@ -285,6 +333,8 @@ this.editBox({
 									});
 
 						this.addRetirada({ amount : this.amount, justification : this.description, by : this.getUserAuth.id  })
+						this.amount = ""
+						this.description = 	""
 
 				}
 				else{
@@ -297,6 +347,30 @@ this.editBox({
 
 
 			},
+
+		
+			
+			addValue() {
+				const box = this.MyBox
+
+this.editBox({
+										id: box.id,
+										message: 'Montante Adicionado',
+										updates: {
+										
+											value : ~~box.box.value + ~~this.amount,
+											closedAt: new Date()
+										}
+									});
+
+						this.addRetirada({ amount : this.amount, justification : this.description, by : this.getUserAuth.id , status  : "Adicao" })
+						this.amount = ""
+						this.description = 	""	
+			
+
+
+			},
+
 
 			closeBox() {
 				if (this.boxs) {
