@@ -1,9 +1,9 @@
 <template>
-	<div class="row">
+	<div>
 
-			<div class="col-6">
+		
 					<q-input v-model="qtd" type="number" min='1' dense filled outlined /> 
-		</div>
+		
 	
 	</div>
 </template>

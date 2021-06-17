@@ -141,13 +141,18 @@
 					<td class="text-left text-capitalize">
 						{{ product.name }}
 					</td>
-					<td class="  text-left">
+					<td class=" row text-center">
 						<addQuantity
+							class="col-9 "
 							:id="index"
 							:product="product"
 							@updateQuantity="updateQuantity" 
 						/>
-						<q-btn color="primary" flat label="OK" @click="ok(index)" />
+						<div class="col-2 justify-left">
+									<q-btn color="primary" no-caps flat label="Recalcular" @click="ok(index)" />
+
+
+						</div>
 
 					</td>
 					<td class="text-left">
