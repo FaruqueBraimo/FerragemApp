@@ -2,7 +2,7 @@
 	<q-page padding>
 		<div class="row justify-end q-py-sm">
 			<download-excel
-				class="q-px-md "
+				class="q-px-md"
 				:data="json_data"
 				:fields="json_fields"
 				worksheet="Produtos Cadastrados"
@@ -14,9 +14,6 @@
 					label="Excel"
 					unelevated
 				/>
-
-
-				
 			</download-excel>
 			{{ prod }}
 			<q-btn
@@ -67,8 +64,8 @@
 			class="text-center text-body1"
 			v-if="
 				Object.keys(products).length == 0 &&
-					Object.keys(productFiltered).length == 0 &&
-					Object.keys(productFilteredCategory).length == 0
+				Object.keys(productFiltered).length == 0 &&
+				Object.keys(productFilteredCategory).length == 0
 			"
 		>
 			<q-icon name="sentiment_very_dissatisfied" color="red" size="lg" />
@@ -92,151 +89,149 @@
 </template>
 
 <script>
-	import { mapActions, mapState, mapGetters } from 'vuex';
-	import ProductsBodyComponent from '../../components/admin/product/ProductsBodyComponent';
-	import ProductsHeaderComponent from '../../components/admin/product/ProductsHeaderComponent';
-	import AddUserDialog from '../../components/admin/users/AddUserDialog';
-	import VueHtmlToPaper from 'vue-html-to-paper';
-	import Vue from 'vue';
-	import JsonExcel from 'vue-json-excel';
-	import { log } from 'util';
-	import products from 'src/store/modules/products';
+import { mapActions, mapState, mapGetters } from 'vuex';
+import ProductsBodyComponent from '../../components/admin/product/ProductsBodyComponent';
+import ProductsHeaderComponent from '../../components/admin/product/ProductsHeaderComponent';
+import AddUserDialog from '../../components/admin/users/AddUserDialog';
+import VueHtmlToPaper from 'vue-html-to-paper';
+import Vue from 'vue';
+import JsonExcel from 'vue-json-excel';
+import { log } from 'util';
+import products from 'src/store/modules/products';
 
-	Vue.component('downloadExcel', JsonExcel);
+Vue.component('downloadExcel', JsonExcel);
 
-	export default {
-		name: 'ProductPage',
-		data() {
-			return {
-				dialog: false,
-				search: '',
+export default {
+	name: 'ProductPage',
+	data() {
+		return {
+			dialog: false,
+			search: '',
 
-				options: [],
-				json_fields: {
-					codigo : 'code',
-					Produto: 'name',
-					Referência: 'reference',
-					Categoria: 'category',
-					Quantidade : 'quantity',
-					PrecoRetalho  : 'price_payd', 
-					PrecoGrosso : 'grosso',
-					Fornecedor : 'provider',
-					DataCriacao : 'createdAt',
-					CriadoPor : 'createdBy'
-
-
-
-				},
-				json_data: [],
-				json_meta: [
-					[
-						{
-							key: 'charset',
-							value: 'utf-8'
-						}
-					]
+			options: [],
+			json_fields: {
+				codigo: 'code',
+				Produto: 'name',
+				Referência: 'reference',
+				Categoria: 'category',
+				Quantidade: 'quantity',
+				PrecoRetalho: 'price_payd',
+				PrecoGrosso: 'grosso',
+				Fornecedor: 'provider',
+				DataCriacao: 'createdAt',
+				CriadoPor: 'createdBy'
+			},
+			json_data: [],
+			json_meta: [
+				[
+					{
+						key: 'charset',
+						value: 'utf-8'
+					}
 				]
-			};
-		},
-		computed: {
-			...mapState('product', [
-				'products',
-				'productFiltered',
-				'productFilteredCategory',
-				'loading'
-			]),
-						...mapState('auth', ['users']),
+			]
+		};
+	},
+	computed: {
+		...mapState('product', [
+			'products',
+			'productFiltered',
+			'productFilteredCategory',
+			'loading'
+		]),
+		...mapState('auth', ['users']),
 
-			...mapGetters('product', ['searchProduct']),
+		...mapGetters('product', ['searchProduct']),
 
-			prod() {
-				let product = {};
-				let produtToJson = {};
-				let count = 0;
-				Object.keys(this.products).map((element, index) => {
-					count = index;
-					produtToJson = this.products[element];
-					this.json_data[count] = {
-						code : produtToJson.code,
-						name: produtToJson.name,
-						reference: produtToJson.reference,
-						category: produtToJson.category.label,
-						provider : produtToJson.provider.label,
-						quantity : produtToJson.quantity,
-						price_payd : produtToJson.price_buy,
-						grosso : produtToJson.grosso,
-						DataCriacao :  produtToJson.createdAt,
-						createdBy :  this.users[produtToJson.createdBy] ? this.users[produtToJson.createdBy].name  : "Admin"  
-					};
-				});
+		prod() {
+			let product = {};
+			let produtToJson = {};
+			let count = 0;
+			Object.keys(this.products).map((element, index) => {
+				count = index;
+				produtToJson = this.products[element];
+				this.json_data[count] = {
+					code: produtToJson.code,
+					name: produtToJson.name,
+					reference: produtToJson.reference,
+					category: produtToJson.category.label,
+					provider: produtToJson.provider.label,
+					quantity: produtToJson.quantity,
+					price_payd: produtToJson.price_buy,
+					grosso: produtToJson.grosso,
+					DataCriacao: produtToJson.createdAt,
+					createdBy: this.users[produtToJson.createdBy]
+						? this.users[produtToJson.createdBy].name
+						: 'Admin'
+				};
+			});
 
-				return '';
-			},
-
-			sendProduts() {
-				let element = [];
-				Object.keys(this.prod).map(key => {});
-
-				return this.json_data;
-			}
-		},
-		mounted() {
-			this.listenProductRealTimeChanges();
+			return '';
 		},
 
-		methods: {
-			...mapActions('product', [
-				'deleteProduct',
-				'listenProductRealTimeChanges',
-				'filterDatafromDb',
-				'filterCategoryDatafromDb',
-				'setProductSearchKey',
-				'filterByReference',
-				'getData'
-			]),
-			printTable() {
-				// Pass the element id here
-				this.$htmlToPaper('printMe');
-			},
+		sendProduts() {
+			let element = [];
+			Object.keys(this.prod).map((key) => {});
 
-			removeProduct(id) {
-				let productName = this.products[id].name;
-				this.$q
-					.dialog({
-						title: 'Confirme',
-						message: `Tem certeza que deseja apagar o produto ${productName} ?`,
-						ok: 'Sim',
-						cancel: true,
-						cancel: 'Não',
-						persistent: true
-					})
-					.onOk(() => {
-						this.deleteProduct(id);
-						
-					});
-			},
-			closeDialog() {
-				this.dialog = false;
-				this.updateCategory = false;
-			},
-			filterproduct(query) {
-				this.filterDatafromDb(query);
-			},
-			productFilterCategory(query) {
-				this.filterCategoryDatafromDb(query);
-			},
-			productFilterByReference(query) {
-				this.filterByReference(query);
-			}
-		},
-		components: {
-			ProductsHeaderComponent,
-			ProductsBodyComponent,
-			AddUserDialog
-		},
-
-		watch: {
-			search(val) {}
+			return this.json_data;
 		}
-	};
+	},
+	mounted() {
+		this.listenProductRealTimeChanges();
+	},
+
+	methods: {
+		...mapActions('product', [
+			'deleteProduct',
+			'listenProductRealTimeChanges',
+			'filterDatafromDb',
+			'filterCategoryDatafromDb',
+			'setProductSearchKey',
+			'filterByReference',
+			'getData'
+		]),
+		printTable() {
+			// Pass the element id here
+			this.$htmlToPaper('printMe');
+		},
+
+		removeProduct(id) {
+			let productName = this.products[id].name;
+			this.$q
+				.dialog({
+					title: 'Confirme',
+					message: `Tem certeza que deseja apagar o produto ${productName} ?`,
+					ok: 'Sim',
+					cancel: true,
+					cancel: 'Não',
+					persistent: true
+				})
+				.onOk(() => {
+					this.deleteProduct(id);
+				});
+		},
+		closeDialog() {
+			this.dialog = false;
+			this.updateCategory = false;
+		},
+		filterproduct(query) {
+			this.filterDatafromDb(query);
+		},
+		productFilterCategory(query) {
+			this.filterCategoryDatafromDb(query);
+		},
+		productFilterByReference(query) {
+			this.filterByReference(query);
+		}
+	},
+	components: {
+		ProductsHeaderComponent,
+		ProductsBodyComponent,
+		AddUserDialog
+	},
+
+	watch: {
+		search(val) {}
+	}
+};
 </script>

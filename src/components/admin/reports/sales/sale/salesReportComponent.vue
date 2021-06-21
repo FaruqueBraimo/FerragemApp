@@ -91,7 +91,8 @@
 				maximizedToggle: true,
 				search: '',
 
-				options: []
+				options: [],
+				  
 			};
 		},
 		computed: {
@@ -101,6 +102,8 @@
 			...mapGetters('sale', [
 				'filterSaleByTime',
 			]),
+
+			
 			
 
             

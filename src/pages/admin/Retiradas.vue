@@ -16,6 +16,7 @@
                     <q-card-section>
                         <div class="text-h6">Valor :  {{box.amount}}</div>
                         <div class="text-subtitle2"> {{box.status == "Adicao" ? 'Adicionado Por ' : 'Retirado por'}}   {{users[box.by].name}}</div>
+						  <div class="text-subtitle2">Data :  {{box.createdAt|dateFormat}}</div>
                     </q-card-section>
                     <q-card-section>
                     <div class="text-subtitle2">Justificativa</div>
